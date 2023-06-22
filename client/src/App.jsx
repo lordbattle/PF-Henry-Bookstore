@@ -1,34 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Stack from 'react-bootstrap/Stack'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import Nav from './components/Nav/Nav'
+import LandingPage from './components/LandingPage/LandingPage'
+import About from './components/About/About'
+import Home from './components/Home/Home'
+import Login from './components/Login/Login'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const { pathname } = useLocation();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='container'>
+      <Stack direction="horizontal" gap={3}>
+
+        { pathname !== '/' && <Nav />}
+
+      <Routes>
+        <Route path='/' element={<LandingPage />}></Route>
+        <Route path='/home' element={<Home />}></Route>
+        <Route path='/about' element={<About />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+      </Routes>
+
+      {/* <div className="p-2">NameStore</div>
+      <div className="p-2 ms-auto">Products</div>
+      <div className="vr" />
+      <div className="p-2">Log in</div>
+      <div className="p-2">Sign un</div> */} 
+      </Stack>
+  </div>
   )
 }
 

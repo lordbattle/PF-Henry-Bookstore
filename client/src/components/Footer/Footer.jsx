@@ -1,9 +1,17 @@
 
 const Footer = () => {
     return (
-        <div>
-            <h1>Footer</h1>
-        </div>
+        <>
+             <footer>
+                <ul>
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>Services</li>
+                    <li>Team</li>
+                    <li>Contac</li>
+                </ul>
+           </footer>
+        </>
     )
 }
 

@@ -8,7 +8,8 @@ const mainRouter = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-mainRouter.use("/", );
+//mainRouter.use("/", );
 
 
 module.exports = mainRouter;
+

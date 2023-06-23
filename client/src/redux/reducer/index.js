@@ -10,9 +10,12 @@ function rootReducer (state=initialState, action){
                     books: action.payload,
                 }
 
-        default:          
-               console.log("Entro a caso default")
-            break;
+        default:
+            return {
+                ...state,
+            }
+
             
     }
 }
+export default rootReducer;

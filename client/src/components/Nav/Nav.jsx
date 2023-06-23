@@ -1,6 +1,7 @@
 import Stack from "react-bootstrap/Stack";
 
 import { Link } from "react-router-dom";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Nav = () => {
   return (
@@ -11,6 +12,8 @@ const Nav = () => {
             NameStore
           </Link>
         </span>
+
+        <SearchBar />
 
         <div className="w-100 m-0 d-flex justify-content-end">
           {" "}

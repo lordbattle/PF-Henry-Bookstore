@@ -1,0 +1,21 @@
+.main{
+    width: 32rem;
+}
+
+.container{
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.input{
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn{
+    border: none;
+    border-radius: 8px;
+}

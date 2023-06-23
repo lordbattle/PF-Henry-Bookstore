@@ -7,7 +7,7 @@ const {
   deleteBooksHandler,
 } = require("../handlers/booksHandlers");
 const BooksRouter = Router();
-//ko
+
 BooksRouter.get("/", getBooksHandler)
   .get("/:idBooks", getBooksIdHandler)
   .post("/", postBooksIdHandler)

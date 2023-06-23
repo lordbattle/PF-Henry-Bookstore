@@ -1,26 +1,80 @@
- const {
-   saveAllBooksDb,
-  // getAllBooks,
-  // getCountryById,
-  // getCountryByName,
-} = require("../controllers/BooksControllers"); 
-
-
+const {
+  saveAllBooksDb,
+  getAllBooks,
+  getBooksBytitle,
+  getBookById,
+  postBook,
+} = require("../controllers/booksControllers");
 
 //Save API data in the DB
-saveAllBooksDb();
+//saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
-  const { name } = req.query;
+  const { title } = req.query;
+  try {
+    if (title) {
+      const bookByName = await getBooksBytitle(title);
+      bookByName.length > 0
+        ? res.status(200).json(bookByName)
+        : res.status(404).json({ error: "There are no books with that name" });
+    } else {
+      const allBooks = await getAllBooks();
+      res.status(200).json(allBooks);
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-//Get Books by Id
+//Get Book by Id
 const getBooksIdHandler = async (req, res) => {
-  const { idBooks } = req.params;
+  const { idBook } = req.params;
+  try {
+    const response = await getBookById(idBook);
+    response === null
+      ? res.status(400).json({ error: "There are no books with that id" })
+      : res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 //Post Books
-const postBooksIdHandler = async (req, res) => {};
+const postBooksHandler = async (req, res) => {
+  const {
+    title,
+    subtitle,
+    publishedDate,
+    publisher,
+    description,
+    pages,
+    averageRating,
+    usersRating,
+    identifier,
+    bookPic,
+    authors,
+    genre,
+  } = req.body;
+  try {
+    const newBook = await postBook(
+      title,
+      subtitle,
+      publishedDate,
+      publisher,
+      description,
+      pages,
+      averageRating,
+      usersRating,
+      identifier,
+      bookPic,
+      authors,
+      genre
+    );
+    res.status(200).json(newBook);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //Put Books
 const putBooksHandler = async (req, res) => {};
@@ -33,7 +87,7 @@ const deleteBooksHandler = async (req, res) => {
 module.exports = {
   getBooksHandler,
   getBooksIdHandler,
-  postBooksIdHandler,
+  postBooksHandler,
   putBooksHandler,
   deleteBooksHandler,
 };

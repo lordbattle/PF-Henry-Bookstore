@@ -11,7 +11,7 @@ const BooksRouter = Router();
 BooksRouter.get("/", getBooksHandler)
   .get("/:idBook", getBooksIdHandler)
   .post("/", postBooksHandler)
-  .put("/", putBooksHandler)
+  .put("/:idBook", putBooksHandler)
   .delete("/:idBook", deleteBooksHandler);
 
 module.exports = BooksRouter;

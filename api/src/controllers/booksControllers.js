@@ -112,7 +112,6 @@ const getBooksBytitle = async (title) => {
 };
 
 const getBookById = async (idBook) => {
-  console.log(idBook)
   return await Book.findByPk(idBook);
 };
 
@@ -131,6 +130,7 @@ const postBook = async (
   genre
 ) => {
   let newBook = await Book.create({
+    id,
     title,
     subtitle,
     publishedDate,
@@ -147,10 +147,55 @@ const postBook = async (
   return newBook;
 };
 
+const putBook = async (
+  idBook,
+  title,
+  subtitle,
+  publishedDate,
+  publisher,
+  description,
+  pages,
+  averageRating,
+  usersRating,
+  identifier,
+  bookPic,
+  authors,
+  genre
+) => {
+  const updateBook = Book.update(
+    {
+      title,
+      subtitle,
+      publishedDate,
+      publisher,
+      description,
+      pages,
+      averageRating,
+      usersRating,
+      identifier,
+      bookPic,
+      authors,
+      genre,
+    },
+    {
+      where: { id: idBook },
+    }
+  );
+  return updateBook;
+};
+
+const deleteBook = async (idBook) => {
+  return await Book.destroy({
+    where: { id: idBook },
+  });
+};
+
 module.exports = {
   saveAllBooksDb,
   getAllBooks,
   getBooksBytitle,
   getBookById,
-  postBook
+  postBook,
+  putBook,
+  deleteBook,
 };

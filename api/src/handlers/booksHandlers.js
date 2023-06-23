@@ -4,6 +4,8 @@ const {
   getBooksBytitle,
   getBookById,
   postBook,
+  putBook,
+  deleteBook,
 } = require("../controllers/booksControllers");
 
 //Save API data in the DB
@@ -77,11 +79,57 @@ const postBooksHandler = async (req, res) => {
 };
 
 //Put Books
-const putBooksHandler = async (req, res) => {};
+const putBooksHandler = async (req, res) => {
+  const { idBook } = req.params;
+
+  const {
+    title,
+    subtitle,
+    publishedDate,
+    publisher,
+    description,
+    pages,
+    averageRating,
+    usersRating,
+    identifier,
+    bookPic,
+    authors,
+    genre,
+  } = req.body;
+
+  try {
+    console.log("entre al handler");
+    await putBook(
+      idBook,
+      title,
+      subtitle,
+      publishedDate,
+      publisher,
+      description,
+      pages,
+      averageRating,
+      usersRating,
+      identifier,
+      bookPic,
+      authors,
+      genre
+    );
+    res.status(200).json("Product updated succesfully");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //Delete Books
 const deleteBooksHandler = async (req, res) => {
-  const { idBooks } = req.params;
+  const { idBook } = req.params;
+
+  try {
+    await deleteBook(idBook);
+    res.status(200).send("product deleted succesfully 👌");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 module.exports = {

@@ -2,16 +2,16 @@ const { Router } = require("express");
 const {
   getBooksHandler,
   getBooksIdHandler,
-  postBooksIdHandler,
+  postBooksHandler,
   putBooksHandler,
   deleteBooksHandler,
 } = require("../handlers/booksHandlers");
 const BooksRouter = Router();
 
 BooksRouter.get("/", getBooksHandler)
-  .get("/:idBooks", getBooksIdHandler)
-  .post("/", postBooksIdHandler)
+  .get("/:idBook", getBooksIdHandler)
+  .post("/", postBooksHandler)
   .put("/", putBooksHandler)
-  .delete("/:idBooks", deleteBooksHandler);
+  .delete("/:idBook", deleteBooksHandler);
 
 module.exports = BooksRouter;

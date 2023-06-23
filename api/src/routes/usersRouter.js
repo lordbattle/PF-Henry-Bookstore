@@ -6,9 +6,10 @@ const {
   putUsersHandler,
   deleteUsersHandler
 } = require("../handlers/usersHandlers");
-constUsersRouter = Router();
+const UsersRouter = Router();
 
-UsersRouter.get("/", getUsersHandler)
+UsersRouter.get
+      ("/", getUsersHandler)
   .get("/:idUsers", getUsersIdHandler)
   .post("/", postUsersIdHandler)
   .put("/", putUsersHandler)

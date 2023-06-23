@@ -4,11 +4,12 @@ const {
   getBooksIdHandler,
   postBooksIdHandler,
   putBooksHandler,
-  deleteBooksHandler,
+  deleteBooksHandler
 } = require("../handlers/booksHandlers");
 const BooksRouter = Router();
 
-BooksRouter.get("/", getBooksHandler)
+BooksRouter.get
+      ("/", getBooksHandler)
   .get("/:idBooks", getBooksIdHandler)
   .post("/", postBooksIdHandler)
   .put("/", putBooksHandler)

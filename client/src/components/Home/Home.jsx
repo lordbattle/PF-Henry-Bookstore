@@ -1,13 +1,23 @@
 
-
+import Footer from "../Footer/Footer"
+import Card from "../Card/Card"
+import { useSelector } from "react-redux/es/hooks/useSelector"
+import { useState } from "react"
 const Home = () => {
-  return (
-    <>
-      <div id="contain_home" className="d-flex flex-column">
-        <h1>Home</h1> 
-      </div>
-    </>
-  );
-};
+    const allBooks = useSelector(state=>state.books)
+    console.log("ALLBOKS HOME", allBooks)
+    const[currentPage, setCurrentPage]= useState(1)
+    const recetasPorPag=20;
+    const indexUltiJuego= currentPage * recetasPorPag;
+    const indexPrimJuego= indexUltiJuego - recetasPorPag;
+    const currentBooks = Array.isArray(allBooks) ? allBooks.slice(indexPrimJuego, indexUltiJuego) : [];
 
-export default Home;
+    return (
+        <div className="d-flex flex-column">
+            <Card currentBooks={currentBooks}></Card>
+            <Footer />
+        </div>
+    )
+}
+
+export default Home

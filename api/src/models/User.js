@@ -9,6 +9,7 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true
       },
       userName: {
         type: DataTypes.STRING,
@@ -63,12 +64,7 @@ module.exports = (sequelize) => {
       googleUser: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-      },
-      firstLogin: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
-      },
+      },      
       notifications: {
         type: DataTypes.JSON,
       },

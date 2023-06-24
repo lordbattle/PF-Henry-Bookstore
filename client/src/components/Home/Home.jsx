@@ -1,14 +1,13 @@
-import Footer from "../Footer/Footer"
-
 
 
 const Home = () => {
-    return (
-        <div className="d-flex flex-column">
-            <h1>Home</h1>
-            <Footer />
-        </div>
-    )
-}
+  return (
+    <>
+      <div id="contain_home" className="d-flex flex-column">
+        <h1>Home</h1> 
+      </div>
+    </>
+  );
+};
 
-export default Home
+export default Home;

@@ -28,8 +28,8 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/detail/:id' element={<Detail/>}></Route>
       </Routes>
-         
-      { pathname !== '/' && <Footer />}
+      
+      <Footer />
 
   </div>
   )

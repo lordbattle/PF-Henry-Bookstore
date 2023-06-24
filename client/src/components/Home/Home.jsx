@@ -15,7 +15,6 @@ const Home = () => {
     return (
         <div className="d-flex flex-column">
             <Card currentBooks={currentBooks}></Card>
-            <Footer />
         </div>
     )
 }

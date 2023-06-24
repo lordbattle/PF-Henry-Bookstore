@@ -1,42 +1,44 @@
 import Stack from 'react-bootstrap/Stack'
+import style from '../LandingPage/LandingPage.module.css'
 import { Row, Col, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
     
     return (
-        <div >
-    <Stack className="container text-black d-flex align-items-center" direction="vertical">
-      <h1>BookStore</h1>
+        <div className={style.main}>
+    
+      <div className={style.head}>
+      <h1>The literary corner</h1>
       <p>A great place to buy a good book.</p>
-
-      <div className="d-flex justify-content-center">
-        <Button variant="link">
-          <Link to={"/home"} className="text-decoration-none text-reset">Our Books</Link>
+      <div className={style.btns}>
+      <Button className={style.containerbtn}>
+          <Link to={"/home"} className={style.btn}>Our Books</Link>
         </Button>
 
-        <Button variant="link" className="p-2 link-as-text">
-          <Link to={"/login"} className="text-decoration-none text-reset">Log in | Register</Link>
+        <Button className={style.containerbtn}>
+          <Link to={"/login"} className={style.btn}>Log in | Register</Link>
         </Button>
-       
+        </div>
       </div>
-    </Stack>
+    
 
         <Row>
-        <Col xs={6}className="d-flex align-items-center">
-          <img src="https://cdn3d.iconscout.com/3d/premium/thumb/book-2997214-2516252.png" alt="yellow book" />
+        <Col xs={5} className="d-flex align-items-center" style={{padding: '5px 120px'}}>
+          <img src="https://images.vexels.com/media/users/3/151119/isolated/preview/0916a384c03a97e17954c40d0cb6d73b-hombre-leyendo-libro-silueta-gente-leyendo.png" alt="yellow book" />
         </Col>
-        <Col xs={6} className="d-flex align-items-center" style={{padding: '0px 50px'}}>
+        <Col xs={6} className="d-flex flex-wrap align-items-center" style={{padding: '100px 0px'}}>
           <h1>LIFE IS TOO SHORT TO READ A BAD BOOK</h1>
+          <h2>"Unleash Your Imagination, One Page at a Time"</h2>
         </Col>
       </Row>
 
       <Row>
-        <Col xs={3}>
-          <Image src="https://static.vecteezy.com/system/resources/previews/015/736/213/original/3d-books-3d-rendering-illustration-free-png.png" alt="blue book" style={{ width: '100%', height: 'auto' }} />
+        <Col xs={3} style={{padding: '20px 0px 30px'}}>
+          <Image src="https://images.vexels.com/media/users/3/151287/isolated/preview/90111e412b99189ef799b3d7a697097d-mujer-leyendo-libro-silueta-gente-leyendo.png" alt="stackbook" style={{ width: '100%', height: 'auto', padding: '20px 40px' }} />
         </Col>
-        <Col xs={9} className="d-flex align-items-center" style={{padding: '0px'}}>
-          <h3>Discover the perfect place to buy your books right here! We offer one of the best websites with a wide variety of authors, categories, and the latest releases in the market. Immerse yourself in a world of knowledge and enjoy the experience of finding your next read all in one place!</h3>
+        <Col xs={8} className="d-flex align-items-center" style={{padding: '40px'}}>
+          <h3>"Discover a world of literary wonders at our online bookshop. From captivating novels to insightful non-fiction, our carefully curated collection offers something for every reader. Immerse yourself in the pages that hold stories waiting to be explored, characters waiting to be discovered, and ideas waiting to be pondered. Find your next great read and let the magic of books transport you to new realms of imagination and knowledge. Happy reading!"</h3>
         </Col>
       </Row>
 

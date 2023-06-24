@@ -8,8 +8,8 @@ const { typeUser, cleanData, defineOrder } = require("../helpers/userHelper");
 //Get All Users
 const getUsersHandler = async (req, res) => {
   const name = req.query.name || "";
-  const page = +req.query.page - 1 || 0;
-  const limit = +req.query.limit || 2;
+  const limit = +req.query.limit || 20;
+  const page = req.query.page ? (+req.query.page-1) * limit : 0;  
   const sort = (req.query.sort && defineOrder(req.query.sort)) || [["id"]];
   const rol = (req.query.rol && [req.query.rol]) || [true, false];
 

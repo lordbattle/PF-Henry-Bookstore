@@ -6,10 +6,12 @@ import LandingPage from './components/LandingPage/LandingPage'
 import About from './components/About/About'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
+// import { useAuth0 } from '@auth0/auth0-react'
 
 function App() {
 
   const { pathname } = useLocation();
+  // const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div className='container'>

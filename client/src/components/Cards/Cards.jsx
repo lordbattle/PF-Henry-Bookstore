@@ -9,7 +9,7 @@ const Cards =(props)=>{
           <p>Authors: {props.authors}</p>
           <p>Categories: {props.categories}</p>
           <p>Page Count: {props.pageCount}</p>
-          
+          <Link to={`/detail/${props.id}`}><span>Leer mas</span></Link>
           
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>

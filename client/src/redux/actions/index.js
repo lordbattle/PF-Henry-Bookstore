@@ -48,3 +48,20 @@ export const getBookByTitle = (title) => {
         }
     }
 }
+
+export const deleteBook = (idBook) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.delete(`http://localhost:3001/books/${idBook}`);
+        const data = response.data;
+        alert(data);
+        return dispatch({
+          type: DELETE_BOOK,
+          payload: data,
+        });
+      } catch (error) {
+        alert(`Error del catch delete ${error}`);
+      }
+    };
+  };
+  

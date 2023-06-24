@@ -12,10 +12,28 @@ const {
 //saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
-  const { title } = req.query;
+  // const { title } = req.query;
+  
+  // try {
+  //   if (title) {
+  //     console.log(' entro ', title)
+  //     const bookByName = await getBooksBytitle(title);      
+  //     bookByName.length > 0
+  //       ? res.status(200).json(bookByName)
+  //       : res.status(404).json({ error: "There are no books with that name" });
+  //   } else {
+  //     const allBooks = await getAllBooks();
+  //     res.status(200).json(allBooks);
+  //   }
+  // } catch (error) {
+    
+  //   res.status(400).json({ error: error.message });
+  // }
+
+  const { title, order , page , limit } = req.query;
   try {
     if (title) {
-      const bookByName = await getBooksBytitle(title);
+      const bookByName = await getBooksBytitle(title, order , page, limit);
       bookByName.length > 0
         ? res.status(200).json(bookByName)
         : res.status(404).json({ error: "There are no books with that name" });

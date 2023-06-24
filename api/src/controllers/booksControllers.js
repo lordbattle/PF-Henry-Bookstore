@@ -99,16 +99,84 @@ const saveAllBooksDb = async (req, res) => {
   }
 };
 
+
+
 const getAllBooks = async () => {
   return await Book.findAll();
 };
 
-const getBooksBytitle = async (title) => {
-  return await Book.findAll({
+const getBooksBytitle = async (title, order, page, limit) => {
+  // return await Book.findAll({
+  //   where: {
+  //     title: { [Op.iLike]: "%" + title + "%" },
+  //   },
+  // });
+
+
+  let bookByTitle = await Book.findAll({
     where: {
       title: { [Op.iLike]: "%" + title + "%" },
     },
   });
+
+  if (order) {
+    switch (order) {
+      case 'asc':
+        bookByTitle.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+        break;
+      default:
+        bookByTitle.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase())).reverse();
+        break;
+    }
+  }
+  console.log(' boooookkkkssss', bookByTitle.length)
+  if (page && limit) {
+    if((bookByTitle.length % limit != 1 && page > bookByTitle.length / limit) ||
+      (bookByTitle.length % limit == 1 && page >= bookByTitle.length / limit)) 
+      throw new Error ('non-existent page number in the search') 
+
+    parseInt(page);
+    parseInt(limit);
+    if (page == 1 && (bookByTitle.length / limit) == 1)
+      return bookByTitle;
+
+    if (page == 1)
+      return bookByTitle.slice(0, limit)
+
+    const indiceInicio = page * limit - limit;
+    const inidceFin = indiceInicio + limit;
+
+    if ((bookByTitle.length % limit) != 0.0 && ((page - 1) < (bookByTitle.length / limit))) {
+      if( indiceInicio == (bookByTitle.length - 1) )
+        return bookByTitle.slice(-1);
+
+      return bookByTitle.slice(indiceInicio, (bookByTitle.length - 1))      
+    }
+
+
+    return bookByTitle.slice(indiceInicio, inidceFin )
+
+
+    // if( ( bookByTitle.length / +limit) <= 1 && +page ===1 ){
+    //   return bookByTitle ;
+    // }
+    // if( +page > ( bookByTitle.length / +limit) && (bookByTitle.length % +limit ) === 0.0 )
+    //   throw new Error ('non-existent page number in the search')
+    // if( (bookByTitle.length % +limit ) !== 0.0 && +page > ( bookByTitle.length / +limit) )
+    //   return bookByTitle.slice(((+limit)*((+page)-1)), (bookByTitle.length - 1 ));
+
+    // if((bookByTitle.length % +limit ) != 0 ){
+    //   if( ( bookByTitle.length / +limit) < +page ){
+
+    //     if((+limit)*((+page)-1) === (bookByTitle.length - 1 ) )
+    //       return bookByTitle[((+limit)*((+page)-1))]
+
+    //     return  bookByTitle.slice(((+limit)*((+page)-1)), (bookByTitle.length - 1 ));
+    //   }
+    // }
+    // return bookByTitle.slice(((+limit)*((+page)-1)),(((+limit) * (+page))));
+  }
+  return bookByTitle;
 };
 
 const getBookById = async (idBook) => {

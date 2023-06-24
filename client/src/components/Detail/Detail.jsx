@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams, Link} from "react-router-dom"
-import { getBookById } from "../../redux/actions";
+import { getBookById, deleteBook } from "../../redux/actions";
 
 const Detail = () =>{
     const {id} = useParams();

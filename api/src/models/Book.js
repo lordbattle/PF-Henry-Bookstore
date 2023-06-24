@@ -12,12 +12,12 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
       title: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
         unique: true,
       },
       subtitle: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
       },
       publishedDate: {
         type: DataTypes.STRING,
@@ -36,6 +36,7 @@ module.exports = (sequelize) => {
       },
       usersRating: {
         type: DataTypes.DOUBLE,
+        defaultValue : 0 
       },
       active: {
         type: DataTypes.BOOLEAN,
@@ -48,7 +49,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue:
           "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-      },      
+      }, 
+      authors:{
+        type : DataTypes.STRING,
+
+      },
+      genre:{
+        type : DataTypes.STRING,
+      }     
     },
     { timestamps: false }
   );

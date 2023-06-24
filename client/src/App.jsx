@@ -1,12 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Stack from 'react-bootstrap/Stack'
+import "./main.css"
+// import Stack from 'react-bootstrap/Stack'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Nav from './components/Nav/Nav'
 import LandingPage from './components/LandingPage/LandingPage'
 import About from './components/About/About'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
+
 // import { useAuth0 } from '@auth0/auth0-react'
+
+import Detail from "./components/Detail/Detail"
+import Footer from './components/Footer/Footer'
+
 
 function App() {
 
@@ -15,8 +21,8 @@ function App() {
 
   return (
     <div className='container'>
-      <Stack direction="horizontal" gap={3}>
-
+      {/* <Stack direction="horizontal" gap={3}>
+</Stack> */}
         { pathname !== '/' && <Nav />}
 
       <Routes>
@@ -24,14 +30,11 @@ function App() {
         <Route path='/home' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/login' element={<Login />}></Route>
+        <Route path='/detail/:id' element={<Detail/>}></Route>
       </Routes>
+      
+      <Footer />
 
-      {/* <div className="p-2">NameStore</div>
-      <div className="p-2 ms-auto">Products</div>
-      <div className="vr" />
-      <div className="p-2">Log in</div>
-      <div className="p-2">Sign un</div> */} 
-      </Stack>
   </div>
   )
 }

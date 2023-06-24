@@ -13,22 +13,21 @@ const Card = ({currentBooks}) =>{
       <div className="bg-danger ">
         {currentBooks.length > 0 ? (
           currentBooks.map((v) => {
-            const { volumeInfo } = v; // Desestructura volumeInfo del objeto v
-            return (
+           return (
               <Cards
                 key={v.id}
                 id={v.id}
-                title={volumeInfo.title}
-                authors={volumeInfo.authors}
-                categories={volumeInfo.categories}
-                pageCount={volumeInfo.pageCount}
-                imageLinks={volumeInfo.imageLinks?.thumbnail}
+                title={v.title}
+                authors={v.authors}
+                categories={v.genre}
+                averageRating={v.averageRating}
+                imageLinks={v.bookPic}
                 // Otras propiedades de volumeInfo que desees utilizar
               />
             );
           })
         ) : (
-          <p>Error de carga</p>
+          console.log("LOG DEL ERROR", currentBooks)
         )}
       </div>
     );

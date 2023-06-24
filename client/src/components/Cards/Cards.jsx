@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom" 
 const Cards =(props)=>{
     return (
         <div className="container bg-info d-flex flex-column" >
@@ -8,8 +9,8 @@ const Cards =(props)=>{
             maxHeight: '300vh'}} src={props.imageLinks} alt="" />
           <p>Authors: {props.authors}</p>
           <p>Categories: {props.categories}</p>
-          <p>Page Count: {props.pageCount}</p>
-          
+          <p>Rating: {props.averageRating}</p>
+          <Link to={`/detail/${props.id}`}><span>Leer mas</span></Link>
           
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>

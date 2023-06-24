@@ -7,7 +7,9 @@ import LandingPage from './components/LandingPage/LandingPage'
 import About from './components/About/About'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
+import Detail from "./components/Detail/Detail"
 import Footer from './components/Footer/Footer'
+
 
 function App() {
 
@@ -24,8 +26,11 @@ function App() {
         <Route path='/home' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/login' element={<Login />}></Route>
-      </Routes> 
+        <Route path='/detail/:id' element={<Detail/>}></Route>
+      </Routes>
+         
       { pathname !== '/' && <Footer />}
+
   </div>
   )
 }

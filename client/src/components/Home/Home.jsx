@@ -1,5 +1,3 @@
-
-import Footer from "../Footer/Footer"
 import Card from "../Card/Card"
 import { useSelector } from "react-redux/es/hooks/useSelector"
 import { useState } from "react"

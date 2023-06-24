@@ -2,6 +2,7 @@ import axios from "axios";
 const GET_BOOKS = "GET_BOOKS";
 const GET_BOOK_ID= "GET_BOOK_ID";
 const GET_BOOK_TITLE= "GET_BOOK_TITLE"
+const DELETE_BOOK = "DELETE_BOOK";
 
 export const getBooks=()=>{
     return async (dispatch)=>{

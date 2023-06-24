@@ -2,6 +2,7 @@ import axios from "axios";
 const GET_BOOKS = "GET_BOOKS";
 const GET_BOOK_ID= "GET_BOOK_ID";
 const GET_BOOK_TITLE= "GET_BOOK_TITLE"
+const DELETE_BOOK = "DELETE_BOOK";
 
 export const getBooks=()=>{
     return async (dispatch)=>{
@@ -48,3 +49,20 @@ export const getBookByTitle = (title) => {
         }
     }
 }
+
+export const deleteBook = (idBook) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.delete(`http://localhost:3001/books/${idBook}`);
+        const data = response.data;
+        alert(data);
+        return dispatch({
+          type: DELETE_BOOK,
+          payload: data,
+        });
+      } catch (error) {
+        alert(`Error del catch delete ${error}`);
+      }
+    };
+  };
+  

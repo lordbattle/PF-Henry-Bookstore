@@ -6,13 +6,12 @@ import SearchBar from "../SearchBar/SearchBar";
 const Nav = () => {
   return (
     <div
-      style={{ backgroundColor: "#ffafcc" }}
-      className="px-2 py-3 border-0 rounded bg_navbar text-white"
+      className="px-2 py-3 border-0 bg_navbar text-white bg-dark"
     >
       <Stack direction="horizontal" gap={3}>
         <span className="p-2 link-as-text">
           <Link to={"/"} className="text-decoration-none fs-4 text-reset">
-            NameStore
+          TheLiteraryCorner
           </Link>
         </span>
 

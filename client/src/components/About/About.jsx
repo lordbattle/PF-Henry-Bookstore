@@ -4,8 +4,7 @@ import Alert from 'react-bootstrap/Alert';
 const About = () => {
     return (
         <div>
-            <Alert variant="success">
-                <Alert.Heading><p style={{ display: 'flex', justifyContent: 'center', fontSize: '30px'}}>Members</p></Alert.Heading>
+            <p style={{display: 'flex', justifyContent: 'center', fontSize: '40px'}}>Members</p>
             <div class='d-flex justify-content-center'>
             <Card style={{ width: '20rem' }}>
                 <Card.Img variant="top" src="https://www.unjobnet.org/assets/images/users/blank-profile.png" />
@@ -107,7 +106,7 @@ const About = () => {
                 </Card.Body>
             </Card>
             </div>
-            </Alert>
+        
         </div>
     )
 }

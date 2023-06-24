@@ -8,6 +8,8 @@ import About from './components/About/About'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Detail from "./components/Detail/Detail"
+import Footer from './components/Footer/Footer'
+
 
 function App() {
 
@@ -26,13 +28,9 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/detail/:id' element={<Detail/>}></Route>
       </Routes>
+         
+      { pathname !== '/' && <Footer />}
 
-      {/* <div className="p-2">NameStore</div>
-      <div className="p-2 ms-auto">Products</div>
-      <div className="vr" />
-      <div className="p-2">Log in</div>
-      <div className="p-2">Sign un</div> */} 
-      
   </div>
   )
 }

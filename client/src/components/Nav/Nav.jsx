@@ -5,7 +5,10 @@ import SearchBar from "../SearchBar/SearchBar";
 
 const Nav = () => {
   return (
-    <div style={{backgroundColor: "#ffafcc"}} className="px-2 py-3 border-0 rounded bg_navbar text-white">
+    <div
+      style={{ backgroundColor: "#ffafcc" }}
+      className="px-2 py-3 border-0 rounded bg_navbar text-white"
+    >
       <Stack direction="horizontal" gap={3}>
         <span className="p-2 link-as-text">
           <Link to={"/"} className="text-decoration-none fs-4 text-reset">
@@ -28,7 +31,10 @@ const Nav = () => {
             </Link>
           </span>
           <span className="p-2 ms-0 link-as-text">
-            <Link to={"/about"} className="text-decoration-none fs-5 text-reset">
+            <Link
+              to={"/about"}
+              className="text-decoration-none fs-5 text-reset"
+            >
               About Us
             </Link>
           </span>
@@ -41,7 +47,10 @@ const Nav = () => {
             Log in
           </Link>
 
-          <Link to={"/register"} className="text-decoration-none fs-5 text-reset">
+          <Link
+            to={"/register"}
+            className="text-decoration-none fs-5 text-reset"
+          >
             Sign up
           </Link>
         </div>

@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Stack from 'react-bootstrap/Stack'
+import "./main.css"
+// import Stack from 'react-bootstrap/Stack'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Nav from './components/Nav/Nav'
 import LandingPage from './components/LandingPage/LandingPage'
@@ -13,8 +14,8 @@ function App() {
 
   return (
     <div className='container'>
-      <Stack direction="horizontal" gap={3}>
-
+      {/* <Stack direction="horizontal" gap={3}>
+</Stack> */}
         { pathname !== '/' && <Nav />}
 
       <Routes>
@@ -29,7 +30,7 @@ function App() {
       <div className="vr" />
       <div className="p-2">Log in</div>
       <div className="p-2">Sign un</div> */} 
-      </Stack>
+      
   </div>
   )
 }

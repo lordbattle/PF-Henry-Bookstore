@@ -20,6 +20,10 @@ function rootReducer (state=initialState, action){
                 ...state,
                 books: action.payload
             }
+        case "DELETE_BOOK":
+            return{
+                ...state,
+            }
         default:
             return {
                 ...state,

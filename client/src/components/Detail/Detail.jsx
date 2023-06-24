@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams, Link} from "react-router-dom"
-import { getBookById } from "../../redux/actions";
+import { getBookById, deleteBook } from "../../redux/actions";
 
 const Detail = () =>{
     const {id} = useParams();
@@ -18,14 +18,13 @@ const Detail = () =>{
     return (
         <div>
             <p>ID DEL LIBRO: {id}</p>
-            <p>{active}</p>
+            <p>{active===true? ( <button onClick={()=>{dispatch(deleteBook(id));}}>Deshabilitar producto</button> ):(<button>Habilitar producto</button>)}</p>
             <p>{title}</p>
             <p>{subtitle}</p>
             <img src={bookPic} alt="Imagen del libro" />
             <p>Author's: {authors}</p>
             <p>{description}</p>
             <p>Rating global: {averageRating}</p> <p>Rating de usuarios: {userRating}</p>
-            <p></p>
             <p>Categories: {genre}</p>
             <p>Pages: {pages}</p>
             <p>{publisher}</p><p>{publishedDate}</p>

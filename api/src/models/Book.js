@@ -18,18 +18,23 @@ module.exports = (sequelize) => {
       },
       subtitle: {
         type: DataTypes.TEXT,
+        allowNull: false,
       },
       publishedDate: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       publisher: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       description: {
         type: DataTypes.TEXT,
+        allowNull: false,
       },
       pages: {
         type: DataTypes.INTEGER,
+        allowNull: false,
       },
       averageRating: {
         type: DataTypes.DOUBLE,
@@ -41,9 +46,11 @@ module.exports = (sequelize) => {
       active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+        allowNull: false,
       },
       identifier: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       bookPic: {
         type: DataTypes.STRING,
@@ -52,10 +59,12 @@ module.exports = (sequelize) => {
       }, 
       authors:{
         type : DataTypes.STRING,
+        allowNull: false,
 
       },
       genre:{
         type : DataTypes.STRING,
+        allowNull: false,
       }     
     },
     { timestamps: false }

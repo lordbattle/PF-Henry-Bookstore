@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom" 
 const Cards =(props)=>{
     return (
-        <div className="container bg-info d-flex flex-column" >
+        <div className="container d-flex flex-column" >
           <h3>{props.title}</h3>
           <img style={{
             maxWidth: '30vh',

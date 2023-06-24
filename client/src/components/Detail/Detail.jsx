@@ -18,7 +18,7 @@ const Detail = () =>{
     return (
         <div>
             <p>ID DEL LIBRO: {id}</p>
-            <p>{active}</p>
+            <p>{active===true? ( <button onClick={()=>{dispatch(deleteBook(id));}}>Deshabilitar producto</button> ):(<button>Habilitar producto</button>)}</p>
             <p>{title}</p>
             <p>{subtitle}</p>
             <img src={bookPic} alt="Imagen del libro" />

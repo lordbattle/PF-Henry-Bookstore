@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <footer className="py-4 bg-dark fixed-bottom">
-        <div className="d-flex m-0  justify-content-around text-align align-items-center">
+      <footer className="py-4 bg-dark">
+        <div className="d-flex m-0  justify-content-around text-center align-items-center">
           <p className="m-0">
             <Link to={"/home"} className="text-white text-decoration-none">Home</Link>
           </p>

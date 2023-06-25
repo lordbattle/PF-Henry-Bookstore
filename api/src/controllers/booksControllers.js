@@ -2,7 +2,9 @@ const axios = require("axios");
 require("dotenv").config();
 const { API_KEY, API_URL } = process.env;
 const { User, Book, Genre, Author, ReviewStore } = require("../db");
-const { bookFilterAndPagination } = require("../helpers/bookFilterAndPagination");
+const {
+  bookFilterAndPagination,
+} = require("../helpers/bookFilterAndPagination");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
@@ -50,14 +52,18 @@ const saveAllBooksDb = async (req, res) => {
             subtitle: allBooksApi.items[i].volumeInfo.subtitle
               ? allBooksApi.items[i].volumeInfo.subtitle
               : "It does not have subtitles",
-            publishedDate: allBooksApi.items[i].volumeInfo.publishedDate,
+            publishedDate: allBooksApi.items[i].volumeInfo.publishedDate
+              ? allBooksApi.items[i].volumeInfo.publishedDate.slice(0, 4)
+              : 1900,
             publisher: allBooksApi.items[i].volumeInfo.publisher
               ? allBooksApi.items[i].volumeInfo.publisher
               : "It does not have publisher",
             description: allBooksApi.items[i].volumeInfo.description
               ? allBooksApi.items[i].volumeInfo.description
               : "It does not have description",
-            pages: allBooksApi.items[i].volumeInfo.pageCount,
+            pages: allBooksApi.items[i].volumeInfo.pageCount
+              ? allBooksApi.items[i].volumeInfo.pageCount
+              : 150,
             averageRating: allBooksApi.items[i].volumeInfo.averageRating
               ? allBooksApi.items[i].volumeInfo.averageRating
               : 2,
@@ -71,7 +77,6 @@ const saveAllBooksDb = async (req, res) => {
               : "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
             authors: stringAuthors(allBooksApi.items[i].volumeInfo.authors),
             genre: stringCategories(allBooksApi.items[i].volumeInfo.categories),
-            price : allBooksApi.items[i].saleInfo.listPrice ? allBooksApi.items[i].saleInfo.listPrice.amount : 0 ,
           },
         });
 
@@ -101,12 +106,9 @@ const saveAllBooksDb = async (req, res) => {
   }
 };
 
-
-
 const getAllBooks = async () => {
   return await Book.findAll();
 };
-
 
 /*return books that contain genre, may or may not have the other params
  * order : asc to sort ascending and desc to sort descending
@@ -121,9 +123,8 @@ const getBookByGenres = async (genre, order, page, limit, price) => {
   });
   if (order || page || limit)
     return bookFilterAndPagination(bookByGenre, order, page, limit, price);
-  else
-    return bookByGenre;
-}
+  else return bookByGenre;
+};
 
 const getBookByAuthor = async (author, order, page, limit, price) => {
   let bookByAuthors = await Book.findAll({
@@ -133,9 +134,8 @@ const getBookByAuthor = async (author, order, page, limit, price) => {
   });
   if (order || page || limit)
     return bookFilterAndPagination(bookByAuthors, order, page, limit, price);
-  else
-    return bookByAuthors;
-}
+  else return bookByAuthors;
+};
 
 const getBooksBytitle = async (title, order, page, limit, price) => {
   let bookByTitle = await Book.findAll({
@@ -146,10 +146,7 @@ const getBooksBytitle = async (title, order, page, limit, price) => {
 
   if (order || page || limit)
     return bookFilterAndPagination(bookByTitle, order, page, limit, price);
-  else
-    return bookByTitle;
-
-
+  else return bookByTitle;
 };
 
 const getBookById = async (idBook) => {
@@ -167,6 +164,7 @@ const postBook = async (
   usersRating,
   identifier,
   bookPic,
+  price,
   authors,
   genre
 ) => {
@@ -181,6 +179,7 @@ const postBook = async (
     usersRating,
     identifier,
     bookPic,
+    price,
     authors,
     genre,
   });
@@ -199,6 +198,7 @@ const putBook = async (
   usersRating,
   identifier,
   bookPic,
+  price,
   authors,
   genre
 ) => {
@@ -214,6 +214,7 @@ const putBook = async (
       usersRating,
       identifier,
       bookPic,
+      price,
       authors,
       genre,
     },
@@ -225,9 +226,18 @@ const putBook = async (
 };
 
 const deleteBook = async (idBook) => {
-  return await Book.destroy({
+  const book = await Book.findByPk(idBook, {
     where: { id: idBook },
   });
+
+  if (!book) {
+    throw Error("There is no book with the specified id");
+  }
+
+  book.active = false;
+  await book.save();
+
+  return book;
 };
 
 module.exports = {

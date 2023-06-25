@@ -3,8 +3,8 @@ require("dotenv").config();
 const { API_KEY, API_URL } = process.env;
 const { User, Book, Genre, Author, ReviewStore } = require("../db");
 const {
-  bookFilterAndPagination,
-} = require("../helpers/bookFilterAndPagination");
+  wildcardFilterAndPagination,
+} = require("../helpers/wildcardFilterAndPagination");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
@@ -66,7 +66,7 @@ const saveAllBooksDb = async (req, res) => {
               : 150,
             averageRating: allBooksApi.items[i].volumeInfo.averageRating
               ? allBooksApi.items[i].volumeInfo.averageRating
-              : 2,
+              : Math.floor(Math.random() * (5 - 1 + 1)) + 1,
             identifier: stringIdentifier(
               allBooksApi.items[i].volumeInfo.industryIdentifiers
             ),
@@ -110,43 +110,40 @@ const getAllBooks = async () => {
   return await Book.findAll();
 };
 
-/*return books that contain genre, may or may not have the other params
+/*return books that contain first three queries, may or may not have the other params
  * order : asc to sort ascending and desc to sort descending
  * price : true to order not by title but by the price of the books in specified order
  * page : page number you want to see from your search
  * limit : limit number of books to view per page*/
-const getBookByGenres = async (genre, order, page, limit, price) => {
+const getBookBySearch = async (
+  title,
+  author,
+  genre,
+  order,
+  page,
+  limit,
+  price
+) => {
+  let whereClause = {};
+  if (title) {
+    whereClause.title = { [Op.iLike]: "%" + title + "%" };
+  }
+
+  if (author) {
+    whereClause.authors = { [Op.iLike]: "%" + author + "%" };
+  }
+
+  if (genre) {
+    whereClause.genre = { [Op.iLike]: "%" + genre + "%" };
+  }
+
   let bookByGenre = await Book.findAll({
-    where: {
-      genre: { [Op.iLike]: "%" + genre + "%" },
-    },
+    where: whereClause,
   });
+
   if (order || page || limit)
-    return bookFilterAndPagination(bookByGenre, order, page, limit, price);
+    return wildcardFilterAndPagination(bookByGenre, order, page, limit, price);
   else return bookByGenre;
-};
-
-const getBookByAuthor = async (author, order, page, limit, price) => {
-  let bookByAuthors = await Book.findAll({
-    where: {
-      authors: { [Op.iLike]: "%" + author + "%" },
-    },
-  });
-  if (order || page || limit)
-    return bookFilterAndPagination(bookByAuthors, order, page, limit, price);
-  else return bookByAuthors;
-};
-
-const getBooksBytitle = async (title, order, page, limit, price) => {
-  let bookByTitle = await Book.findAll({
-    where: {
-      title: { [Op.iLike]: "%" + title + "%" },
-    },
-  });
-
-  if (order || page || limit)
-    return bookFilterAndPagination(bookByTitle, order, page, limit, price);
-  else return bookByTitle;
 };
 
 const getBookById = async (idBook) => {
@@ -243,7 +240,7 @@ const deleteBook = async (idBook) => {
 module.exports = {
   saveAllBooksDb,
   getAllBooks,
-  getBooksBytitle,
+  getBookBySearch,
   getBookById,
   postBook,
   putBook,

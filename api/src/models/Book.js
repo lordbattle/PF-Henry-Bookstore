@@ -38,6 +38,9 @@ module.exports = (sequelize) => {
       },
       averageRating: {
         type: DataTypes.DOUBLE,
+        defaultValue: function () {
+          return Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+        },
       },
       usersRating: {
         type: DataTypes.DOUBLE,
@@ -58,12 +61,12 @@ module.exports = (sequelize) => {
       },
       currencyCode: {
         type: DataTypes.STRING,
-        defaultValue: "$",
+        defaultValue: "USD",
       },
       price: {
         type: DataTypes.INTEGER,
         defaultValue: function () {
-          return Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000;
+          return Math.floor(Math.random() * (30000 - 5 + 1)) + 5;
         },
       },
       authors: {

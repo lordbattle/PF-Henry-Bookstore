@@ -55,7 +55,11 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue:
           "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-      },
+
+      },      
+      price :{
+        type : DataTypes.INTEGER
+      },     
       authors: {
         type: DataTypes.STRING,
         allowNull: false,

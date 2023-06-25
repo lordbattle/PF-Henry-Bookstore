@@ -2,6 +2,7 @@ const axios = require("axios");
 require("dotenv").config();
 const { API_KEY, API_URL } = process.env;
 const { User, Book, Genre, Author, ReviewStore } = require("../db");
+const { bookFilterAndPagination } = require("../helpers/bookFilterAndPagination");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
@@ -70,6 +71,7 @@ const saveAllBooksDb = async (req, res) => {
               : "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
             authors: stringAuthors(allBooksApi.items[i].volumeInfo.authors),
             genre: stringCategories(allBooksApi.items[i].volumeInfo.categories),
+            price : allBooksApi.items[i].saleInfo.listPrice ? allBooksApi.items[i].saleInfo.listPrice.amount : 0 ,
           },
         });
 
@@ -99,16 +101,55 @@ const saveAllBooksDb = async (req, res) => {
   }
 };
 
+
+
 const getAllBooks = async () => {
   return await Book.findAll();
 };
 
-const getBooksBytitle = async (title) => {
-  return await Book.findAll({
+
+/*return books that contain genre, may or may not have the other params
+ * order : asc to sort ascending and desc to sort descending
+ * price : true to order not by title but by the price of the books in specified order
+ * page : page number you want to see from your search
+ * limit : limit number of books to view per page*/
+const getBookByGenres = async (genre, order, page, limit, price) => {
+  let bookByGenre = await Book.findAll({
+    where: {
+      genre: { [Op.iLike]: "%" + genre + "%" },
+    },
+  });
+  if (order || page || limit)
+    return bookFilterAndPagination(bookByGenre, order, page, limit, price);
+  else
+    return bookByGenre;
+}
+
+const getBookByAuthor = async (author, order, page, limit, price) => {
+  let bookByAuthors = await Book.findAll({
+    where: {
+      authors: { [Op.iLike]: "%" + author + "%" },
+    },
+  });
+  if (order || page || limit)
+    return bookFilterAndPagination(bookByAuthors, order, page, limit, price);
+  else
+    return bookByAuthors;
+}
+
+const getBooksBytitle = async (title, order, page, limit, price) => {
+  let bookByTitle = await Book.findAll({
     where: {
       title: { [Op.iLike]: "%" + title + "%" },
     },
   });
+
+  if (order || page || limit)
+    return bookFilterAndPagination(bookByTitle, order, page, limit, price);
+  else
+    return bookByTitle;
+
+
 };
 
 const getBookById = async (idBook) => {

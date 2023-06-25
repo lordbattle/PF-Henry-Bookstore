@@ -56,7 +56,10 @@ module.exports = (sequelize) => {
       },
       genre:{
         type : DataTypes.STRING,
-      }     
+      } ,
+      price :{
+        type : DataTypes.INTEGER
+      }   
     },
     { timestamps: false }
   );

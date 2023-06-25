@@ -2,6 +2,7 @@ const axios = require("axios");
 require("dotenv").config();
 const { API_KEY, API_URL } = process.env;
 const { User, Book, Genre, Author, ReviewStore } = require("../db");
+const { bookFilterAndPagination } = require("../helpers/bookFilterAndPagination");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
@@ -70,6 +71,7 @@ const saveAllBooksDb = async (req, res) => {
               : "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
             authors: stringAuthors(allBooksApi.items[i].volumeInfo.authors),
             genre: stringCategories(allBooksApi.items[i].volumeInfo.categories),
+            price : allBooksApi.items[i].saleInfo.listPrice ? allBooksApi.items[i].saleInfo.listPrice.amount : 0 ,
           },
         });
 
@@ -105,78 +107,49 @@ const getAllBooks = async () => {
   return await Book.findAll();
 };
 
-const getBooksBytitle = async (title, order, page, limit) => {
-  // return await Book.findAll({
-  //   where: {
-  //     title: { [Op.iLike]: "%" + title + "%" },
-  //   },
-  // });
 
+/*return books that contain genre, may or may not have the other params
+ * order : asc to sort ascending and desc to sort descending
+ * price : true to order not by title but by the price of the books in specified order
+ * page : page number you want to see from your search
+ * limit : limit number of books to view per page*/
+const getBookByGenres = async (genre, order, page, limit, price) => {
+  let bookByGenre = await Book.findAll({
+    where: {
+      genre: { [Op.iLike]: "%" + genre + "%" },
+    },
+  });
+  if (order || page || limit)
+    return bookFilterAndPagination(bookByGenre, order, page, limit, price);
+  else
+    return bookByGenre;
+}
 
+const getBookByAuthor = async (author, order, page, limit, price) => {
+  let bookByAuthors = await Book.findAll({
+    where: {
+      authors: { [Op.iLike]: "%" + author + "%" },
+    },
+  });
+  if (order || page || limit)
+    return bookFilterAndPagination(bookByAuthors, order, page, limit, price);
+  else
+    return bookByAuthors;
+}
+
+const getBooksBytitle = async (title, order, page, limit, price) => {
   let bookByTitle = await Book.findAll({
     where: {
       title: { [Op.iLike]: "%" + title + "%" },
     },
   });
 
-  if (order) {
-    switch (order) {
-      case 'asc':
-        bookByTitle.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
-        break;
-      default:
-        bookByTitle.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase())).reverse();
-        break;
-    }
-  }
-  console.log(' boooookkkkssss', bookByTitle.length)
-  if (page && limit) {
-    if((bookByTitle.length % limit != 1 && page > bookByTitle.length / limit) ||
-      (bookByTitle.length % limit == 1 && page >= bookByTitle.length / limit)) 
-      throw new Error ('non-existent page number in the search') 
-
-    parseInt(page);
-    parseInt(limit);
-    if (page == 1 && (bookByTitle.length / limit) == 1)
-      return bookByTitle;
-
-    if (page == 1)
-      return bookByTitle.slice(0, limit)
-
-    const indiceInicio = page * limit - limit;
-    const inidceFin = indiceInicio + limit;
-
-    if ((bookByTitle.length % limit) != 0.0 && ((page - 1) < (bookByTitle.length / limit))) {
-      if( indiceInicio == (bookByTitle.length - 1) )
-        return bookByTitle.slice(-1);
-
-      return bookByTitle.slice(indiceInicio, (bookByTitle.length - 1))      
-    }
+  if (order || page || limit)
+    return bookFilterAndPagination(bookByTitle, order, page, limit, price);
+  else
+    return bookByTitle;
 
 
-    return bookByTitle.slice(indiceInicio, inidceFin )
-
-
-    // if( ( bookByTitle.length / +limit) <= 1 && +page ===1 ){
-    //   return bookByTitle ;
-    // }
-    // if( +page > ( bookByTitle.length / +limit) && (bookByTitle.length % +limit ) === 0.0 )
-    //   throw new Error ('non-existent page number in the search')
-    // if( (bookByTitle.length % +limit ) !== 0.0 && +page > ( bookByTitle.length / +limit) )
-    //   return bookByTitle.slice(((+limit)*((+page)-1)), (bookByTitle.length - 1 ));
-
-    // if((bookByTitle.length % +limit ) != 0 ){
-    //   if( ( bookByTitle.length / +limit) < +page ){
-
-    //     if((+limit)*((+page)-1) === (bookByTitle.length - 1 ) )
-    //       return bookByTitle[((+limit)*((+page)-1))]
-
-    //     return  bookByTitle.slice(((+limit)*((+page)-1)), (bookByTitle.length - 1 ));
-    //   }
-    // }
-    // return bookByTitle.slice(((+limit)*((+page)-1)),(((+limit) * (+page))));
-  }
-  return bookByTitle;
 };
 
 const getBookById = async (idBook) => {

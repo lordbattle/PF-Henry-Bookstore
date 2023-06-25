@@ -1,33 +1,61 @@
-import Stack from 'react-bootstrap/Stack'
-import { Link } from 'react-router-dom'
+import Stack from "react-bootstrap/Stack";
+
+import { Link } from "react-router-dom";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Nav = () => {
-    return (
-        <div className="container border border-primary rounded bg-success text-white">
-        <Stack direction="horizontal" gap={3}>
-
+  return (
+    <div
+      className="px-2 py-3 border-0 bg_navbar text-white bg-dark"
+    >
+      <Stack direction="horizontal" gap={3}>
         <span className="p-2 link-as-text">
-          <Link to={"/"} className="text-decoration-none text-reset">NameStore</Link>
+          <Link to={"/"} className="text-decoration-none fs-4 text-reset">
+          TheLiteraryCorner
+          </Link>
         </span>
 
-        <span className="p-2 ms-auto link-as-text">
-          <Link to={"/home"} className="text-decoration-none text-reset">Products</Link>
-        </span>
-        
+        <SearchBar />
+
+        <div className="w-100 m-0 d-flex justify-content-end">
+          {" "}
+          <span className="p-2 ms-0 link-as-text">
+            <Link to={"/home"} className="text-decoration-none fs-5 text-reset">
+              Home
+            </Link>
+          </span>
+          <span className="p-2 ms-0 link-as-text">
+            <Link to={"#"} className="text-decoration-none fs-5 text-reset">
+              Categories
+            </Link>
+          </span>
+          <span className="p-2 ms-0 link-as-text">
+            <Link
+              to={"/about"}
+              className="text-decoration-none fs-5 text-reset"
+            >
+              About Us
+            </Link>
+          </span>
+        </div>
+
         <b className="vr" />
 
-        <span className="p-2 link-as-text">
-          <Link to={"/login"} className="text-decoration-none text-reset">Log in</Link>
-        </span>
+        <div className="w-25 d-flex justify-content-center gap-3">
+          <Link to={"/login"} className="text-decoration-none  fs-5 text-reset">
+            Log in
+          </Link>
 
-        <span className="p-2 link-as-text">
-          <Link to={"/register"} className="text-decoration-none text-reset">Sign up</Link>
-        </span>
-        
-        </Stack>
-        
-      </div>
-    )
-}
+          <Link
+            to={"/register"}
+            className="text-decoration-none fs-5 text-reset"
+          >
+            Sign up
+          </Link>
+        </div>
+      </Stack>
+    </div>
+  );
+};
 
-export default Nav
+export default Nav;

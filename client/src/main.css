@@ -1,4 +1,6 @@
-#root{
-    background-color: #bde0fe;
-    min-height: 100vh;
+.container{
+    background-color: #e37714;
+    min-width: 100vw;
+    margin: 0;
+    padding: 0;
 }

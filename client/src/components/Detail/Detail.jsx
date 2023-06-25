@@ -25,7 +25,6 @@ const Detail = () =>{
             <p>Author's: {authors}</p>
             <p>{description}</p>
             <p>Rating global: {averageRating}</p> <p>Rating de usuarios: {userRating}</p>
-            <p></p>
             <p>Categories: {genre}</p>
             <p>Pages: {pages}</p>
             <p>{publisher}</p><p>{publishedDate}</p>

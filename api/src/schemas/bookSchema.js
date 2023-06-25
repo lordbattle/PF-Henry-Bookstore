@@ -193,10 +193,10 @@ const bookNewSchema = {
     custom: {
       options: (value) => {
         const price = parseInt(value);
-        const min = 1000
-        const max = 200000
+        const min = 5
+        const max = 30000
         if (price < min || price > max) {
-          throw new Error(`The price must be between $${min} and $${max}`);
+          throw new Error(`The price must be between USD${min} and USD${max}`);
         }
         return true;
       },

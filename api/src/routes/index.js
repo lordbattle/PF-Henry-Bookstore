@@ -15,8 +15,9 @@ const mainRouter = Router();
 
 mainRouter.use("/users", UsersRouter);
 mainRouter.use("/books", BooksRouter);
-mainRouter.use("/genders", GendersRouter);
-mainRouter.use("/authors", AuthorsRouter);
+
+/* mainRouter.use("/genders", GendersRouter);
+mainRouter.use("/authors", AuthorsRouter); */
 
 
 module.exports = mainRouter;

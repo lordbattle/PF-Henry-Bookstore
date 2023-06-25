@@ -1,6 +1,6 @@
 const {
   getAllGender,
-  getGenderBytitle,
+  getBookByGenres,
   getGenderById,
 } = require("../controllers/gendersController");
 
@@ -12,8 +12,9 @@ const getGenderHandler = (req, res) => {
   }
 };
 
-//Get gender by Id
-const getGenderIdHandler = (req, res) => {};
+const getGenderIdHandler = (req, res) => {
+  
+};
 
 module.exports = {
   getGenderHandler,

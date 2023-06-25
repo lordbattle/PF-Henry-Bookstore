@@ -1,6 +1,6 @@
 const {
   getAllAuthors,
-  getAuthorBytitle,
+  getBookByAuthor,
   getAuthorById,
 } = require("../controllers/authorsControllers");
 

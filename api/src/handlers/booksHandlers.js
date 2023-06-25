@@ -1,22 +1,49 @@
 const {
   saveAllBooksDb,
   getAllBooks,
-  getBooksBytitle,
+  getBookBySearch,
   getBookById,
   postBook,
   putBook,
   deleteBook,
 } = require("../controllers/booksControllers");
 
-
 //Save API data in the DB
 //saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
-  const { title, order , page , limit , price } = req.query;
+  const { title, author, genre, order, page, limit, price } = req.query;
   try {
+    let search = [];
+
     if (title) {
-      const bookByName = await getBooksBytitle(title, order , page, limit , price);
+      search.push(title);
+    } else {
+      search.push("");
+    }
+
+    if (author) {
+      search.push(author);
+    } else {
+      search.push("");
+    }
+
+    if (genre) {
+      search.push(genre);
+    } else {
+      search.push("");
+    }
+
+    if (search) {
+      const bookByName = await getBookBySearch(
+        title,
+        author,
+        genre,
+        order,
+        page,
+        limit,
+        price
+      );
       bookByName.length > 0
         ? res.status(200).json(bookByName)
         : res.status(404).json({ error: "There are no books with that name" });

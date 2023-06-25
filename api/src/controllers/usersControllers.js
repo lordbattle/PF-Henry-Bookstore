@@ -1,125 +1,72 @@
 const axios = require("axios");
-require("dotenv").config();
+const bcrypt = require("bcryptjs");
+const { User, conn } = require("../db");
+const { Op } = require("sequelize");
+const { API_CLOUDINARY_USERS_UPLOAD_PRESET } = process.env;
 
-const { User, Book, Genre, Author, ReviewStore } = require("../db");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//------|  POST/  |---------->   
-const postUser = async (
-      userName, 
-      email, 
-      password, 
-      age, 
-      lacation, 
-      genres, 
-      phone, 
-      profilePic, 
-      active, 
-      banned, 
-      admin, 
-      googleUser, 
-      firstLogin, 
-      notifications 
-    ) =>{
-    
-     // si ya existe arroja error
-    const userExists = await User.findOne({where: {userName}});
-    if(userExists) throw Error('this username already exists in the DB');
-
-   //creamos la tabla 
-   const newUser = await User.create({userName, email, password, age, lacation, genres, phone, profilePic, active, banned, admin, googleUser, firstLogin, notifications});
-   
-     
-   return newUser;
-  
-  }
+const { cloudinary } = require("../services/cloudinaryService");
 
     
 
     //------|  PUT/  |---------->
-     const putUser = async (id, updatedData) => {
-    const {
-         userName, 
-         email, 
-         password, 
-         age, 
-         lacation,
-         genres, 
-         phone, 
-         profilePic, 
-         active, 
-         banned, 
-         admin, 
-         googleUser, 
-         firstLogin, 
-         notifications 
-        } = updatedData;
+    const putUser = async (id, updatedData) => {
+      try {
+        const user = await User.findByPk(+id);
     
-    // chekeamos si el usuario existe
-    const user = await User.findByPk(id);
-    if (!user) throw Error('User not found');
-  
-    // actualizamos datos del usuario
-    user.userName = userName;
-    user.email = email;
-    user.password = password;
-    user.age = age;
-    user.lacation = lacation;
-    user.genres = genres;
-    user.phone = phone;
-    user.profilePic = profilePic;
-    user.active = active;
-    user.banned = banned;
-    user.admin = admin;
-    user.googleUser = googleUser;
-    user.firstLogin = firstLogin;
-    user.notifications = notifications;
-  
-    // guardamos la actualizacion 
-    await user.save();
-  
-    return user;
-  }
-
+        if (!user) {
+          throw Error("There is no user with the specified id");
+        }
+    
+        const { email, ...rest } = updatedData;
+    
+        if (email) {
+          const salt = bcrypt.genSaltSync();
+          const hashedEmail = bcrypt.hashSync(email, salt);
+          user.email = hashedEmail;
+        }
+    
+        Object.assign(user, rest);
+        await user.save();
+    
+        return user;
+      } catch (e) {
+        throw Error(e.message);
+      }
+    };
+      
+     //------|  deleteUser/:id  |---------->
+    const deleteUser = async (id) => {
+      try {
+        const user = await User.findByPk(+id);
+    
+        if (!user) {
+          throw Error("There is no user with the specified id");
+        }
+    
+        user.active = false;
+        await user.save();
+    
+        return user;
+      } catch (e) {
+        throw Error(e.message);
+      }
+    };
     
 
-    //------|  DELETE/:id  |----------> 
-  const deleteUser = async(id) => {
-    const toDelete= await User.findByPk(id);
-    if(!toDelete) return "user not found";
-    await toDelete.destroy();
-
-    return "Dog deleted successfully";
-
-   }
 
 
-
-   module.exports={
-    
-      postUser,    
+    module.exports = {
+      getAllUsers,
+      getUserById,
+      registerUser,
       putUser,
-      deleteUser      
-   }
+      deleteUser
+      
+    };
 
 
 
-/*getUsers,
-getUserById,*/
+
 
 
 

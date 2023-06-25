@@ -55,11 +55,17 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue:
           "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-
-      },      
-      price :{
-        type : DataTypes.INTEGER
-      },     
+      },
+      currencyCode: {
+        type: DataTypes.STRING,
+        defaultValue: "$",
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        defaultValue: function () {
+          return Math.floor(Math.random() * (30000 - 1000 + 1)) + 1000;
+        },
+      },
       authors: {
         type: DataTypes.STRING,
         allowNull: false,

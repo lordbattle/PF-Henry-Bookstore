@@ -72,8 +72,10 @@ const bookNewSchema = {
     custom: {
       options: (value) => {
         const year = parseInt(value);
-        if (year < 1800 || year > 2030) {
-          throw new Error("The publication date must be between 1800 and 2030");
+        const min = 1800
+        const max = 2030
+        if (year < min || year > max) {
+          throw new Error(`The publication date must be between the years ${min} and ${max}`);
         }
         return true;
       },
@@ -179,6 +181,26 @@ const bookNewSchema = {
         }
       },
     },
+  }, 
+  price: {
+    in: "body",
+    notEmpty: {
+      errorMessage: "The price is required",
+    },
+    isInt: {
+      errorMessage: "The price must be an integer",
+    },
+    custom: {
+      options: (value) => {
+        const price = parseInt(value);
+        const min = 1000
+        const max = 200000
+        if (price < min || price > max) {
+          throw new Error(`The price must be between $${min} and $${max}`);
+        }
+        return true;
+      },
+    },
   },
   authors: {
     in: "body",
@@ -221,12 +243,12 @@ const bookNewSchema = {
 };
 
 const bookPutSchema = {
-  ...bookNewSchema, // Copiar todas las propiedades de bookNewSchema
+  ...bookNewSchema,
 
-  // Hacer que algunas propiedades sean opcionales para la modificación
+  // Make some properties optional for modification
   title: {
-    ...bookNewSchema.title, // Copiar las reglas de validación de title en bookNewSchema
-    optional: true, // Hacer que la propiedad sea opcional
+    ...bookNewSchema.title, // Copy the title validation rules to bookNewSchema
+    optional: true, // Make the property optional
   },
   subtitle: {
     ...bookNewSchema.subtitle,
@@ -254,6 +276,10 @@ const bookPutSchema = {
   },
   bookPic: {
     ...bookNewSchema.bookPic,
+    optional: true,
+  },
+  price: {
+    ...bookNewSchema.price,
     optional: true,
   },
   authors: {

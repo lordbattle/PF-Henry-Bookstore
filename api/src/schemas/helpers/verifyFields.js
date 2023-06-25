@@ -9,6 +9,16 @@ const regexString = /^[A-Za-z0-9,.:-\s]*$/;
 //Can only start with letters or numbers
 const regexOnlyStringNumber = /^[A-Za-z0-9][A-Za-z0-9\s\S]*$/;
 
+//Can only start with letters or numbers and contain -
+const regexUsername = /^[A-Za-z0-9][A-Za-z0-9--\s]*$/;
+
+//Minimum eight and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number, and one special character
+const regexPassword =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{0,}$/;
+
+//Telephone numbers in the format +xx-xxx-xxx-xxxx
+const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/;
+
 const isEmptyBoolean = (value) => !value || typeof value === "boolean" || false;
 
 const isEmptyImageFile = (value) => {
@@ -41,6 +51,24 @@ const isStringValidate = (value) => {
   }
 };
 
+const isUsernameValidate = (value) => {
+  if (regexUsername.test(value)) {
+    return true;
+  }
+};
+
+const isPasswordValidate = (value) => {
+  if (regexPassword.test(value)) {
+    return true;
+  }
+};
+
+const isPhoneValidate = (value) => {
+  if (regexPhone.test(value)) {
+    return true;
+  }
+};
+
 module.exports = {
   isEmptyBoolean,
   isEmptyImageFile,
@@ -48,4 +76,7 @@ module.exports = {
   isStartsWithLetter,
   isStringNumberStartValidate,
   isStringValidate,
+  isUsernameValidate,
+  isPasswordValidate,
+  isPhoneValidate,
 };

@@ -55,6 +55,7 @@ const postBooksHandler = async (req, res) => {
     usersRating,
     identifier,
     bookPic,
+    price,
     authors,
     genre,
   } = req.body;
@@ -70,6 +71,7 @@ const postBooksHandler = async (req, res) => {
       usersRating,
       identifier,
       bookPic,
+      price,
       authors,
       genre
     );
@@ -94,6 +96,7 @@ const putBooksHandler = async (req, res) => {
     usersRating,
     identifier,
     bookPic,
+    price,
     authors,
     genre,
   } = req.body;
@@ -112,6 +115,7 @@ const putBooksHandler = async (req, res) => {
       usersRating,
       identifier,
       bookPic,
+      price,
       authors,
       genre
     );
@@ -127,7 +131,7 @@ const deleteBooksHandler = async (req, res) => {
 
   try {
     await deleteBook(idBook);
-    res.status(200).send("product deleted succesfully 👌");
+    res.status(200).send("Product deleted succesfully 👌");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

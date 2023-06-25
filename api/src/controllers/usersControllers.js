@@ -133,9 +133,9 @@ const registerUser = async (data) => {
     };
       
      //------|  deleteUser/:id  |---------->
-    const deleteUser = async (id) => {
+    const deleteUser = async (idUsers) => {
       try {
-        const user = await User.findByPk(+id);
+        const user = await User.findByPk(+idUsers);
     
         if (!user) {
           throw Error("There is no user with the specified id");

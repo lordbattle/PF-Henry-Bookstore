@@ -1,7 +1,7 @@
 const {
     
     putUser,
-    deleteUser
+    deleteUser,
   } = require("../controllers/usersControllers");
   const { typeUser, cleanData, defineOrder } = require("../helpers/userHelper");  
  
@@ -32,8 +32,7 @@ const deleteUsersHandler = async (req, res) => {
   }
 };
   
-  module.exports = {
-    
+  module.exports = {    
     putUsersHandler,
     deleteUsersHandler,
   };

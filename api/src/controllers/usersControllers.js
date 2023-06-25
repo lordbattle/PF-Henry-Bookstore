@@ -56,9 +56,7 @@ const { cloudinary } = require("../services/cloudinaryService");
 
 
     module.exports = {
-      getAllUsers,
-      getUserById,
-      registerUser,
+      
       putUser,
       deleteUser
       

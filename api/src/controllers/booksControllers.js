@@ -137,13 +137,13 @@ const getBookBySearch = async (
     whereClause.genre = { [Op.iLike]: "%" + genre + "%" };
   }
 
-  let bookByGenre = await Book.findAll({
+  let bookBySearch = await Book.findAll({
     where: whereClause,
   });
 
   if (order || page || limit)
-    return wildcardFilterAndPagination(bookByGenre, order, page, limit, price);
-  else return bookByGenre;
+    return wildcardFilterAndPagination(bookBySearch, order, page, limit, price);
+  else return bookBySearch;
 };
 
 const getBookById = async (idBook) => {
@@ -193,6 +193,7 @@ const putBook = async (
   pages,
   averageRating,
   usersRating,
+  active,
   identifier,
   bookPic,
   price,
@@ -209,6 +210,7 @@ const putBook = async (
       pages,
       averageRating,
       usersRating,
+      active,
       identifier,
       bookPic,
       price,

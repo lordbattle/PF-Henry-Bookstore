@@ -4,8 +4,11 @@ const {
   getUserById,
   putUser,
   deleteUser,
-} = require("../controllers/usersControllers");
-const { typeUser, cleanData, defineOrder } = require("../helpers/userHelper");
+
+  } = require("../controllers/usersControllers");
+  const { typeUser, cleanData, defineOrder } = require("../helpers/userHelper");
+  const { sendNewUserEmail } = require("../config/mailer");
+ 
 
 //Get All Users
 const getUsersHandler = async (req, res) => {
@@ -41,7 +44,9 @@ const postUsersIdHandler = async (req, res) => {
 
   try {
     const results = await registerUser(data);
-    res.status(200).json({ success: true, results });
+    const emailSent = await sendNewUserEmail(results.email, results.userName);
+
+    res.status(200).json({ success: true, results, emailSent });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
   }

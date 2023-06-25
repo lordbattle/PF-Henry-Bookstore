@@ -41,12 +41,11 @@ module.exports = (sequelize) => {
       },
       usersRating: {
         type: DataTypes.DOUBLE,
-        defaultValue : 0 
+        defaultValue: 0,
       },
       active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-        allowNull: false,
       },
       identifier: {
         type: DataTypes.STRING,
@@ -56,16 +55,15 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue:
           "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-      }, 
-      authors:{
-        type : DataTypes.STRING,
-        allowNull: false,
-
       },
-      genre:{
-        type : DataTypes.STRING,
+      authors: {
+        type: DataTypes.STRING,
         allowNull: false,
-      }     
+      },
+      genre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     { timestamps: false }
   );

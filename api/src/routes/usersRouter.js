@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const { checkSchema } = require("express-validator");
+const { userNewSchema } = require("../schemas/userSchema");
+const { validateRequest } = require("../middleware/validateRequest");
 
 const {
   getUsersHandler,
@@ -8,8 +10,6 @@ const {
   putUsersHandler,
   deleteUsersHandler,
 } = require("../handlers/usersHandlers");
-const { userNewSchema } = require("../schemas/userSchema");
-const { validateRequest } = require("../middleware/validateRequest");
 
 const UsersRouter = Router();
 

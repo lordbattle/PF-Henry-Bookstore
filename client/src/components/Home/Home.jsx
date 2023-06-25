@@ -11,7 +11,7 @@ const Home = () => {
     const currentBooks = Array.isArray(allBooks) ? allBooks.slice(indexPrimJuego, indexUltiJuego) : [];
 
     return (
-        <div className="d-flex flex-column ">
+        <div className="d-flex flex-column p-1">
             <Card currentBooks={currentBooks}></Card>
         </div>
     )

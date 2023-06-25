@@ -3,9 +3,9 @@ import Alert from 'react-bootstrap/Alert';
 
 const About = () => {
     return (
-        <div>
+        <div style={{paddingBottom: '20px'}}>
             <p style={{display: 'flex', justifyContent: 'center', fontSize: '40px'}}>Members</p>
-            <div class='d-flex justify-content-center'>
+            <div class='d-flex justify-content-center '>
             <Card style={{ width: '20rem' }}>
                 <Card.Img variant="top" src="https://www.unjobnet.org/assets/images/users/blank-profile.png" />
                 <Card.Body>

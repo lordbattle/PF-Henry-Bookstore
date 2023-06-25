@@ -26,6 +26,7 @@
     background-color: rgb(48, 48, 48);
     border-radius: 5px;
     padding: 2px;
+    width: 100%;
 }
 
 .read:hover{

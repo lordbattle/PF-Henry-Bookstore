@@ -17,7 +17,7 @@ const Cards =(props)=>{
           <p style={{minHeight: '50px'}}>Authors: {props.authors}</p>
           <p>Categories: {props.categories}</p>
           <p>Rating: {props.averageRating}</p>
-          <Link to={`/detail/${props.id}`} style={{textDecoration: 'none'}}><span className={style.read}>Read more</span></Link>
+          <Link to={`/detail/${props.id}`} style={{textDecoration: 'none', width: '30%'}}><span className={style.read}>Read more</span></Link>
           
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>

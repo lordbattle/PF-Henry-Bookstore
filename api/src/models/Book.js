@@ -18,25 +18,30 @@ module.exports = (sequelize) => {
       },
       subtitle: {
         type: DataTypes.TEXT,
+        allowNull: false,
       },
       publishedDate: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       publisher: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       description: {
         type: DataTypes.TEXT,
+        allowNull: false,
       },
       pages: {
         type: DataTypes.INTEGER,
+        allowNull: false,
       },
       averageRating: {
         type: DataTypes.DOUBLE,
       },
       usersRating: {
         type: DataTypes.DOUBLE,
-        defaultValue : 0 
+        defaultValue: 0,
       },
       active: {
         type: DataTypes.BOOLEAN,
@@ -44,22 +49,25 @@ module.exports = (sequelize) => {
       },
       identifier: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
       bookPic: {
         type: DataTypes.STRING,
         defaultValue:
           "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-      }, 
-      authors:{
-        type : DataTypes.STRING,
 
-      },
-      genre:{
-        type : DataTypes.STRING,
-      } ,
+      },      
       price :{
         type : DataTypes.INTEGER
-      }   
+      },     
+      authors: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      genre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     { timestamps: false }
   );

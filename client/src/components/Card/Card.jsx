@@ -2,6 +2,7 @@ import {useDispatch} from "react-redux"
 import { useEffect } from "react"
 import { getBooks } from "../../redux/actions"
 import Cards from "../Cards/Cards"
+import style from '../Card/Card.module.css'
 const Card = ({currentBooks}) =>{
 
     const dispatch = useDispatch()
@@ -10,25 +11,24 @@ const Card = ({currentBooks}) =>{
     }, [dispatch])
     
     return (
-      <div className="bg-danger ">
+      <div className={style.main}>
         {currentBooks.length > 0 ? (
           currentBooks.map((v) => {
-            const { volumeInfo } = v; // Desestructura volumeInfo del objeto v
-            return (
+           return (
               <Cards
                 key={v.id}
                 id={v.id}
-                title={volumeInfo.title}
-                authors={volumeInfo.authors}
-                categories={volumeInfo.categories}
-                pageCount={volumeInfo.pageCount}
-                imageLinks={volumeInfo.imageLinks?.thumbnail}
+                title={v.title}
+                authors={v.authors}
+                categories={v.genre}
+                averageRating={v.averageRating}
+                imageLinks={v.bookPic}
                 // Otras propiedades de volumeInfo que desees utilizar
               />
             );
           })
         ) : (
-          <p>Error de carga</p>
+          console.log("LOG DEL ERROR", currentBooks)
         )}
       </div>
     );

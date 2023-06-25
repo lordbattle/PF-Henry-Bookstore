@@ -8,9 +8,16 @@ import About from './components/About/About'
 import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 
+// import { useAuth0 } from '@auth0/auth0-react'
+
+import Detail from "./components/Detail/Detail"
+import Footer from './components/Footer/Footer'
+
+
 function App() {
 
   const { pathname } = useLocation();
+  // const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div className='container'>
@@ -23,14 +30,11 @@ function App() {
         <Route path='/home' element={<Home />}></Route>
         <Route path='/about' element={<About />}></Route>
         <Route path='/login' element={<Login />}></Route>
+        <Route path='/detail/:id' element={<Detail/>}></Route>
       </Routes>
-
-      {/* <div className="p-2">NameStore</div>
-      <div className="p-2 ms-auto">Products</div>
-      <div className="vr" />
-      <div className="p-2">Log in</div>
-      <div className="p-2">Sign un</div> */} 
       
+      <Footer />
+
   </div>
   )
 }

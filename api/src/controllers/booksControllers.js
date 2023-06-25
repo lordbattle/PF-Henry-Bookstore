@@ -171,7 +171,6 @@ const postBook = async (
   genre
 ) => {
   let newBook = await Book.create({
-    id,
     title,
     subtitle,
     publishedDate,

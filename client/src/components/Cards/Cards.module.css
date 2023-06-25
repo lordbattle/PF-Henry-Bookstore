@@ -1,11 +1,15 @@
 .main{
-    border: 2px orange solid;
-    border-radius: 15px;
-    width: 20%;
+    border: 1px rgb(103, 103, 103) solid;
+    border-radius: 7px;
+    width: 19.54%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 10px;
+    margin: 3px;
+    background-color: rgb(123, 123, 123);
 }
+
 
 .container{
     display: flex;
@@ -13,6 +17,19 @@
 }
 
 .title{
-    width: 100% !important;
-    font-size: 15px;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.read{
+    background-color: rgb(48, 48, 48);
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.read:hover{
+    color: black;
+    background-color: #e37714;
+    box-shadow: 4px 4px 3px black;
 }

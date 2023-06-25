@@ -5,16 +5,19 @@ const Cards =(props)=>{
     return (
       <div className={style.main}>
         <div className={style.container}>
-          <h3 className={style.title}>{props.title}</h3>
           <img style={{
-            maxWidth: '30vh',
+            maxWidth: '100%',
             maxHeight: '300vh',
-            width: '200px',
-            height: '300px'}} src={props.imageLinks} alt="" className={style.img}/>
-          <p>Authors: {props.authors}</p>
+            width: '250px',
+            height: '250px',
+            }} src={props.imageLinks} alt="" className={style.img}/>
+          <h3 className={style.title} style={{
+            minHeight: '50px'
+          }}>{props.title}</h3>
+          <p style={{minHeight: '50px'}}>Authors: {props.authors}</p>
           <p>Categories: {props.categories}</p>
           <p>Rating: {props.averageRating}</p>
-          <Link to={`/detail/${props.id}`}><span>Leer mas</span></Link>
+          <Link to={`/detail/${props.id}`} style={{textDecoration: 'none'}}><span className={style.read}>Read more</span></Link>
           
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>

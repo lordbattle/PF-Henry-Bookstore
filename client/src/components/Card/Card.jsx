@@ -2,6 +2,7 @@ import {useDispatch} from "react-redux"
 import { useEffect } from "react"
 import { getBooks } from "../../redux/actions"
 import Cards from "../Cards/Cards"
+import style from '../Card/Card.module.css'
 const Card = ({currentBooks}) =>{
 
     const dispatch = useDispatch()
@@ -10,7 +11,7 @@ const Card = ({currentBooks}) =>{
     }, [dispatch])
     
     return (
-      <div className="bg-danger ">
+      <div className={style.main}>
         {currentBooks.length > 0 ? (
           currentBooks.map((v) => {
            return (

@@ -46,7 +46,11 @@ const getBooksHandler = async (req, res) => {
       );
       bookByName.length > 0
         ? res.status(200).json(bookByName)
-        : res.status(404).json({ error: "There are no books with that name" });
+        : res
+            .status(404)
+            .json({
+              error: "There are no books with that name, gener or author",
+            });
     } else {
       const allBooks = await getAllBooks();
       res.status(200).json(allBooks);
@@ -121,6 +125,7 @@ const putBooksHandler = async (req, res) => {
     pages,
     averageRating,
     usersRating,
+    active,
     identifier,
     bookPic,
     price,
@@ -140,6 +145,7 @@ const putBooksHandler = async (req, res) => {
       pages,
       averageRating,
       usersRating,
+      active,
       identifier,
       bookPic,
       price,

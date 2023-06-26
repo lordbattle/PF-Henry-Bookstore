@@ -25,7 +25,7 @@ const SearchBar = () => {
     return (
         <div className={style.main}>
             <div className={style.container}>
-                <input type='search' className={style.input} placeholder="Ingresa el libro que deseas buscar" onChange={ event => handleInput(event)}></input>
+                <input type='search' className={style.input} placeholder="Search books" onChange={ event => handleInput(event)}></input>
                 <button className={style.btn} onClick={ event => handleSubmit(event)}>🔍︎</button>
             </div>
         </div>

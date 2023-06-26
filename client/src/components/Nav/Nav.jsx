@@ -25,11 +25,6 @@ const Nav = () => {
             </Link>
           </span>
           <span className="p-2 ms-0 link-as-text">
-            <Link to={"#"} className="text-decoration-none fs-5 text-reset">
-              Categories
-            </Link>
-          </span>
-          <span className="p-2 ms-0 link-as-text">
             <Link
               to={"/about"}
               className="text-decoration-none fs-5 text-reset"
@@ -47,7 +42,7 @@ const Nav = () => {
           </Link>
 
           <Link
-            to={"/register"}
+            to={"/login"}
             className="text-decoration-none fs-5 text-reset"
           >
             Sign up

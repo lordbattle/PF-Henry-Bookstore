@@ -23,6 +23,7 @@ const Card = ({currentBooks}) =>{
                 categories={v.genre}
                 averageRating={v.averageRating}
                 imageLinks={v.bookPic}
+                price={v.price}
                 // Otras propiedades de volumeInfo que desees utilizar
               />
             );

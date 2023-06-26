@@ -3,7 +3,7 @@ import style from '../Cards/Cards.module.css'
 import {Link} from "react-router-dom" 
 const Cards =(props)=>{
     return (
-      <div className={style.main}>
+      <div className={style.main} style={{margin: '5px 20px'}}>
         <div className={style.container}>
           <img style={{
             maxWidth: '100%',
@@ -16,8 +16,9 @@ const Cards =(props)=>{
           }}>{props.title}</h3>
           <p style={{minHeight: '50px'}}>Authors: {props.authors}</p>
           <p>Categories: {props.categories}</p>
-          <p>Rating: {props.averageRating}</p>
-          <Link to={`/detail/${props.id}`} style={{textDecoration: 'none', width: '30%'}}><span className={style.read}>Read more</span></Link>
+          <p>Rating: {props.averageRating}</p> <p>Price: ${props.price}</p>
+          <Link to={`/detail/${props.id}`} style={{display: 'flex', justifyContent:'center', textDecoration: 'none', width: 'auto'}}>
+            <span className={style.read} style={{display: 'flex', justifyContent:'center'}}>Read more</span></Link>
           
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>

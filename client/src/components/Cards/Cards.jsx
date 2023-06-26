@@ -16,7 +16,9 @@ const Cards =(props)=>{
           }}>{props.title}</h3>
           <p style={{minHeight: '50px'}}>Authors: {props.authors}</p>
           <p style={{minHeight: '55px'}}>Categories: {props.categories}</p>
-          <p>Rating: {props.averageRating}</p> <p>Price: ${props.price}</p>
+          <p>Price: ${props.price}</p>
+          <p>Stock: {props.stock}</p>
+          <p>Rating: {props.averageRating}</p> 
           <Link to={`/detail/${props.id}`} style={{display: 'flex', justifyContent:'center', textDecoration: 'none', width: 'auto'}}>
             <span className={style.read} style={{display: 'flex', justifyContent:'center'}}>Read more</span></Link>
           

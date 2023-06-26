@@ -1,0 +1,24 @@
+.main{
+    width: 32rem;
+    padding-left: 70px;
+}
+
+.container{
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.input{
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    color: black;
+}
+
+.btn{
+    border: none;
+    border-radius: 8px;
+    background-color: gray;
+}

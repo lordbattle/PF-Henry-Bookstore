@@ -167,24 +167,24 @@ const bookNewSchema = {
       },
     },
   },
-  bookPic: {
-    in: "body",
-    /* custom: {
-      options: isEmptyImageFile,
-    },
-    errorMessage: "The submitted file is not a .jpg, .jpeg, .png or .gif image", */
-    custom: {
-      options: (value) => {
-        if (!isEmptyImageFile(value)) {
-          throw new Error(
-            "The submitted file is not a .jpg, .jpeg, .png or .gif image"
-          );
-        } else {
-          return true;
-        }
-      },
-    },
-  },
+  // bookPic: {
+  //   in: "body",
+  //   /* custom: {
+  //     options: isEmptyImageFile,
+  //   },
+  //   errorMessage: "The submitted file is not a .jpg, .jpeg, .png or .gif image", */
+  //   custom: {
+  //     options: (value) => {
+  //       if (!isEmptyImageFile(value)) {
+  //         throw new Error(
+  //           "The submitted file is not a .jpg, .jpeg, .png or .gif image"
+  //         );
+  //       } else {
+  //         return true;
+  //       }
+  //     },
+  //   },
+  // }, 
   price: {
     in: "body",
     notEmpty: {

@@ -7,7 +7,7 @@ const DELETE_BOOK = "DELETE_BOOK";
 export const getBooks=()=>{
     return async (dispatch)=>{
         try {
-            const {data} = await axios.get("http://localhost:3001/books");
+            const {data} = await axios.get("/books");
             console.log("LOG DATA ACTIONS", data)
             return dispatch({
                 type: GET_BOOKS,
@@ -22,7 +22,7 @@ export const getBooks=()=>{
 export const getBookById = (idBook) =>{
     return async (dispatch)=>{
         try {
-            const {data} = await axios.get(`http://localhost:3001/books/${idBook}`);
+            const {data} = await axios.get(`/books/${idBook}`);
             console.log("LOG DEL GETID", data)
             return dispatch({
                 type: GET_BOOK_ID,
@@ -37,7 +37,7 @@ export const getBookById = (idBook) =>{
 export const getBookByTitle = (title) => {
     return async (dispatch)=>{
         try {
-            const {data} = await axios.get(`http://localhost:3001/books/?title=${title}`);
+            const {data} = await axios.get(`/books/?title=${title}`);
             return dispatch({
                 type: GET_BOOK_TITLE,
                 payload: data
@@ -53,7 +53,7 @@ export const getBookByTitle = (title) => {
 export const deleteBook = (idBook) => {
     return async (dispatch) => {
       try {
-        const response = await axios.delete(`http://localhost:3001/books/${idBook}`);
+        const response = await axios.delete(`/books/${idBook}`);
         const data = response.data;
         alert(data);
         return dispatch({

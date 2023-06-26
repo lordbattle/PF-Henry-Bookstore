@@ -30,7 +30,7 @@ const sendNewUserEmail = async (toEmail, name) => {
                     <div style="width: 100%; height: 100%; padding: 0 19%; background: transparent; box-sizing: border-box;">
                         <h5 style="font-size: 14px; color: #fff; margin-bottom: 40px;">Hello ${name}</h5>
                         <h4 style="color: #fff; font-size: 18px; font-weight: Medium; letter-spacing: 2px; margin-bottom: 10px;">¡Welcome!</h4>
-                        <h1 style="font-size: 45px; font-weight: bold; color: #fff; margin: 0 0 45px;">BOOKS-STORE</h1>
+                        <h1 style="font-size: 45px; font-weight: bold; color: #fff; margin: 0 0 45px;">The Literary Corner</h1>
                         <p style="color: #fff; font-size: 15px; line-height: 1.9; margin-bottom: 40px;">You have just opened an account in bookstore, <br> you can now buy the books that you like the most</p>
                         <a style="display: inline-block; color: #fff; text-decoration: none; background: rgb(63, 76, 119); padding: 12px 30px; color: white; font-size: 14px; font-weight: bold; line-height: 1.4; border: 1px solid transparent; border-radius: 30px; cursor: pointer;" href="https://desarrolloweb.com/articulos/183.php" target="_blank">Watch Books</a>
                     </div>

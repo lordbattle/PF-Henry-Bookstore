@@ -8,7 +8,7 @@ const {
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
-const saveAllBooksDb = async (req, res) => {
+const saveAllBooksDb = async () => {
   try {
     for (let index = 0; index < 100; index = index = index + 50) {
       const { data: allBooksApi } = await axios(
@@ -41,7 +41,7 @@ const saveAllBooksDb = async (req, res) => {
         return categories.toString();
       };
 
-      for (let i = 0; i < allBooksApi.items.length; i++) {
+      for (let i = 0; i < allBooksApi.items?.length; i++) {
         console.log(index, i, allBooksApi.items[i].volumeInfo.title);
         //Se crea el libro
         const newBook = await Book.findOrCreate({

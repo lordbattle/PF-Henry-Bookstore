@@ -14,13 +14,14 @@ const AddBookForm = () => {
     averageRating: '',
     usersRating: '',
     identifier: '',
-    author: '',
-    genres: '',
-    image: null,
+    authors: '',
+    genre: '',
+    bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
+    price: '',
   });
 
   const handleChange = (event) => {
-    if (event.target.name === 'image') {
+    if (event.target.name === 'bookPic') {
       setBook({
         ...book,
         image: event.target.files[0],
@@ -36,14 +37,14 @@ const AddBookForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // const requiredFields = ['title', 'subtitle', 'publishedDate', 'publisher', 'description', 'pages', 'averageRating', 'usersRating', 'identifier', 'author', 'genres'];
-    // const emptyFields = requiredFields.filter((field) => !book[field]);
+    const requiredFields = ['title', 'subtitle', 'publishedDate', 'publisher', 'description', 'pages', 'averageRating', 'usersRating', 'identifier', 'authors', 'genre'];
+    const emptyFields = requiredFields.filter((field) => !book[field]);
 
-    // if (emptyFields.length > 0) {
-    //   const errorMessage = `Please complete the following fields: ${emptyFields.join(', ')}`;
-    //   alert(errorMessage);
-    //   return;
-    // }
+    if (emptyFields.length > 0) {
+      const errorMessage = `Please complete the following fields: ${emptyFields.join(', ')}`;
+      alert(errorMessage);
+      return;
+    }
     dispatch(postBooks(book));
 
     setBook({
@@ -56,16 +57,17 @@ const AddBookForm = () => {
       averageRating: '',
       usersRating: '',
       identifier: '',
-      author: '',
-      genres: '',
-      image: null,
+      authors: '',
+      genre: '',
+      bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
+      price: '',
     });
 
     alert('Book added successfully');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{color: 'black'}}>
       <label>
         Title:
         <input
@@ -171,11 +173,22 @@ const AddBookForm = () => {
       </label>
       <br />
       <label>
-        Author:
+        authors:
         <input
           type="text"
-          name="author"
-          value={book.author}
+          name="authors"
+          value={book.authors}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <br />
+      <label>
+        Price:
+        <input
+          type="number"
+          name="price"
+          value={book.price}
           onChange={handleChange}
           required
         />
@@ -185,8 +198,8 @@ const AddBookForm = () => {
         Genres:
         <input
           type="text"
-          name="genres"
-          value={book.genres}
+          name="genre"
+          value={book.genre}
           onChange={handleChange}
           required
         />
@@ -194,7 +207,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Image:
-        <input type="file" name="image" onChange={handleChange} required />
+        <input type="url" name="bookPic" value={book.bookPic}onChange={handleChange} required />
       </label>
       <br />
       <button type="submit" onClick={handleSubmit}>Create Book</button>

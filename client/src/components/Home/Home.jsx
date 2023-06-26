@@ -16,6 +16,8 @@ const Home = () => {
 
   let booksFilters = filtersBooks(allBooks);
 
+  console.log("libros filtrados",booksFilters);
+
   const [currentPage] = useState(1);
   const recetasPorPag = 20;
   const indexUltiJuego = currentPage * recetasPorPag;

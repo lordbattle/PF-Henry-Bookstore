@@ -25,7 +25,11 @@ const Filters = (props) => {
     }));
   };
 
-  function propertiesGenres(array) {
+ 
+
+
+  
+ function propertiesGenres(array) {
     const resultado = [];
 
     array.forEach((objeto) => {
@@ -44,49 +48,48 @@ const Filters = (props) => {
 
     return resultado;
   }
+  // function propertiesRating(array) {
+  //   const resultado = [];
 
+  //   array.forEach((objeto) => {
+  //     const { averageRating } = objeto;
 
-  function propertiesRating(array) {
-    const resultado = [];
+  //     if (
+  //       averageRating &&
+  //       !resultado.some((item) => item.rating === averageRating)
+  //     ) {
+  //       resultado.push({
+  //         id: objeto.id,
+  //         rating: averageRating,
+  //       });
+  //     }
+  //   });
 
-    array.forEach((objeto) => {
-      const { averageRating } = objeto;
+  //   return resultado;
+  // }
+  // function propertiespPrice(array) {
+  //   const resultado = [];
 
-      if (
-        averageRating &&
-        !resultado.some((item) => item.rating === averageRating)
-      ) {
-        resultado.push({
-          id: objeto.id,
-          rating: averageRating,
-        });
-      }
-    });
+  //   array.forEach((objeto) => {
+  //     const { price } = objeto;
 
-    return resultado;
-  }
+  //     if (
+  //       price &&
+  //       !resultado.some((item) => item.price === price)
+  //     ) {
+  //       resultado.push({
+  //         id: objeto.id,
+  //         rating: price,
+  //       });
+  //     }
+  //   });
 
-  function propertiespPrice(array) {
-    const resultado = [];
+  //   return resultado;
+  // }
 
-    array.forEach((objeto) => {
-      const { price } = objeto;
+  // const newArrayRating = propertiesRating(books);
 
-      if (
-        price &&
-        !resultado.some((item) => item.price === price)
-      ) {
-        resultado.push({
-          id: objeto.id,
-          rating: price,
-        });
-      }
-    });
-
-    return resultado;
-  }
-
-  const newArrayRating = propertiesRating(books);
+  const newArrayGenres = propertiesGenres(books);
 
 
 

@@ -9,10 +9,10 @@ const {
 } = require("../controllers/booksControllers");
 
 //Save API data in the DB
-saveAllBooksDb();
+//saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
-  const { title, author, genre, order, page, limit, price } = req.query;
+  const { title, author, genre, order, page, limit, price, stock } = req.query;
   try {
     let search = [];
 
@@ -42,7 +42,8 @@ const getBooksHandler = async (req, res) => {
         order,
         page,
         limit,
-        price
+        price,
+        stock,
       );
       bookByName.length > 0
         ? res.status(200).json(bookByName)
@@ -87,6 +88,7 @@ const postBooksHandler = async (req, res) => {
     identifier,
     bookPic,
     price,
+    stock,
     authors,
     genre,
   } = req.body;
@@ -103,6 +105,7 @@ const postBooksHandler = async (req, res) => {
       identifier,
       bookPic,
       price,
+      stock,
       authors,
       genre
     );
@@ -129,6 +132,7 @@ const putBooksHandler = async (req, res) => {
     identifier,
     bookPic,
     price,
+    stock,
     authors,
     genre,
   } = req.body;
@@ -149,6 +153,7 @@ const putBooksHandler = async (req, res) => {
       identifier,
       bookPic,
       price,
+      stock,
       authors,
       genre
     );

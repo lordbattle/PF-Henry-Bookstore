@@ -72,10 +72,12 @@ const bookNewSchema = {
     custom: {
       options: (value) => {
         const year = parseInt(value);
-        const min = 1800
-        const max = 2030
+        const min = 1800;
+        const max = 2030;
         if (year < min || year > max) {
-          throw new Error(`The publication date must be between the years ${min} and ${max}`);
+          throw new Error(
+            `The publication date must be between the years ${min} and ${max}`
+          );
         }
         return true;
       },
@@ -148,19 +150,20 @@ const bookNewSchema = {
     notEmpty: {
       errorMessage: "The identifier is required",
     },
+    isInt: {
+      errorMessage: "The identifier must be an integer",
+    },
     custom: {
       options: (value) => {
-        if (!isEmptyField(value)) {
-          throw new Error("The identifier is required");
-        } else if (!isStringNumberStartValidate(value)) {
-          throw new Error("The identifier can only start with letters or numbers");
-        } else if (!isStringValidate(value)) {
+        const identifier = parseInt(value);
+        const min = 1000000000000;
+        const max = 9999999999999;
+        if (identifier < min || identifier > max) {
           throw new Error(
-            "Only letters, numbers, commas, periods and double periods are accepted"
+            `The identifier must be a thirteen-digit number and be between ${min} and ${max}`
           );
-        } else {
-          return true;
         }
+        return true;
       },
     },
   },
@@ -193,10 +196,30 @@ const bookNewSchema = {
     custom: {
       options: (value) => {
         const price = parseInt(value);
-        const min = 5
-        const max = 30000
+        const min = 5;
+        const max = 30000;
         if (price < min || price > max) {
-          throw new Error(`The price must be between USD${min} and USD${max}`);
+          throw new Error(`The price must be between USD ${min} and USD ${max}`);
+        }
+        return true;
+      },
+    },
+  },
+  stock: {
+    in: "body",
+    notEmpty: {
+      errorMessage: "The stock is required",
+    },
+    isInt: {
+      errorMessage: "The stock must be an integer",
+    },
+    custom: {
+      options: (value) => {
+        const stock = parseInt(value);
+        const min = 0;
+        const max = 999;
+        if (stock < min || stock > max) {
+          throw new Error(`The stock must be between ${min} and ${max}`);
         }
         return true;
       },
@@ -280,6 +303,10 @@ const bookPutSchema = {
   },
   price: {
     ...bookNewSchema.price,
+    optional: true,
+  },
+  stock: {
+    ...bookNewSchema.stock,
     optional: true,
   },
   authors: {

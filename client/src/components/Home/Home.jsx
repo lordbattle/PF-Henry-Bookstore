@@ -4,7 +4,6 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { useState } from "react";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
-import Footer from "../Footer/Footer";
 
 const Home = () => {
   const allBooks = useSelector((state) => state.books);
@@ -28,11 +27,10 @@ const Home = () => {
 
   console.log("Filtersbooks", currentBooks);
   return (
-    <div className="d-flex flex-column ">
+    <div className="d-flex flex-column">
       <Filters setFilters={setFilters} />
 
       <Card currentBooks={currentBooks}></Card>
-      <Footer />
     </div>
   );
 };

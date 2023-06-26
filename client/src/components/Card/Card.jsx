@@ -24,6 +24,8 @@ const Card = ({currentBooks}) =>{
                 averageRating={v.averageRating}
                 imageLinks={v.bookPic}
                 price={v.price}
+                stock={v.stock}
+                
                 // Otras propiedades de volumeInfo que desees utilizar
               />
             );

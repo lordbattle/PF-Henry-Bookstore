@@ -7,16 +7,15 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import {store} from "./redux/store/index.js"
 
-// const domain = process.env.REACT_APP_AUTH0_DOMAIN
-// const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID
+// const { REACT_APP_AUTH0_CLIENT_ID, REACT_APP_AUTH0_DOMAIN } = process.env;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>
       <React.StrictMode>
         {/* <Auth0provider 
-        domain={domain} 
-        clientId={clientId} 
+        domain={REACT_APP_AUTH_DOMAIN}
+        clientId={REACT_APP_AUTH_CLIENT_ID} 
         redirectUri={window.location.origin}> */}
           <App />
         {/* </Auth0provider> */}

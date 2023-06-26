@@ -66,3 +66,13 @@ export const deleteBook = (idBook) => {
     };
   };
   
+  export const postBooks = (payload)=>{
+    return async ()=>{
+            try {
+                const  dat = await axios.post("/books", payload);
+                return dat;
+            } catch (error) {
+                console.log(error)
+            }
+    }
+}

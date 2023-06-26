@@ -41,8 +41,9 @@ const saveAllBooksDb = async (req, res) => {
         return categories.toString();
       };
 
-      for (let i = 0; i < allBooksApi.items.length; i++) {
+      for (let i = 0; i < allBooksApi.items?.length; i++) {
         console.log(index, i, allBooksApi.items[i].volumeInfo.title);
+
         //Se crea el libro
         const newBook = await Book.findOrCreate({
           where: {
@@ -79,30 +80,10 @@ const saveAllBooksDb = async (req, res) => {
             genre: stringCategories(allBooksApi.items[i].volumeInfo.categories),
           },
         });
-
-        /* //Se crea el autor
-        allBooksApi.items[i].volumeInfo.authors?.forEach(async (author) => {
-          const newAuthor = await Author.findOrCreate({
-            where: {
-              name: author,
-            },
-          });
-        });
-
-        //Se crea los generos
-        allBooksApi.items[i].volumeInfo.categories?.forEach(
-          async (categorie) => {
-            const newCategorie = await Genre.findOrCreate({
-              where: {
-                name: categorie,
-              },
-            });
-          }
-        ); */
       }
     }
   } catch (error) {
-    console.log(error.message);
+    console.log({ error: error.message });
   }
 };
 

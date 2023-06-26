@@ -8,7 +8,7 @@ const {
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
-const saveAllBooksDb = async (req, res) => {
+const saveAllBooksDb = async () => {
   try {
     for (let index = 0; index < 100; index = index = index + 50) {
       const { data: allBooksApi } = await axios(

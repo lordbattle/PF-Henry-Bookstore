@@ -11,6 +11,10 @@ import Login from "./components/Login/Login";
 // import { useAuth0 } from '@auth0/auth0-react'
 
 import Detail from "./components/Detail/Detail";
+import axios from "axios";
+
+axios.defaults.baseURL = 'http://localhost:3001'
+
 
 function App() {
   const { pathname } = useLocation();

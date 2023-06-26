@@ -65,9 +65,31 @@ const Filters = (props) => {
     return resultado;
   }
 
+  function propertiespPrice(array) {
+    const resultado = [];
+
+    array.forEach((objeto) => {
+      const { price } = objeto;
+
+      if (
+        price &&
+        !resultado.some((item) => item.price === price)
+      ) {
+        resultado.push({
+          id: objeto.id,
+          rating: price,
+        });
+      }
+    });
+
+    return resultado;
+  }
+
   const newArrayRating = propertiesRating(books);
   const newArrayGenres = propertiesGenres(books);
+  const newArrayPrice = propertiespPrice(books);
 
+  console.log(newArrayPrice);
   console.log(newArrayRating);
   console.log(newArrayGenres);
   {
@@ -106,10 +128,8 @@ const Filters = (props) => {
           onChange={handleChangePrice}
         >
           <option value="all">All</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          <option value="Mayor">Mayor P. a Menor P.</option>
+          <option value="Menor">Menor P. a Mayor P.</option>
         </select>
       </div>
       <div className="d-flex gap-2 align-items-center">

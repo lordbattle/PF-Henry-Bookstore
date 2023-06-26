@@ -16,9 +16,17 @@ const useFilters = () => {
       );
     }).sort((a,b) => {
       if(filters.rating === "Menor"){
-        return a.rating - b.rating;
+        return a.averageRating - b.averageRating;
       } else if(filters.rating === "Mayor"){
-        return b.rating - a.rating;
+        return b.averageRating - a.averageRating;
+      }
+
+      return 0
+    }).sort((a,b) => {
+      if(filters.price === "Menor"){
+        return a.price - b.price;
+      } else if(filters.price === "Mayor"){
+        return b.price - a.price;
       }
 
       return 0

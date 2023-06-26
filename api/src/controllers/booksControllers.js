@@ -16,7 +16,7 @@ const saveAllBooksDb = async () => {
       );
 
       //devuelve los identifier correspondientes en String
-      const stringIdentifier = (industryIdentifiers) => {
+      /* const stringIdentifier = (industryIdentifiers) => {
         let stringIdentifier = "";
         if (typeof industryIdentifiers === "undefined")
           return "It does not have identifier";
@@ -27,7 +27,7 @@ const saveAllBooksDb = async () => {
           }
         }
         return stringIdentifier;
-      };
+      }; */
 
       const stringAuthors = (authors) => {
         if (typeof authors === "undefined") return "Not authors";
@@ -68,9 +68,9 @@ const saveAllBooksDb = async () => {
             averageRating: allBooksApi.items[i].volumeInfo.averageRating
               ? allBooksApi.items[i].volumeInfo.averageRating
               : Math.floor(Math.random() * (5 - 1 + 1)) + 1,
-            identifier: stringIdentifier(
+            /* identifier: stringIdentifier(
               allBooksApi.items[i].volumeInfo.industryIdentifiers
-            ),
+            ), */
             bookPic: allBooksApi.items[i].volumeInfo.hasOwnProperty(
               "imageLinks"
             )
@@ -103,7 +103,8 @@ const getBookBySearch = async (
   order,
   page,
   limit,
-  price
+  price,
+  stock
 ) => {
   let whereClause = {};
   if (title) {
@@ -123,7 +124,7 @@ const getBookBySearch = async (
   });
 
   if (order || page || limit)
-    return wildcardFilterAndPagination(bookBySearch, order, page, limit, price);
+    return wildcardFilterAndPagination(bookBySearch, order, page, limit, price, stock);
   else return bookBySearch;
 };
 
@@ -143,6 +144,7 @@ const postBook = async (
   identifier,
   bookPic,
   price,
+  stock,
   authors,
   genre
 ) => {
@@ -158,6 +160,7 @@ const postBook = async (
     identifier,
     bookPic,
     price,
+    stock,
     authors,
     genre,
   });
@@ -178,6 +181,7 @@ const putBook = async (
   identifier,
   bookPic,
   price,
+  stock,
   authors,
   genre
 ) => {
@@ -195,6 +199,7 @@ const putBook = async (
       identifier,
       bookPic,
       price,
+      stock,
       authors,
       genre,
     },

@@ -5,7 +5,7 @@ const Logout = () => {
     const {logout} = useAuth0();
 
     return (
-        <Button onClick={() => logout}/>
+        <Button onClick={() => logout({returnTo: window.location.origin})}/>
     )
 }
 

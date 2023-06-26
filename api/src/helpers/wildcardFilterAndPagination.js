@@ -1,4 +1,4 @@
-const wildcardFilterAndPagination = (wildcard, order, page, limit, price) => {
+const wildcardFilterAndPagination = (wildcard, order, page, limit, price, stock) => {
   if (order) {
     if (price) {
       switch (order) {

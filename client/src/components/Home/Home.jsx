@@ -22,9 +22,7 @@ const Home = () => {
   return (
     <div className="d-flex flex-column">
       <Filters setFilters={setFilters} />
-
       <Card currentBooks={currentBooks} />
-
       <Pagination
         currentPage={currentPage}
         totalPages={Math.ceil(booksFilters.length / recetasPorPag)}

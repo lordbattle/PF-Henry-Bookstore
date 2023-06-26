@@ -44,7 +44,8 @@ p{
 .back{
     background-Color: rgb(48, 48, 48);
     border-radius: 5px;
-    width: 5%;
+    width: 75vh;
+    margin-left: 25vh;
     color: white; 
     font-Size: 20px;
     text-align: center;

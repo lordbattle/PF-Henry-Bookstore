@@ -23,12 +23,13 @@ const Home = () => {
     <div className="d-flex flex-column">
       <Filters setFilters={setFilters} />
       <Card currentBooks={currentBooks} />
+      <div className="d-flex justify-content-center p-2">
       <Pagination
         currentPage={currentPage}
         totalPages={Math.ceil(booksFilters.length / recetasPorPag)}
         onPageChange={setCurrentPage}
       />
-
+      </div>
       <Footer />
     </div>
   );

@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { postBooks } from '../../redux/actions';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { postBooks } from "../../redux/actions";
+import style from '../BooksForm/BooksForm.module.css'
 
 const AddBookForm = () => {
   const dispatch = useDispatch();
   const [book, setBook] = useState({
-    title: '',
-    subtitle: '',
-    publishedDate: '',
-    publisher: '',
-    description: '',
-    pages: '',
-    averageRating: '',
-    usersRating: '',
-    identifier: '',
-    author: '',
-    genres: '',
+    title: "",
+    subtitle: "",
+    publishedDate: "",
+    publisher: "",
+    description: "",
+    pages: "",
+    averageRating: "",
+    usersRating: "",
+    identifier: "",
+    price: "",
+    stock: "",
+    author: "",
+    genres: "",
     image: null,
   });
 
   const handleChange = (event) => {
-    if (event.target.name === 'image') {
+    if (event.target.name === "image") {
       setBook({
         ...book,
         image: event.target.files[0],
@@ -47,28 +50,30 @@ const AddBookForm = () => {
     dispatch(postBooks(book));
 
     setBook({
-      title: '',
-      subtitle: '',
-      publishedDate: '',
-      publisher: '',
-      description: '',
-      pages: '',
-      averageRating: '',
-      usersRating: '',
-      identifier: '',
-      author: '',
-      genres: '',
+      title: "",
+      subtitle: "",
+      publishedDate: "",
+      publisher: "",
+      description: "",
+      pages: "",
+      averageRating: "",
+      usersRating: "",
+      identifier: "",
+      price: "",
+      stock: "",
+      author: "",
+      genres: "",
       image: null,
     });
 
-    alert('Book added successfully');
+    alert("Book added successfully");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={style.main}>
       <label>
         Title:
-        <input
+        <input className={style.input}
           type="text"
           name="title"
           value={book.title}
@@ -79,7 +84,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Subtitle:
-        <input
+        <input className={style.input}
           type="text"
           name="subtitle"
           value={book.subtitle}
@@ -90,7 +95,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Published Date:
-        <input
+        <input className={style.input}
           type="text"
           name="publishedDate"
           value={book.publishedDate}
@@ -101,7 +106,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Publisher:
-        <input
+        <input className={style.input}
           type="text"
           name="publisher"
           value={book.publisher}
@@ -112,7 +117,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Description:
-        <textarea
+        <textarea className={style.input}
           name="description"
           value={book.description}
           onChange={handleChange}
@@ -122,7 +127,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Pages:
-        <input
+        <input className={style.input}
           type="text"
           name="pages"
           value={book.pages}
@@ -133,7 +138,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Average Rating:
-        <input
+        <input className={style.input}
           type="number"
           name="averageRating"
           value={book.averageRating}
@@ -147,7 +152,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Users Rating:
-        <input
+        <input className={style.input}
           type="number"
           name="usersRating"
           value={book.usersRating}
@@ -161,7 +166,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Identifier:
-        <input
+        <input className={style.input}
           type="text"
           name="identifier"
           value={book.identifier}
@@ -170,9 +175,33 @@ const AddBookForm = () => {
         />
       </label>
       <br />
+      <br />
+      <label>
+        Price:
+        <input className={style.input}
+          type="text"
+          name="price"
+          value={book.price}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <br />
+      <br />
+      <label>
+        Stock:
+        <input className={style.input}
+          type="text"
+          name="stock"
+          value={book.stock}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <br />
       <label>
         Author:
-        <input
+        <input className={style.input}
           type="text"
           name="author"
           value={book.author}
@@ -183,7 +212,7 @@ const AddBookForm = () => {
       <br />
       <label>
         Genres:
-        <input
+        <input className={style.input}
           type="text"
           name="genres"
           value={book.genres}
@@ -194,10 +223,12 @@ const AddBookForm = () => {
       <br />
       <label>
         Image:
-        <input type="file" name="image" onChange={handleChange} required />
+        <input className={style.input} type="file" name="image" onChange={handleChange} required />
       </label>
       <br />
-      <button type="submit" onClick={handleSubmit}>Create Book</button>
+      <button type="submit" onClick={handleSubmit}>
+        Create Book
+      </button>
     </form>
   );
 };

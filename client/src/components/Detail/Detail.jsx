@@ -15,7 +15,7 @@ const Detail = () =>{
     const details = useSelector(state=> state.details);
     console.log("log del details", details);
     
-    const {active, authors, averageRating, bookPic, description, genre, identifier, pages, publishedDate, publisher, subtitle, title, userRating, price} = details;
+    const {active, authors, averageRating, bookPic, description, genre, identifier, pages, publishedDate, publisher, subtitle, title, userRating, price, stock} = details;
     return (
         <div className={style.main}>
             <div className={style.container}>
@@ -30,13 +30,14 @@ const Detail = () =>{
             <h1 style={{width: '100%',fontSize: '30px'}}>{title}</h1>
             <h2 style={{fontSize: '20px'}}>{subtitle}</h2>
             <p style={{fontSize: '20px'}}>Price: ${price}</p>
+            <p style={{fontSize: '20px'}}>Stock: {stock}</p>
             <p style={{fontSize: '20px'}}>Author's: {authors}</p>
             <p style={{fontSize: '18px', maxHeight: '60%'}}>{description}</p>
             <p style={{width: '50%', fontSize: '20px'}}>Rating global: {averageRating}</p> <p style={{width: '50%', fontSize: '20px'}}>Rating de usuarios: {userRating}</p>
             <p style={{width: '33.3%', fontSize: '18px'}}>Categories: {genre}</p>
             <p style={{width: '33.3%', fontSize: '18px'}}>Pages: {pages}</p>
             <p style={{width: '33.3%', fontSize: '18px'}}>{publisher} : {publishedDate}</p>
-            <p style={{fontSize: '20px'}}>{identifier}</p>
+            <p style={{fontSize: '20px'}}>ISBN : {identifier}</p>
             
             </div>
             </div>

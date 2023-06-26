@@ -1,4 +1,3 @@
-import Stack from 'react-bootstrap/Stack'
 import style from '../LandingPage/LandingPage.module.css'
 import { Row, Col, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom'

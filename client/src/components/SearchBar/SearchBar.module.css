@@ -1,5 +1,6 @@
 .main{
     width: 32rem;
+    padding-left: 70px;
 }
 
 .container{
@@ -13,9 +14,11 @@
     width: 100%;
     border: none;
     border-radius: 8px;
+    color: black;
 }
 
 .btn{
     border: none;
     border-radius: 8px;
+    background-color: gray;
 }

@@ -1,0 +1,8 @@
+.main{
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+    margin-left: 15%;
+    background-color: rgb(48, 48, 48);
+    border-radius: 8px;
+}

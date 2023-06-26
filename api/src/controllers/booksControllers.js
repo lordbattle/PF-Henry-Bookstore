@@ -2,10 +2,13 @@ const axios = require("axios");
 require("dotenv").config();
 const { API_KEY, API_URL } = process.env;
 const { User, Book, Genre, Author, ReviewStore } = require("../db");
+const {
+  wildcardFilterAndPagination,
+} = require("../helpers/wildcardFilterAndPagination");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
 
-const saveAllBooksDb = async (req, res) => {
+const saveAllBooksDb = async () => {
   try {
     for (let index = 0; index < 100; index = index = index + 50) {
       const { data: allBooksApi } = await axios(
@@ -38,8 +41,9 @@ const saveAllBooksDb = async (req, res) => {
         return categories.toString();
       };
 
-      for (let i = 0; i < allBooksApi.items.length; i++) {
+      for (let i = 0; i < allBooksApi.items?.length; i++) {
         console.log(index, i, allBooksApi.items[i].volumeInfo.title);
+
         //Se crea el libro
         const newBook = await Book.findOrCreate({
           where: {
@@ -49,17 +53,21 @@ const saveAllBooksDb = async (req, res) => {
             subtitle: allBooksApi.items[i].volumeInfo.subtitle
               ? allBooksApi.items[i].volumeInfo.subtitle
               : "It does not have subtitles",
-            publishedDate: allBooksApi.items[i].volumeInfo.publishedDate,
+            publishedDate: allBooksApi.items[i].volumeInfo.publishedDate
+              ? allBooksApi.items[i].volumeInfo.publishedDate.slice(0, 4)
+              : 1900,
             publisher: allBooksApi.items[i].volumeInfo.publisher
               ? allBooksApi.items[i].volumeInfo.publisher
               : "It does not have publisher",
             description: allBooksApi.items[i].volumeInfo.description
               ? allBooksApi.items[i].volumeInfo.description
               : "It does not have description",
-            pages: allBooksApi.items[i].volumeInfo.pageCount,
+            pages: allBooksApi.items[i].volumeInfo.pageCount
+              ? allBooksApi.items[i].volumeInfo.pageCount
+              : 150,
             averageRating: allBooksApi.items[i].volumeInfo.averageRating
               ? allBooksApi.items[i].volumeInfo.averageRating
-              : 2,
+              : Math.floor(Math.random() * (5 - 1 + 1)) + 1,
             identifier: stringIdentifier(
               allBooksApi.items[i].volumeInfo.industryIdentifiers
             ),
@@ -72,30 +80,10 @@ const saveAllBooksDb = async (req, res) => {
             genre: stringCategories(allBooksApi.items[i].volumeInfo.categories),
           },
         });
-
-        /* //Se crea el autor
-        allBooksApi.items[i].volumeInfo.authors?.forEach(async (author) => {
-          const newAuthor = await Author.findOrCreate({
-            where: {
-              name: author,
-            },
-          });
-        });
-
-        //Se crea los generos
-        allBooksApi.items[i].volumeInfo.categories?.forEach(
-          async (categorie) => {
-            const newCategorie = await Genre.findOrCreate({
-              where: {
-                name: categorie,
-              },
-            });
-          }
-        ); */
       }
     }
   } catch (error) {
-    console.log(error.message);
+    console.log("error.message");
   }
 };
 
@@ -103,12 +91,40 @@ const getAllBooks = async () => {
   return await Book.findAll();
 };
 
-const getBooksBytitle = async (title) => {
-  return await Book.findAll({
-    where: {
-      title: { [Op.iLike]: "%" + title + "%" },
-    },
+/*return books that contain first three queries, may or may not have the other params
+ * order : asc to sort ascending and desc to sort descending
+ * price : true to order not by title but by the price of the books in specified order
+ * page : page number you want to see from your search
+ * limit : limit number of books to view per page*/
+const getBookBySearch = async (
+  title,
+  author,
+  genre,
+  order,
+  page,
+  limit,
+  price
+) => {
+  let whereClause = {};
+  if (title) {
+    whereClause.title = { [Op.iLike]: "%" + title + "%" };
+  }
+
+  if (author) {
+    whereClause.authors = { [Op.iLike]: "%" + author + "%" };
+  }
+
+  if (genre) {
+    whereClause.genre = { [Op.iLike]: "%" + genre + "%" };
+  }
+
+  let bookBySearch = await Book.findAll({
+    where: whereClause,
   });
+
+  if (order || page || limit)
+    return wildcardFilterAndPagination(bookBySearch, order, page, limit, price);
+  else return bookBySearch;
 };
 
 const getBookById = async (idBook) => {
@@ -126,11 +142,11 @@ const postBook = async (
   usersRating,
   identifier,
   bookPic,
+  price,
   authors,
   genre
 ) => {
   let newBook = await Book.create({
-    id,
     title,
     subtitle,
     publishedDate,
@@ -141,6 +157,7 @@ const postBook = async (
     usersRating,
     identifier,
     bookPic,
+    price,
     authors,
     genre,
   });
@@ -157,8 +174,10 @@ const putBook = async (
   pages,
   averageRating,
   usersRating,
+  active,
   identifier,
   bookPic,
+  price,
   authors,
   genre
 ) => {
@@ -172,8 +191,10 @@ const putBook = async (
       pages,
       averageRating,
       usersRating,
+      active,
       identifier,
       bookPic,
+      price,
       authors,
       genre,
     },
@@ -185,15 +206,24 @@ const putBook = async (
 };
 
 const deleteBook = async (idBook) => {
-  return await Book.destroy({
+  const book = await Book.findByPk(idBook, {
     where: { id: idBook },
   });
+
+  if (!book) {
+    throw Error("There is no book with the specified id");
+  }
+
+  book.active = false;
+  await book.save();
+
+  return book;
 };
 
 module.exports = {
   saveAllBooksDb,
   getAllBooks,
-  getBooksBytitle,
+  getBookBySearch,
   getBookById,
   postBook,
   putBook,

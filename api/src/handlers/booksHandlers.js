@@ -1,7 +1,7 @@
 const {
   saveAllBooksDb,
   getAllBooks,
-  getBooksBytitle,
+  getBookBySearch,
   getBookById,
   postBook,
   putBook,
@@ -9,16 +9,48 @@ const {
 } = require("../controllers/booksControllers");
 
 //Save API data in the DB
-//saveAllBooksDb();
+saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
-  const { title } = req.query;
+  const { title, author, genre, order, page, limit, price } = req.query;
   try {
+    let search = [];
+
     if (title) {
-      const bookByName = await getBooksBytitle(title);
+      search.push(title);
+    } else {
+      search.push("");
+    }
+
+    if (author) {
+      search.push(author);
+    } else {
+      search.push("");
+    }
+
+    if (genre) {
+      search.push(genre);
+    } else {
+      search.push("");
+    }
+
+    if (search) {
+      const bookByName = await getBookBySearch(
+        title,
+        author,
+        genre,
+        order,
+        page,
+        limit,
+        price
+      );
       bookByName.length > 0
         ? res.status(200).json(bookByName)
-        : res.status(404).json({ error: "There are no books with that name" });
+        : res
+            .status(404)
+            .json({
+              error: "There are no books with that name, gener or author",
+            });
     } else {
       const allBooks = await getAllBooks();
       res.status(200).json(allBooks);
@@ -54,6 +86,7 @@ const postBooksHandler = async (req, res) => {
     usersRating,
     identifier,
     bookPic,
+    price,
     authors,
     genre,
   } = req.body;
@@ -69,6 +102,7 @@ const postBooksHandler = async (req, res) => {
       usersRating,
       identifier,
       bookPic,
+      price,
       authors,
       genre
     );
@@ -91,8 +125,10 @@ const putBooksHandler = async (req, res) => {
     pages,
     averageRating,
     usersRating,
+    active,
     identifier,
     bookPic,
+    price,
     authors,
     genre,
   } = req.body;
@@ -109,8 +145,10 @@ const putBooksHandler = async (req, res) => {
       pages,
       averageRating,
       usersRating,
+      active,
       identifier,
       bookPic,
+      price,
       authors,
       genre
     );
@@ -126,7 +164,7 @@ const deleteBooksHandler = async (req, res) => {
 
   try {
     await deleteBook(idBook);
-    res.status(200).send("product deleted succesfully 👌");
+    res.status(200).send("Product deleted succesfully 👌");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

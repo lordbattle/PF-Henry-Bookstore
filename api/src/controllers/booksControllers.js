@@ -10,7 +10,7 @@ const { Op } = require("sequelize");
 
 const saveAllBooksDb = async () => {
   try {
-    for (let index = 0; index < 100; index = index = index + 50) {
+    for (let index = 0; index < 500; index = index = index + 50) {
       const { data: allBooksApi } = await axios(
         `${API_URL}startIndex=${index}&maxResults=40&q=%20+title&key=AIzaSyDIEQFwVWL0GFcB3moa_sL8euql4UjAm7k`
       );

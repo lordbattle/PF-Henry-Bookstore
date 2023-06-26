@@ -11,7 +11,6 @@ import Login from "./components/Login/Login";
 // import { useAuth0 } from '@auth0/auth0-react'
 
 import Detail from "./components/Detail/Detail"
-import Footer from './components/Footer/Footer'
 import AddBookForm from './components/BooksForm/BooksForm'
 import axios from "axios";
 

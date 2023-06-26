@@ -9,6 +9,7 @@ const useFilters = () => {
 
   const filtersBooks = (arr) => {
     return arr.filter((book) => {
+
         return (
           (filters.genre === "all" ||
             book.genre.toLowerCase() === filters.genre.toLowerCase())
@@ -19,6 +20,7 @@ const useFilters = () => {
         } else if (filters.rating === "Mayor") {
           return b.averageRating - a.averageRating;
         }
+
 
         return 0;
       }).sort((a, b) => {

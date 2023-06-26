@@ -45,7 +45,50 @@ const Filters = (props) => {
     return resultado;
   }
 
-  const newArrayGenres = propertiesGenres(books);
+
+  function propertiesRating(array) {
+    const resultado = [];
+
+    array.forEach((objeto) => {
+      const { averageRating } = objeto;
+
+      if (
+        averageRating &&
+        !resultado.some((item) => item.rating === averageRating)
+      ) {
+        resultado.push({
+          id: objeto.id,
+          rating: averageRating,
+        });
+      }
+    });
+
+    return resultado;
+  }
+
+  function propertiespPrice(array) {
+    const resultado = [];
+
+    array.forEach((objeto) => {
+      const { price } = objeto;
+
+      if (
+        price &&
+        !resultado.some((item) => item.price === price)
+      ) {
+        resultado.push({
+          id: objeto.id,
+          rating: price,
+        });
+      }
+    });
+
+    return resultado;
+  }
+
+  const newArrayRating = propertiesRating(books);
+
+
 
   return (
     <section className="d-flex justify-content-evenly py-3">
@@ -71,6 +114,7 @@ const Filters = (props) => {
           onChange={handleChangePrice}
         >
           <option value="all">ALL</option>
+
           <option value="Mayor">Mayor P. a Menor P.</option>
           <option value="Menor">Menor P. a Mayor P.</option>
         </select>

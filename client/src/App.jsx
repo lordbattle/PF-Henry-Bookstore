@@ -36,8 +36,6 @@ function App() {
         <Route path='/detail/:id' element={<Detail/>}></Route>
         <Route path='/createbook' element={<AddBookForm/>}></Route>
       </Routes>
-
-      <Footer />
     </div>
   );
 }

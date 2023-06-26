@@ -45,43 +45,8 @@ const Filters = (props) => {
     return resultado;
   }
 
-  function propertiesRating(array) {
-    const resultado = [];
-
-    array.forEach((objeto) => {
-      const { averageRating } = objeto;
-
-      if (
-        averageRating &&
-        !resultado.some((item) => item.rating === averageRating)
-      ) {
-        resultado.push({
-          id: objeto.id,
-          rating: averageRating,
-        });
-      }
-    });
-
-    return resultado;
-  }
-
-  const newArrayRating = propertiesRating(books);
   const newArrayGenres = propertiesGenres(books);
 
-  console.log(newArrayRating);
-  console.log(newArrayGenres);
-  {
-    /* {newArrayRating &&
-            newArrayRating
-              .sort((a, b) => a.rating > b.rating)
-              .map((rat) => {
-                return (
-                  <option key={rat.id} value={rat.rating}>
-                    {rat.rating}
-                  </option>
-                );
-              })} */
-  }
   return (
     <section className="d-flex justify-content-evenly py-3">
       <div className="d-flex gap-2 align-items-center">
@@ -92,7 +57,7 @@ const Filters = (props) => {
           className="bg-dark py-1 px-2"
           onChange={handleChangeRating}
         >
-          <option value="all">All</option>
+          <option value="all">ALL</option>
           <option value="Mayor">Mayor a Menor</option>
           <option value="Menor">Menor a Mayor</option>
         </select>
@@ -105,11 +70,9 @@ const Filters = (props) => {
           className="bg-dark py-1 px-2"
           onChange={handleChangePrice}
         >
-          <option value="all">All</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          <option value="all">ALL</option>
+          <option value="Mayor">Mayor P. a Menor P.</option>
+          <option value="Menor">Menor P. a Mayor P.</option>
         </select>
       </div>
       <div className="d-flex gap-2 align-items-center">
@@ -120,7 +83,7 @@ const Filters = (props) => {
           className="bg-dark py-1 px-2"
           onChange={handleChangeGenre}
         >
-          <option value="all">All</option>
+          <option value="all">ALL</option>
           {newArrayGenres &&
             newArrayGenres.map((obj) => {
               return (

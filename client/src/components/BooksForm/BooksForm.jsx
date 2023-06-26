@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { postBooks } from '../../redux/actions';
 
 const AddBookForm = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const AddBookForm = () => {
     //   alert(errorMessage);
     //   return;
     // }
+    dispatch(postBooks(book));
 
     setBook({
       title: '',
@@ -195,7 +197,7 @@ const AddBookForm = () => {
         <input type="file" name="image" onChange={handleChange} required />
       </label>
       <br />
-      <button type="submit">Add Book</button>
+      <button type="submit" onClick={handleSubmit}>Create Book</button>
     </form>
   );
 };

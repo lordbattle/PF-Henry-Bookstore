@@ -32,6 +32,14 @@ const Nav = () => {
               About Us
             </Link>
           </span>
+          <span className="p-2 ms-0 link-as-text">
+            <Link
+              to={"/createbook"}
+              className="text-decoration-none fs-5 text-reset"
+            >
+              Create Books
+            </Link>
+          </span>
         </div>
 
         <b className="vr" />

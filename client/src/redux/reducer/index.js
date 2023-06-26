@@ -28,8 +28,10 @@ function rootReducer (state=initialState, action){
             return {
                 ...state,
             }
-
-            
+        case "CREATE_BOOK":
+            return{
+                ...state,
+            }
     }
 }
 export default rootReducer;

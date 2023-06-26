@@ -12,6 +12,7 @@ import Login from './components/Login/Login'
 
 import Detail from "./components/Detail/Detail"
 import Footer from './components/Footer/Footer'
+import AddBookForm from './components/BooksForm/BooksForm'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path='/about' element={<About />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/detail/:id' element={<Detail/>}></Route>
+        <Route path='/createbook' element={<AddBookForm/>}></Route>
       </Routes>
       
       <Footer />

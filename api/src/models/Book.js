@@ -52,7 +52,14 @@ module.exports = (sequelize) => {
       },
       identifier: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false,
+        defaultValue: function () {
+          return (
+            Math.floor(Math.random() * (9999999999999 - 1000000000000 + 1)) +
+            1000000000000
+          );
+        },
       },
       bookPic: {
         type: DataTypes.STRING,
@@ -65,8 +72,16 @@ module.exports = (sequelize) => {
       },
       price: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         defaultValue: function () {
           return Math.floor(Math.random() * (30000 - 5 + 1)) + 5;
+        },
+      },
+      stock: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: function () {
+          return Math.floor(Math.random() * (101 - 0)) + 0;
         },
       },
       authors: {

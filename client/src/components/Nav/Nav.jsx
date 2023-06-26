@@ -45,7 +45,7 @@ const Nav = () => {
         <b className="vr" />
 
         <div className="w-25 d-flex justify-content-center gap-3">
-          Log in | Sign up
+          <p>Log in | Sign up</p>
           {/* <Link to={"/login"} className="text-decoration-none  fs-5 text-reset">
             Log in
           </Link>

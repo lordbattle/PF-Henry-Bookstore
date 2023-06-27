@@ -1,6 +1,7 @@
 .container{
-    background-color: #e37714;
+    background-color: #fcffff;
     min-width: 100vw;
+    min-height: 54vw;
     margin: 0;
     padding: 0;
 }

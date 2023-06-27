@@ -1,6 +1,7 @@
 import style from '../LandingPage/LandingPage.module.css'
 import { Row, Col, Image, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
+import CarouselComp from '../Carousel/Carousel.jsx'
 
 const LandingPage = () => {
     
@@ -8,8 +9,8 @@ const LandingPage = () => {
         <div className={style.main}>
     
       <div className={style.head}>
-      <h1>The literary corner</h1>
-      <p>A great place to buy a good book.</p>
+      <h1 style={{fontSize: '50px'}}>The literary corner</h1>
+      <p style={{fontSize: '20px'}}>A great place to buy a good book.</p>
       <div className={style.btns}>
       <Button className={style.containerbtn}>
           <Link to={"/home"} className={style.btn}>Our Books</Link>
@@ -20,9 +21,8 @@ const LandingPage = () => {
         </Button>
         </div>
       </div>
-    
-
         <Row>
+        <CarouselComp />
         <Col xs={5} className="d-flex align-items-center" style={{padding: '5px 120px'}}>
           <img src="https://images.vexels.com/media/users/3/151119/isolated/preview/0916a384c03a97e17954c40d0cb6d73b-hombre-leyendo-libro-silueta-gente-leyendo.png" alt="yellow book" />
         </Col>

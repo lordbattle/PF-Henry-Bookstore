@@ -30,7 +30,6 @@ const Home = () => {
         onPageChange={setCurrentPage}
       />
       </div>
-      <Footer />
     </div>
   );
 };

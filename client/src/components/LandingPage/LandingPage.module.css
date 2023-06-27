@@ -8,7 +8,7 @@
 }
 
 .head{
-    background-color: #c4dafa;
+    background-color: #84b6f4;
     color: black;
     width: 100% !important;
     padding: 0;
@@ -16,7 +16,7 @@
 }
 
 .btns{
-    background-color: #c4dafa;
+    background-color: #84b6f4;
     padding: 5px;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .containerbtn{
-    background-color: #84b6f4;
+    background-color: #c4dafa;
     border: none;
     margin-right: 3px;
     margin-left: 3px;

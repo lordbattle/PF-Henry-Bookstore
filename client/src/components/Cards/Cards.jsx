@@ -8,8 +8,8 @@ const Cards =(props)=>{
           <img style={{
             maxWidth: '100%',
             maxHeight: '300vh',
-            width: '250px',
-            height: '250px',
+            width: '30em',
+            height: '20em',
             }} src={props.imageLinks} alt="" className={style.img}/>
           <h3 className={style.title} style={{
             minHeight: '40px'

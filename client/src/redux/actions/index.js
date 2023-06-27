@@ -7,7 +7,7 @@ const DELETE_BOOK = "DELETE_BOOK";
 export const getBooks=()=>{
     return async (dispatch)=>{
         try {
-            const {data} = await axios.get("books");
+            const {data} = await axios.get("/books");
             console.log("LOG DATA ACTIONS", data)
             return dispatch({
                 type: GET_BOOKS,

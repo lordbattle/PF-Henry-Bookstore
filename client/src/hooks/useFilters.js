@@ -1,40 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getBooksByFilters } from "../redux/actions/index";
 
 const useFilters = () => {
   const [filters, setFilters] = useState({
     rating: "all",
-    price: "all",
+    price: 0,
     genre: "all",
+    author: "all",
   });
 
-  const filtersBooks = (arr) => {
-    return arr.filter((book) => {
+  const dispatch = useDispatch();
 
-        return (
-          (filters.genre === "all" ||
-            book.genre.toLowerCase() === filters.genre.toLowerCase())
-        );
-      }).sort((a, b) => {
-        if (filters.rating === "Menor") {
-          return a.averageRating - b.averageRating;
-        } else if (filters.rating === "Mayor") {
-          return b.averageRating - a.averageRating;
-        }
+  const filtersBooks = (obj) => {
+    let options = {
+      rating: obj.rating || "all",
+      genre: obj.genre || "all",
+      price: obj.price !== 0 ? obj.price :  0,
+      author: obj.author || "all",
+    };
 
-
-        return 0;
-      }).sort((a, b) => {
-        if (filters.price === "Menor") {
-          return a.price - b.price;
-        } else if (filters.price === "Mayor") {
-          return b.price - a.price;
-        }
-
-        return 0;
-      });
+    dispatch(getBooksByFilters(options));
   };
 
-  return { setFilters, filtersBooks };
+  useEffect(() => {
+    setFilters({
+      rating: "",
+      price: 0,
+      genre: "",
+      author: "",
+    });
+  }, []);
+
+  useEffect(() => {
+    filtersBooks(filters);
+  }, [filters]);
+
+  return { setFilters };
 };
 
 export default useFilters;

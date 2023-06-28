@@ -118,46 +118,9 @@ const postBooksHandler = async (req, res) => {
 //Put Books
 const putBooksHandler = async (req, res) => {
   const { idBook } = req.params;
-
-  const {
-    title,
-    subtitle,
-    publishedDate,
-    publisher,
-    description,
-    pages,
-    averageRating,
-    usersRating,
-    active,
-    identifier,
-    bookPic,
-    price,
-    stock,
-    authors,
-    genre,
-  } = req.body;
-
   try {
-    console.log("entre al handler");
-    await putBook(
-      idBook,
-      title,
-      subtitle,
-      publishedDate,
-      publisher,
-      description,
-      pages,
-      averageRating,
-      usersRating,
-      active,
-      identifier,
-      bookPic,
-      price,
-      stock,
-      authors,
-      genre
-    );
-    res.status(200).json("Product updated succesfully");
+    await putBook(idBook);
+    res.status(200).send("Product actived succesfully 👌");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

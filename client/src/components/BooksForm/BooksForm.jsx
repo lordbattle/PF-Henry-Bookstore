@@ -76,11 +76,13 @@ const AddBookForm = () => {
   };
   const handleImageClick = () => {
     inputRef.current.click();
+    console.log(imageUpload,' ruta : ',file,' click ...')
   }
   
   const handleImageChange = ( event) => {
     const file = event.target.files[0];
     setImageUpload(file);
+    console.log(imageUpload,' ruta : ',file,' change ...')
   }
 
   return (
@@ -155,7 +157,7 @@ const AddBookForm = () => {
             {/* <input type="url" name="bookPic" value={book.bookPic} onChange={handleChange} required /> */}
             <input type="file" accept="image/*" ref={inputRef} onChange={handleImageChange} style={{ display: 'none' }} />
             {imageUpload ?
-              <img src={imageUpload} width={40} height={40} alt={file} />
+              <img src={URL.createObjectURL(imageUpload)} style={{ borderRadius:'10%', boxShadow:'0 0 8px black'}} width={70} height={70} alt={file} />
               :
               <MdCloudUpload color="#1475cf" size={40}  />
             }

@@ -14,6 +14,7 @@
   align-items: center;
   justify-content: center;
   background-color: rgb(142, 137, 137);
+  box-shadow: 0 0 10px black;
   border-radius: 10px;
   height: 99%;
   width: 65%;
@@ -46,10 +47,10 @@
   color: #fff;
 }
 
-.inputContainer input:focus textarea:focus {
+.inputContainer input:focus   {
   border: none;
   outline: none;
-  border-bottom: 1px solid #e74c3c;
+  border-bottom: 1px solid #bcb7b7;
 }
 
 .inputContainer input:focus ~ label,
@@ -63,6 +64,8 @@
 
 .inputContainerImage{
   border: 2px dashed black;
+  box-shadow: 0 0 7px black;
+
   cursor: pointer;
   border-radius: 5px;
   width: 75%;
@@ -90,7 +93,9 @@
   position: relative;
   color: rgb(239, 237, 237);
   background-color: #555;
-  top : 2px;
+  box-shadow: 0 0 7px black;
+
+  top : 4px;
   border: none;
   height: 7em;
   width: 100%;
@@ -99,8 +104,9 @@
 .h1Titulo {
   position: absolute;
   font-weight: bold;
+  font-family: Georgia, serif;
   top: 0.2em;
-  left: 41%;
+  left: 36%;
 
 }
 .inputImage{
@@ -132,8 +138,8 @@
 }
 
 .buttonBook:hover {
-  box-shadow: 0 0 8px #a6a6f5;
-  border-radius: 10%;
+  box-shadow: 0 0 7px black;
+  border-radius: 15%;
 }
 
 input {

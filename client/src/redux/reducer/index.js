@@ -1,3 +1,5 @@
+import {GET_BOOKS, GET_BOOK_ID, GET_BOOK_TITLE, DELETE_BOOK, FILTERS_BOOKS} from "../types/types.js"
+
 export const initialState = {
     books: [],
     details:[],
@@ -5,25 +7,30 @@ export const initialState = {
 
 function rootReducer (state=initialState, action){
     switch (action.type) {
-        case "GET_BOOKS":
+        case GET_BOOKS:
                 return{
                     ...state,
                     books: action.payload,
                 }
-        case "GET_BOOK_ID":
+        case GET_BOOK_ID:
             return{
                 ...state,
                 details: action.payload
             }
-        case "GET_BOOK_TITLE":
+        case GET_BOOK_TITLE:
             return{
                 ...state,
                 books: action.payload
             }
-        case "DELETE_BOOK":
+        case DELETE_BOOK:
             return{
                 ...state,
             }
+            case FILTERS_BOOKS:
+                return {
+                    ...state,
+                    books: action.payload
+                }
         default:
             return {
                 ...state,

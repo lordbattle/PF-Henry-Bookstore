@@ -124,3 +124,15 @@ export const activeBook = (idBook)=>{
     }
   }
 }
+
+export const editBook = (idBook, updatedProduct) =>{
+  return async()=>{
+    try {
+      const {data} = await axios.put(`/books/${idBook}`, updatedProduct)
+      alert (data);
+    } catch (error) {
+      console.log(error)
+      alert(`Cath del editBook ${error}`)
+    }
+  }
+}

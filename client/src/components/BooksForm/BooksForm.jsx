@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postBooks } from "../../redux/actions";
 import style from '../BooksForm/BooksForm.module.css'
+import image from '../../images/bookForm.png';
 
 const AddBookForm = () => {
   const dispatch = useDispatch();
@@ -64,184 +65,171 @@ const AddBookForm = () => {
       stock: "",
       author: "",
       genres: "",
-     bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
+      bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
     });
     alert("Book added successfully");
   };
 
+
+
   return (
-    <form onSubmit={handleSubmit} className={style.main}>
-      <label>
-        Title:
-        <input className={style.input}
-          type="text"
-          name="title"
-          value={book.title}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Subtitle:
-        <input className={style.input}
-          type="text"
-          name="subtitle"
-          value={book.subtitle}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Published Date:
-        <input className={style.input}
-          type="text"
-          name="publishedDate"
-          value={book.publishedDate}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Publisher:
-        <input className={style.input}
-          type="text"
-          name="publisher"
-          value={book.publisher}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Description:
-        <textarea className={style.input}
-          name="description"
-          value={book.description}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Pages:
-        <input className={style.input}
-          type="text"
-          name="pages"
-          value={book.pages}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Average Rating:
-        <input className={style.input}
-          type="number"
-          name="averageRating"
-          value={book.averageRating}
-          min="0"
-          max="5"
-          step="1"
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Users Rating:
-        <input className={style.input}
-          type="number"
-          name="usersRating"
-          value={book.usersRating}
-          min="0"
-          max="5"
-          step="1"
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Identifier:
-        <input className={style.input}
-          type="text"
-          name="identifier"
-          value={book.identifier}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Price:
-        <input className={style.input}
-          type="text"
-          name="price"
-          value={book.price}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <br />
-      <label>
-        Stock:
-        <input className={style.input}
-          type="text"
-          name="stock"
-          value={book.stock}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Author:
-        <input className={style.input}
-          type="text"
-          name="authors"
-          value={book.authors}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Price:
-        <input
-          type="number"
-          name="price"
-          value={book.price}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Genres:
-        <input className={style.input}
-          type="text"
-          name="genre"
-          value={book.genre}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Image:
-        <input className={style.input} type="url" name="bookPic"  value={book.bookPic} onChange={handleChange} required />
-      </label>
-      <br />
-      <button type="submit" onClick={handleSubmit}>
-        Create Book
-      </button>
-    </form>
+    <div className={style.containerForm}>
+      <form onSubmit={handleSubmit} className={style.main}>
+        <h1 className={style.h1Titulo}>NEW BOOK</h1>
+        <img src={image} alt="imageBookForm" className={style.imageForm} />
+        <div className={style.containerSubUno}>
+
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="title"
+              value={book.title}
+              onChange={handleChange}
+              required
+            />
+            <label>Title:</label>
+          </div>        
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="subtitle"
+              value={book.subtitle}
+              onChange={handleChange}
+              required
+            />
+            <label>Subtitle:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="publishedDate"
+              value={book.publishedDate}
+              onChange={handleChange}
+              required
+            />
+            <label>Published Date:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="publisher"
+              value={book.publisher}
+              onChange={handleChange}
+              required
+            />
+            <label>Publisher:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="identifier"
+              value={book.identifier}
+              onChange={handleChange}
+              required
+            />
+            <label>Identifier:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="authors"
+              value={book.authors}
+              onChange={handleChange}
+              required
+            />
+            <label>Author:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="genre"
+              value={book.genre}
+              onChange={handleChange}
+              required
+            />
+            <label>Genres:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input type="url" name="bookPic" value={book.bookPic} onChange={handleChange} required />
+            <label>Image:</label>
+
+          </div>
+        </div>
+
+        <button type="submit" onClick={handleSubmit} className={style.buttonBook}></button>
+        <span className={style.spanButton}>Crear Book</span>
+
+        <div className={style.containerSubDos}>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="price"
+              value={book.price}
+              onChange={handleChange}
+              required
+            />
+            <label>Price:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="pages"
+              value={book.pages}
+              onChange={handleChange}
+              required
+            />
+            <label>Pages:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="stock"
+              value={book.stock}
+              onChange={handleChange}
+              required
+            />
+            <label>Stock:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="number"
+              name="usersRating"
+              value={book.usersRating}
+              min="0"
+              max="5"
+              step="1"
+              onChange={handleChange}
+              required
+            />
+            <label>Users Rating:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <input
+              type="number"
+              name="averageRating"
+              value={book.averageRating}
+              min="0"
+              max="5"
+              step="1"
+              onChange={handleChange}
+              required
+            />
+            <label>Average Rating:</label>
+          </div>
+          <div className={style.inputContainer}>
+            <textarea className={style.textarea}
+              name="description"
+              value={book.description}
+              onChange={handleChange}
+              required
+            />
+            <label>Description:</label>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 };
 
 export default AddBookForm;
+

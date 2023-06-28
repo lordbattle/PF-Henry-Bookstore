@@ -157,6 +157,7 @@ const putBooksHandler = async (req, res) => {
       authors,
       genre
     );
+    await putBook(idBook);
     res.status(200).json("Product updated succesfully");
   } catch (error) {
     res.status(400).json({ error: error.message });

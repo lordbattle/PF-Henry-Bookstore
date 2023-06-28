@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Card from "../Card/Card";
 import { useSelector } from "react-redux";
 import Filters from "../Filters/Filters";
@@ -8,15 +8,15 @@ import Footer from "../Footer/Footer";
 
 const Home = () => {
   const allBooks = useSelector((state) => state.books);
-  const { setFilters, filtersBooks } = useFilters();
+  const { setFilters } = useFilters();
   const [currentPage, setCurrentPage] = useState(1);
   const recetasPorPag = 20;
 
-  const booksFilters = filtersBooks(allBooks);
+  
   const indexUltiJuego = currentPage * recetasPorPag;
   const indexPrimJuego = indexUltiJuego - recetasPorPag;
-  const currentBooks = Array.isArray(booksFilters)
-    ? booksFilters.slice(indexPrimJuego, indexUltiJuego)
+  const currentBooks = Array.isArray(allBooks)
+    ? allBooks.slice(indexPrimJuego, indexUltiJuego)
     : [];
 
   return (
@@ -26,7 +26,7 @@ const Home = () => {
       <div className="d-flex justify-content-center p-2">
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(booksFilters.length / recetasPorPag)}
+        totalPages={Math.ceil(allBooks.length / recetasPorPag)}
         onPageChange={setCurrentPage}
       />
       </div>

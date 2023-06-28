@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams, Link} from "react-router-dom"
-import { getBookById, deleteBook } from "../../redux/actions";
+import { getBookById, deleteBook, activeBook } from "../../redux/actions";
 import style from '../Detail/Detail.module.css'
 
 const Detail = () =>{
@@ -21,7 +21,7 @@ const Detail = () =>{
             <div className={style.container}>
                 <div className={style.detail}>
                 <h2>ID DEL LIBRO: {id}</h2>
-                <h4>{active===true? ( <button onClick={()=>{dispatch(deleteBook(id));}} className={style.deleteButtom}>Deshabilitar producto</button> ):(<button className={style.deleteButtom}>Habilitar producto</button>)}</h4>
+                <h4>{active===true? ( <button onClick={()=>{dispatch(deleteBook(id));}} className={style.deleteButtom}>Deshabilitar producto</button> ):(<button onClick={()=>(dispatch(activeBook(id)))} className={style.deleteButtom}>Habilitar producto</button>)}</h4>
                 </div>
 
             <div className='d-flex p-3'>

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { postBooks } from "../../redux/actions";
@@ -28,19 +27,27 @@ const AddBookForm = () => {
     genres: "",
     bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
   });
-
-
   const onSubmit = (data) => {
     const bookData = {
       ...data,
       bookPic: data.bookPic || "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
     };
-
-    dispatch(postBooks(bookData));
-    alert("Book added successfully");
+  }
+  const handleChange = (event) => {
+    if (event.target.name === "bookPic") {
+      setBook({
+        ...book,
+        image: event.target.files[0],
+      });
+    } else {
+      setBook({
+        ...book,
+        [event.target.name]: event.target.value,
+      });
+    }
   };
 
-  const generateYearOptions = () => {
+   const generateYearOptions = () => {
     const options = [];
     for (let year = 2030; year >= 1800; year--) {
       options.push(
@@ -48,6 +55,17 @@ const AddBookForm = () => {
           {year}
         </option>
       );
+    }
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const requiredFields = ['title', 'subtitle', 'publishedDate', 'publisher', 'description', 'pages', 'averageRating', 'usersRating', 'identifier', 'authors', 'genre'];
+    const emptyFields = requiredFields.filter((field) => !book[field]);
+
+    if (emptyFields.length > 0) {
+      const errorMessage = `Please complete the following fields: ${emptyFields.join(', ')}`;
+      alert(errorMessage);
+      return;
     }
     dispatch(postBooks(book));
 
@@ -69,7 +87,6 @@ const AddBookForm = () => {
       bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
     });
     alert("Book added successfully");
-
   };
   const handleImageClick = () => {
     inputRef.current.click();
@@ -247,4 +264,5 @@ const AddBookForm = () => {
   );
 };
 
-export default AddBookForm;  
+export default AddBookForm;
+

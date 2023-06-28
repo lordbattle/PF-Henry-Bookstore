@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { postBooks } from "../../redux/actions";
 import style from '../BooksForm/BooksForm.module.css'
 import image from '../../images/bookForm.png';
+import { MdCloudUpload, MdDelete } from 'react-icons/md';
+import { AiFillFileImage } from 'react-icons/ai';
 
 const AddBookForm = () => {
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
+  const [imageUpload, setImageUpload] = useState('');
+  const [ file , setFile ] = useState();
   const [book, setBook] = useState({
     title: "",
     subtitle: "",
@@ -69,8 +74,14 @@ const AddBookForm = () => {
     });
     alert("Book added successfully");
   };
-
-
+  const handleImageClick = () => {
+    inputRef.current.click();
+  }
+  
+  const handleImageChange = ( event) => {
+    const file = event.target.files[0];
+    setImageUpload(file);
+  }
 
   return (
     <div className={style.containerForm}>
@@ -88,7 +99,7 @@ const AddBookForm = () => {
               required
             />
             <label>Title:</label>
-          </div>        
+          </div>
           <div className={style.inputContainer}>
             <input
               type="text"
@@ -98,16 +109,6 @@ const AddBookForm = () => {
               required
             />
             <label>Subtitle:</label>
-          </div>
-          <div className={style.inputContainer}>
-            <input
-              type="text"
-              name="publishedDate"
-              value={book.publishedDate}
-              onChange={handleChange}
-              required
-            />
-            <label>Published Date:</label>
           </div>
           <div className={style.inputContainer}>
             <input
@@ -149,9 +150,15 @@ const AddBookForm = () => {
             />
             <label>Genres:</label>
           </div>
-          <div className={style.inputContainer}>
-            <input type="url" name="bookPic" value={book.bookPic} onChange={handleChange} required />
+          <div className={style.inputContainerImage} onClick={handleImageClick}>
             <label>Image:</label>
+            {/* <input type="url" name="bookPic" value={book.bookPic} onChange={handleChange} required /> */}
+            <input type="file" accept="image/*" ref={inputRef} onChange={handleImageChange} style={{ display: 'none' }} />
+            {imageUpload ?
+              <img src={imageUpload} width={40} height={40} alt={file} />
+              :
+              <MdCloudUpload color="#1475cf" size={40}  />
+            }
 
           </div>
         </div>
@@ -160,6 +167,16 @@ const AddBookForm = () => {
         <span className={style.spanButton}>Crear Book</span>
 
         <div className={style.containerSubDos}>
+          <div className={style.inputContainer}>
+            <input
+              type="text"
+              name="publishedDate"
+              value={book.publishedDate}
+              onChange={handleChange}
+              required
+            />
+            <label>Published Date:</label>
+          </div>
           <div className={style.inputContainer}>
             <input
               type="text"

@@ -7,12 +7,26 @@ const {
   putBook,
   deleteBook,
 } = require("../controllers/booksControllers");
+const { API_CLOUDINARY_BOOKS_UPLOAD_PRESET } = process.env;
+
+const { cloudinary } = require("../services/cloudinaryService");
 
 //Save API data in the DB
 //saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
-  const { title, author, genre, order, page, limit, price, stock } = req.query;
+  const {
+    title,
+    author,
+    genre,
+    orderTitle,
+    orderPrice,
+    orderStock,
+    page,
+    limit,
+    price,
+    stock,
+  } = req.query;
   try {
     let search = [];
 
@@ -39,19 +53,19 @@ const getBooksHandler = async (req, res) => {
         title,
         author,
         genre,
-        order,
+        orderTitle,
+        orderPrice,
+        orderStock,
         page,
         limit,
         price,
-        stock,
+        stock
       );
       bookByName.length > 0
         ? res.status(200).json(bookByName)
-        : res
-            .status(404)
-            .json({
-              error: "There are no books with that name, gener or author",
-            });
+        : res.status(404).json({
+            error: "There are no books with that name, gener or author",
+          });
     } else {
       const allBooks = await getAllBooks();
       res.status(200).json(allBooks);

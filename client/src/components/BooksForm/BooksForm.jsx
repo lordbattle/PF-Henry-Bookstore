@@ -1,245 +1,215 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { postBooks } from "../../redux/actions";
-import style from '../BooksForm/BooksForm.module.css'
+import style from '../BooksForm/BooksForm.module.css';
 
 const AddBookForm = () => {
   const dispatch = useDispatch();
-  const [book, setBook] = useState({
-    title: "",
-    subtitle: "",
-    publishedDate: "",
-    publisher: "",
-    description: "",
-    pages: "",
-    averageRating: "",
-    usersRating: "",
-    identifier: "",
-    price: "",
-    stock: "",
-    author: "",
-    genres: "",
-    bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const handleChange = (event) => {
-    if (event.target.name === "bookPic") {
-      setBook({
-        ...book,
-        image: event.target.files[0],
-      });
-    } else {
-      setBook({
-        ...book,
-        [event.target.name]: event.target.value,
-      });
-    }
-  };
+  const onSubmit = (data) => {
+    const bookData = {
+      ...data,
+      bookPic: data.bookPic || "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
+    };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const requiredFields = ['title', 'subtitle', 'publishedDate', 'publisher', 'description', 'pages', 'averageRating', 'usersRating', 'identifier', 'authors', 'genre'];
-    const emptyFields = requiredFields.filter((field) => !book[field]);
-
-    if (emptyFields.length > 0) {
-      const errorMessage = `Please complete the following fields: ${emptyFields.join(', ')}`;
-      alert(errorMessage);
-      return;
-    }
-    dispatch(postBooks(book));
-
-    setBook({
-
-      title: "",
-      subtitle: "",
-      publishedDate: "",
-      publisher: "",
-      description: "",
-      pages: "",
-      averageRating: "",
-      usersRating: "",
-      identifier: "",
-      price: "",
-      stock: "",
-      author: "",
-      genres: "",
-     bookPic: "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-    });
+    dispatch(postBooks(bookData));
     alert("Book added successfully");
   };
 
+  const generateYearOptions = () => {
+    const options = [];
+    for (let year = 2030; year >= 1800; year--) {
+      options.push(
+        <option key={year} value={year}>
+          {year}
+        </option>
+      );
+    }
+    return options;
+  };
+
   return (
-    <form onSubmit={handleSubmit} className={style.main}>
+    <form onSubmit={handleSubmit(onSubmit)} className={style.main}>
       <label>
         Title:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="text"
           name="title"
-          value={book.title}
-          onChange={handleChange}
-          required
+          placeholder="Insert book title"
+          {...register("title", { required: true })}
         />
+        {errors.title && <p>Title is required</p>}
       </label>
       <br />
       <label>
         Subtitle:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="text"
           name="subtitle"
-          value={book.subtitle}
-          onChange={handleChange}
-          required
+          placeholder="Insert book subtitle"
+          {...register("subtitle", { required: true })}
         />
+        {errors.subtitle && <p>Subtitle is required</p>}
       </label>
       <br />
       <label>
         Published Date:
-        <input className={style.input}
-          type="text"
+        <select
+          className={style.input}
           name="publishedDate"
-          value={book.publishedDate}
-          onChange={handleChange}
-          required
-        />
+          placeholder="Insert book"
+          {...register("publishedDate", { required: true })}
+        >
+          <option value="">Select Year</option>
+          {generateYearOptions()}
+        </select>
+        {errors.publishedDate && <p>Published Date is required</p>}
       </label>
       <br />
       <label>
         Publisher:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="text"
           name="publisher"
-          value={book.publisher}
-          onChange={handleChange}
-          required
+          placeholder="Insert book publisher"
+          {...register("publisher", { required: true })}
         />
+        {errors.publisher && <p>Publisher is required</p>}
       </label>
       <br />
       <label>
         Description:
-        <textarea className={style.input}
+        <textarea
+          className={style.input}
           name="description"
-          value={book.description}
-          onChange={handleChange}
-          required
+          placeholder="Insert book description"
+          {...register("description", { required: true })}
         />
+        {errors.description && <p>Description is required</p>}
       </label>
       <br />
       <label>
         Pages:
-        <input className={style.input}
-          type="text"
+        <input
+          className={style.input}
+          type="number"
           name="pages"
-          value={book.pages}
-          onChange={handleChange}
-          required
+          placeholder="Insert amount of pages"
+          {...register("pages", { required: true })}
         />
+        {errors.pages && <p>Pages is required</p>}
       </label>
       <br />
       <label>
         Average Rating:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="number"
           name="averageRating"
-          value={book.averageRating}
           min="0"
           max="5"
           step="1"
-          onChange={handleChange}
-          required
+          {...register("averageRating", { required: true })}
         />
+        {errors.averageRating && <p>Average Rating is required</p>}
       </label>
       <br />
       <label>
         Users Rating:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="number"
           name="usersRating"
-          value={book.usersRating}
           min="0"
           max="5"
           step="1"
-          onChange={handleChange}
-          required
+          {...register("usersRating", { required: true })}
         />
+        {errors.usersRating && <p>Users Rating is required</p>}
       </label>
       <br />
       <label>
         Identifier:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="text"
           name="identifier"
-          value={book.identifier}
-          onChange={handleChange}
-          required
+          placeholder="Insert the 13 digits"
+          {...register("identifier", {
+            required: true,
+            pattern: /^[0-9]+$/,
+            maxLength: 13,
+          })}
         />
+        {errors.identifier && <p>Identifier must be 13 digits long and numbers only</p>}
       </label>
       <br />
       <br />
       <label>
         Price:
-        <input className={style.input}
-          type="text"
+        <input
+          className={style.input}
+          type="number"
           name="price"
-          value={book.price}
-          onChange={handleChange}
-          required
+          placeholder="Insert book price"
+          {...register("price", { required: true })}
         />
+        {errors.price && <p>Price is required</p>}
       </label>
       <br />
       <br />
       <label>
         Stock:
-        <input className={style.input}
-          type="text"
+        <input
+          className={style.input}
+          type="number"
           name="stock"
-          value={book.stock}
-          onChange={handleChange}
-          required
+          placeholder="Insert book stock"
+          {...register("stock", { required: true })}
         />
+        {errors.stock && <p>Stock is required</p>}
       </label>
       <br />
       <label>
         Author:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="text"
           name="authors"
-          value={book.authors}
-          onChange={handleChange}
-          required
+          placeholder="Insert authors"
+          {...register("authors", { required: true })}
         />
-      </label>
-      <br />
-      <label>
-        Price:
-        <input
-          type="number"
-          name="price"
-          value={book.price}
-          onChange={handleChange}
-          required
-        />
+        {errors.authors && <p>Author is required</p>}
       </label>
       <br />
       <label>
         Genres:
-        <input className={style.input}
+        <input
+          className={style.input}
           type="text"
           name="genre"
-          value={book.genre}
-          onChange={handleChange}
-          required
+          placeholder="Insert book genres"
+          {...register("genre", { required: true })}
         />
+        {errors.genre && <p>Genre is required</p>}
       </label>
       <br />
       <label>
         Image:
-        <input className={style.input} type="url" name="bookPic"  value={book.bookPic} onChange={handleChange} required />
+        <input
+          className={style.input}
+          type="url"
+          name="bookPic"
+          {...register("bookPic")}
+        />
       </label>
       <br />
-      <button type="submit" onClick={handleSubmit}>
-        Create Book
-      </button>
+      <button type="submit">Publish Book</button>
     </form>
   );
 };

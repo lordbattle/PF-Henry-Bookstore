@@ -37,7 +37,7 @@ const Nav = () => {
               to={"/createbook"}
               className="text-decoration-none fs-5 text-reset"
             >
-              Create Books
+              Publish Books
             </Link>
           </span>
         </div>

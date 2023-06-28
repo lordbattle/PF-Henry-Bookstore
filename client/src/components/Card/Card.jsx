@@ -16,6 +16,7 @@ const Card = ({currentBooks}) =>{
           currentBooks.map((v) => {
            return (
               <Cards
+              active={v.active}
                 key={v.id}
                 id={v.id}
                 title={v.title}

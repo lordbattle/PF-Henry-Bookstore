@@ -167,47 +167,19 @@ const postBook = async (
   return newBook;
 };
 
-const putBook = async (
-  idBook,
-  title,
-  subtitle,
-  publishedDate,
-  publisher,
-  description,
-  pages,
-  averageRating,
-  usersRating,
-  active,
-  identifier,
-  bookPic,
-  price,
-  stock,
-  authors,
-  genre
-) => {
-  const updateBook = Book.update(
-    {
-      title,
-      subtitle,
-      publishedDate,
-      publisher,
-      description,
-      pages,
-      averageRating,
-      usersRating,
-      active,
-      identifier,
-      bookPic,
-      price,
-      stock,
-      authors,
-      genre,
-    },
-    {
-      where: { id: idBook },
-    }
-  );
-  return updateBook;
+const putBook = async (idBook) => {
+  const book = await Book.findByPk(idBook, {
+    where: { id: idBook },
+  });
+
+  if (!book) {
+    throw Error("There is no book with the specified id");
+  }
+
+  book.active = true;
+  await book.save();
+
+  return book;
 };
 
 const deleteBook = async (idBook) => {

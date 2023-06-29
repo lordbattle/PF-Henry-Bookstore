@@ -7,25 +7,23 @@ import style from '../Card/Card.module.css'
 const Card = ({ currentBooks }) => {
 
   //LOCALSTORAGE PARA EL CARRITO
-  const [cart, setCart]= useState([])
+  const [cart, setCart]= useState(()=>{
+    try {
+      //lee el localStorage si tuviese info, sino array vacio
+      const storedCart = localStorage.getItem("cart");
+      return storedCart ? JSON.parse(storedCart) : []
+   }
+    catch (error) {
+     console.log(`ERROR DEL getItem de storedCart ${error}`);
+     return [];
+   }
+  })
 
   useEffect(()=>{
     //almacena en el localstorage
     localStorage.setItem("cart", JSON.stringify(cart))
   },[cart])
 
-  useEffect(()=>{
-    ///LEE el carrito almacenado en localstorage
-    try {
-       const storedCart = localStorage.getItem("cart");
-    if(storedCart){
-      setCart(JSON.parse(storedCart))
-    }
-    } catch (error) {
-      console.log(`ERROR DEL getItem de storedCart ${error}`)
-    }
-   
-  }, [])
 
   const addToCart = (newItem)=>{
     const existingItem = cart.find((item)=> item.id === newItem.id);

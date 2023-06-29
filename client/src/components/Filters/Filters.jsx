@@ -14,6 +14,18 @@ const Filters = (props) => {
     }));
   };
 
+  const btnReset = (e) => {
+    e.preventDefault();
+    setFilters({
+      price: 0,
+      genre: "all",
+      author: "all",
+      limit: 10,
+      orderPrice: "neu",
+      orderTitle: "neu",
+    });
+  };
+
   const handleChangeAuthors = (e) => {
     setFilters((prevState) => ({
       ...prevState,
@@ -21,14 +33,24 @@ const Filters = (props) => {
     }));
   };
 
-  const handleChangeRating = (e) => {
+  const handleChangeOrderPrice = (e) => {
+    console.log("priceOrder changed", e.target.value);
     setFilters((prevState) => ({
       ...prevState,
-      rating: e.target.value,
+      orderPrice: e.target.value,
+    }));
+  };
+
+  const handleChangeOrderTitle = (e) => {
+    console.log("titleOrder changed", e.target.value);
+    setFilters((prevState) => ({
+      ...prevState,
+      orderTitle: e.target.value,
     }));
   };
 
   const handleChangePrice = (e) => {
+    console.log("price changed", e.target.value);
     setFilters((prevState) => ({
       ...prevState,
       price: e.target.value,
@@ -93,30 +115,7 @@ const Filters = (props) => {
   return (
     <section className="d-flex justify-content-evenly py-3">
       <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="title">Order Title</label>
-        <select
-          id="title"
-          className="bg-dark py-1 px-2"
-          onChange={handleChangeRating}
-        >
-          <option value="0">ALL</option>
-          <option value="asc">Mayor a Menor</option>
-          <option value="desc">Menor a Mayor</option>
-        </select>
-      </div>
-      <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="price">Order Price</label>
-        <select
-          id="price"
-          name="price"
-          className="bg-dark py-1 px-2"
-          onChange={handleChangePrice}
-        >
-          <option value={0}>ALL</option>
-
-          <option value="asc">Ascendente</option>
-          <option value="desc">Desendente</option>
-        </select>
+        <button className="bg-dark py-1 px-2" onClick={btnReset}>Reset</button>
       </div>
       <div className="d-flex gap-2 align-items-center">
         <label htmlFor="title">Authors</label>
@@ -127,18 +126,38 @@ const Filters = (props) => {
         >
           <option value="all">ALL</option>
           {newArrayAuthors?.map((item) => (
-            <option key={item.id} value={item.author}>
+            <option
+              key={item.id}
+              value={item.author
+                .trim()
+                .split(" ")
+                .slice(0, 2)
+                .filter((char) => char !== ".")
+                .join(" ")
+                .toLowerCase()}
+            >
               {item.author.toUpperCase()}
             </option>
           ))}
         </select>
       </div>
-
+      <div className="d-flex gap-2 align-items-center">
+        <label htmlFor="price">Price</label>
+        <select
+          id="price"
+          className="bg-dark py-1 px-2"
+          onChange={handleChangePrice}
+        >
+          <option value={0}>Everything</option>
+          <option value={1}>Hasta 500</option>
+          <option value={2}>500 - 5000</option>
+          <option value={3}>Mas de 5000</option>
+        </select>
+      </div>
       <div className="d-flex gap-2 align-items-center">
         <label htmlFor="genre">Genre</label>
         <select
           id="genre"
-          name="genre"
           className="bg-dark py-1 px-2"
           onChange={handleChangeGenre}
         >
@@ -151,6 +170,28 @@ const Filters = (props) => {
                 </option>
               );
             })}
+        </select>
+      </div>{" "}
+      <div className="d-flex gap-2 align-items-center">
+        <label htmlFor="title">Order Title</label>
+        <select
+          id="title"
+          className="bg-dark py-1 px-2"
+          onChange={handleChangeOrderTitle}
+        >
+          <option value="asc">A-Z</option>
+          <option value="desc">Z-A</option>
+        </select>
+      </div>
+      <div className="d-flex gap-2 align-items-center">
+        <label htmlFor="Oprice">Order Price</label>
+        <select
+          id="Oprice"
+          className="bg-dark py-1 px-2"
+          onChange={handleChangeOrderPrice}
+        >
+          <option value="asc">Ascendente</option>
+          <option value="desc">Desendente</option>
         </select>
       </div>
     </section>

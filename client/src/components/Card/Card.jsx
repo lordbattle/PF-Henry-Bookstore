@@ -1,3 +1,4 @@
+
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { getBooks } from "../../redux/actions"
@@ -39,4 +40,4 @@ const Card = ({ currentBooks }) => {
 
 }
 
-export default Card
+export default Card;

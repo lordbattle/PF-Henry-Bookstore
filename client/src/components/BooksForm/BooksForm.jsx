@@ -1,27 +1,50 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { postBooks } from "../../redux/actions";
-import style from '../BooksForm/BooksForm.module.css';
-import image from '../../images/bookForm.png';
-import { MdCloudUpload, MdDelete } from 'react-icons/md';
-import { AiFillFileImage } from 'react-icons/ai';
+import style from "../BooksForm/BooksForm.module.css";
+import image from "../../images/bookForm.png";
 
 const AddBookForm = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const [imageUpload, setImageUpload] = useState('');
   const [file, setFile] = useState();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const onSubmit = (data) => {
-    const files = data.bookPic;
-    const bookData = {
-      ...data,
-      bookPic: files[0].name || "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
-    };
-    dispatch(postBooks(bookData));
-    alert("Book added successfully");
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("bookPic", file);
+    formData.append("title", data.title);
+    formData.append("subtitle", data.subtitle);
+    formData.append("publisher", data.publisher);
+    formData.append("identifier", data.identifier);
+    formData.append("authors", data.authors);
+    formData.append("genre", data.genre);
+    formData.append("publishedDate", data.publishedDate);
+    formData.append("price", data.price);
+    formData.append("pages", data.pages);
+    formData.append("stock", data.stock);
+    formData.append("usersRating", data.usersRating);
+    formData.append("averageRating", data.averageRating);
+    formData.append("description", data.description);
+
+    dispatch(postBooks(formData))
+      .then(() => {
+        alert("Book added successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("An error occurred while adding the book");
+      });
+  };
+
+  const handleImageChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
   };
 
   const generateYearOptions = () => {
@@ -36,9 +59,9 @@ const AddBookForm = () => {
     return options;
   };
 
-  const handleImageClick = () => {
+  /*  const handleImageClick = () => {
     inputRef.current.click();
-  }
+  }; */
 
   return (
     <div className={style.containerForm}>
@@ -81,14 +104,16 @@ const AddBookForm = () => {
               type="text"
               name="identifier"
               placeholder="Insert the 13 digits"
-              maxLength='13'
+              maxLength="13"
               {...register("identifier", {
                 required: true,
                 pattern: /^[0-9]+$/,
               })}
             />
             <label>Identifier:</label>
-            {errors.identifier && <p>Identifier must be 13 digits long and numbers only</p>}
+            {errors.identifier && (
+              <p>Identifier must be 13 digits long and numbers only</p>
+            )}
           </div>
           <div className={style.inputContainer}>
             <input
@@ -100,7 +125,7 @@ const AddBookForm = () => {
             <label>Author:</label>
             {errors.authors && <p>Author is required</p>}
           </div>
-          <div className={style.inputContainer} >
+          <div className={style.inputContainer}>
             <input
               type="text"
               name="genre"
@@ -110,14 +135,18 @@ const AddBookForm = () => {
             <label>Genres:</label>
             {errors.genre && <p>Genre is required</p>}
           </div>
-          <div className={style.inputContainerImage} >
+          <div className={style.inputContainerImage}>
             <label>Image:</label>
-            <input type="file" className={style.uploadImageInput} name='bookPic' accept="image/*"    {...register("bookPic")} />
-            {/* {imageUpload ?
-              <img src={URL.createObjectURL(imageUpload)} style={{ borderRadius: '10%', boxShadow: '0 0 8px black' }} width={70} height={70} alt={file} />
-              :
-              <MdCloudUpload color="#1475cf" size={40} />
-            } */}
+            <input
+              type="file"
+              className={style.uploadImageInput}
+              name="bookPic"
+              accept="image/*"
+              required=""
+              id="file-input"
+              ref={inputRef}
+              onChange={handleImageChange}
+            />
           </div>
         </div>
         <button type="submit" className={style.buttonBook}></button>
@@ -125,7 +154,8 @@ const AddBookForm = () => {
 
         <div className={style.containerSubDos}>
           <div className={style.inputContainer}>
-            <select className={style.selectInput}
+            <select
+              className={style.selectInput}
               name="publishedDate"
               placeholder="Insert book"
               {...register("publishedDate", { required: true })}
@@ -191,7 +221,8 @@ const AddBookForm = () => {
             {errors.averageRating && <p>Average Rating is required</p>}
           </div>
           <div className={style.inputContainer}>
-            <textarea className={style.textarea}
+            <textarea
+              className={style.textarea}
               name="description"
               placeholder="Insert book description"
               {...register("description", { required: true })}
@@ -199,7 +230,6 @@ const AddBookForm = () => {
             <label>Description:</label>
             {errors.description && <p>Description is required</p>}
           </div>
-
         </div>
       </form>
     </div>

@@ -10,6 +10,7 @@ const { Op } = require("sequelize");
 const { API_CLOUDINARY_BOOKS_UPLOAD_PRESET } = process.env;
 
 const { cloudinary } = require("../services/cloudinaryService");
+const { log } = require("console");
 
 const saveAllBooksDb = async () => {
   try {
@@ -113,7 +114,7 @@ const getBookBySearch = async (
 ) => {
   let whereClause = {};
   if (title) {
-    whereClause.title = { [Op.iLike]: "%" + title + "%" };
+    whereClause.title =  { [Op.iLike]: "%" + title + "%" };
   }
 
   if (author) {
@@ -133,12 +134,12 @@ const getBookBySearch = async (
       whereClause.price = { [Op.between]: [5000, 30000] };
     }
   }
+  console.log(whereClause)
 
   let bookBySearch = await Book.findAll({
     where: whereClause,
   });
-  console.log("hola");
-  console.log(bookBySearch.length);
+  
   if (orderTitle || orderPrice || orderStock || page || limit)
     return wildcardFilterAndPagination(
       bookBySearch,
@@ -194,25 +195,26 @@ const postBook = async (
         authors,
         genre,
       },
-      // { transaction }
+      { transaction }
     );
 
-    // if (bookPic) {
-    //   const { secure_url } = await cloudinary.uploader.upload(bookPic, {
-    //     upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
-    //     /* resource_type: "image",
-    //     folder: "books",
-    //     public_id: "private_image",
-    //     type: "private", */
-    //   });
-    //   newBook.set({ bookPic: secure_url });
+    if (bookPic) {
+      const { secure_url } = await cloudinary.uploader.upload(bookPic, {
+        upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
+        /* resource_type: "image",
+        folder: "books",
+        public_id: "private_image",
+        type: "private", */
+      });
+      newBook.set({ bookPic: secure_url });
 
-    //   await newBook.save();
-    // }
-    //inserting the data if the whole process was successful
-    // await transaction.commit();
+      await newBook.save();
+    }
+    // inserting the data if the whole process was successful
+    await transaction.commit();
 
     return newBook;
+
   } catch (error) {
     // await transaction.rollback();
     throw Error(error.message);

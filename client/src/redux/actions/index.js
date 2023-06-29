@@ -111,3 +111,27 @@ export const postBooks = (payload) => {
     }
   };
 };
+
+
+export const activeBook = (idBook)=>{
+  return async ()=>{
+    try {
+      const {data} = await axios.put(`/books/${idBook}`, {active: true})
+      alert(data)
+    } catch (error) {
+      alert(`Catch del activeBook ${error}`)
+    }
+  }
+}
+
+export const editBook = (idBook, updatedProduct) =>{
+  return async()=>{
+    try {
+      const {data} = await axios.put(`/books/${idBook}`, updatedProduct)
+      alert (data);
+    } catch (error) {
+      console.log(error)
+      alert(`Cath del editBook ${error}`)
+    }
+  }
+}

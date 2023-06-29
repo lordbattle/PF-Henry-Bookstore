@@ -56,7 +56,7 @@ export const getBooksByFilters = (obj) => {
     //price no funciona
     //rating no funciona
     try {
-      let url = "/books/?";
+      let url = "/books?";
 
       if (obj.author !== "all") {
         url += `author=${obj.author}&`;
@@ -65,9 +65,21 @@ export const getBooksByFilters = (obj) => {
       if (obj.genre !== "all") {
         url += `genre=${obj.genre}&`;
       }
-
-      if (obj.price !== "all") {
+      if (obj.page) {
+        url += `page=${obj.page}&`;
+      }
+      if (obj.limit) {
+        url += `limit=${obj.limit}&`;
+      }
+      if (obj.price !== 0) {
         url += `price=${obj.price}&`;
+      }
+      if (obj.orderPrice && obj.orderPrice !== "neu") {
+        url += `orderPrice=${obj.orderPrice}&`;
+      }
+
+      if (obj.orderTitle && obj.orderTitle !== "neu") {
+        url += `orderTitle=${obj.orderTitle}&`;
       }
 
       // Remove trailing '&' from the URL
@@ -112,26 +124,25 @@ export const postBooks = (payload) => {
   };
 };
 
-
-export const activeBook = (idBook)=>{
-  return async ()=>{
+export const activeBook = (idBook) => {
+  return async () => {
     try {
-      const {data} = await axios.put(`/books/${idBook}`, {active: true})
-      alert(data)
+      const { data } = await axios.put(`/books/${idBook}`, { active: true });
+      alert(data);
     } catch (error) {
-      alert(`Catch del activeBook ${error}`)
+      alert(`Catch del activeBook ${error}`);
     }
-  }
-}
+  };
+};
 
-export const editBook = (idBook, updatedProduct) =>{
-  return async()=>{
+export const editBook = (idBook, updatedProduct) => {
+  return async () => {
     try {
-      const {data} = await axios.put(`/books/${idBook}`, updatedProduct)
-      alert (data);
+      const { data } = await axios.put(`/books/${idBook}`, updatedProduct);
+      alert(data);
     } catch (error) {
-      console.log(error)
-      alert(`Cath del editBook ${error}`)
+      console.log(error);
+      alert(`Cath del editBook ${error}`);
     }
-  }
-}
+  };
+};

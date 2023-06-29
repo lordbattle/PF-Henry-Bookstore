@@ -3,44 +3,32 @@ import { useDispatch } from "react-redux";
 import { getBooksByFilters } from "../redux/actions/index";
 
 const useFilters = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
-    rating: "all",
     price: 0,
-    genre: "all",
-    author: "all",
-    page: 1,
+    genre: 'all',
+    author: 'all',
     limit: 10,
-    orderPrice:0,
-    orderTitle: 0
+    orderPrice: 'neu',
+    orderTitle: 'neu',
   });
 
   const dispatch = useDispatch();
 
   const filtersBooks = (obj) => {
-    let options = {
-      rating: obj.rating || "all",
-      genre: obj.genre || "all",
-      price: obj.price !== 0 ? obj.price :  0,
-      author: obj.author || "all",
+    const options = {
+      ...obj,
+      page: currentPage,
     };
 
     dispatch(getBooksByFilters(options));
   };
 
   useEffect(() => {
-    setFilters({
-      rating: "",
-      price: 0,
-      genre: "",
-      author: "",
-    });
-  }, []);
-
-  useEffect(() => {
     filtersBooks(filters);
-  }, [filters]);
+  }, [currentPage, filters]);
 
-  return { setFilters };
+  return { setFilters, setCurrentPage, currentPage };
 };
 
 export default useFilters;

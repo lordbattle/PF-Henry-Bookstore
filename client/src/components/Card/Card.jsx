@@ -12,6 +12,7 @@ const Card = ({ currentBooks }) => {
   }, [dispatch])
 
   return (
+    <div className="d-flex justify-content-center">
     <div className={style.main}>
       {currentBooks.length > 0 ? (
         currentBooks.map((v) => {
@@ -35,6 +36,7 @@ const Card = ({ currentBooks }) => {
       ) : (
         console.log("LOG DEL ERROR", currentBooks)
       )}
+    </div>
     </div>
   );
 

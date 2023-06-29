@@ -1,9 +1,8 @@
 
-
 const Pagination = ({ currentPage, onPageChange }) => {
   const pageNumbers = [];
-  const maxPageDisplay = 10; // Número máximo de páginas a mostrar en la paginación
-  const totalPages = 10;
+  const maxPageDisplay = 9; // Número máximo de páginas a mostrar en la paginación
+  const totalPages = 9;
 
   // Generar los números de página
   for (let i = 1; i <= Math.min(totalPages, maxPageDisplay); i++) {

@@ -13,7 +13,7 @@ import naycolPerfil from '../../images/naycolPerfil.jpg';
 //"https://www.unjobnet.org/assets/images/users/blank-profile.png"
 const About = () => {
     return (
-        <div style={{ paddingBottom: '20px' }}>
+        <div style={{ paddingBottom: '20px', display: 'flex', flexWrap : 'wrap', justifyContent: 'center'}}>
             <p style={{ display: 'flex', justifyContent: 'space-around', fontSize: '40px' }}>Members</p>
             <div style={ {display:'flex', flexDirection:'row', marginBlock:'5em',marginInline:'6em' }}>
                 <Card style={{ width: '20rem', marginInlineEnd :'2em'}}>

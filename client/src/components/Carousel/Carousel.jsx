@@ -6,13 +6,13 @@ const CarouselComp = () => {
         <Carousel>
           <Carousel.Item interval={3000}>
             <img
-              className="d-block w-100"
+              className="d-block w-100" height={'220vh'}
               src=""
               alt="First slide"
             />
             <Carousel.Caption>
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <h3>Are you looking for your favorite book and can't find it?</h3>
+              <p>find it on our page where we have a lot of books</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item interval={3000}>

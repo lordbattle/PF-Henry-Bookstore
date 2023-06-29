@@ -8,7 +8,7 @@ const useFilters = () => {
     price: 0,
     genre: 'all',
     author: 'all',
-    limit: 10,
+    limit: 9,
     orderPrice: 'neu',
     orderTitle: 'neu',
   });

@@ -10,7 +10,7 @@ const { Op } = require("sequelize");
 const { API_CLOUDINARY_BOOKS_UPLOAD_PRESET } = process.env;
 
 const { cloudinary } = require("../services/cloudinaryService");
-const { log } = require("console");
+
 
 const saveAllBooksDb = async () => {
   try {
@@ -114,7 +114,7 @@ const getBookBySearch = async (
 ) => {
   let whereClause = {};
   if (title) {
-    whereClause.title =  { [Op.iLike]: "%" + title + "%" };
+    whereClause.title = { [Op.iLike]: "%" + title + "%" };
   }
 
   if (author) {
@@ -134,12 +134,12 @@ const getBookBySearch = async (
       whereClause.price = { [Op.between]: [5000, 30000] };
     }
   }
-  console.log(whereClause)
+  console.log(whereClause);
 
   let bookBySearch = await Book.findAll({
     where: whereClause,
   });
-  
+
   if (orderTitle || orderPrice || orderStock || page || limit)
     return wildcardFilterAndPagination(
       bookBySearch,
@@ -174,51 +174,32 @@ const postBook = async (
   authors,
   genre
 ) => {
-  //transaction creation
-  const transaction = await conn.transaction();
+  const { secure_url } = await cloudinary.uploader.upload(bookPic, {
+    upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
+    /* resource_type: "image",
+    folder: "books",
+    public_id: "private_image",
+    type: "private", */
+  });
 
-  try {
-    let newBook = await Book.create(
-      {
-        title,
-        subtitle,
-        publishedDate,
-        publisher,
-        description,
-        pages,
-        averageRating,
-        usersRating,
-        identifier,
-        bookPic,
-        price,
-        stock,
-        authors,
-        genre,
-      },
-      { transaction }
-    );
-
-    if (bookPic) {
-      const { secure_url } = await cloudinary.uploader.upload(bookPic, {
-        upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
-        /* resource_type: "image",
-        folder: "books",
-        public_id: "private_image",
-        type: "private", */
-      });
-      newBook.set({ bookPic: secure_url });
-
-      await newBook.save();
-    }
-    // inserting the data if the whole process was successful
-    await transaction.commit();
-
-    return newBook;
-
-  } catch (error) {
-    // await transaction.rollback();
-    throw Error(error.message);
-  }
+  const newBook = await Book.create({
+    title,
+    subtitle,
+    publishedDate,
+    publisher,
+    description,
+    pages,
+    averageRating,
+    usersRating,
+    identifier,
+    bookPic: secure_url, // Guarda la URL segura en el atributo bookPic
+    price,
+    stock,
+    authors,
+    genre,
+  });
+  
+  return newBook;
 };
 
 const putBook = async (

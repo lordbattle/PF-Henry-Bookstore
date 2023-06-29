@@ -8,6 +8,10 @@ const useFilters = () => {
     price: 0,
     genre: "all",
     author: "all",
+    page: 1,
+    limit: 10,
+    orderPrice:0,
+    orderTitle: 0
   });
 
   const dispatch = useDispatch();

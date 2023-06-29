@@ -56,7 +56,7 @@ export const getBooksByFilters = (obj) => {
     //price no funciona
     //rating no funciona
     try {
-      let url = "/books?";
+      let url = "/books/?";
 
       if (obj.author !== "all") {
         url += `author=${obj.author}&`;
@@ -66,14 +66,12 @@ export const getBooksByFilters = (obj) => {
         url += `genre=${obj.genre}&`;
       }
 
-      if (obj.price !== 0) {
+      if (obj.price !== "all") {
         url += `price=${obj.price}&`;
       }
 
       // Remove trailing '&' from the URL
       url = url.slice(0, -1);
-
-      console.log(url);
 
       const { data } = await axios.get(url);
       console.log("filtros data", data);
@@ -113,6 +111,7 @@ export const postBooks = (payload) => {
     }
   };
 };
+
 
 export const activeBook = (idBook)=>{
   return async ()=>{

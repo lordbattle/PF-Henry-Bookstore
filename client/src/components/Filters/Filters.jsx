@@ -2,8 +2,11 @@ import { useSelector } from "react-redux";
 
 const Filters = (props) => {
   const { books } = useSelector((state) => state);
-
+  const dataCopy = books.slice();
   const { setFilters } = props;
+
+  //sirve para cargar el la copia del array y despues desmotar el aray original.
+
   const handleChangeGenre = (e) => {
     setFilters((prevState) => ({
       ...prevState,
@@ -32,9 +35,7 @@ const Filters = (props) => {
     }));
   };
 
-  // ESTO ES LO QUE SE FILTRARA books?title=ha&author=li&genre=Not&price=15
-
-  //! PRICE Y RAIATING no funcionan se corrigen en el back
+  // ESTO ES LO QUE SE FILTRARA http://localhost:3001/books/?title=&author=&genre=&page=1&limit=10&orderPrice=desc&orderTitle=desc
 
   function propertiesGenres(array) {
     const resultado = [];
@@ -73,7 +74,6 @@ const Filters = (props) => {
               .slice(0, 2)
               .filter((char) => char !== ".")
               .join(" ")
-              
         )
       ) {
         resultado.push({
@@ -86,23 +86,36 @@ const Filters = (props) => {
     return resultado;
   }
 
-  const newArrayGenres = propertiesGenres(books);
+  const newArrayGenres = propertiesGenres(dataCopy);
 
-  const newArrayAuthors = propertiesAuthors(books);
+  const newArrayAuthors = propertiesAuthors(dataCopy);
 
   return (
     <section className="d-flex justify-content-evenly py-3">
       <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="rating">Rating</label>
+        <label htmlFor="title">Order Title</label>
         <select
-          id="rating"
-          name="rating"
+          id="title"
           className="bg-dark py-1 px-2"
           onChange={handleChangeRating}
         >
-          <option value="all">ALL</option>
-          <option value="Mayor">Mayor a Menor</option>
-          <option value="Menor">Menor a Mayor</option>
+          <option value="0">ALL</option>
+          <option value="asc">Mayor a Menor</option>
+          <option value="desc">Menor a Mayor</option>
+        </select>
+      </div>
+      <div className="d-flex gap-2 align-items-center">
+        <label htmlFor="price">Order Price</label>
+        <select
+          id="price"
+          name="price"
+          className="bg-dark py-1 px-2"
+          onChange={handleChangePrice}
+        >
+          <option value={0}>ALL</option>
+
+          <option value="asc">Ascendente</option>
+          <option value="desc">Desendente</option>
         </select>
       </div>
       <div className="d-flex gap-2 align-items-center">
@@ -121,20 +134,6 @@ const Filters = (props) => {
         </select>
       </div>
 
-      <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="price">Price</label>
-        <select
-          id="price"
-          name="price"
-          className="bg-dark py-1 px-2"
-          onChange={handleChangePrice}
-        >
-          <option value={0}>ALL</option>
-
-          <option value="asc">Ascendente</option>
-          <option value="desc">Desendente</option>
-        </select>
-      </div>
       <div className="d-flex gap-2 align-items-center">
         <label htmlFor="genre">Genre</label>
         <select

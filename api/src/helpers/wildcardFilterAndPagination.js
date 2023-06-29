@@ -1,31 +1,53 @@
-const wildcardFilterAndPagination = (wildcard, order, page, limit, price, stock) => {
-  if (order) {
-    if (price) {
-      switch (order) {
-        case "asc":
-          wildcard.sort((a, b) => a.price - b.price);
-          break;
-        default:
-          wildcard.sort((a, b) => a.price - b.price).reverse();
-          break;
+const wildcardFilterAndPagination = (
+  wildcard,
+  orderTitle,
+  orderPrice,
+  orderStock,
+  page,
+  limit,
+) => {
+  console.log("probando funcion helper");
+
+  wildcard.sort((a, b) => {
+    if (orderPrice === "asc") {
+      if (a.price !== b.price) {
+        return a.price - b.price;
+      } else {
+        // If prices are the same, sort by title
+        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
       }
-    } else {
-      switch (order) {
-        case "asc":
-          wildcard.sort((a, b) =>
-            a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-          );
-          break;
-        default:
-          wildcard
-            .sort((a, b) =>
-              a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-            )
-            .reverse();
-          break;
+    } else if (orderPrice === "desc") {
+      if (a.price !== b.price) {
+        return b.price - a.price;
+      } else {
+        // If prices are the same, sort by title
+        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
       }
     }
-  }
+
+    if (orderStock === "asc") {
+      if (a.stock !== b.stock) {
+        return a.stock - b.stock;
+      } else {
+        // If stock are the same, sort by title
+        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+      }
+    } else if (orderStock === "desc") {
+      if (a.stock !== b.stock) {
+        return b.stock - a.stock;
+      } else {
+        // If stock are the same, sort by title
+        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+      }
+    }
+
+    // Order title
+    if (orderTitle === "asc") {
+      return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+    } else if (orderTitle === "desc") {
+      return b.title.toLowerCase().localeCompare(a.title.toLowerCase());
+    }
+  });
 
   if (page && limit) {
     const pageInt = Number(page);

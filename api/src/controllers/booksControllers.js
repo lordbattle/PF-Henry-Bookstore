@@ -1,12 +1,15 @@
 const axios = require("axios");
 require("dotenv").config();
 const { API_KEY, API_URL } = process.env;
-const { User, Book, Genre, Author, ReviewStore } = require("../db");
+const { User, Book, Genre, Author, ReviewStore, conn } = require("../db");
 const {
   wildcardFilterAndPagination,
 } = require("../helpers/wildcardFilterAndPagination");
 const crypto = require("crypto");
 const { Op } = require("sequelize");
+const { API_CLOUDINARY_BOOKS_UPLOAD_PRESET } = process.env;
+
+const { cloudinary } = require("../services/cloudinaryService");
 
 const saveAllBooksDb = async () => {
   try {
@@ -44,7 +47,7 @@ const saveAllBooksDb = async () => {
       for (let i = 0; i < allBooksApi.items?.length; i++) {
         console.log(index, i, allBooksApi.items[i].volumeInfo.title);
 
-        //Se crea el libro
+        //Create book
         const newBook = await Book.findOrCreate({
           where: {
             title: allBooksApi.items[i].volumeInfo.title.slice(0, 50),
@@ -100,7 +103,9 @@ const getBookBySearch = async (
   title,
   author,
   genre,
-  order,
+  orderTitle,
+  orderPrice,
+  orderStock,
   page,
   limit,
   price,
@@ -119,12 +124,32 @@ const getBookBySearch = async (
     whereClause.genre = { [Op.iLike]: "%" + genre + "%" };
   }
 
+  if (price) {
+    if (Number(price) === 1) {
+      whereClause.price = { [Op.between]: [0, 500] };
+    } else if (Number(price) === 2) {
+      whereClause.price = { [Op.between]: [500, 5000] };
+    } else if (Number(price) === 3) {
+      whereClause.price = { [Op.between]: [5000, 30000] };
+    }
+  }
+
   let bookBySearch = await Book.findAll({
     where: whereClause,
   });
-
-  if (order || page || limit)
-    return wildcardFilterAndPagination(bookBySearch, order, page, limit, price, stock);
+  console.log("hola");
+  console.log(bookBySearch.length);
+  if (orderTitle || orderPrice || orderStock || page || limit)
+    return wildcardFilterAndPagination(
+      bookBySearch,
+      orderTitle,
+      orderPrice,
+      orderStock,
+      page,
+      limit,
+      price,
+      stock
+    );
   else return bookBySearch;
 };
 
@@ -148,23 +173,50 @@ const postBook = async (
   authors,
   genre
 ) => {
-  let newBook = await Book.create({
-    title,
-    subtitle,
-    publishedDate,
-    publisher,
-    description,
-    pages,
-    averageRating,
-    usersRating,
-    identifier,
-    bookPic,
-    price,
-    stock,
-    authors,
-    genre,
-  });
-  return newBook;
+  //transaction creation
+  const transaction = await conn.transaction();
+
+  try {
+    let newBook = await Book.create(
+      {
+        title,
+        subtitle,
+        publishedDate,
+        publisher,
+        description,
+        pages,
+        averageRating,
+        usersRating,
+        identifier,
+        bookPic,
+        price,
+        stock,
+        authors,
+        genre,
+      },
+      // { transaction }
+    );
+
+    // if (bookPic) {
+    //   const { secure_url } = await cloudinary.uploader.upload(bookPic, {
+    //     upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
+    //     /* resource_type: "image",
+    //     folder: "books",
+    //     public_id: "private_image",
+    //     type: "private", */
+    //   });
+    //   newBook.set({ bookPic: secure_url });
+
+    //   await newBook.save();
+    // }
+    //inserting the data if the whole process was successful
+    // await transaction.commit();
+
+    return newBook;
+  } catch (error) {
+    // await transaction.rollback();
+    throw Error(error.message);
+  }
 };
 
 const putBook = async (

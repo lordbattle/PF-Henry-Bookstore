@@ -17,7 +17,7 @@ const Home = () => {
     <div className="d-flex flex-column">
       <Filters setFilters={setFilters} />
       <Card currentBooks={allBooks} />
-      <div className="d-flex justify-content-center p-2">
+      <div className="d-flex justify-content-center py-2">
       <Pagination
         currentPage={currentPage}
         

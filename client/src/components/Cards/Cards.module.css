@@ -1,5 +1,5 @@
 .main{
-    border: 1px rgb(103, 103, 103) solid;
+    border: 1px #7097d1 solid;
     border-radius: 7px;
     width: 24.54%;
     display: flex;
@@ -7,7 +7,7 @@
     justify-content: center;
     padding: 10px;
     margin: 3px;
-    background-color: rgb(123, 123, 123);
+    background-color: #b7cff4;
 }
 
 
@@ -23,14 +23,14 @@
 }
 
 .read{
-    background-color: rgb(48, 48, 48);
+    background-color: #84b6f4;
     border-radius: 5px;
     padding: 2px;
     width: 100%;
 }
 
 .read:hover{
-    color: black;
-    background-color: #e37714;
+    color: white;
+    background-color: #4d82bc;
     box-shadow: 4px 4px 3px black;
 }

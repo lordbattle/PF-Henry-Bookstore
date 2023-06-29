@@ -4,13 +4,13 @@
     padding-left: 60px;
     padding-right: 60px;
     border-radius: 20px;
-    background-color: #24242c;
+    background-color: #71a5e5;
     width: 75%;
     margin-left: 12.5%;
 }
 
 .container{
-    background-color: #e37714;
+    background-color: #b7cff4;
     border-radius: 20px;
     margin: 15px;
     padding: 20px;
@@ -22,7 +22,9 @@
 }
 
 .deleteButtom{
-    background-color: rgb(48, 48, 48);
+    background-color: #71a5e5;
+    border: none;
+    border-radius: 5px;
 }
 
 .deleteButtom:hover{
@@ -42,11 +44,11 @@ p{
 }
 
 .back{
-    background-Color: rgb(48, 48, 48);
+    background-Color: #71a5e5;
     border-radius: 5px;
     width: 75vh;
     margin-left: 25vh;
-    color: white; 
+    color: black; 
     font-Size: 20px;
     text-align: center;
     text-decoration: none;
@@ -55,6 +57,27 @@ p{
 .back:hover{
     box-shadow: 3px 3px 3px black;
     border: 1px black;
-    color: black;
-    background-color: #f49336;
+    color: white;
+    background-color: #4d82bc;
+}
+
+.cancel{
+    border: none;
+    background-color: #71a5e5;
+    border-radius: 5px;
+
+    &:hover{
+        color: red;
+        box-shadow: 3px 3px 3px black;
+    }
+}
+
+.update{
+    border: none;
+    background-color: #71a5e5;
+    border-radius: 5px;
+
+    &:hover{
+        box-shadow: 3px 3px 3px black;
+    }
 }

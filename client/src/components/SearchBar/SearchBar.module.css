@@ -15,10 +15,16 @@
     border: none;
     border-radius: 8px;
     color: black;
+    outline: none;
 }
+
 
 .btn{
     border: none;
-    border-radius: 8px;
-    background-color: gray;
+    border-radius: 7px;
+    background-color: #5088cc;
+}
+
+.btn:hover{
+    background-color: #3874be;
 }

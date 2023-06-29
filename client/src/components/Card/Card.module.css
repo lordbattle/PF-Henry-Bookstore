@@ -1,11 +1,11 @@
 .main{
     display: flex;
     flex-wrap: wrap;
-    width: 70%;
-    margin-left: 15%;
+    width: 100%;
+     
     background-color: red;
     border-radius: 8px;
-    padding: 5px;
-    gap: 0.01em;
-    justify-content:center;
+    
+    gap: 2em;
+    justify-content:space-around;
 }

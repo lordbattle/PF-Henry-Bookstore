@@ -15,11 +15,11 @@ const AddBookForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
+    const files = data.bookPic;
     const bookData = {
       ...data,
-      bookPic: data.bookPic || "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
+      bookPic: files[0].name || "https://previews.123rf.com/images/tackgalichstudio/tackgalichstudio1411/tackgalichstudio141100020/33575659-s%C3%ADmbolo-de-libro-sobre-fondo-gris.jpg",
     };
-
     dispatch(postBooks(bookData));
     alert("Book added successfully");
   };
@@ -79,12 +79,12 @@ const AddBookForm = () => {
           <div className={style.inputContainer}>
             <input
               type="text"
-              name="identifier"              
+              name="identifier"
               placeholder="Insert the 13 digits"
+              maxLength='13'
               {...register("identifier", {
                 required: true,
                 pattern: /^[0-9]+$/,
-                maxLength: 13,
               })}
             />
             <label>Identifier:</label>
@@ -110,15 +110,14 @@ const AddBookForm = () => {
             <label>Genres:</label>
             {errors.genre && <p>Genre is required</p>}
           </div>
-          <div className={style.inputContainerImage} onClick={handleImageClick}>
+          <div className={style.inputContainerImage} >
             <label>Image:</label>
-            {/* <input type="url" name="bookPic" value={book.bookPic} onChange={handleChange} required /> */}
-            <input type="file" name='bookPic' accept="image/*" ref={inputRef}   {...register("bookPic")} style={{ display: 'none' }} />
-            {imageUpload ?
+            <input type="file" className={style.uploadImageInput} name='bookPic' accept="image/*"    {...register("bookPic")} />
+            {/* {imageUpload ?
               <img src={URL.createObjectURL(imageUpload)} style={{ borderRadius: '10%', boxShadow: '0 0 8px black' }} width={70} height={70} alt={file} />
               :
               <MdCloudUpload color="#1475cf" size={40} />
-            }
+            } */}
           </div>
         </div>
         <button type="submit" className={style.buttonBook}></button>
@@ -126,7 +125,7 @@ const AddBookForm = () => {
 
         <div className={style.containerSubDos}>
           <div className={style.inputContainer}>
-            <select
+            <select className={style.selectInput}
               name="publishedDate"
               placeholder="Insert book"
               {...register("publishedDate", { required: true })}
@@ -169,12 +168,12 @@ const AddBookForm = () => {
           </div>
           <div className={style.inputContainer}>
             <input
-             type="number"
-             name="usersRating"
-             min="0"
-             max="5"
-             step="1"
-             {...register("usersRating", { required: true })}
+              type="number"
+              name="usersRating"
+              min="0"
+              max="5"
+              step="1"
+              {...register("usersRating", { required: true })}
             />
             <label>Users Rating:</label>
             {errors.usersRating && <p>Users Rating is required</p>}

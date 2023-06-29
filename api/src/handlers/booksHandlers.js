@@ -7,9 +7,7 @@ const {
   putBook,
   deleteBook,
 } = require("../controllers/booksControllers");
-const { API_CLOUDINARY_BOOKS_UPLOAD_PRESET } = process.env;
-
-const { cloudinary } = require("../services/cloudinaryService");
+const fs = require("fs-extra");
 
 //Save API data in the DB
 //saveAllBooksDb();
@@ -100,12 +98,12 @@ const postBooksHandler = async (req, res) => {
     averageRating,
     usersRating,
     identifier,
-    bookPic,
     price,
     stock,
     authors,
     genre,
   } = req.body;
+  //const bookPic = req.file.path
   try {
     const newBook = await postBook(
       title,
@@ -117,12 +115,13 @@ const postBooksHandler = async (req, res) => {
       averageRating,
       usersRating,
       identifier,
-      bookPic,
+      req.file.path,
       price,
       stock,
       authors,
       genre
     );
+    await fs.unlink(req.file.path);
     res.status(200).json(newBook);
   } catch (error) {
     res.status(400).json({ error: error.message });

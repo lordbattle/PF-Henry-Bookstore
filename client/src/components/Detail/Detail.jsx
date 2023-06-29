@@ -80,79 +80,109 @@ const Detail = () =>{
             <div className={style.advancedDetail}>
 
            {isEditing && (
-                <>
-            <input
-            placeholder="TITLE"
-                type="text"
-                name="title"
-                value={editedProduct.title}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="SUBTITLE"
-                type="text"
-                name="subtitle"
-                value={editedProduct.subtitle}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="PRICE"
-                type="number"
-                name="price"
-                value={editedProduct.price}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="STOCK"
-                type="number"
-                name="stock"
-                value={editedProduct.stock}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="AUTHOR'S"
-                type="text"
-                name="authors"
-                value={editedProduct.authors}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="GENRES"
-                type="text"
-                name="genre"
-                value={editedProduct.genre}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="IDENTIFIER"
-                type="text"
-                name="identifier"
-                value={editedProduct.identifier}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="PUBLISHER"
-                type="text"
-                name="publisher"
-                value={editedProduct.publisher}
-                onChange={handleInputChange}
-            />
-            <input
-            placeholder="PUBLISHED DATE"
-                type="text"
-                name="publishedDate"
-                value={editedProduct.publishedDate}
-                onChange={handleInputChange}
-            />
-            <textarea
-            placeholder="DESCRIPTION"
-                name="description"
-                value={editedProduct.description}
-                onChange={handleInputChange}
-            />
-            <button onClick={handleEditProduct}>Update product</button>
-            <button onClick={()=>setIsEditing(false)}>Cancel update</button>
-            </>)}
+                <div className="d-flex flex-column">
+            <label style={{fontSize: '23px'}}>Title:
+                <input
+                placeholder="TITLE"
+                    type="text"
+                    name="title"
+                    value={editedProduct.title}
+                    onChange={handleInputChange}
+                    style={{minWidth: '20rem'}}
+                />
+            </label>
+            <label style={{fontSize: '20px'}}>Subtitle:
+                <input
+                placeholder="SUBTITLE"
+                    type="text"
+                    name="subtitle"
+                    value={editedProduct.subtitle}
+                    onChange={handleInputChange}
+                    style={{minWidth: '20rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Price:
+                <input
+                placeholder="PRICE"
+                    type="number"
+                    name="price"
+                    value={editedProduct.price}
+                    onChange={handleInputChange}
+                    style={{maxWidth: '5rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Stock:
+                <input
+                placeholder="STOCK"
+                    type="number"
+                    name="stock"
+                    value={editedProduct.stock}
+                    onChange={handleInputChange}
+                    style={{maxWidth: '3.5rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Author's:
+                <input
+                placeholder="AUTHOR'S"
+                    type="text"
+                    name="authors"
+                    value={editedProduct.authors}
+                    onChange={handleInputChange}
+                    style={{minWidth: '20rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Genres:
+                <input
+                placeholder="GENRES"
+                    type="text"
+                    name="genre"
+                    value={editedProduct.genre}
+                    onChange={handleInputChange}
+                    style={{minWidth: '20rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Identifier:
+                <input
+                placeholder="IDENTIFIER"
+                    type="text"
+                    name="identifier"
+                    value={editedProduct.identifier}
+                    onChange={handleInputChange}
+                    style={{maxWidth: '8rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Publisher:
+                <input
+                placeholder="PUBLISHER"
+                    type="text"
+                    name="publisher"
+                    value={editedProduct.publisher}
+                    onChange={handleInputChange}
+                    style={{minWidth: '20rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Published date:
+                <input
+                placeholder="PUBLISHED DATE"
+                    type="text"
+                    name="publishedDate"
+                    value={editedProduct.publishedDate}
+                    onChange={handleInputChange}
+                    style={{maxWidth: '3rem'}}
+                />
+            </label>
+            <label style={{fontSize: '18px'}}>Description:</label>
+                <textarea
+                placeholder="DESCRIPTION"
+                    name="description"
+                    value={editedProduct.description}
+                    onChange={handleInputChange}
+                /><br/>
+            <div className="d-flex justify-content-around">
+            <button className={style.cancel} onClick={()=>setIsEditing(false)}>Cancel update</button>
+            <button className={style.update} onClick={handleEditProduct}>Update product</button>
+            </div>
+            </div>)}
             
            {!isEditing && (
             <>

@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from '../Cards/Cards.module.css'
 import {Link} from "react-router-dom" 
 
 const Cards = (props) => {
+
+  const handlerCart = () => {
+
+      const newItem = {
+        id: props.id,
+        img: props.imageLinks,
+        title: props.title,
+        price: props.price,
+        stock: 1,
+      };
+      props.addToCart(newItem)
+      console.log("ENTREA NEW ITEM", newItem)
+    
+  }
+
   if (props.active === true) {
     return (
       <div className={style.main} style={{marginLeft: '15px 20px'}}>
@@ -26,6 +41,7 @@ const Cards = (props) => {
           <Link to={`/detail/${props.id}`} style={{display: 'flex', justifyContent:'center', textDecoration: 'none', width: 'auto'}}>
             <span className={style.read} style={{display: 'flex', justifyContent:'center'}}>Read more</span>
           </Link>
+          <span onClick={handlerCart} className={style.read} style={{display: 'flex', marginTop:'1vh', justifyContent:'center'}}>Add to cart</span>
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>
       </div>

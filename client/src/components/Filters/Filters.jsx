@@ -20,7 +20,7 @@ const Filters = (props) => {
       price: 0,
       genre: "all",
       author: "all",
-      limit: 30,
+      limit: 10,
       orderPrice: "neu",
       orderTitle: "neu",
     });

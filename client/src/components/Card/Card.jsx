@@ -1,22 +1,21 @@
-import {useDispatch} from "react-redux"
-import { useEffect } from "react"
-import { getBooks } from "../../redux/actions"
-import Cards from "../Cards/Cards"
-import style from '../Card/Card.module.css'
-const Card = ({currentBooks}) =>{
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getBooks } from "../../redux/actions";
+import Cards from "../Cards/Cards";
+import style from "../Card/Card.module.css";
+const Card = ({ currentBooks }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getBooks());
+  }, [dispatch]);
 
-    const dispatch = useDispatch()
-    useEffect(()=>{
-        dispatch(getBooks())
-    }, [dispatch])
-    
-    return (
-      <div className={style.main}>
-        {currentBooks.length > 0 ? (
-          currentBooks.map((v) => {
-           return (
+  return (
+    <div className={style.main}>
+      {currentBooks.length > 0
+        ? currentBooks.map((v) => {
+            return (
               <Cards
-              active={v.active}
+                active={v.active}
                 key={v.id}
                 id={v.id}
                 title={v.title}
@@ -26,17 +25,14 @@ const Card = ({currentBooks}) =>{
                 imageLinks={v.bookPic}
                 price={v.price}
                 stock={v.stock}
-                
+
                 // Otras propiedades de volumeInfo que desees utilizar
               />
             );
           })
-        ) : (
-          console.log("LOG DEL ERROR", currentBooks)
-        )}
-      </div>
-    );
-    
-}
+        : console.log("LOG DEL ERROR", currentBooks)}
+    </div>
+  );
+};
 
-export default Card
+export default Card;

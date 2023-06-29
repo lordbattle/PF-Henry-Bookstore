@@ -1,11 +1,12 @@
 
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ currentPage, onPageChange }) => {
   const pageNumbers = [];
   const maxPageDisplay = 10; // Número máximo de páginas a mostrar en la paginación
+  const totalPages = 10;
 
   // Generar los números de página
-  for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+  for (let i = 1; i <= Math.min(totalPages, maxPageDisplay); i++) {
     pageNumbers.push(i);
   }
 
@@ -19,20 +20,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         </li>
       )}
 
-      {currentPage > maxPageDisplay && (
-        <li className="page-item">
-          <button className="page-link" onClick={() => onPageChange(1)}>
-            1
-          </button>
-        </li>
-      )}
-
-      {currentPage > maxPageDisplay && (
-        <li className="page-item disabled">
-          <span className="page-link">...</span>
-        </li>
-      )}
-
       {pageNumbers.map((pageNumber) => (
         <li
           key={pageNumber}
@@ -43,20 +30,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           </button>
         </li>
       ))}
-
-      {currentPage < totalPages - maxPageDisplay + 1 && (
-        <li className="page-item disabled">
-          <span className="page-link">...</span>
-        </li>
-      )}
-
-      {currentPage < totalPages - maxPageDisplay + 1 && (
-        <li className="page-item">
-          <button className="page-link" onClick={() => onPageChange(totalPages)}>
-            {totalPages}
-          </button>
-        </li>
-      )}
 
       {currentPage < totalPages && (
         <li className="page-item">

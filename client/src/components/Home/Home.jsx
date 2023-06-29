@@ -10,9 +10,9 @@ const Home = () => {
   const allBooks = useSelector((state) => state.books);
   const { setFilters, setCurrentPage, currentPage } = useFilters();
 
-  const librosPorPag = 10;
+  //const librosPorPag = 10;
 
-
+//totalPages={Math.ceil(allBooks.length / librosPorPag)}
   return (
     <div className="d-flex flex-column">
       <Filters setFilters={setFilters} />
@@ -20,7 +20,7 @@ const Home = () => {
       <div className="d-flex justify-content-center p-2">
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(allBooks.length / librosPorPag)+28}
+        
         onPageChange={setCurrentPage}
       />
       </div>

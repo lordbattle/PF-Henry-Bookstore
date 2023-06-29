@@ -12,14 +12,19 @@ const Card = ({ currentBooks }) => {
   useEffect(()=>{
     //almacena en el localstorage
     localStorage.setItem("cart", JSON.stringify(cart))
-  })
+  },[cart])
 
   useEffect(()=>{
     ///LEE el carrito almacenado en localstorage
-    const storedCart = localStorage.getItem("cart");
+    try {
+       const storedCart = localStorage.getItem("cart");
     if(storedCart){
       setCart(JSON.parse(storedCart))
     }
+    } catch (error) {
+      console.log(`ERROR DEL getItem de storedCart ${error}`)
+    }
+   
   }, [])
 
   const addToCart = (newItem)=>{

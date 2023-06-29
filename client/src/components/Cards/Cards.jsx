@@ -14,6 +14,7 @@ const Cards = (props) => {
         stock: 1,
       };
       props.addToCart(newItem)
+      console.log("ENTREA NEW ITEM", newItem)
     
   }
 

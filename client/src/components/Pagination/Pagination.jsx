@@ -1,6 +1,9 @@
 
 
 const Pagination = ({ currentPage, onPageChange }) => {
+
+  
+
   const pageNumbers = [];
   const maxPageDisplay = 10; // Número máximo de páginas a mostrar en la paginación
   const totalPages = 10;

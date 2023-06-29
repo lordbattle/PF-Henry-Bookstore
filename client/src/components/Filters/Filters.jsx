@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 const Filters = (props) => {
   const { books } = useSelector((state) => state);
-  const dataCopy = books.slice();
+  
   const { setFilters } = props;
 
   //sirve para cargar el la copia del array y despues desmotar el aray original.
@@ -108,9 +108,9 @@ const Filters = (props) => {
     return resultado;
   }
 
-  const newArrayGenres = propertiesGenres(dataCopy);
+  const newArrayGenres = propertiesGenres(books);
 
-  const newArrayAuthors = propertiesAuthors(dataCopy);
+  const newArrayAuthors = propertiesAuthors(books);
 
   return (
     <section className="d-flex justify-content-evenly py-3">

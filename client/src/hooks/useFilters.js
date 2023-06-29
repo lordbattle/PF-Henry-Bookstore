@@ -28,6 +28,9 @@ const useFilters = () => {
     filtersBooks(filters);
   }, [currentPage, filters]);
 
+ /*  const filtLimit = filters.limit / 10;
+  console.log(filtLimit); */
+
   return { setFilters, setCurrentPage, currentPage };
 };
 

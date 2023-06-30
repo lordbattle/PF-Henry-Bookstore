@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
+import set from "./Filters.module.css";
 
 const Filters = (props) => {
   const { books } = useSelector((state) => state);
-  
+
   const { setFilters } = props;
 
   //sirve para cargar el la copia del array y despues desmotar el aray original.
@@ -113,15 +114,20 @@ const Filters = (props) => {
   const newArrayAuthors = propertiesAuthors(books);
 
   return (
-    <section className="d-flex justify-content-evenly py-3">
+    <section
+      style={{ background: "#7097d1" }}
+      className="d-flex flex-column align-items-center h-25 py-3"
+    >
       <div className="d-flex gap-2 align-items-center">
-        <button className="bg-dark py-1 px-2" onClick={btnReset}>Reset</button>
+        <button className="bg-dark py-1 px-2" onClick={btnReset}>
+          Reset
+        </button>
       </div>
-      <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="title">Authors</label>
-        <select
+      <div className="d-flex gap-2 flex-column">
+        <label>Authors</label>
+        <section
           id="title"
-          className="bg-dark py-1 px-2"
+          className="bg-dark py-1 px-2 "
           onChange={handleChangeAuthors}
         >
           <option value="all">ALL</option>
@@ -139,60 +145,101 @@ const Filters = (props) => {
               {item.author.toUpperCase()}
             </option>
           ))}
-        </select>
+        </section>
       </div>
-      <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="price">Price</label>
-        <select
-          id="price"
-          className="bg-dark py-1 px-2"
-          onChange={handleChangePrice}
-        >
-          <option value={0}>Everything</option>
-          <option value={1}>Hasta 500</option>
-          <option value={2}>500 - 5000</option>
-          <option value={3}>Mas de 5000</option>
-        </select>
+      <div className="d-flex gap-2 align-items-center my-3 ">
+        <section className="py-1 px-2">
+          <label className="text-white fs-5">Price</label>
+          <div className={set.hover_options}>
+            <option
+              className="text-white border-bottom border-white border-opacity-50 py-1"
+              value={0}
+              onClick={(e) => handleChangePrice(e)}
+            >
+              Everything
+            </option>
+            <option
+              className="text-white border-bottom border-white border-opacity-50 py-1"
+              value={1}
+              onClick={(e) => handleChangePrice(e)}
+            >
+              Hasta $500
+            </option>
+            <option
+              className="text-white border-bottom border-white border-opacity-50 py-1"
+              value={2}
+              onClick={(e) => handleChangePrice(e)}
+            >
+              $500 - $5,000
+            </option>
+            <option
+              className="text-white py-1"
+              value={3}
+              onClick={(e) => handleChangePrice(e)}
+            >
+              Mas de $5,000
+            </option>
+          </div>
+        </section>
       </div>
-      <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="genre">Genre</label>
-        <select
-          id="genre"
-          className="bg-dark py-1 px-2"
-          onChange={handleChangeGenre}
-        >
-          <option value="all">ALL</option>
-          {newArrayGenres &&
-            newArrayGenres?.map((obj) => {
-              return (
-                <option key={obj.id} value={obj.genre}>
-                  {obj.genre.toUpperCase()}
-                </option>
-              );
-            })}
-        </select>
+      <div className="d-flex gap-2 align-items-center my-3">
+        <section id="genre" className="py-1 px-2">
+          <label className="text-white fs-5">Genre</label>
+          <div className={set.hover_options}>
+            <option
+              className="text-white border-bottom border-white border-opacity-50 py-1"
+              value="all"
+            >
+              ALL
+            </option>
+            {newArrayGenres &&
+              newArrayGenres?.map((obj) => {
+                return (
+                  <option
+                    key={obj.id}
+                    onClick={(e) => handleChangeGenre(e)}
+                    value={obj.genre}
+                    className="text-white border-bottom border-white border-opacity-50 py-1 "
+                  >
+                    {obj.genre}
+                  </option>
+                );
+              })}
+          </div>
+        </section>
       </div>{" "}
       <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="title">Order Title</label>
-        <select
-          id="title"
-          className="bg-dark py-1 px-2"
-          onChange={handleChangeOrderTitle}
-        >
-          <option value="asc">A-Z</option>
-          <option value="desc">Z-A</option>
-        </select>
+        <section className="py-1 px-2">
+          {" "}
+          <label className="text-white fs-5">Order Title</label>
+          <div className={set.hover_options}>
+            <option
+              onClick={(e) => handleChangeOrderTitle(e)}
+              value="asc"
+              className="text-white border-bottom border-white border-opacity-50 py-1 "
+            >
+              A-Z
+            </option>
+            <option
+              onClick={(e) => handleChangeOrderTitle(e)}
+              value="desc"
+              className="text-white border-bottom border-white border-opacity-50 py-1 "
+            >
+              Z-A
+            </option>
+          </div>
+        </section>
       </div>
       <div className="d-flex gap-2 align-items-center">
         <label htmlFor="Oprice">Order Price</label>
-        <select
+        <section
           id="Oprice"
-          className="bg-dark py-1 px-2"
+          className="py-1 px-2"
           onChange={handleChangeOrderPrice}
         >
           <option value="asc">Ascendente</option>
           <option value="desc">Desendente</option>
-        </select>
+        </section>
       </div>
     </section>
   );

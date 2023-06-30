@@ -1,27 +1,32 @@
-
 import Card from "../Card/Card";
+import { useRef } from 'react';
 import { useSelector } from "react-redux";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
-/* import Footer from "../Footer/Footer"; */
+
 
 const Home = () => {
   const allBooks = useSelector((state) => state.books);
   const { setFilters, setCurrentPage, currentPage } = useFilters();
+  const componentRef = useRef(null);
 
-  //const librosPorPag = 10;
-
-//totalPages={Math.ceil(allBooks.length / librosPorPag)}
+  const handleScrollUp = () => {
+    componentRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+  
+  
   return (
-    <div className="d-flex flex-column">
-      <Filters setFilters={setFilters} />
-      <Card currentBooks={allBooks} />
-      <div className="d-flex justify-content-center py-2">
+    <div className="d-flex flex-column" ref={componentRef}>
+      <div className="d-flex"><Filters setFilters={setFilters} />
+      <Card currentBooks={allBooks} /></div>
+      
+      <div className="d-flex justify-content-center p-2">
       <Pagination
         currentPage={currentPage}
-        
         onPageChange={setCurrentPage}
+        handleScrollUp={handleScrollUp}
+        componentRef={componentRef}
       />
       </div>
     </div>

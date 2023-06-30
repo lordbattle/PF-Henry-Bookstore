@@ -1,72 +1,127 @@
-import React, { useEffect, useState } from "react";
-import style from '../Cards/Cards.module.css'
-import {Link} from "react-router-dom" 
+import style from "../Cards/Cards.module.css";
+import { Link } from "react-router-dom";
 
 const Cards = (props) => {
-
   const handlerCart = () => {
-
-      const newItem = {
-        id: props.id,
-        img: props.imageLinks,
-        title: props.title,
-        price: props.price,
-        stock: 1,
-      };
-      props.addToCart(newItem)
-      console.log("ENTREA NEW ITEM", newItem)
-    
-  }
+    const newItem = {
+      id: props.id,
+      img: props.imageLinks,
+      title: props.title,
+      price: props.price,
+      stock: 1,
+    };
+    props.addToCart(newItem);
+    console.log("ENTREA NEW ITEM", newItem);
+  };
 
   if (props.active === true) {
     return (
-      <div className={style.main} style={{marginLeft: '15px 20px'}}>
+      <main className={style.main} style={{ marginLeft: "15px 20px" }}>
         <div className={style.container}>
-          <img style={{
-            maxWidth: '100%',
-            maxHeight: '300vh',
+          <img
+            style={{
+              maxWidth: "100%",
+              maxHeight: "300vh",
 
-            width: '30em',
-            height: '20em',
-            }} src={props.imageLinks} alt="" className={style.img}/>
+              width: "30em",
+              height: "20em",
+            }}
+            src={props.imageLinks}
+            alt=""
+            className={style.img}
+          />
 
-          <h3 className={style.title} style={{
-            minHeight: '40px'
-          }}>{props.title}</h3>
-          <p style={{minHeight: '50px'}}>Authors: {props.authors}</p>
-          <p style={{minHeight: '55px'}}>Categories: {props.categories}</p>
+          <h3
+            className={style.title}
+            style={{
+              minHeight: "40px",
+            }}
+          >
+            {props.title}
+          </h3>
+          <p style={{ minHeight: "50px" }}>Authors: {props.authors}</p>
+          <p style={{ minHeight: "55px" }}>Categories: {props.categories}</p>
           <p>Price: ${props.price}</p>
           <p>Stock: {props.stock}</p>
-          <p>Rating: {props.averageRating}</p> 
-          <Link to={`/detail/${props.id}`} style={{display: 'flex', justifyContent:'center', textDecoration: 'none', width: 'auto'}}>
-            <span className={style.read} style={{display: 'flex', justifyContent:'center'}}>Read more</span>
+          <p>Rating: {props.averageRating}</p>
+          <Link
+            to={`/detail/${props.id}`}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              textDecoration: "none",
+              width: "auto",
+            }}
+          >
+            <span
+              className={style.read}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              Read more
+            </span>
           </Link>
-          <span onClick={handlerCart} className={style.read} style={{display: 'flex', marginTop:'1vh', justifyContent:'center'}}>Add to cart</span>
+          <span
+            onClick={handlerCart}
+            className={style.read}
+            style={{
+              display: "flex",
+              marginTop: "1vh",
+              justifyContent: "center",
+            }}
+          >
+            Add to cart
+          </span>
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>
-      </div>
+      </main>
     );
   } else {
     return (
-      <div className={style.main} style={{marginLeft: '15px 20px', backgroundColor: 'red'}}>
+      <div
+        className={style.main}
+        style={{ marginLeft: "15px 20px", backgroundColor: "red" }}
+      >
         <div className={style.container}>
-          <img style={{
-            maxWidth: '100%',
-            maxHeight: '300vh',
-            width: '250px',
-            height: '250px',
-          }} src={props.imageLinks} alt="" className={style.img}/>
-          <h3 className={style.title} style={{
-            minHeight: '40px'
-          }}>{props.title}</h3>
-          <p style={{minHeight: '50px'}}>Authors: {props.authors}</p>
-          <p style={{minHeight: '55px'}}>Categories: {props.categories}</p>
+          <img
+            style={{
+              maxWidth: "100%",
+              maxHeight: "300vh",
+              width: "250px",
+              height: "250px",
+            }}
+            src={props.imageLinks}
+            alt=""
+            className={style.img}
+          />
+          <h3
+            className={style.title}
+            style={{
+              minHeight: "40px",
+            }}
+          >
+            {props.title}
+          </h3>
+          <p style={{ minHeight: "50px" }}>Authors: {props.authors}</p>
+          <p style={{ minHeight: "55px" }}>Categories: {props.categories}</p>
           <p>Price: ${props.price}</p>
           <p>Stock: {props.stock}</p>
           <p>Rating: {props.averageRating}</p>
           <h4>DISABLED PRODUCT</h4>
-          <Link to={`/detail/${props.id}`} style={{display: 'flex', justifyContent:'center', textDecoration: 'none', width: 'auto'}}>
-            <span className={style.read} style={{display: 'flex', justifyContent:'center'}}>Read more</span>
+          <Link
+            to={`/detail/${props.id}`}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              textDecoration: "none",
+              width: "auto",
+            }}
+          >
+            <span
+              className={style.read}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              Read more
+            </span>
           </Link>
           {/* Agrega más propiedades aquí según tus necesidades */}
         </div>

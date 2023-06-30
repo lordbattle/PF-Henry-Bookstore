@@ -1,8 +1,4 @@
-
-const Pagination = ({ currentPage, onPageChange }) => {
-
-  
-
+const Pagination = ({ currentPage, onPageChange, handleScrollUp, componentRef }) => {
   const pageNumbers = [];
   const maxPageDisplay = 9; // Número máximo de páginas a mostrar en la paginación
   const totalPages = 9;
@@ -16,7 +12,12 @@ const Pagination = ({ currentPage, onPageChange }) => {
     <ul className="pagination">
       {currentPage > 1 && (
         <li className="page-item">
-          <button className="page-link" onClick={() => onPageChange(currentPage - 1)}>
+          <button
+            className="page-link"
+            onClick={() => {
+              onPageChange(currentPage - 1)
+            }}
+          >
             Previous
           </button>
         </li>
@@ -25,9 +26,15 @@ const Pagination = ({ currentPage, onPageChange }) => {
       {pageNumbers.map((pageNumber) => (
         <li
           key={pageNumber}
-          className={`page-item${pageNumber === currentPage ? ' active' : ''}`}
+          className={`page-item${pageNumber === currentPage ? " active" : ""}`}
         >
-          <button className="page-link" onClick={() => onPageChange(pageNumber)}>
+          <button
+            className="page-link"
+            onClick={() => {
+              onPageChange(pageNumber);
+              handleScrollUp();
+            }}
+          >
             {pageNumber}
           </button>
         </li>
@@ -35,11 +42,18 @@ const Pagination = ({ currentPage, onPageChange }) => {
 
       {currentPage < totalPages && (
         <li className="page-item">
-          <button className="page-link" onClick={() => onPageChange(currentPage + 1)}>
+          <button
+            className="page-link"
+            onClick={() => {
+              onPageChange(currentPage + 1);
+            }}
+          >
             Next
           </button>
         </li>
       )}
+
+      <div ref={componentRef}></div>
     </ul>
   );
 };

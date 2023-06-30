@@ -37,6 +37,6 @@ export const useStorage = () =>{
         setCart([...cart, newItem]);
       }
     }
-    return {cart, addToCart}
+    return {cart, addToCart, setCart}
 }
 export default useStorage;

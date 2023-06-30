@@ -1,19 +1,19 @@
 
-import { useDispatch } from "react-redux"
+/* import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
-import { getBooks } from "../../redux/actions"
+import { getBooks } from "../../redux/actions" */
 import Cards from "../Cards/Cards"
 import style from '../Card/Card.module.css'
 import useStorage from "../LocalStorage/LocalStorage"
 
 const Card = ({ currentBooks }) => {
 
-  const {cart, addToCart} = useStorage();
+  const { addToCart} = useStorage();
 
-  const dispatch = useDispatch()
+  /* const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getBooks())
-  }, [dispatch])
+  }, [dispatch]) */
 
   return (
     <div className="d-flex justify-content-center">

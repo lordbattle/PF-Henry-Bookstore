@@ -43,7 +43,7 @@ const Nav = () => {
 
           <span className="p-2 ms-0 link-as-text">
             <Link
-            to={'PONER DONDE IR'}>
+            to={'/create'}>
             <img src='https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360' width={'25em'}></img>
             </Link>
           </span>

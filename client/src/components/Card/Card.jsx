@@ -4,45 +4,11 @@ import { useEffect, useState } from "react"
 import { getBooks } from "../../redux/actions"
 import Cards from "../Cards/Cards"
 import style from '../Card/Card.module.css'
+import useStorage from "../LocalStorage/LocalStorage"
+
 const Card = ({ currentBooks }) => {
 
-  //LOCALSTORAGE PARA EL CARRITO
-  const [cart, setCart]= useState(()=>{
-    try {
-      //lee el localStorage si tuviese info, sino array vacio
-      const storedCart = localStorage.getItem("cart");
-      return storedCart ? JSON.parse(storedCart) : []
-   }
-    catch (error) {
-     console.log(`ERROR DEL getItem de storedCart ${error}`);
-     return [];
-   }
-  })
-
-  useEffect(()=>{
-    //almacena en el localstorage
-    localStorage.setItem("cart", JSON.stringify(cart))
-  },[cart])
-
-
-  const addToCart = (newItem)=>{
-    const existingItem = cart.find((item)=> item.id === newItem.id);
-    if(existingItem){
-    const updatedCart = cart.map((item)=>{
-      if(item.id === newItem.id){
-        return {
-          ...item,
-          stock: item.stock + 1,
-        }
-      }
-      return item
-    })
-      setCart(updatedCart);
-  } else {
-    setCart([...cart, newItem]);
-  }
-}
-/////////////////////////////////
+  const {cart, addToCart} = useStorage();
 
   const dispatch = useDispatch()
   useEffect(() => {

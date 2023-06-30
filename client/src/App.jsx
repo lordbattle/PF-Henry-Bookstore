@@ -8,7 +8,7 @@ import About from "./components/About/About";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer.jsx"
-
+import Cart from "./components/Cart/Cart"
 // import { useAuth0 } from '@auth0/auth0-react'
 
 import Detail from "./components/Detail/Detail"
@@ -36,6 +36,7 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/detail/:id' element={<Detail/>}></Route>
         <Route path='/createbook' element={<AddBookForm/>}></Route>
+        <Route path='/cart' element={<Cart/>}></Route>
       </Routes>
 
       <Footer />

@@ -19,8 +19,10 @@ const AddBookForm = () => {
     
     const formData = new FormData();
     if (!file) {
+
       alert("Please select an image"); 
       return; 
+
     }
     formData.append("bookPic", file);
     formData.append("title", data.title);
@@ -42,7 +44,9 @@ const AddBookForm = () => {
       alert("Book added successfully");
     } catch (error) {
       console.log(error);
+
       setError(true); 
+
       alert("An error occurred while adding the book");
     }
   };

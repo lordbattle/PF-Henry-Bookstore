@@ -1,33 +1,45 @@
 import Card from "../Card/Card";
-import { useRef } from 'react';
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
 
-
 const Home = () => {
-  const allBooks = useSelector((state) => state.books);
+  const { books } = useSelector((state) => state);
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);
 
   const handleScrollUp = () => {
-    componentRef.current.scrollIntoView({ behavior: 'smooth' });
+    componentRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  
-  
+
+  useEffect(() => {
+    setFilters({
+      author: "all",
+      genre: "all",
+      page: 1,
+      limit: 10,
+      price: 0,
+      orderPrice: "nue",
+      orderTitle: "nue",
+    });
+  }, [setFilters]);
+
   return (
     <div className="d-flex flex-column" ref={componentRef}>
-      <div className="d-flex"><Filters setFilters={setFilters} />
-      <Card currentBooks={allBooks} /></div>
-      
+      <div className="d-flex">
+        <Filters setFilters={setFilters} />
+        <Card currentBooks={books} />
+      </div>
+
       <div className="d-flex justify-content-center p-2">
-      <Pagination
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-        handleScrollUp={handleScrollUp}
-        componentRef={componentRef}
-      />
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          handleScrollUp={handleScrollUp}
+          componentRef={componentRef}
+        />
       </div>
     </div>
   );
@@ -35,72 +47,3 @@ const Home = () => {
 
 export default Home;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*   const [currentPage, setCurrentPage] = useState(1);
-  const recetasPorPag = 20;
-
-  
-  const indexUltiJuego = currentPage * recetasPorPag;
-  const indexPrimJuego = indexUltiJuego - recetasPorPag;
-  const currentBooks = Array.isArray(allBooks)
-    ? allBooks.slice(indexPrimJuego, indexUltiJuego)
-    : []; */
-
-// //import Footer from "../Footer/Footer"
-// import Card from "../Card/Card";
-// import { useSelector } from "react-redux/es/hooks/useSelector";
-// import { useState } from "react";
-// import Filters from "../Filters/Filters";
-// import useFilters from "../../hooks/useFilters";
-// import Footer from "../Footer/Footer";
-// import Pagination from "../Pagination/Pagination";
-
-
-// const Home = () => {
-//   const allBooks = useSelector((state) => state.books);
-
-//   //no borrar esta linea porfavor
-//   const { setFilters, filtersBooks } = useFilters();
-
-//   // console.log("ALLBOKS HOME", allBooks);
-
-//   let booksFilters = filtersBooks(allBooks);
-
-//   console.log("libros filtrados",booksFilters);
-
-//   const [currentPage] = useState(1);
-//   const recetasPorPag = 20;
-//   const indexUltiJuego = currentPage * recetasPorPag;
-//   const indexPrimJuego = indexUltiJuego - recetasPorPag;
-//   const currentBooks = Array.isArray(booksFilters)
-//     ? booksFilters.slice(indexPrimJuego, indexUltiJuego)
-//     : [];
-
-//   console.log("Filtersbooks", currentBooks);
-//   return (
-//     <div className="d-flex flex-column ">
-//       <Filters setFilters={setFilters} />
-
-//       <Card currentBooks={currentBooks}></Card>
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default Home;

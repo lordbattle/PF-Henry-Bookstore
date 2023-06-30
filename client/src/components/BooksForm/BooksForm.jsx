@@ -17,6 +17,10 @@ const AddBookForm = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
+    if (!file) {
+      alert("Please select an image"); // Muestra el mensaje de error
+      return; // Detiene la ejecución del onSubmit
+    }
     formData.append("bookPic", file);
     formData.append("title", data.title);
     formData.append("subtitle", data.subtitle);
@@ -32,14 +36,14 @@ const AddBookForm = () => {
     formData.append("averageRating", data.averageRating);
     formData.append("description", data.description);
 
-    dispatch(postBooks(formData))
-      .then(() => {
-        alert("Book added successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("An error occurred while adding the book");
-      });
+    try {
+      await dispatch(postBooks(formData));
+      alert("Book added successfully");
+    } catch (error) {
+      console.log(error);
+      setError(true); // Establece la variable de estado de error a true si se produce un error
+      alert("An error occurred while adding the book");
+    }
   };
 
   const handleImageChange = (event) => {

@@ -1,10 +1,11 @@
 import { useState } from "react";
 //import { Link } from "react-router-dom";
-import { Formik } from "formik";
+import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { postUsers } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 //import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
+import { element } from "prop-types";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -15,21 +16,30 @@ const Register = () => {
   /* const userEmail = JSON.parse(localStorage.getItem("userData"));
   const userFilEmail = userEmail.email; */
 
+  const agesSelect = () => {
+    let count = [];
+    for (let i = 18; i <= 100; i++) {
+      count.push(i+'');
+    }
+    return count;
+  }
+
   return (
     <div className={style.formContainer}>
       <Formik
         initialValues={{
           userName: "",
           password: "",
-          dni: "",
-          name: "",
-          lastName: "",
-          //email: userFilEmail,
           email: "",
           age: "",
           location: "",
           genres: "",
           phone: "",
+          profilePic: '',
+
+          dni: "",
+          name: "",
+          lastName: ""
         }}
         validate={(values) => {
           let errors = {};
@@ -38,6 +48,9 @@ const Register = () => {
           } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
             errors.name =
               "The name can only have letters and spaces and length less than 20";
+          }
+          if (!values.lastName) {
+            errors.name = "Please, insert a lastName";
           }
           return errors;
         }}
@@ -64,143 +77,132 @@ const Register = () => {
             <p className={style.message}>
               Signup now and get full access to our app.
             </p>
+            <div className={style.containerNames}>
+              <label>
+                <Field
+                  placeholder=""
+                  type="text"
+                  className={style.inputNames}
+                  id="name"
+                  name="name"
+                />
+                <span>Name</span>
+              </label>
+              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.name}</div>)} />
+              <label>
+                <Field
+                  placeholder=""
+                  type="text"
+                  className={style.inputNames}
+                  id="lastName"
+                  name="lastName"
+                />
+                <span>Last name</span>
+              </label>
+              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.lastName}</div>)} />
+            </div>
+
 
             <label>
-              <input
-                required=""
-                //value={userFilEmail}
-                //readOnly
+              <Field
                 id="email"
                 name="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                type="text"
+                className={style.input}
               />
               <span>Email</span>
             </label>
+            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.email}</div>)} />
+
 
             <label>
-              <input
+              <Field
                 placeholder=""
                 type="text"
                 className={style.input}
                 id="userName"
                 name="userName"
-                value={values.userName}
-                onChange={handleChange}
-                onBlur={handleBlur}
               />
               <span>User name</span>
             </label>
+            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.userName}</div>)} />
 
             <label>
-              <input
+              <Field
                 placeholder=""
                 type="text"
                 className={style.input}
                 id="password"
                 name="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
               />
               <span>password</span>
             </label>
+            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.password}</div>)} />
 
             <label>
-              <input
-                placeholder=""
-                type="text"
-                className={style.input}
-                id="name"
-                name="name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <span>Name</span>
-            </label>
-            {touched.name && errors.name && (
-              <div className={style.error}>{errors.name}</div>
-            )}
-
-            <label>
-              <input
-                placeholder=""
-                type="text"
-                className={style.input}
-                id="lastName"
-                name="lastName"
-                value={values.lastName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <span>Last name</span>
-            </label>
-            {touched.lastName && errors.lastName && (
-              <div className={style.error}>{errors.lastName}</div>
-            )}
-
-            <label>
-              <input
-                placeholder=""
-                type="text"
-                className={style.input}
-                id="age"
-                name="age"
-                value={values.age}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <span>Age</span>
-            </label>
-
-            <label>
-              <input
+              <Field
                 required=""
                 placeholder=""
                 type="text"
                 className={style.input}
                 id="location"
                 name="location"
-                value={values.location}
-                onChange={handleChange}
-                onBlur={handleBlur}
               />
               <span>Location</span>
             </label>
+            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.location}</div>)} />
 
-            <label>
-              <input
-                required=""
-                placeholder=""
-                type="text"
-                className={style.input}
-                id="genres"
-                name="genres"
-                value={values.genres}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <span>Genres</span>
-            </label>
 
-            <label>
-              <input
-                required=""
-                placeholder=""
-                type="text"
-                className={style.input}
-                id="phone"
-                name="phone"
-                value={values.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <span>Phone</span>
-            </label>
+            <div className={style.containerNumberInfo}>
+              <label>
+                <Field
+                placeholder='+ 18'
+                  type='text'
+                  className={style.input}
+                  id="age"
+                  name="age"
+                />
+                <span>Age</span>
+              </label>
+              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.age}</div>)} />
 
-            <button className={style.submit}>Submit</button>
+
+
+              <label>
+                <Field
+                  as='select'
+                  className={style.input}
+                  id="genres"
+                  name="genres"
+                >          
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>  
+                </Field>
+
+                <span>Genres</span>
+              </label>
+              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.email}</div>)} />
+
+
+              <label>
+                <Field
+                  placeholder=" +COD xxxxxxxxxx"
+                  type="text"
+                  className={style.input}
+                  id="phone"
+                  name="phone"
+                />
+                <span>Phone</span>
+              </label>
+              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.phone}</div>)} />
+
+            </div>
+
+
+
+
+
+            <button className={style.submit}>Register</button>
             {formSubmitted && (
               <p className={style.successMessage}>
                 {formSubmitted && (

@@ -7,10 +7,12 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import About from "./components/About/About";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
+
 import Register from "./components/Register/Register";
 import Footer from "./components/Footer/Footer.jsx";
 import Cart from "./components/Cart/Cart";
-// import { useAuth0 } from '@auth0/auth0-react'
+import { useAuth0 } from '@auth0/auth0-react'
+
 
 import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
@@ -21,7 +23,7 @@ axios.defaults.baseURL = "http://localhost:3001";
 
 function App() {
   const { pathname } = useLocation();
-  // const { isAuthenticated, isLoading } = useAuth0();
+   const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div className="container">

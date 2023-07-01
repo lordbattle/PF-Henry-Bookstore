@@ -3,9 +3,6 @@ const BooksRouter = require("./booksRouter");
 const UsersRouter = require("./usersRouter");
 const GendersRouter = require("./gendersRouter");
 const AuthorsRouter = require("./authorsRouter");
-const AuthRouter = require("./authRoutes");
-const ProfileRouter = require("./profileRoutes");
-const { createAccessToken } = require("../helpers/createAccesToken");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -19,6 +16,7 @@ mainRouter.use("/authUser", AuthRouter);
 mainRouter.use("/profileUser", createAccessToken, ProfileRouter);
 mainRouter.use("/users", UsersRouter);
 mainRouter.use("/books", BooksRouter);
+mainRouter.use("/orders", OrdersRouter);
 
 /* mainRouter.use("/genders", GendersRouter);
 mainRouter.use("/authors", AuthorsRouter); */

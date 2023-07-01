@@ -135,12 +135,10 @@ const userNewSchema = {
     errorMessage: "Admin must be a boolean value",
   },
   googleUser: {
-    notEmpty: {
-      errorMessage: "GoogleUser is required",
+    custom: {
+      options: isEmptyBoolean,
     },
-    isBoolean: {
-      errorMessage: "GoogleUser must be a boolean value",
-    },
+    errorMessage: "GoogleUser must be a boolean value",
   },
 };
 

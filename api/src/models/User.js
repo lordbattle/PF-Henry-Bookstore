@@ -9,14 +9,9 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       userName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        uniquie: true,
-      },
-      email: {
         type: DataTypes.STRING,
         allowNull: false,
         uniquie: true,
@@ -24,6 +19,19 @@ module.exports = (sequelize) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        uniquie: true,
       },
       age: {
         type: DataTypes.INTEGER,
@@ -64,7 +72,7 @@ module.exports = (sequelize) => {
       googleUser: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-      },      
+      },
       notifications: {
         type: DataTypes.JSON,
       },

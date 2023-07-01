@@ -16,34 +16,44 @@ const Cards = (props) => {
 
   if (props.active === true) {
     return (
-      <main className={style.main} style={{ marginLeft: "15px 20px" }}>
-        <div className={style.container}>
+      <main className={style.main}>
+        <div className={style.containImg}>
           <img
-            style={{
-              maxWidth: "100%",
-              maxHeight: "300vh",
-
-              width: "30em",
-              height: "20em",
-            }}
             src={props.imageLinks}
-            alt=""
-            className={style.img}
+            alt={props.title}
+            className={style.image}
           />
+        </div>
 
-          <h3
-            className={style.title}
-            style={{
-              minHeight: "40px",
-            }}
-          >
-            {props.title}
-          </h3>
-          <p style={{ minHeight: "50px" }}>Authors: {props.authors}</p>
-          <p style={{ minHeight: "55px" }}>Categories: {props.categories}</p>
-          <p>Price: ${props.price}</p>
-          <p>Stock: {props.stock}</p>
-          <p>Rating: {props.averageRating}</p>
+        <div className={style.contain_title}>
+          <section className="d-flex justify-content-start flex-column pl-5 w-100">
+            <h3 className="m-0">{props.title}</h3>
+            <span>name author {props.author}</span>
+          </section>
+          <section className="d-flex w-100 align-items-start justify-content-center gap-5">
+            <div className="w-50 d-flex flex-column pl-5">
+              {" "}
+              <p className="m-0 fs-3 text-start">
+                ${props.price}{" "}
+                <span style={{ color: "#4cbd49" }} className="fs-6">
+                  15% OFF
+                </span>
+              </p>
+              <p className="m-0 text-start">
+                en{" "}
+                <span style={{ color: "#4cbd49" }}>
+                  12 x ${Math.round(props.price / 12)}.00 sin intereses.
+                </span>
+              </p>
+            </div>
+            <div className="w-50">
+              {" "}
+              <p>Rating: {props.averageRating}</p>
+            </div>
+          </section>{" "}
+        </div>
+
+        <div className={style.contain_btns}>
           <Link
             to={`/detail/${props.id}`}
             style={{
@@ -53,12 +63,7 @@ const Cards = (props) => {
               width: "auto",
             }}
           >
-            <span
-              className={style.read}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              Read more
-            </span>
+            Read more
           </Link>
           <span
             onClick={handlerCart}
@@ -71,7 +76,6 @@ const Cards = (props) => {
           >
             Add to cart
           </span>
-          {/* Agrega más propiedades aquí según tus necesidades */}
         </div>
       </main>
     );

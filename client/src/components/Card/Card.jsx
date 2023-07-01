@@ -1,24 +1,16 @@
-
 /* import { useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
 import { getBooks } from "../../redux/actions" */
-import Cards from "../Cards/Cards"
-import style from '../Card/Card.module.css'
-import useStorage from "../LocalStorage/LocalStorage"
+import Cards from "../Cards/Cards";
+
+import useStorage from "../LocalStorage/LocalStorage";
 
 const Card = ({ currentBooks }) => {
-
-  const { addToCart} = useStorage();
-
-  /* const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getBooks())
-  }, [dispatch]) */
+  const { addToCart } = useStorage();
 
   return (
-    <div className="d-flex justify-content-center">
-    <div className={style.main}>
-      {currentBooks.length > 0 ? (
+    <div className="d-flex justify-content-center flex-column w-100 h-100 border border-black px-2">
+      {currentBooks ? (
         currentBooks.map((v) => {
           return (
             <Cards
@@ -26,24 +18,21 @@ const Card = ({ currentBooks }) => {
               key={v.id}
               id={v.id}
               title={v.title}
-              authors={v.authors}
+              author={v.authors}
               categories={v.genre}
               averageRating={v.averageRating}
               imageLinks={v.bookPic}
               price={v.price}
               stock={v.stock}
               addToCart={addToCart}
-            // Otras propiedades de volumeInfo que desees utilizar
             />
           );
         })
       ) : (
-        console.log("LOG DEL ERROR", currentBooks)
+        <p>No se encuentran libros</p>
       )}
     </div>
-    </div>
   );
-
-}
+};
 
 export default Card;

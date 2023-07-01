@@ -1,44 +1,106 @@
-import {GET_BOOKS, GET_BOOK_ID, GET_BOOK_TITLE, DELETE_BOOK, FILTERS_BOOKS} from "../types/types.js"
+import {
+  GET_BOOKS,
+  GET_BOOK_ID,
+  GET_BOOK_TITLE,
+  DELETE_BOOK,
+  FILTERS_BOOKS,
+  GET_USERS,
+  GET_USER_ID,
+  GET_CURRENT_USER,
+  DELETE_USER,
+  GET_USERS_BY_STATUS,
+  CLEAN_USER_DETAIL,
+} from "../types/types.js";
 
 export const initialState = {
-    books: [],
-    details:[],
-}
+  books: [],
+  details: [],
+  allUsers: [],
+  users: [],
+  userDetail: {},
+  currentUser: null,
+};
 
-function rootReducer (state=initialState, action){
-    switch (action.type) {
-        case GET_BOOKS:
-                return{
-                    ...state,
-                    books: action.payload,
-                }
-        case GET_BOOK_ID:
-            return{
-                ...state,
-                details: action.payload
-            }
-        case GET_BOOK_TITLE:
-            return{
-                ...state,
-                books: action.payload
-            }
-        case DELETE_BOOK:
-            return{
-                ...state,
-            }
-            case FILTERS_BOOKS:
-                return {
-                    ...state,
-                    books: action.payload
-                }
-        default:
-            return {
-                ...state,
-            }
-        case "CREATE_BOOK":
-            return{
-                ...state,
-            }
-    }
+function rootReducer(state = initialState, action) {
+  let allUsers = state.allUsers;
+  let filteredUsers = state.users;
+
+  switch (action.type) {
+    case GET_BOOKS:
+      return {
+        ...state,
+        books: action.payload,
+      };
+    case GET_BOOK_ID:
+      return {
+        ...state,
+        details: action.payload,
+      };
+    case GET_BOOK_TITLE:
+      return {
+        ...state,
+        books: action.payload,
+      };
+    case DELETE_BOOK:
+      return {
+        ...state,
+      };
+    case FILTERS_BOOKS:
+      return {
+        ...state,
+        books: action.payload,
+      };
+    default:
+      return {
+        ...state,
+      };
+    case "CREATE_BOOK":
+      return {
+        ...state,
+      };
+
+    /////USER
+
+    case GET_USERS:
+      return {
+        ...state,
+        allUsers: action.payload,
+        users: action.payload,
+      };
+
+    case GET_USER_ID:
+      return {
+        ...state,
+        userDetail: action.payload,
+      };
+
+    case GET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+
+    case DELETE_USER:
+      return {
+        ...state,
+      };
+
+    case GET_USERS_BY_STATUS:
+      if (action.payload.toLowerCase() === "active") {
+        filteredUsers = allUsers.filter((user) => !user.banned);
+      } else {
+        filteredUsers = allUsers.filter((user) => user.banned);
+      }
+      return {
+        ...state,
+        users: filteredUsers,
+      };
+
+    case CLEAN_USER_DETAIL:
+      return {
+        ...state,
+        userDetail: {},
+      };
+  }
 }
 export default rootReducer;

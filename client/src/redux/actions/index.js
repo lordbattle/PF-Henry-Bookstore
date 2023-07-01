@@ -148,3 +148,22 @@ export const editBook = (idBook, updatedProduct) => {
     }
   };
 };
+
+export const buyBook = (id_user, items, total) => {
+  return async () => {
+    try {
+      const payload = {
+        id_user: id_user,
+        items: items,
+        total: total
+      };
+
+      const response = await axios.post(`/orders`, payload);
+      console.log(`Se ejecutó bien buyBook ${data}`);
+      const { id } = response.data; 
+      return id;
+    } catch (error) {
+      console.log(`Catch de buyBook ${error}`);
+    }
+  };
+};

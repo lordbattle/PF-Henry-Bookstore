@@ -1,5 +1,8 @@
-
 import localStorage from '../LocalStorage/LocalStorage'
+import { buyBook } from '../../redux/actions';
+import {initMercadoPago, Wallet} from "@mercadopago/sdk-react"
+import { useState } from 'react';
+
 
 export const Cart =()=>{
 const {cart, addToCart, setCart} = localStorage();
@@ -40,10 +43,43 @@ const {cart, addToCart, setCart} = localStorage();
         setCart(updatedCart);
       };
       ///////TOTAL TO PAY//////
-      let total = 0;
+      let totalCart = 0;
       cart.forEach((item)=>{
-        total += item.price * item.stock;
+        totalCart += item.price * item.stock;
       })
+
+///mercadoPago
+const [Id, setId]=useState(null);
+const publicKey = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY;
+initMercadoPago(publicKey)
+
+const handleBuy = async () => {
+  try {
+    console.log("HandleBuy clickeado");
+    const id_user = 1; 
+    const items = cart.map((item) => ({
+      id: item.id,
+      quantity: item.stock,
+    }));
+    const total = totalCart;
+
+    const product = {
+      id_user: id_user,
+      items: items,
+      total: total,
+    };
+
+    const id = await buyBook(product)();
+    if (id) {
+      setId(id);
+    }
+  } catch (error) {
+    console.log(`error del catch buyproduch ${error}`);
+  }
+};
+
+
+
     return(
         <div>
       {cart.length > 0 ? (
@@ -60,7 +96,8 @@ const {cart, addToCart, setCart} = localStorage();
                     <span onClick={() => handleRemoveItem(item.id)}>❌Delet product❌</span>
             </div>
           ))}
-          <p>Total: ${total}</p>
+          <p>Total: ${totalCart}</p> <button onClick={handleBuy}>Buy</button>
+          {Id && <Wallet initialization={{preferenceId: Id}}/>}
         </div>
       ) : (
         <p key="No books">No hay elementos en el carrito.</p>

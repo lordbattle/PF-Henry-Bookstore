@@ -11,7 +11,7 @@ const { API_CLOUDINARY_BOOKS_UPLOAD_PRESET } = process.env;
 
 
 //Save API data in the DB
-//saveAllBooksDb();
+saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
   const {

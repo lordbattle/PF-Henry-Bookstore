@@ -5,12 +5,13 @@ import { getBooksByFilters } from "../redux/actions/index";
 const useFilters = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
-    price: 0,
-    genre: "all",
     author: "all",
-    limit: 9,
-    orderPrice: "neu",
-    orderTitle: "neu",
+    genre: "all",
+    page: 1,
+    limit: 10,
+    price: 0,
+    orderPrice: "nue",
+    orderTitle: "nue",
   });
 
   const dispatch = useDispatch();
@@ -21,12 +22,21 @@ const useFilters = () => {
       page: currentPage,
     };
 
-    dispatch(getBooksByFilters(options));
+    try {
+       dispatch(getBooksByFilters(options));
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {
-    filtersBooks(filters);
-  }, [currentPage, filters]);
+    try {
+      filtersBooks(filters);
+    } catch (error) {
+      console.log(error.message);
+    }
+    
+  }, [currentPage,filters]);
 
   return { setFilters, setCurrentPage, currentPage };
 };

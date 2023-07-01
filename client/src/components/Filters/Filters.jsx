@@ -35,7 +35,6 @@ const Filters = (props) => {
   };
 
   const handleChangeOrderPrice = (e) => {
-    console.log("priceOrder changed", e.target.value);
     setFilters((prevState) => ({
       ...prevState,
       orderPrice: e.target.value,
@@ -43,7 +42,6 @@ const Filters = (props) => {
   };
 
   const handleChangeOrderTitle = (e) => {
-    console.log("titleOrder changed", e.target.value);
     setFilters((prevState) => ({
       ...prevState,
       orderTitle: e.target.value,
@@ -51,7 +49,6 @@ const Filters = (props) => {
   };
 
   const handleChangePrice = (e) => {
-    console.log("price changed", e.target.value);
     setFilters((prevState) => ({
       ...prevState,
       price: e.target.value,
@@ -105,7 +102,7 @@ const Filters = (props) => {
         });
       }
     });
-    console.log("array authors ", resultado);
+
     return resultado;
   }
 
@@ -119,32 +116,39 @@ const Filters = (props) => {
       className="d-flex flex-column align-items-center h-25 py-3"
     >
       <div className="d-flex gap-2 align-items-center">
-        <button className="bg-dark py-1 px-2" onClick={btnReset}>
+        <button className="btn bg-success py-1 px-2" onClick={btnReset}>
           Reset
         </button>
       </div>
       <div className="d-flex gap-2 flex-column">
-        <label>Authors</label>
-        <section
-          id="title"
-          className="bg-dark py-1 px-2 "
-          onChange={handleChangeAuthors}
-        >
-          <option value="all">ALL</option>
-          {newArrayAuthors?.map((item) => (
+        <section id="title" className="py-1 px-2 ">
+          <label className="text-white fs-5">Authors</label>
+          <div className={set.hover_options}>
+            {" "}
             <option
-              key={item.id}
-              value={item.author
-                .trim()
-                .split(" ")
-                .slice(0, 2)
-                .filter((char) => char !== ".")
-                .join(" ")
-                .toLowerCase()}
+              className="text-white border-bottom border-white border-opacity-50 py-1"
+              onClick={(e) => handleChangeAuthors(e)}
+              value="all"
             >
-              {item.author.toUpperCase()}
+              ALL
             </option>
-          ))}
+            {newArrayAuthors?.map((item) => (
+              <option
+                key={item.id}
+                onClick={(e) => handleChangeAuthors(e)}
+                className="text-white border-bottom border-white border-opacity-50 py-1"
+                value={item.author
+                  .trim()
+                  .split(" ")
+                  .slice(0, 2)
+                  .filter((char) => char !== ".")
+                  .join(" ")
+                  .toLowerCase()}
+              >
+                {item.author.toUpperCase()}
+              </option>
+            ))}
+          </div>
         </section>
       </div>
       <div className="d-flex gap-2 align-items-center my-3 ">
@@ -231,14 +235,25 @@ const Filters = (props) => {
         </section>
       </div>
       <div className="d-flex gap-2 align-items-center">
-        <label htmlFor="Oprice">Order Price</label>
-        <section
-          id="Oprice"
-          className="py-1 px-2"
-          onChange={handleChangeOrderPrice}
-        >
-          <option value="asc">Ascendente</option>
-          <option value="desc">Desendente</option>
+        <section id="Oprice" className="py-1 px-2">
+          <label className="text-white fs-5">Order Price</label>
+          <div className={set.hover_options}>
+            {" "}
+            <option
+              className="text-white border-bottom border-white border-opacity-50 py-1 "
+              onClick={(e) => handleChangeOrderTitle(e)}
+              value="asc"
+            >
+              Ascendente
+            </option>
+            <option
+              className="text-white border-bottom border-white border-opacity-50 py-1 "
+              onClick={(e) => handleChangeOrderTitle(e)}
+              value="desc"
+            >
+              Desendente
+            </option>
+          </div>
         </section>
       </div>
     </section>

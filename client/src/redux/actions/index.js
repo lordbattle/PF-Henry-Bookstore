@@ -1,6 +1,5 @@
 import axios from "axios";
 import {
-  GET_BOOKS,
   GET_BOOK_ID,
   GET_BOOK_TITLE,
   DELETE_BOOK,
@@ -14,13 +13,16 @@ import {
   CLEAN_USER_DETAIL,
 } from "../types/types.js";
 
+
 //BOOKS
 
-export const getBooks = () => {
-  return async (dispatch) => {
+//!Esta funcion esta deteriorada no descomentar
+/* export const getBooks = () => {
+  return (dispatch) => {
+
     try {
-      const { data } = await axios.get("/books");
-      console.log("LOG DATA ACTIONS", data);
+      const { data } = axios.get("/books");
+      
       return dispatch({
         type: GET_BOOKS,
         payload: data,
@@ -29,7 +31,7 @@ export const getBooks = () => {
       alert(`ERROR DEL CATCH ${error}`);
     }
   };
-};
+}; */
 
 export const getBookById = (idBook) => {
   return async (dispatch) => {
@@ -50,6 +52,7 @@ export const getBookByTitle = (title) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/books/?title=${title}`);
+      console.log(title);
       return dispatch({
         type: GET_BOOK_TITLE,
         payload: data,
@@ -62,16 +65,14 @@ export const getBookByTitle = (title) => {
 
 export const getBooksByFilters = (obj) => {
   return async (dispatch) => {
-    //price no funciona
-    //rating no funciona
     try {
-      let url = "/books?";
+      let url = "/books/?";
 
-      if (obj.author !== "all") {
+      if ( obj.author && obj.author !== "all") {
         url += `author=${obj.author}&`;
       }
 
-      if (obj.genre !== "all") {
+      if (obj.genre && obj.genre !== "all") {
         url += `genre=${obj.genre}&`;
       }
       if (obj.page) {
@@ -80,7 +81,7 @@ export const getBooksByFilters = (obj) => {
       if (obj.limit) {
         url += `limit=${obj.limit}&`;
       }
-      if (obj.price !== 0) {
+      if (obj.price) {
         url += `price=${obj.price}&`;
       }
       if (obj.orderPrice && obj.orderPrice !== "neu") {
@@ -93,9 +94,10 @@ export const getBooksByFilters = (obj) => {
 
       // Remove trailing '&' from the URL
       url = url.slice(0, -1);
-
+      console.log(url);
       const { data } = await axios.get(url);
-      console.log("filtros data", data);
+      
+      
       return dispatch({
         type: FILTERS_BOOKS,
         payload: data,

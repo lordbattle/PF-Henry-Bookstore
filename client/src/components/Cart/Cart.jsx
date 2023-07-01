@@ -61,12 +61,12 @@ const handleBuy = async () => {
       id: item.id,
       quantity: item.stock,
     }));
-    const total = totalCart;
+
 
     const product = {
       id_user: id_user,
       items: items,
-      total: total,
+
     };
 
     const id = await buyBook(product)();

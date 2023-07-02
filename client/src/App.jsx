@@ -14,7 +14,6 @@ import Profile from "./components/Profile/Profile";
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
-import CartProducts from "./context/CartProducts"
 import { AuthContextProvider, UserAuth } from "./context/AuthContextFirebase";
 // import Stack from 'react-bootstrap/Stack'
 //import { useAuth0 } from "@auth0/auth0-react";
@@ -31,7 +30,6 @@ function App() {
     <div className="container">
       {pathname !== "/" && <Nav />}
 
-      <CartProducts.Provider>
       <AuthContextProvider>
         <AuthProvider>
           <Routes>
@@ -49,7 +47,6 @@ function App() {
           <Footer />
         </AuthProvider>
       </AuthContextProvider>
-      </CartProducts.Provider>
     </div>
   );
 }

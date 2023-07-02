@@ -1,3 +1,60 @@
+.main {
+  border-radius: 7px;
+  width: 99.7%;
+  height: 12em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 30px 10px;
+  margin: 3px;
+  background-color: #b7cff4;
+  border: 1px solid rgba(0, 0, 0);
+}
+
+.decrease{
+  border-radius: 10px;
+  height: 2rem;
+  font-size: 18px;
+
+  &:hover{
+    background-color: red;
+  }
+}
+
+.increase{
+  border-radius: 10px;
+  height: 2rem;
+  font-size: 18px;
+
+  &:hover{
+    background-color: rgb(53, 222, 53);
+  }
+}
+
+.delete{
+  font-size: 20px;
+
+
+  &:hover{
+    cursor: pointer;
+    color: white;
+  }
+}
+
+.btn{
+  background-color: #b7cff4;
+  border: 1px black solid;
+  border-radius: 4px;
+  width: 5rem;
+
+  &:hover{
+    box-shadow: 3px 3px 3px black;
+  }
+}
+
+
 .fade-backgroundSuccess {
     animation: fadeBackground 2s ease-in-out forwards;
   }

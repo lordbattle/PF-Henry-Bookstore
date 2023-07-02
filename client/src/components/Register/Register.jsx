@@ -7,9 +7,11 @@ import { useDispatch } from "react-redux";
 import style from "./Register.module.css";
 import { element } from "prop-types";
 import validations from "../../hooks/validations";
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formSubmitted, setFormSubmitted] = useState(false);
   //const navigate = useNavigate();
 
@@ -36,30 +38,31 @@ const Register = () => {
           location: "",
           genres: "",
           phone: "",
-          profilePic: '',
-
-          dni: "",
           name: "",
           lastName: ""
         }}
-        validate={ (values) =>{
+        validate={(values) => {
           return validations(values);
         }
         }
         onSubmit={(values, { resetForm }) => {
-          resetForm();
-          console.log("FORM SENT");
+          console.log(values, ' userrrrrrr')
           const user = dispatch(postUsers(values));
-          localStorage.setItem("userData", JSON.stringify(user.data));
+          console.log(user, ' userrrrrrr')
+
           setFormSubmitted(true);
           setTimeout(() => setFormSubmitted(false), 5000);
+          //navigate('/Home');
+         
+          resetForm();
+          // localStorage.setItem("userData", JSON.stringify(user.data));
           //window.location.href = "https://pf-henry-bookstore.vercel.app/home";
         }}
       >
         {({
-          errors, handleSubmit , handleChange , handleBlur
+          errors, onSubmit
         }) => (
-          <form className={style.form} onSubmit={handleSubmit} >
+          <Form className={style.form} >
             <p className={style.title}>Register</p>
             <p className={style.message}>
               Signup now and get full access to our app.
@@ -79,7 +82,6 @@ const Register = () => {
                 <ErrorMessage name='name' component={() =>
                 (<div className='errors'>{errors.name}</div>
                 )} />
-                {/*errors.name && <div className="error">{errors.name} </div>*/ }
               </div>
 
               <div>
@@ -89,7 +91,7 @@ const Register = () => {
                     name="lastName"
                     placeholder=""
                     type="text"
-                    className={style.inputNames} 
+                    className={style.inputNames}
                   />
                   <span>Last name</span>
                 </label>
@@ -174,18 +176,19 @@ const Register = () => {
                   id="genres"
                   name="genres"
                 >
-                  <option value="M">Masculino</option>
-                  <option value="F">Femenino</option>
+                  <option value="">  </option>
+                  <option value="male">Masculino</option>
+                  <option value="female">Femenino</option>
                 </Field>
 
                 <span>Genres</span>
               </label>
-              <ErrorMessage name='genres' component={() => (<div className='error'>{errors.email}</div>)} />
+              <ErrorMessage name='genres' component={() => (<div className='error'>{errors.genres}</div>)} />
 
 
               <label>
                 <Field
-                  placeholder=" +COD xxx-xxx-xxxx"
+                  placeholder=" +COD-xxx-xxx-xxxx"
                   type="text"
                   className={style.input}
                   id="phone"
@@ -197,19 +200,15 @@ const Register = () => {
 
             </div>
 
-
-
-
-
-            <button className={style.submit}>Register</button>
+            <button className={style.submit} type="submit" >Register</button>
             {formSubmitted && (
-              <p className={style.successMessage}>
+              <p>
                 {formSubmitted && (
-                  <p className={style.submit}> Form submitted successfully</p>
+                  <p > Form submitted successfully</p>
                 )}
               </p>
             )}
-          </form>
+          </Form>
         )}
       </Formik>
     </div>

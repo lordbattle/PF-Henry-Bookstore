@@ -38,8 +38,13 @@ const validations = (values) => {
 
     if (!values.userName) {
         errors.userName = "Please, insert a userName";
-    } else if (!regexUsername.test(values.userName)) {
-        errors.userName = 'The username can only start with letters or numbers';
+    } else if (values.userName.length > 8) {
+        if (!regexUsername.test(values.userName)) {
+            errors.userName = 'The username can only start with letters or numbers';
+        }
+    }
+    else{
+        errors.userName = ' Username must contain between 8 and 20 characters '
     }
 
     if (!values.password) {
@@ -63,7 +68,6 @@ const validations = (values) => {
         errors.age = "Please, insert a age";
     } else if (parseInt(values.age)) {
         const ageNum = +values.age;
-        console.log(ageNum, ' ageeeeeeeeee')
         if ((ageNum % 1) != 0) {
             errors.age = ' The age cannot be decimal';
         } else {
@@ -79,10 +83,10 @@ const validations = (values) => {
         errors.genres = "Please, insert a genres";
     }
 
-    
+
     if (!values.phone) {
         errors.phone = "Please, insert a phone";
-    }else if(!regexPhone.test(values.phone)){
+    } else if (!regexPhone.test(values.phone)) {
         errors.phone = 'invalid Format phone';
     }
     return errors;

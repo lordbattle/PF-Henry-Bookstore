@@ -170,7 +170,7 @@ export const editBook = (idBook, updatedProduct) => {
 export const buyBook = (payload)=>{
   return async()=>{
     try {
-        const {data} = await axios.post(`/orders`, payload)
+        const {data} = await axiosInstance.post(`/orders`, payload)
         console.log(`Se ejecuto bien buyBook`, data)
         const {id} = data.results
         return id;

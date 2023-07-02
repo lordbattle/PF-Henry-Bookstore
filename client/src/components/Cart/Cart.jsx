@@ -84,7 +84,8 @@ const {cart, addToCart, setCart} = localStorage();
 
     const {status} = useParams();
     if(status === 'success'){
-        Swal.fire({title: "Exit!",
+        Swal.fire({
+          title: "Exit!",
         text: "Purchase successfully",
         icon: "success",
         confirmButtonText: "OK",
@@ -96,15 +97,15 @@ const {cart, addToCart, setCart} = localStorage();
         text: "Failed purchase",
         icon: 'error',
        confirmButtonText: "Retry",
-       backdrop: 'rgba(248, 40, 40, 0.6)'
+       backdrop: 'rgba(248, 40, 40, 0.8)'
       });
-    }else{
+    }else if (status === 'pending') {
       Swal.fire({
         title: "Pending",
         text: "Something went wrong",
         icon: 'warning',
        confirmButtonText: "Retry",
-       backdrop: 'rgba(255, 165, 0, 0.6)'
+       backdrop: 'rgba(243, 148, 23, 0.8)'
       });
     }
 

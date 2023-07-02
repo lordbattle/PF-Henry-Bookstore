@@ -4,26 +4,41 @@ import { useEffect, useState } from "react";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { postUsers ,  } from "../../redux/actions";
 import { useDispatch } from "react-redux";
-//import { useNavigate } from "react-router-dom";
+import { UserAuth } from "../../context/AuthContextFirebase";
+import Swal from "sweetalert2";
 import style from "./Register.module.css";
 import { element } from "prop-types";
 import validations from "../../hooks/validations";
 import { useNavigate } from 'react-router-dom';
 
-
-
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { signUp, loginWithGoogle } = UserAuth();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
-  //const navigate = useNavigate();
 
   // FILTRO EL EMAIL QUE ME TRAE EL LOCALSTORAGE
- /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
+  /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
   const userFilEmail = userEmail.email; */
 
+
+  /* useEffect(() => {
+    if (isAuthenticated) navigate("/home");
+  }, [isAuthenticated]);
+ */
+  const postUsersAsync = (payload) => {
+    return new Promise((resolve, reject) => {
+      dispatch(postUsers(payload))
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
 
   const agesSelect = () => {
     let count = [];
@@ -32,8 +47,7 @@ const Register = () => {
     }
     return count;
   }
-
-
+  
   return (
     <div className={style.formContainer}>
       <Formik
@@ -49,7 +63,49 @@ const Register = () => {
           lastName: ""
         }}
         validate={(values) => {
-          return validations(values);
+
+          //CESAR
+          let errors = {};
+          if (!values.name) {
+            errors.name = "Please, insert a name";
+          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
+            errors.name =
+              "The name can only have letters and spaces and length less than 20";
+          }
+          return errors;
+        }}
+        onSubmit={async (values, { resetForm }) => {
+          try {
+            console.log("FORM SENT");
+            // redux
+            try {
+              await postUsersAsync(values); // Esperar la resolución de la promesa
+            } catch (error) {
+              throw new Error(error);
+            }
+        
+            await signUp(values.email, values.password, values.name);
+            setFormSubmitted(true);
+            resetForm();
+            setTimeout(() => setFormSubmitted(false), 5000);
+            dispatch(logingUser(values.email, values.password, values.userName));
+            Swal.fire({
+              icon: "success",
+              title: "Registered Welcome!",
+              text: "You are now part of The Litary Corner!",
+              backdrop: true,
+            });
+            navigate("/login");
+          } catch (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
+  
+          //DEVELOP
+        /*  return validations(values);
         }
         }
         onSubmit={(values, { resetForm }) => {
@@ -68,8 +124,7 @@ const Register = () => {
               alert(`${response.message}`) 
               resetForm();
             }
-          })
-
+          }) */
         }}
       >
         {({
@@ -180,8 +235,6 @@ const Register = () => {
               </label>
               <ErrorMessage name='age' component={() => (<div className='error'>{errors.age}</div>)} />
 
-
-
               <label>
                 <Field
                   as='select'
@@ -214,6 +267,7 @@ const Register = () => {
             </div>
 
             <button className={style.submit} type="submit" >Register</button>
+
             {formSubmitted && (
               <p>
                 {formSubmitted &&

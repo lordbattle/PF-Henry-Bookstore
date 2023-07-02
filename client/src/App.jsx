@@ -31,6 +31,7 @@ function App() {
     <div className="container">
       {pathname !== "/" && <Nav />}
 
+
       <AuthContextProvider>
         <AuthProvider>
           <Routes>
@@ -49,6 +50,7 @@ function App() {
           <Footer />
         </AuthProvider>
       </AuthContextProvider>
+
     </div>
   );
 }

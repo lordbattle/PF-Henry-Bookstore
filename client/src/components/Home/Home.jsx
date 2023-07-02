@@ -26,6 +26,8 @@ const Home = () => {
     });
   }, [setFilters]);
 
+  console.log(books);
+
   return (
     <div className="d-flex flex-column" ref={componentRef}>
       <div className="d-flex">

@@ -1,14 +1,38 @@
-import { useDispatch } from "react-redux";
-import { getUsers } from "../../redux/actions/index";
+
+//import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from "react-redux";
+/* import { getUserById, cleanUserDetail } from "../../redux/actions/index";
+import { useEffect } from "react"; */
 
 const Profile = () => {
+  /*  const { user } = useAuth0();
+  console.log(user); */
+ /*  const dispatch = useDispatch(); */
   // no este trayendo el user, solo da undefined
 
-  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state);
+  const userR = currentUser;
+  /* useEffect(() => {
+    dispatch(getUserById(1));
+    return () => {
+      dispatch(cleanUserDetail());
+    };
+  }, []); */
+
+  console.log(currentUser);
 
   return (
-    <div>
-      <button onClick={() => dispatch(getUsers())}>Get users</button>
+    <div style={{ height: "100vh" }}>
+      {userR && (
+        <>
+          <img src={userR.profilePic} width="100px" />
+          <h4>UserName: {userR.userName}</h4>
+          <h4>Email: {userR.email}</h4>
+          <h4>Phone: {userR.phone}</h4>
+          <h4>Age: {userR.age}</h4>
+        </>
+      )}
+
     </div>
   );
 };

@@ -10,6 +10,7 @@ import Cart from "./components/Cart/Cart";
 import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
+import OptionLoginOrRegister from './components/OptionLoginOrRegister/OptionLoginOrRegister';
 
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -37,6 +38,7 @@ function App() {
             <Route path="/home" element={<Home />}></Route>
             <Route path="/about" element={<About />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/optionLoginOrRegister" element={<OptionLoginOrRegister />}></Route>
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />}></Route>
             <Route path="/detail/:id" element={<Detail />}></Route>

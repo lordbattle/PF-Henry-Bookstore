@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 //import { Link } from "react-router-dom";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
-import { postUsers } from "../../redux/actions";
+import { postUsers ,  } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 //import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
 import { element } from "prop-types";
 import validations from "../../hooks/validations";
 import { useNavigate } from 'react-router-dom';
+
 
 
 const Register = () => {
@@ -56,6 +57,8 @@ const Register = () => {
           values.googleUser = false;
 
           const user = dispatch(postUsers(values));
+          
+          console.log(user, 'userrrrrrr')
           user.then((response) => {
             if(response.success ){
               setFormSubmitted(true) 

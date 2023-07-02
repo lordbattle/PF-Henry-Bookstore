@@ -98,7 +98,7 @@ const {cart, addToCart, setCart} = localStorage();
        denyButtonText: "Retry",
        customClass: {container: 'fade-backgroundFailure'}
       });
-    }else{
+    }else if (status === 'pending'){
       Swal.fire({
         title: "Pending",
         text: "Something went wrong",
@@ -117,7 +117,6 @@ const {cart, addToCart, setCart} = localStorage();
           {cart.map((item) => (
             <div key={item.id}>
                     <p>ID del producto: {item.id}</p>
-                    <img src={item.img} alt="book image" />
                     <p>{item.title}</p>
                     <p>${item.price}</p>
                     <button onClick={() => handleDecreaseAmount(item.id)}>-</button>

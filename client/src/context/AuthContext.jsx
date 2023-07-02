@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logingUser, postUsers, verifyUser } from "../redux/actions/index";
-import Cookies from "js-cookie";
 import { registerRequest } from "../api/auth";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 

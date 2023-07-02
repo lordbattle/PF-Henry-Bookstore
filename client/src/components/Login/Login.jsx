@@ -1,6 +1,9 @@
 
-import Register from '../Register/Register';
-import style from '../Login/Login.module.css';
+
+/* import { useAuth0 } from '@auth0/auth0-react' */
+/* import Register from '../Register/Register'; */
+/* import style from '../Login/Login.module.css'; */
+
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";

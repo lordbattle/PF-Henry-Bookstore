@@ -26,9 +26,16 @@ import { AuthContextProvider, UserAuth } from "./context/AuthContextFirebase";
 function App() {
   const { pathname } = useLocation();
   //const { isAuthenticated, isLoading } = useAuth0();
+
+  const { cart } = localStorage();
+  let totalProducts = 0;
   
+      cart.forEach((item)=>{
+        totalProducts += item.stock;
+      })
+
   const cantProducts = {
-    cant: 0
+    cant: totalProducts
   }
 
   return (

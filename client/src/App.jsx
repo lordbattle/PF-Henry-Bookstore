@@ -11,8 +11,6 @@ import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
 
-import localStorage from './components/LocalStorage/LocalStorage'
-
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
@@ -29,22 +27,11 @@ function App() {
   const { pathname } = useLocation();
   //const { isAuthenticated, isLoading } = useAuth0();
 
-  const { cart } = localStorage();
-  let totalProducts = 0;
-
-      cart.forEach((item)=>{
-        totalProducts += item.stock;
-      })
-
-  const cantProducts = {
-    cant: totalProducts
-  }
-
   return (
     <div className="container">
       {pathname !== "/" && <Nav />}
 
-      <CartProducts.Provider value={cantProducts}>
+      <CartProducts.Provider>
       <AuthContextProvider>
         <AuthProvider>
           <Routes>

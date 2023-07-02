@@ -166,6 +166,20 @@ export const editBook = (idBook, updatedProduct) => {
   };
 };
 
+
+export const buyBook = (payload)=>{
+  return async()=>{
+    try {
+        const {data} = await axios.post(`/orders`, payload)
+        console.log(`Se ejecuto bien buyBook`, data)
+        const {id} = data.results
+        return id;
+    } catch (error) {
+      console.log(`Catch de buyBook ${error}`);
+    }
+  }
+}
+
 //USER
 
 export const getUsers = () => {
@@ -332,3 +346,4 @@ export function verifyUser() {
     }
   };
 }
+

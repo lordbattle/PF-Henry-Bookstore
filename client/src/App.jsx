@@ -10,6 +10,7 @@ import Cart from "./components/Cart/Cart";
 import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
+
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";

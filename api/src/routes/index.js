@@ -1,6 +1,7 @@
 const { Router } = require("express");
-const GendersRouter = require("./gendersRouter");
-const AuthorsRouter = require("./authorsRouter");
+
+/* const GendersRouter = require("./gendersRouter");
+const AuthorsRouter = require("./authorsRouter"); */
 const BooksRouter = require("./booksRouter");
 const UsersRouter = require("./usersRouter");
 const AuthRouter = require("./authRoutes");

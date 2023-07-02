@@ -2,8 +2,12 @@ import Stack from "react-bootstrap/Stack";
 
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
+import cartProducts from "../../hooks/CartProducts";
 
 const Nav = () => {
+
+  const { cant } = cartProducts()
+
   return (
     <div
       className="px-2 py-3 border-0 bg_navbar text-white"
@@ -51,7 +55,7 @@ const Nav = () => {
               <img
                 src="https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360"
                 width={"25em"}
-              ></img>
+              ></img>{cant}
             </Link>
           </span>
         </div>

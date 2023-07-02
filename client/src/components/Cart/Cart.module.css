@@ -51,6 +51,8 @@
 
   &:hover{
     box-shadow: 3px 3px 3px black;
+    background-color: #71a5e5;
+    color: white;
   }
 }
 

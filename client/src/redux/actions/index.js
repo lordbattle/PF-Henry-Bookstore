@@ -22,7 +22,7 @@ import Cookies from "js-cookie";
 >>>>>>> 1e887b7aa7bd5207292481848751f19b85f382ca
 
 //BOOKS
-
+//?
 //!Esta funcion esta deteriorada no descomentar
 /* export const getBooks = () => {
   return (dispatch) => {
@@ -177,7 +177,7 @@ export const editBook = (idBook, updatedProduct) => {
 export const buyBook = (payload)=>{
   return async()=>{
     try {
-        const {data} = await axios.post(`/orders`, payload)
+        const {data} = await axiosInstance.post(`/orders`, payload)
         console.log(`Se ejecuto bien buyBook`, data)
         const {id} = data.results
         return id;

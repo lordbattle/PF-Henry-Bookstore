@@ -1,0 +1,33 @@
+.fade-backgroundSuccess {
+    animation: fadeBackground 2s ease-in-out forwards;
+  }
+  
+  @keyframes fadeBackgroundSucess {
+    0% {
+      background: linear-gradient(rgba(76, 175, 80, 0), rgba(76, 175, 80, 0));
+    }
+    50% {
+      background: linear-gradient(rgba(76, 175, 80, 0), rgba(76, 175, 80, 1));
+    }
+    100% {
+      background: linear-gradient(rgba(76, 175, 80, 1), rgba(76, 175, 80, 0));
+    }
+  }
+
+.fade-backgroundFailed {
+    animation: fadeBackgroundFailed 2s ease-in-out forwards;
+  }
+  
+  @keyframes fadeBackgroundFailed {
+    0% {
+      background-color: transparent;
+    }
+    50% {
+      background-color: rgba(255, 39, 39, 0.774);
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+  
+  

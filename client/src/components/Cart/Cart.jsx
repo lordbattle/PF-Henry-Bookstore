@@ -2,6 +2,9 @@ import localStorage from '../LocalStorage/LocalStorage'
 import { buyBook } from '../../redux/actions';
 import {initMercadoPago, Wallet} from "@mercadopago/sdk-react"
 import { useState } from 'react';
+import {useParams} from "react-router-dom"
+import Swal from "sweetalert2"
+import "./Cart.module.css"
 
 
 export const Cart =()=>{
@@ -49,34 +52,61 @@ const {cart, addToCart, setCart} = localStorage();
       })
 
 ///mercadoPago
-const [Id, setId]=useState(null);
-const publicKey = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY;
-initMercadoPago(publicKey)
+    const [Id, setId]=useState(null);
+    const publicKey = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY;
+    initMercadoPago(publicKey)
 
-const handleBuy = async () => {
-  try {
-    console.log("HandleBuy clickeado");
-    const id_user = 1; 
-    const items = cart.map((item) => ({
-      id: item.id,
-      quantity: item.stock,
-    }));
+    const handleBuy = async () => {
+      try {
+        console.log("HandleBuy clickeado");
+        const id_user = 1; 
+        const items = cart.map((item) => ({
+          id: item.id,
+          quantity: item.stock,
+        }));
 
 
-    const product = {
-      id_user: id_user,
-      items: items,
+        const product = {
+          id_user: id_user,
+          items: items,
 
+        };
+
+        const id = await buyBook(product)();
+        if (id) {
+          setId(id);
+        }
+      } catch (error) {
+        console.log(`error del catch buyproduch ${error}`);
+      }
     };
 
-    const id = await buyBook(product)();
-    if (id) {
-      setId(id);
+    const {status} = useParams();
+    if(status === 'success'){
+        Swal.fire({
+          title: "Exit!",
+          text: "Purchase successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+          customClass: {container: 'fade-backgroundSuccess'}
+        });
+    }else if (status === 'failure'){
+      Swal.fire({
+        title: "Failed",
+        text: "Failed purchase",
+        icon: 'error',
+       denyButtonText: "Retry",
+       customClass: {container: 'fade-backgroundFailure'}
+      });
+    }else{
+      Swal.fire({
+        title: "Pending",
+        text: "Something went wrong",
+        icon: 'warning',
+       denyButtonText: "Retry",
+       customClass: {container: 'fade-backgroundFailure'}
+      });
     }
-  } catch (error) {
-    console.log(`error del catch buyproduch ${error}`);
-  }
-};
 
 
 

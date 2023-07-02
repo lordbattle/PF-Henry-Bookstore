@@ -1,3 +1,7 @@
+
+import { useAuth0 } from '@auth0/auth0-react'
+import Register from '../Register/Register';
+import style from '../Login/Login.module.css';
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
@@ -6,6 +10,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
+
 
 const Login = () => {
   const { loginWithGoogle } = UserAuth();
@@ -83,6 +88,7 @@ const Login = () => {
   }, [userlogin]);
 
   return (
+
     <div className="flex w-full h-screen">
       <div>
         <span>Welcome back to Haal</span>
@@ -223,3 +229,4 @@ const Login = () => {
 };
 
 export default Login;
+

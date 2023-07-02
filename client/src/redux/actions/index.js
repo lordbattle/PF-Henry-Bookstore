@@ -261,7 +261,7 @@ export const postUsers = (payload) => {
 
       return dat;
     } catch (error) {
-      console.log(error);
+      return error.response.data;
     }
   };
 };

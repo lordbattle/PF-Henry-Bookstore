@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //import { Link } from "react-router-dom";
+
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { postUsers } from "../../redux/actions";
 import { useDispatch } from "react-redux";
@@ -9,15 +10,19 @@ import { element } from "prop-types";
 import validations from "../../hooks/validations";
 import { useNavigate } from 'react-router-dom';
 
+
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
   const [formSubmitted, setFormSubmitted] = useState(false);
   //const navigate = useNavigate();
 
   // FILTRO EL EMAIL QUE ME TRAE EL LOCALSTORAGE
-  /* const userEmail = JSON.parse(localStorage.getItem("userData"));
+ /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
   const userFilEmail = userEmail.email; */
+
 
   const agesSelect = () => {
     let count = [];
@@ -26,6 +31,7 @@ const Register = () => {
     }
     return count;
   }
+
 
   return (
     <div className={style.formContainer}>
@@ -46,6 +52,7 @@ const Register = () => {
         }
         }
         onSubmit={(values, { resetForm }) => {
+
           values.googleUser = false;
 
           const user = dispatch(postUsers(values));
@@ -59,6 +66,7 @@ const Register = () => {
               resetForm();
             }
           })
+
         }}
       >
         {({

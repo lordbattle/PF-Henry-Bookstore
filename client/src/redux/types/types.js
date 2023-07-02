@@ -13,3 +13,8 @@ export const DELETE_USER = "DELETE_USER";
 export const GET_USERS_BY_NAME = "GET_USERS_BY_NAME";
 export const GET_USERS_BY_STATUS = "GET_USERS_BY_NAME";
 export const CLEAN_USER_DETAIL = "CLEAN_USER_DETAIL";
+
+//Login
+export const LOGING_USER = "LOGING_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const VERIFY_USER = "VERIFY_USER";

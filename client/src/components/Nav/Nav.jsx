@@ -6,12 +6,13 @@ import SearchBar from "../SearchBar/SearchBar";
 const Nav = () => {
   return (
     <div
-      className="px-2 py-3 border-0 bg_navbar text-white" style={{backgroundColor: '#71a5e5'}}
+      className="px-2 py-3 border-0 bg_navbar text-white"
+      style={{ backgroundColor: "#71a5e5" }}
     >
       <Stack direction="horizontal" gap={3}>
         <span className="p-2 link-as-text">
           <Link to={"/"} className="text-decoration-none fs-4 text-reset">
-          TheLiteraryCorner
+            TheLiteraryCorner
           </Link>
         </span>
 
@@ -22,6 +23,11 @@ const Nav = () => {
           <span className="p-2 ms-0 link-as-text">
             <Link to={"/home"} className="text-decoration-none fs-5 text-reset">
               Home
+            </Link>
+          </span>{" "}
+          <span className="p-2 ms-0 link-as-text">
+            <Link to={"/profile"} className="text-decoration-none fs-5 text-reset">
+              Profile
             </Link>
           </span>
           <span className="p-2 ms-0 link-as-text">
@@ -40,11 +46,12 @@ const Nav = () => {
               Publish Books
             </Link>
           </span>
-
           <span className="p-2 ms-0 link-as-text">
-            <Link
-            to={'/cart'}>
-            <img src='https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360' width={'25em'}></img>
+            <Link to={"/cart"}>
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360"
+                width={"25em"}
+              ></img>
             </Link>
           </span>
         </div>
@@ -56,10 +63,7 @@ const Nav = () => {
             Log in
           </Link>
 
-          <Link
-            to={"/login"}
-            className="text-decoration-none fs-5 text-reset"
-          >
+          <Link to={"/login"} className="text-decoration-none fs-5 text-reset">
             Sign up
           </Link>
         </div>

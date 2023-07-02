@@ -1,5 +1,4 @@
 import {
-
   GET_BOOKS,
   GET_BOOK_ID,
   GET_BOOK_TITLE,
@@ -11,7 +10,8 @@ import {
   DELETE_USER,
   GET_USERS_BY_STATUS,
   CLEAN_USER_DETAIL,
-
+  LOGING_USER,
+  LOGOUT_USER,
 } from "../types/types.js";
 
 export const initialState = {
@@ -52,16 +52,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         books: action.payload,
       };
-    default:
-      return {
-        ...state,
-      };
     case "CREATE_BOOK":
       return {
         ...state,
       };
 
-    /////USER
+    //USER
 
     case GET_USERS:
       return {
@@ -102,6 +98,23 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: {},
+      };
+
+    //LOGIN
+    case LOGING_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+
+    case LOGOUT_USER:
+      return {
+        ...state,
+        user: [],
+      };
+    default:
+      return {
+        ...state,
       };
   }
 }

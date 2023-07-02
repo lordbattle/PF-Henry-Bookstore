@@ -6,7 +6,7 @@ const { API_CLOUDINARY_USERS_UPLOAD_PRESET } = process.env;
 
 const { cloudinary } = require("../services/cloudinaryService");
 
-const getAllUsers = async (name, page, limit, sort, rol) => {
+const getAllUsers = async (name, page, limit, sort, rol, active) => {
   try {
     const count = await User.count({
       where: {
@@ -35,19 +35,63 @@ const getAllUsers = async (name, page, limit, sort, rol) => {
       order: [...sort],
     });
 
-    return { count, results };
+    const activeStatus = await User.findAll({
+      where:{
+        active: active
+      }, 
+
+    });
+    
+
+    return { count, results, activeStatus };
   } catch (e) {
     throw Error(e.message);
   }
 };
 
+const findUserStatus = async (active) => {
+  try {
+    console.log("controller", active);
+    const statusBoolean = JSON.parse(active); // Convierte el parámetro en minúsculas antes de convertirlo en booleano
+    
+    const result = await User.findAll({
+      where: {
+        active: statusBoolean,
+      },
+      attributes: ['id', 'userName'],
+    });
+
+    return result;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
+
 const getUserById = async (id) => {
   try {
-    const user = await User.findByPk(+id);
+    const user = await User.findByPk(id);
 
     if (!user) throw Error("There is no user with the specified id");
 
     return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+const findUserName = async (userName) => {
+  try {
+    const userByname = await User.findOne({
+      where: {
+        userName: {
+          [Op.iLike]: `%${userName}%`,
+        },
+      },
+    });
+
+    if (!userByname) throw Error("There is no user with the specified name");
+
+    return userByname;
   } catch (e) {
     throw Error(e.message);
   }
@@ -107,53 +151,55 @@ const registerUser = async (data) => {
 };
 
 //------|  PUT/  |---------->
-    const putUser = async (id, updatedData) => {
-      try {
-        const user = await User.findByPk(+id);
-    
-        if (!user) {
-          throw Error("There is no user with the specified id");
-        }
-    
-        const { email, ...rest } = updatedData;
-    
-        if (email) {
-          const salt = bcrypt.genSaltSync();
-          const hashedEmail = bcrypt.hashSync(email, salt);
-          user.email = hashedEmail;
-        }
-    
-        Object.assign(user, rest);
-        await user.save();
-    
-        return user;
-      } catch (e) {
-        throw Error(e.message);
-      }
-    };
-      
-     //------|  deleteUser/:id  |---------->
-    const deleteUser = async (idUsers) => {
-      try {
-        const user = await User.findByPk(+idUsers);
-    
-        if (!user) {
-          throw Error("There is no user with the specified id");
-        }
-    
-        user.active = false;
-        await user.save();
-    
-        return user;
-      } catch (e) {
-        throw Error(e.message);
-      }
-    };
+const putUser = async (id, updatedData) => {
+  try {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      throw Error("There is no user with the specified id");
+    }
+
+    const { email, ...rest } = updatedData;
+
+    if (email) {
+      const salt = bcrypt.genSaltSync();
+      const hashedEmail = bcrypt.hashSync(email, salt);
+      user.email = hashedEmail;
+    }
+
+    Object.assign(user, rest);
+    await user.save();
+
+    return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+//------|  deleteUser/:id  |---------->
+const deleteUser = async (idUsers) => {
+  try {
+    const user = await User.findByPk(idUsers);
+
+    if (!user) {
+      throw Error("There is no user with the specified id");
+    }
+
+    user.active = false;
+    await user.save();
+
+    return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
 
 module.exports = {
   getAllUsers,
   getUserById,
   registerUser,
+  findUserStatus,
+  findUserName,
   putUser,
   deleteUser,
 };

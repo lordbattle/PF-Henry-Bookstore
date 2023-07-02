@@ -84,28 +84,27 @@ const {cart, addToCart, setCart} = localStorage();
 
     const {status} = useParams();
     if(status === 'success'){
-        Swal.fire({
-          title: "Exit!",
-          text: "Purchase successfully",
-          icon: "success",
-          confirmButtonText: "OK",
-          customClass: {container: 'fade-backgroundSuccess'}
+        Swal.fire({title: "Exit!",
+        text: "Purchase successfully",
+        icon: "success",
+        confirmButtonText: "OK",
+        backdrop: 'rgba(53, 222, 53, 0.6)'
         });
     }else if (status === 'failure'){
       Swal.fire({
         title: "Failed",
         text: "Failed purchase",
         icon: 'error',
-       denyButtonText: "Retry",
-       customClass: {container: 'fade-backgroundFailure'}
+       confirmButtonText: "Retry",
+       backdrop: 'rgba(248, 40, 40, 0.6)'
       });
-    }else if (status === 'pending'){
+    }else{
       Swal.fire({
         title: "Pending",
         text: "Something went wrong",
         icon: 'warning',
-       denyButtonText: "Retry",
-       customClass: {container: 'fade-backgroundFailure'}
+       confirmButtonText: "Retry",
+       backdrop: 'rgba(255, 165, 0, 0.6)'
       });
     }
 

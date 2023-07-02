@@ -220,9 +220,8 @@ export function getCurrentUser(payload) {
   return async function (dispatch) {
     try {
       const user = await axiosInstance.post(`/users/register`, payload);
-
-
-
+      
+      console.log("Agregar usuario", user);
       return dispatch({
         type: GET_CURRENT_USER,
         payload: user.data,
@@ -260,7 +259,9 @@ export const postUsers = (payload) => {
         payload: dat,
       });
     } catch (error) {
-      return error.response.data;
+      alert(`Cath del postUser ${error}`);
+      console.log(error);
+      throw new Error(error);
     }
   };
 };

@@ -15,7 +15,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const Login = () => {
-  const { loginWithGoogle } = UserAuth();
+  const { user, loginWithGoogle } = UserAuth();
+  console.log(user, "aqui");
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,20 +25,22 @@ const Login = () => {
   const userlogin = useSelector((state) => state.user);
   // const [loggedIn, setLoggedIn] = useState(false);
   const nombre = useSelector((state) => state.user);
-  const { user } = UserAuth();
+  console.log(nombre);
+
 
   const handleGoogle = async () => {
     try {
       await loginWithGoogle();
       Swal.fire({
         icon: "success",
-        title: `Welcome ${userlogin.userName}`,
+        title: `Welcome ${user.displayName}`,
         text: "Login with Google successful",
       });
+      console.log(user);
 
       navigate("/home");
     } catch (error) {
-      alert("Login invalido");
+      alert(error);
     }
   };
 
@@ -53,29 +57,18 @@ const Login = () => {
         }
       });
     }
-    if (userlogin && userlogin.error === "password incorrect") {
+    if (userlogin && userlogin.error === "Invalid user") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Password invalid!",
+        text: "Invalid email or password!",
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(logoutUser());
         }
       });
     }
-    if (userlogin && userlogin.error === "user email not found") {
-      Swal.fire({
-        title: "Oops...",
-        icon: "error",
-        text: "Email invalid!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(logoutUser());
-        }
-      });
-    }
-    if (userlogin && userlogin.error === "user banned") {
+    if (userlogin && userlogin.error === "User banned") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -102,111 +95,112 @@ const Login = () => {
 
     <div className={style.ContainerMain}>
       <div>
-        <div>
-          <span>Welcome back to Haal</span>
-        </div>
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          validate={(values) => {
-            let error = {};
-            if (!values.email) {
-              error.email = "enter email";
-            } else {
-              if (
-                !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                  values.email
-                )
-              ) {
-                error.email = "invalid email";
-              }
+        <span>Welcome to The Literary Corner</span>
+      </div>
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        validate={(values) => {
+          let error = {};
+          if (!values.email) {
+            error.email = "enter email";
+          } else {
+            if (
+              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+                values.email
+              )
+            ) {
+              error.email = "invalid email";
             }
-            if (!values.password) {
-              error.password = "invalid password";
-            }
-            return error;
-          }}
-          onSubmit={async (values, { resetForm }) => {
-            console.log(values, "ver aca");
-            try {
-              dispatch(logingUser(values));
-            } catch (error) {
-              Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-              });
-            }
-            resetForm();
-          }}
-        >
-          {({
-            values,
-            errors,
-            handleSubmit,
-            touched,
-            handleChange,
-            handleBlur,
-          }) => (
-            <form onSubmit={handleSubmit} className="mt-4">
-              <div className="mb-4">
-                <label htmlFor="name" className="text-lg text-current">
-                  Email
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="  Wil@email.com"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur} //validar fuera del input
-                />
-                {touched.email && errors.email && (
-                  <span className=" bg-red text-red-700">{errors.email}</span>
-                )}
-              </div>
+          }
+          if (!values.password) {
+            error.password = "invalid password";
+          }
+          return error;
+        }}
+        onSubmit={async (values, { resetForm }) => {
+          console.log(values, "ver aca");
+          try {
+            dispatch(logingUser(values));
+          } catch (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
+          resetForm();
+        }}
+      >
+        {({
+          values,
+          errors,
+          handleSubmit,
+          touched,
+          handleChange,
+          handleBlur,
+        }) => (
+          <form onSubmit={handleSubmit} className="mt-4">
+            <div className="mb-4">
+              <label htmlFor="name" className="text-lg text-current">
+                Email
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
+                type="text"
+                id="email"
+                name="email"
+                placeholder="  Wil@email.com"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur} //validar fuera del input
+              />
+              {touched.email && errors.email && (
+                <span className=" bg-red text-red-700">{errors.email}</span>
+              )}
+            </div>
 
-              <div className="mb-4">
-                <label htmlFor="name" className="text-lg text-current">
-                  Password
-                </label>
-                <input
-                  className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder=" **********"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                {touched.password && errors.password && (
-                  <span className=" bg-red text-red-700">{errors.password}</span>
-                )}
-              </div>
+            <div className="mb-4">
+              <label htmlFor="name" className="text-lg text-current">
+                Password
+              </label>
+              <input
+                className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
+                type="password"
+                id="password"
+                name="password"
+                placeholder=" **********"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              {touched.password && errors.password && (
+                <span className=" bg-red text-red-700">{errors.password}</span>
+              )}
+            </div>
 
-              <div className="mt-8 flex flex-col gap-y-4">
-                <button
-                  type="submit"
-                  className="active:scale-[0.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+            <div className="mt-8 flex flex-col gap-y-4">
+              <button
+                type="submit"
+                className="active:scale-[0.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+              >
+                Sing in
+              </button>
+              <button
+                onClick={handleGoogle}
+                type="button"
+                className="active:scale-[0.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all flex rounded-xl py-3 border-2 border-gray-100 items-center justify-center gap-2 "
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+
                 >
-                  Sing in
-                </button>
-                <button
-                  onClick={handleGoogle}
-                  className="active:scale-[0.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all flex rounded-xl py-3 border-2 border-gray-100 items-center justify-center gap-2 "
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
                     <path
                       d="M5.26644 9.76453C6.19903 6.93863 8.85469 4.90909 12.0002 4.90909C13.6912 4.90909 15.2184 5.50909 16.4184 6.49091L19.9093 3C17.7821 1.14545 15.0548 0 12.0002 0C7.27031 0 3.19799 2.6983 1.24023 6.65002L5.26644 9.76453Z"
                       fill="#EA4335"

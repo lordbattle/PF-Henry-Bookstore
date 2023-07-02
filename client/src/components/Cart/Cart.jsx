@@ -4,6 +4,7 @@ import {initMercadoPago, Wallet} from "@mercadopago/sdk-react"
 import { useState } from 'react';
 import {useParams} from "react-router-dom"
 import Swal from "sweetalert2"
+import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
 
 
@@ -115,17 +116,30 @@ const {cart, addToCart, setCart} = localStorage();
       {cart.length > 0 ? (
        <div>
           {cart.map((item) => (
-            <div key={item.id}>
-                    <p>ID del producto: {item.id}</p>
-                    <p>{item.title}</p>
-                    <p>${item.price}</p>
-                    <button onClick={() => handleDecreaseAmount(item.id)}>-</button>
-                    <p>Amount: {item.stock}</p>
-                    <button onClick={() => handleIncreseAmount(item.id)}>+</button>
-                    <span onClick={() => handleRemoveItem(item.id)}>❌Delet product❌</span>
+            <div key={item.id} className={style.main}>
+              <div style={{display: 'flex'}}>
+                    <img src={item.img} alt="book image" style={{height: '11rem', width: '10rem',marginRight: '1rem'}}/>
+                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                      <p>ID del producto: {item.id}</p>
+                      <p>{item.title}</p>
+                      <p>${item.price}</p>
+                    </div>
+                    </div>
+                    <div style={{display: 'flex', justifyContent: 'space-around', minWidth: '20rem', height: '2.5rem',backgroundColor: '#71a5e5', borderRadius: '8px', paddingTop: '3px'}}>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                      <button onClick={() => handleDecreaseAmount(item.id)} className={style.decrease}>-</button>
+                      <p style={{fontSize: '20px', marginLeft: '5px', marginRight: '5px'}}>Amount: {item.stock}</p>
+                      <button onClick={() => handleIncreseAmount(item.id)} className={style.increase}>+</button>
+                    </div>
+                    <span className={style.delete} onClick={() => handleRemoveItem(item.id)}>❌Delet product❌</span>
+                    </div>
             </div>
           ))}
-          <p>Total: ${totalCart}</p> <button onClick={handleBuy}>Buy</button>
+
+          <span style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', minWidth: '100%', textAlign: 'center'}}>
+            <p style={{fontSize: '20px'}}>Total: ${totalCart}</p> 
+            <button onClick={handleBuy} className={style.btn}>Buy</button>
+          </span>
           {Id && <Wallet initialization={{preferenceId: Id}}/>}
         </div>
       ) : (

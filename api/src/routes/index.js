@@ -19,9 +19,9 @@ const mainRouter = Router();
 // Ejemplo: router.use('/auth', authRouter);
 
 mainRouter.use("/authUser", AuthRouter);
-mainRouter.use("/profileUser", validateToken, ProfileRouter);
+mainRouter.use("/profileUser", ProfileRouter);
 mainRouter.use("/users", UsersRouter);
-mainRouter.use("/books", validateToken, BooksRouter);
+mainRouter.use("/books", BooksRouter);
 mainRouter.use("/orders", OrdersRouter);
 
 /* mainRouter.use("/genders", GendersRouter);

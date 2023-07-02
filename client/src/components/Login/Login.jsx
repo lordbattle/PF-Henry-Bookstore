@@ -1,26 +1,19 @@
-/* import { useAuth0 } from '@auth0/auth0-react'
 
-const Login = () => {
-  const { loginWithRedirect } = useAuth0();
-
-  return (
-    <button onClick={()=> loginWithRedirect()}>Login</button>
-  )
-}
-
-export default Login;  */
-
+import { useAuth0 } from '@auth0/auth0-react'
+import Register from '../Register/Register';
+import style from '../Login/Login.module.css';
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../context/AuthContext";
+import { UserAuth } from "../../context/AuthContextFirebase";
 import { logingUser, logoutUser } from "../../redux/actions";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
+
 const Login = () => {
-  const { loginWithGoogle } = useAuth();
+  const { loginWithGoogle } = UserAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +21,7 @@ const Login = () => {
   // const [loggedIn, setLoggedIn] = useState(false);
   const nombre = useSelector((state) => state.user);
   console.log(nombre);
-  const { user } = useAuth();
+  const { user } = UserAuth();
   console.log(user, "aqui");
 
   const handleGoogle = async () => {
@@ -95,6 +88,7 @@ const Login = () => {
   }, [userlogin]);
 
   return (
+
     <div className="flex w-full h-screen">
       <div>
         <span>Welcome back to Haal</span>
@@ -235,3 +229,4 @@ const Login = () => {
 };
 
 export default Login;
+

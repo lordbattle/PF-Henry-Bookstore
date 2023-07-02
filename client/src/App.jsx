@@ -10,9 +10,11 @@ import Cart from "./components/Cart/Cart";
 import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
+
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
+import { AuthContextProvider, UserAuth } from "./context/AuthContextFirebase";
 // import Stack from 'react-bootstrap/Stack'
 //import { useAuth0 } from "@auth0/auth0-react";
 //import axios from "axios";
@@ -28,21 +30,25 @@ function App() {
     <div className="container">
       {pathname !== "/" && <Nav />}
 
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/home" element={<Home />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/detail/:id" element={<Detail />}></Route>
-          <Route path="/createbook" element={<AddBookForm />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
-        </Routes>
-      </AuthProvider>
 
-      <Footer />
+      <AuthContextProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<LandingPage />}></Route>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/detail/:id" element={<Detail />}></Route>
+            <Route path="/createbook" element={<AddBookForm />}></Route>
+            <Route path="/cart" element={<Cart />}></Route>
+          </Routes>
+
+          <Footer />
+        </AuthProvider>
+      </AuthContextProvider>
+
     </div>
   );
 }

@@ -226,7 +226,7 @@ export const postUsers = (payload) => {
       const dat = await axios.post("/users", payload);
       return dat;
     } catch (error) {
-      console.log(error);
+      return error.response.data;
     }
   };
 };

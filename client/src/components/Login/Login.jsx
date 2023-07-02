@@ -7,8 +7,11 @@ const Login = () => {
 
   return (
     <div className={style.ContainerMain}>
-      <Register />
-      <button onClick={() => loginWithRedirect()}>Login</button>
+       <Register />
+      <div className={style.contianerLoginButton}>
+        <p className={style.title}>Login</p>
+        <button className={style.buttonLogin} onClick={() => loginWithRedirect()}>Login</button>
+      </div>
     </div>
   )
 }

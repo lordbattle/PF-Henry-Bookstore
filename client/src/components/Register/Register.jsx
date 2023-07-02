@@ -46,17 +46,19 @@ const Register = () => {
         }
         }
         onSubmit={(values, { resetForm }) => {
-          console.log(values, ' userrrrrrr')
-          const user = dispatch(postUsers(values));
-          console.log(user, ' userrrrrrr')
+          values.googleUser = false;
 
-          setFormSubmitted(true);
-          setTimeout(() => setFormSubmitted(false), 5000);
-          //navigate('/Home');
-         
-          resetForm();
-          // localStorage.setItem("userData", JSON.stringify(user.data));
-          //window.location.href = "https://pf-henry-bookstore.vercel.app/home";
+          const user = dispatch(postUsers(values));
+          user.then((response) => {
+            if(response.success ){
+              setFormSubmitted(true) 
+              setTimeout(() => setFormSubmitted(false), 6000) 
+              navigate('/Home')
+            }else{
+              alert(`${response.message}`) 
+              resetForm();
+            }
+          })
         }}
       >
         {({
@@ -203,9 +205,9 @@ const Register = () => {
             <button className={style.submit} type="submit" >Register</button>
             {formSubmitted && (
               <p>
-                {formSubmitted && (
-                  <p > Form submitted successfully</p>
-                )}
+                {formSubmitted &&
+                  <p className="exito"> Form submitted successfully</p>
+                }
               </p>
             )}
           </Form>

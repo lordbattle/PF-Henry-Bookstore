@@ -87,7 +87,7 @@ const saveAllBooksDb = async () => {
       }
     }
   } catch (error) {
-    console.log("error.message");
+    console.log({error: error.message});
   }
 };
 
@@ -246,9 +246,7 @@ const putBook = async (
 };
 
 const deleteBook = async (idBook) => {
-  const book = await Book.findByPk(idBook, {
-    where: { id: idBook },
-  });
+  const book = await Book.findByPk(idBook);
 
   if (!book) {
     throw Error("There is no book with the specified id");

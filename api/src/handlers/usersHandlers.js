@@ -2,13 +2,13 @@ const {
   getAllUsers,
   registerUser,
   getUserById,
+  findUserName,
+  findUserStatus,
   putUser,
   deleteUser,
-
-  } = require("../controllers/usersControllers");
-  const { typeUser, cleanData, defineOrder } = require("../helpers/userHelper");
-  const { sendNewUserEmail } = require("../config/mailer");
- 
+} = require("../controllers/usersControllers");
+const { typeUser, cleanData, defineOrder } = require("../helpers/userHelper");
+const { sendNewUserEmail } = require("../config/mailer");
 
 //Get All Users
 const getUsersHandler = async (req, res) => {
@@ -23,6 +23,33 @@ const getUsersHandler = async (req, res) => {
     res.status(200).json({ success: true, results });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+//GET USER BY STATUS 
+const getUsersByStatus = async(req,res)=> {
+   const {status} = req.query;
+
+  try {
+    const result = await findUserStatus(status)
+
+    res.status(200).json({ result });
+  } catch (error) {
+    res.status(400).json(error.message)
+  }
+}
+
+
+//GET USER BY userName
+const getUsersByName = async (req, res) => {
+  const { username } = req.query;
+
+  try {
+    const result = await findUserName(username);
+
+    res.status(200).json({ result });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -81,6 +108,8 @@ module.exports = {
   getUsersHandler,
   getUsersIdHandler,
   postUsersIdHandler,
+  getUsersByStatus,
+  getUsersByName,
   putUsersHandler,
   deleteUsersHandler,
 };

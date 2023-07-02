@@ -41,13 +41,45 @@ const getAllUsers = async (name, page, limit, sort, rol) => {
   }
 };
 
+const findUserStatus = async (status) => {
+  try {
+    const result = await User.findAll({
+      where: {
+        active: status,
+      },
+    });
+
+    return result;
+  } catch (error) {
+    throw Error(error.message);
+  }
+};
+
 const getUserById = async (id) => {
   try {
-    const user = await User.findByPk(+id);
+    const user = await User.findByPk(id);
 
     if (!user) throw Error("There is no user with the specified id");
 
     return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+const findUserName = async (userName) => {
+  try {
+    const userByname = await User.findOne({
+      where: {
+        userName: {
+          [Op.iLike]: `%${userName}%`,
+        },
+      },
+    });
+
+    if (!userByname) throw Error("There is no user with the specified name");
+
+    return userByname;
   } catch (e) {
     throw Error(e.message);
   }
@@ -107,53 +139,55 @@ const registerUser = async (data) => {
 };
 
 //------|  PUT/  |---------->
-    const putUser = async (id, updatedData) => {
-      try {
-        const user = await User.findByPk(+id);
-    
-        if (!user) {
-          throw Error("There is no user with the specified id");
-        }
-    
-        const { email, ...rest } = updatedData;
-    
-        if (email) {
-          const salt = bcrypt.genSaltSync();
-          const hashedEmail = bcrypt.hashSync(email, salt);
-          user.email = hashedEmail;
-        }
-    
-        Object.assign(user, rest);
-        await user.save();
-    
-        return user;
-      } catch (e) {
-        throw Error(e.message);
-      }
-    };
-      
-     //------|  deleteUser/:id  |---------->
-    const deleteUser = async (idUsers) => {
-      try {
-        const user = await User.findByPk(+idUsers);
-    
-        if (!user) {
-          throw Error("There is no user with the specified id");
-        }
-    
-        user.active = false;
-        await user.save();
-    
-        return user;
-      } catch (e) {
-        throw Error(e.message);
-      }
-    };
+const putUser = async (id, updatedData) => {
+  try {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      throw Error("There is no user with the specified id");
+    }
+
+    const { email, ...rest } = updatedData;
+
+    if (email) {
+      const salt = bcrypt.genSaltSync();
+      const hashedEmail = bcrypt.hashSync(email, salt);
+      user.email = hashedEmail;
+    }
+
+    Object.assign(user, rest);
+    await user.save();
+
+    return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+//------|  deleteUser/:id  |---------->
+const deleteUser = async (idUsers) => {
+  try {
+    const user = await User.findByPk(idUsers);
+
+    if (!user) {
+      throw Error("There is no user with the specified id");
+    }
+
+    user.active = false;
+    await user.save();
+
+    return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
 
 module.exports = {
   getAllUsers,
   getUserById,
   registerUser,
+  findUserStatus,
+  findUserName,
   putUser,
   deleteUser,
 };

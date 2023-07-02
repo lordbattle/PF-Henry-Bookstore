@@ -61,7 +61,7 @@ function rootReducer(state = initialState, action) {
         ...state,
       };
 
-    /////USER
+    //USER
 
     case GET_USERS:
       return {

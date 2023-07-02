@@ -13,7 +13,6 @@ import {
   CLEAN_USER_DETAIL,
 } from "../types/types.js";
 
-
 //BOOKS
 
 //!Esta funcion esta deteriorada no descomentar
@@ -68,7 +67,7 @@ export const getBooksByFilters = (obj) => {
     try {
       let url = "/books/?";
 
-      if ( obj.author && obj.author !== "all") {
+      if (obj.author && obj.author !== "all") {
         url += `author=${obj.author}&`;
       }
 
@@ -96,8 +95,7 @@ export const getBooksByFilters = (obj) => {
       url = url.slice(0, -1);
       console.log(url);
       const { data } = await axios.get(url);
-      
-      
+
       return dispatch({
         type: FILTERS_BOOKS,
         payload: data,
@@ -176,6 +174,7 @@ export const getUsers = () => {
 };
 
 export const getUserById = (idUser) => {
+  // name y lastname estan en null en el backend
   return async (dispatch) => {
     try {
       const { data } = await axios.get(`/users/${idUser}`);
@@ -194,6 +193,7 @@ export function getCurrentUser(payload) {
   return async function (dispatch) {
     try {
       const user = await axios.post(`/users/register`, payload);
+      console.log("Agregar usuario", user);
       return dispatch({
         type: GET_CURRENT_USER,
         payload: user.data,
@@ -205,6 +205,7 @@ export function getCurrentUser(payload) {
 }
 
 export const deleteUser = (idUser) => {
+  //no lo elimina pero si ejecuata el respose en el backend
   return async (dispatch) => {
     try {
       const response = await axios.delete(`/users/${idUser}`);
@@ -224,6 +225,7 @@ export const postUsers = (payload) => {
   return async () => {
     try {
       const dat = await axios.post("/users", payload);
+      console.log(dat);
       return dat;
     } catch (error) {
       console.log(error);
@@ -232,6 +234,7 @@ export const postUsers = (payload) => {
 };
 
 export const editUser = (idUser, updatedProduct) => {
+  // name y lastname estan en null en el backend
   return async () => {
     try {
       const { data } = await axios.put(`/users/${idUser}`, updatedProduct);
@@ -244,6 +247,7 @@ export const editUser = (idUser, updatedProduct) => {
 };
 
 export const activeUser = (idUser) => {
+  //FUNCIONANDO CORRECTAMENTE
   return async () => {
     try {
       const { data } = await axios.put(`/users/${idUser}`, { active: true });
@@ -254,18 +258,26 @@ export const activeUser = (idUser) => {
   };
 };
 
-export const getUsersByName = (payload) => {
-  return {
-    type: GET_USERS_BY_NAME,
-    payload,
+export const getUsersByName = (name) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/users?username=${name}`);
+      return dispatch({ type: GET_USERS_BY_NAME, payload: data });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 };
 
 export function getUsersByStatus(payload) {
-  return {
-    type: GET_USERS_BY_STATUS,
-    payload,
-  };
+  try {
+    return {
+      type: GET_USERS_BY_STATUS,
+      payload,
+    };
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 export function cleanUserDetail() {

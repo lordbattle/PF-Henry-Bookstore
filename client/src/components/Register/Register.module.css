@@ -28,7 +28,7 @@
     flex-direction: column;
     top: 15px;
     gap: 20px;
-    width: 32em;
+    width: 35em;
     background-color: #63c090;
     padding: 20px;
     border-radius: 20px;
@@ -176,7 +176,7 @@
 }
 
 .errors {
-    color: #063b85;
+    color: #072754;
 }
 
 .submit {

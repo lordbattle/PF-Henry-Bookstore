@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 //import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
 import { element } from "prop-types";
+import validations from "../../hooks/validations";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Register = () => {
   const agesSelect = () => {
     let count = [];
     for (let i = 18; i <= 100; i++) {
-      count.push(i+'');
+      count.push(i + '');
     }
     return count;
   }
@@ -41,19 +42,10 @@ const Register = () => {
           name: "",
           lastName: ""
         }}
-        validate={(values) => {
-          let errors = {};
-          if (!values.name) {
-            errors.name = "Please, insert a name";
-          } else if (!/^[a-zA-ZÀ-ÿ\s]{1,20}$/.test(values.name)) {
-            errors.name =
-              "The name can only have letters and spaces and length less than 20";
-          }
-          if (!values.lastName) {
-            errors.name = "Please, insert a lastName";
-          }
-          return errors;
-        }}
+        validate={ (values) =>{
+          return validations(values);
+        }
+        }
         onSubmit={(values, { resetForm }) => {
           resetForm();
           console.log("FORM SENT");
@@ -65,41 +57,48 @@ const Register = () => {
         }}
       >
         {({
-          values,
-          errors,
-          handleSubmit,
-          touched,
-          handleChange,
-          handleBlur,
+          errors, handleSubmit , handleChange , handleBlur
         }) => (
-          <form className={style.form} onSubmit={handleSubmit}>
+          <form className={style.form} onSubmit={handleSubmit} >
             <p className={style.title}>Register</p>
             <p className={style.message}>
               Signup now and get full access to our app.
             </p>
             <div className={style.containerNames}>
-              <label>
-                <Field
-                  placeholder=""
-                  type="text"
-                  className={style.inputNames}
-                  id="name"
-                  name="name"
-                />
-                <span>Name</span>
-              </label>
-              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.name}</div>)} />
-              <label>
-                <Field
-                  placeholder=""
-                  type="text"
-                  className={style.inputNames}
-                  id="lastName"
-                  name="lastName"
-                />
-                <span>Last name</span>
-              </label>
-              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.lastName}</div>)} />
+              <div>
+                <label>
+                  <Field
+                    placeholder=''
+                    type="text"
+                    className={style.inputNames}
+                    id="name"
+                    name="name"
+                  />
+                  <span>Name</span>
+                </label>
+                <ErrorMessage name='name' component={() =>
+                (<div className='errors'>{errors.name}</div>
+                )} />
+                {/*errors.name && <div className="error">{errors.name} </div>*/ }
+              </div>
+
+              <div>
+                <label>
+                  <Field
+                    id="lastName"
+                    name="lastName"
+                    placeholder=""
+                    type="text"
+                    className={style.inputNames} 
+                  />
+                  <span>Last name</span>
+                </label>
+                <ErrorMessage name='lastName' component={() =>
+                (<div className='errors'>{errors.lastName}</div>
+                )} />
+              </div>
+
+
             </div>
 
 
@@ -112,7 +111,7 @@ const Register = () => {
               />
               <span>Email</span>
             </label>
-            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.email}</div>)} />
+            <ErrorMessage name='email' component={() => (<div className='error'>{errors.email}</div>)} />
 
 
             <label>
@@ -125,7 +124,7 @@ const Register = () => {
               />
               <span>User name</span>
             </label>
-            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.userName}</div>)} />
+            <ErrorMessage name='userName' component={() => (<div className='error'>{errors.userName}</div>)} />
 
             <label>
               <Field
@@ -137,7 +136,7 @@ const Register = () => {
               />
               <span>password</span>
             </label>
-            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.password}</div>)} />
+            <ErrorMessage name='password' component={() => (<div className='error'>{errors.password}</div>)} />
 
             <label>
               <Field
@@ -150,13 +149,13 @@ const Register = () => {
               />
               <span>Location</span>
             </label>
-            <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.location}</div>)} />
+            <ErrorMessage name='location' component={() => (<div className='error'>{errors.location}</div>)} />
 
 
             <div className={style.containerNumberInfo}>
               <label>
                 <Field
-                placeholder='+ 18'
+                  placeholder='+ 18'
                   type='text'
                   className={style.input}
                   id="age"
@@ -164,7 +163,7 @@ const Register = () => {
                 />
                 <span>Age</span>
               </label>
-              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.age}</div>)} />
+              <ErrorMessage name='age' component={() => (<div className='error'>{errors.age}</div>)} />
 
 
 
@@ -174,19 +173,19 @@ const Register = () => {
                   className={style.input}
                   id="genres"
                   name="genres"
-                >          
+                >
                   <option value="M">Masculino</option>
-                  <option value="F">Femenino</option>  
+                  <option value="F">Femenino</option>
                 </Field>
 
                 <span>Genres</span>
               </label>
-              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.email}</div>)} />
+              <ErrorMessage name='genres' component={() => (<div className='error'>{errors.email}</div>)} />
 
 
               <label>
                 <Field
-                  placeholder=" +COD xxxxxxxxxx"
+                  placeholder=" +COD xxx-xxx-xxxx"
                   type="text"
                   className={style.input}
                   id="phone"
@@ -194,7 +193,7 @@ const Register = () => {
                 />
                 <span>Phone</span>
               </label>
-              <ErrorMessage name='LastName' component={() => (<div className='error'>{errors.phone}</div>)} />
+              <ErrorMessage name='phone' component={() => (<div className='error'>{errors.phone}</div>)} />
 
             </div>
 

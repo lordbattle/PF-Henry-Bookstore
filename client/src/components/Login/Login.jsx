@@ -8,7 +8,9 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { loginWithGoogle } = UserAuth();
+  const { user, loginWithGoogle } = UserAuth();
+  console.log(user, "aqui");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,21 +18,20 @@ const Login = () => {
   // const [loggedIn, setLoggedIn] = useState(false);
   const nombre = useSelector((state) => state.user);
   console.log(nombre);
-  const { user } = UserAuth();
-  console.log(user, "aqui");
 
   const handleGoogle = async () => {
     try {
       await loginWithGoogle();
       Swal.fire({
         icon: "success",
-        title: `Welcome ${userlogin.userName}`,
+        title: `Welcome ${user.displayName}`,
         text: "Login with Google successful",
       });
+      console.log(user);
 
       navigate("/home");
     } catch (error) {
-      alert("Login invalido");
+      alert(error);
     }
   };
 
@@ -47,29 +48,18 @@ const Login = () => {
         }
       });
     }
-    if (userlogin && userlogin.error === "password incorrect") {
+    if (userlogin && userlogin.error === "Invalid user") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Password invalid!",
+        text: "Invalid email or password!",
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(logoutUser());
         }
       });
     }
-    if (userlogin && userlogin.error === "user email not found") {
-      Swal.fire({
-        title: "Oops...",
-        icon: "error",
-        text: "Email invalid!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          dispatch(logoutUser());
-        }
-      });
-    }
-    if (userlogin && userlogin.error === "user banned") {
+    if (userlogin && userlogin.error === "User banned") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -85,7 +75,7 @@ const Login = () => {
   return (
     <div className="flex w-full h-screen">
       <div>
-        <span>Welcome back to Haal</span>
+        <span>Welcome to The Literary Corner</span>
       </div>
       <Formik
         initialValues={{
@@ -180,6 +170,7 @@ const Login = () => {
               </button>
               <button
                 onClick={handleGoogle}
+                type="button"
                 className="active:scale-[0.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all flex rounded-xl py-3 border-2 border-gray-100 items-center justify-center gap-2 "
               >
                 <svg

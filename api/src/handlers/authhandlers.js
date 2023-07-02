@@ -24,6 +24,10 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid user" });
     }
 
+    if (userFound.banned === true) {
+      throw new Error(`User banned`);
+    }
+
     const token = await createAccessToken({ id: userFound.id });
 
     res.cookie(

@@ -4,25 +4,37 @@ import { Formik } from "formik";
 import { logingUser, postUsers } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 //import { useNavigate } from "react-router-dom";
-import style from "./Register.module.css";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { UserAuth } from "../../context/AuthContextFirebase";
+import Swal from "sweetalert2";
+import style from "./Register.module.css";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { signup, isAuthenticated } = useAuth;
+  const { signUp, loginWithGoogle } = UserAuth();
   const [formSubmitted, setFormSubmitted] = useState(false);
-  //const navigate = useNavigate();
 
   // FILTRO EL EMAIL QUE ME TRAE EL LOCALSTORAGE
- /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
+  /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
   const userFilEmail = userEmail.email; */
 
   /* useEffect(() => {
     if (isAuthenticated) navigate("/home");
   }, [isAuthenticated]);
  */
+  const postUsersAsync = (payload) => {
+    return new Promise((resolve, reject) => {
+      dispatch(postUsers(payload))
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
   return (
     <div className={style.formContainer}>
       <Formik
@@ -49,23 +61,34 @@ const Register = () => {
           }
           return errors;
         }}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={async (values, { resetForm }) => {
           try {
-            resetForm();
             console.log("FORM SENT");
-            //redux
-            const user = dispatch(postUsers(values));
-            //const user = signup(values);
-            localStorage.setItem("userData", JSON.stringify(user.data));
+            // redux
+            try {
+              await postUsersAsync(values); // Esperar la resolución de la promesa
+            } catch (error) {
+              throw new Error(error);
+            }
+        
+            await signUp(values.email, values.password, values.name);
             setFormSubmitted(true);
+            resetForm();
             setTimeout(() => setFormSubmitted(false), 5000);
-            dispatch(
-              logingUser(values.email, values.password, values.userName)
-            );
-            //navigate("/home");
-            //window.location.href = "https://pf-henry-bookstore.vercel.app/home";
+            dispatch(logingUser(values.email, values.password, values.userName));
+            Swal.fire({
+              icon: "success",
+              title: "Registered Welcome!",
+              text: "You are now part of The Litary Corner!",
+              backdrop: true,
+            });
+            navigate("/login");
           } catch (error) {
-            console.log(error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
           }
         }}
       >
@@ -218,7 +241,7 @@ const Register = () => {
               <span>Phone</span>
             </label>
 
-            <button className={style.submit}>Submit</button>
+            <button type="submit" className={style.submit}>Submit</button>
             {formSubmitted && (
               <p className={style.successMessage}>
                 {formSubmitted && (

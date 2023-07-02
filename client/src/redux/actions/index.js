@@ -100,11 +100,6 @@ export const getBooksByFilters = (obj) => {
       // Remove trailing '&' from the URL
       url = url.slice(0, -1);
       console.log(url);
-<<<<<<< HEAD
-
-      const { data } = await axiosInstance.get(url);
-=======
->>>>>>> d05da656d6e714efaac81649193c66d50a45552a
 
       const { data } = await axiosInstance.get(url);
       return dispatch({
@@ -222,10 +217,8 @@ export function getCurrentUser(payload) {
   return async function (dispatch) {
     try {
       const user = await axiosInstance.post(`/users/register`, payload);
-<<<<<<< HEAD
-=======
+
       console.log("Agregar usuario", user);
->>>>>>> d05da656d6e714efaac81649193c66d50a45552a
 
       return dispatch({
         type: GET_CURRENT_USER,
@@ -261,7 +254,9 @@ export const postUsers = (payload) => {
 
       return dat;
     } catch (error) {
+      alert(`Cath del postUser ${error}`);
       console.log(error);
+      throw new Error(error);
     }
   };
 };

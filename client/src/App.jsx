@@ -11,6 +11,8 @@ import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
 
+import localStorage from './components/LocalStorage/LocalStorage'
+
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
@@ -29,7 +31,7 @@ function App() {
 
   const { cart } = localStorage();
   let totalProducts = 0;
-  
+
       cart.forEach((item)=>{
         totalProducts += item.stock;
       })

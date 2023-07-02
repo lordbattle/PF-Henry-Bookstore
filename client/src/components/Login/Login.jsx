@@ -1,18 +1,15 @@
-
-
 /* import { useAuth0 } from '@auth0/auth0-react' */
 /* import Register from '../Register/Register'; */
-/* import style from '../Login/Login.module.css'; */
+import style from "../Login/Login.module.css";
 
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logingUser, logoutUser } from "../../redux/actions";
 import Swal from "sweetalert2";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-
 
 const Login = () => {
   const { loginWithGoogle } = UserAuth();
@@ -22,8 +19,8 @@ const Login = () => {
 
   const userlogin = useSelector((state) => state.user);
   // const [loggedIn, setLoggedIn] = useState(false);
-  const nombre = useSelector((state) => state.user);
-  const { user } = UserAuth();
+ /*    const nombre = useSelector((state) => state.user);
+  const { user } = UserAuth();  */
 
   const handleGoogle = async () => {
     try {
@@ -88,7 +85,7 @@ const Login = () => {
     }
   }, [userlogin]);
 
-  const handleRegister = () => {
+  /* const handleRegister = () => {
     setOptionRegister(true);
     setOptionLogin(false);
 
@@ -96,10 +93,9 @@ const Login = () => {
   const handleLogin = () => {
     setOptionLogin(true);
     setOptionRegister(false);
-  }
+  } */
 
   return (
-
     <div className={style.ContainerMain}>
       <div>
         <div>
@@ -185,7 +181,9 @@ const Login = () => {
                   onBlur={handleBlur}
                 />
                 {touched.password && errors.password && (
-                  <span className=" bg-red text-red-700">{errors.password}</span>
+                  <span className=" bg-red text-red-700">
+                    {errors.password}
+                  </span>
                 )}
               </div>
 
@@ -242,4 +240,3 @@ const Login = () => {
 };
 
 export default Login;
-

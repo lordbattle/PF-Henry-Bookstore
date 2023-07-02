@@ -7,27 +7,17 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Footer from "./components/Footer/Footer.jsx";
 import Cart from "./components/Cart/Cart";
-<<<<<<< HEAD
-
-//import { useAuth0 } from "@auth0/auth0-react";
-
-import Detail from "./components/Detail/Detail";
-import AddBookForm from "./components/BooksForm/BooksForm";
-=======
 import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
->>>>>>> d05da656d6e714efaac81649193c66d50a45552a
+
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
+import { AuthContextProvider, UserAuth } from "./context/AuthContextFirebase";
 // import Stack from 'react-bootstrap/Stack'
 //import { useAuth0 } from "@auth0/auth0-react";
 //import axios from "axios";
-<<<<<<< HEAD
-
-=======
->>>>>>> d05da656d6e714efaac81649193c66d50a45552a
 
 //axios.defaults.baseURL = "http://localhost:3001";
 //axios.defaults.baseURL = 'https://pf-henry-bookstore-production.up.railway.app'
@@ -40,25 +30,23 @@ function App() {
     <div className="container">
       {pathname !== "/" && <Nav />}
 
-<<<<<<< HEAD
+      <AuthContextProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<LandingPage />}></Route>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/detail/:id" element={<Detail />}></Route>
+            <Route path="/createbook" element={<AddBookForm />}></Route>
+            <Route path="/cart" element={<Cart />}></Route>
+          </Routes>
 
-=======
->>>>>>> d05da656d6e714efaac81649193c66d50a45552a
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/home" element={<Home />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/detail/:id" element={<Detail />}></Route>
-          <Route path="/createbook" element={<AddBookForm />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
-        </Routes>
-      </AuthProvider>
-
-      <Footer />
+          <Footer />
+        </AuthProvider>
+      </AuthContextProvider>
     </div>
   );
 }

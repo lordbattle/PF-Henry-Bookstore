@@ -71,7 +71,7 @@ module.exports = (sequelize) => {
       },
       googleUser: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        defaultValue: false,
       },
       notifications: {
         type: DataTypes.JSON,

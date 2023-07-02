@@ -1,20 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //import { Link } from "react-router-dom";
 import { Formik } from "formik";
-import { postUsers } from "../../redux/actions";
+import { logingUser, postUsers } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 //import { useNavigate } from "react-router-dom";
 import style from "./Register.module.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { signup, isAuthenticated } = useAuth;
   const [formSubmitted, setFormSubmitted] = useState(false);
   //const navigate = useNavigate();
 
   // FILTRO EL EMAIL QUE ME TRAE EL LOCALSTORAGE
-  /* const userEmail = JSON.parse(localStorage.getItem("userData"));
+ /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
   const userFilEmail = userEmail.email; */
 
+  /* useEffect(() => {
+    if (isAuthenticated) navigate("/home");
+  }, [isAuthenticated]);
+ */
   return (
     <div className={style.formContainer}>
       <Formik
@@ -42,13 +50,23 @@ const Register = () => {
           return errors;
         }}
         onSubmit={(values, { resetForm }) => {
-          resetForm();
-          console.log("FORM SENT");
-          const user = dispatch(postUsers(values));
-          localStorage.setItem("userData", JSON.stringify(user.data));
-          setFormSubmitted(true);
-          setTimeout(() => setFormSubmitted(false), 5000);
-          //window.location.href = "https://pf-henry-bookstore.vercel.app/home";
+          try {
+            resetForm();
+            console.log("FORM SENT");
+            //redux
+            const user = dispatch(postUsers(values));
+            //const user = signup(values);
+            localStorage.setItem("userData", JSON.stringify(user.data));
+            setFormSubmitted(true);
+            setTimeout(() => setFormSubmitted(false), 5000);
+            dispatch(
+              logingUser(values.email, values.password, values.userName)
+            );
+            //navigate("/home");
+            //window.location.href = "https://pf-henry-bookstore.vercel.app/home";
+          } catch (error) {
+            console.log(error);
+          }
         }}
       >
         {({

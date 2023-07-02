@@ -15,11 +15,9 @@ import {
   LOGOUT_USER,
   //VERIFY_USER,
 } from "../types/types.js";
-<<<<<<< HEAD
-=======
+
 import axiosInstance from "../../api/axiosInstance.js";
 import Cookies from "js-cookie";
->>>>>>> 1e887b7aa7bd5207292481848751f19b85f382ca
 
 //BOOKS
 //?
@@ -102,12 +100,8 @@ export const getBooksByFilters = (obj) => {
       // Remove trailing '&' from the URL
       url = url.slice(0, -1);
       console.log(url);
-<<<<<<< HEAD
-      const { data } = await axios.get(url);
-=======
-      const { data } = await axiosInstance.get(url);
->>>>>>> 1e887b7aa7bd5207292481848751f19b85f382ca
 
+      const { data } = await axiosInstance.get(url);
       return dispatch({
         type: FILTERS_BOOKS,
         payload: data,
@@ -173,19 +167,18 @@ export const editBook = (idBook, updatedProduct) => {
   };
 };
 
-
-export const buyBook = (payload)=>{
-  return async()=>{
+export const buyBook = (payload) => {
+  return async () => {
     try {
-        const {data} = await axiosInstance.post(`/orders`, payload)
-        console.log(`Se ejecuto bien buyBook`, data)
-        const {id} = data.results
-        return id;
+      const { data } = await axiosInstance.post(`/orders`, payload);
+      console.log(`Se ejecuto bien buyBook`, data);
+      const { id } = data.results;
+      return id;
     } catch (error) {
       console.log(`Catch de buyBook ${error}`);
     }
-  }
-}
+  };
+};
 
 //USER
 
@@ -223,12 +216,9 @@ export const getUserById = (idUser) => {
 export function getCurrentUser(payload) {
   return async function (dispatch) {
     try {
-<<<<<<< HEAD
-      const user = await axios.post(`/users/register`, payload);
-      console.log("Agregar usuario", user);
-=======
       const user = await axiosInstance.post(`/users/register`, payload);
->>>>>>> 1e887b7aa7bd5207292481848751f19b85f382ca
+      console.log("Agregar usuario", user);
+
       return dispatch({
         type: GET_CURRENT_USER,
         payload: user.data,
@@ -259,12 +249,8 @@ export const deleteUser = (idUser) => {
 export const postUsers = (payload) => {
   return async () => {
     try {
-<<<<<<< HEAD
-      const dat = await axios.post("/users", payload);
-      console.log(dat);
-=======
       const dat = await axiosInstance.post("/users", payload);
->>>>>>> 1e887b7aa7bd5207292481848751f19b85f382ca
+
       return dat;
     } catch (error) {
       console.log(error);
@@ -375,4 +361,3 @@ export function verifyUser() {
     }
   };
 }
-

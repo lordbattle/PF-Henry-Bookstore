@@ -102,7 +102,7 @@ export const getBooksByFilters = (obj) => {
       url = url.slice(0, -1);
       console.log(url);
 
-
+      const { data } = await axiosInstance.get(url)
 
       console.log("actions", data);
       return dispatch({

@@ -13,6 +13,7 @@ import {
   CLEAN_USER_DETAIL,
   LOGING_USER,
   LOGOUT_USER,
+  POST_USERS,
   //VERIFY_USER,
 } from "../types/types.js";
 
@@ -103,7 +104,7 @@ export const getBooksByFilters = (obj) => {
 
       const { data } = await axiosInstance.get(url);
 
-      console.log("actions",data);
+      console.log("actions", data);
       return dispatch({
         type: FILTERS_BOOKS,
         payload: data,
@@ -249,11 +250,14 @@ export const deleteUser = (idUser) => {
 };
 
 export const postUsers = (payload) => {
-  return async () => {
+  return async (dispatch) => {
     try {
       const dat = await axiosInstance.post("/users", payload);
 
-      return dat;
+      return dispatch({
+        type: POST_USERS,
+        payload: dat,
+      });
     } catch (error) {
       return error.response.data;
     }

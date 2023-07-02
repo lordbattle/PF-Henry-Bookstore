@@ -13,6 +13,7 @@ export const DELETE_USER = "DELETE_USER";
 export const GET_USERS_BY_NAME = "GET_USERS_BY_NAME";
 export const GET_USERS_BY_STATUS = "GET_USERS_BY_NAME";
 export const CLEAN_USER_DETAIL = "CLEAN_USER_DETAIL";
+export const POST_USERS = "POST_USERS";
 
 //Login
 export const LOGING_USER = "LOGING_USER";

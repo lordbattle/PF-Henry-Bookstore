@@ -84,8 +84,12 @@ const location = useLocation();
       }
     };
 
+    const [localStorageData, setLocalStorageData] = useState(useStorage());
+
     useEffect(() => {
       if (status === "approved") {
+        let{cart} = localStorageData;
+        setCart([])
         Swal.fire({
           title: "Exit!",
           text: "Purchase successfully",
@@ -93,8 +97,10 @@ const location = useLocation();
           confirmButtonText: "OK",
           backdrop: "rgba(53, 222, 53, 0.6)",
         });
-       
-      } else if (status === "rejected") {
+        console.log("ESTO ES LO QUE TIENE EL LOCALSTORAGEDATA si approved", cart);
+      }
+    }, [status]);
+if (status === "rejected") {
         Swal.fire({
           title: "Failed",
           text: "Failed purchase",
@@ -111,7 +117,6 @@ const location = useLocation();
           backdrop: "rgba(243, 148, 23, 0.8)",
         });
       }
-    }, [status, addToPurchaseHistory]);
 
 
 
@@ -149,7 +154,27 @@ const location = useLocation();
       ) : (
         <p key="No books">No hay elementos en el carrito.</p>
       )}
+      <div>
+      {status === "approved" ? (
+        <div> <h3>Purchase history</h3>
+          {localStorageData.cart.length > 0 ? (
+            <div>
+              {localStorageData.cart.map((item) => (
+                <div key={item.id} className={style.card}>
+                  <img src={item.img} alt="Book" />
+                  <h3>{item.title}</h3>
+                  <p>${item.price}</p>
+
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No purchase history.</p>
+          )}
         </div>
+      ) : null}
+      </div>
+</div>
     )
 }
 export default Cart;

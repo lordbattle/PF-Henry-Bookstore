@@ -10,12 +10,13 @@ import Cart from "./components/Cart/Cart";
 import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
-import OptionLoginOrRegister from './components/OptionLoginOrRegister/OptionLoginOrRegister';
+import OptionLoginOrRegister from "./components/OptionLoginOrRegister/OptionLoginOrRegister";
 
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
 import { AuthContextProvider, UserAuth } from "./context/AuthContextFirebase";
+import Logout from "./components/Logout/Logout";
 // import Stack from 'react-bootstrap/Stack'
 //import { useAuth0 } from "@auth0/auth0-react";
 //import axios from "axios";
@@ -31,7 +32,6 @@ function App() {
     <div className="container">
       {pathname !== "/" && <Nav />}
 
-
       <AuthContextProvider>
         <AuthProvider>
           <Routes>
@@ -39,7 +39,11 @@ function App() {
             <Route path="/home" element={<Home />}></Route>
             <Route path="/about" element={<About />}></Route>
             <Route path="/login" element={<Login />}></Route>
-            <Route path="/optionLoginOrRegister" element={<OptionLoginOrRegister />}></Route>
+            <Route path="/logout" element={<Logout />}></Route>
+            <Route
+              path="/optionLoginOrRegister"
+              element={<OptionLoginOrRegister />}
+            ></Route>
             <Route path="/profile" element={<Profile />} />
             <Route path="/register" element={<Register />}></Route>
             <Route path="/detail/:id" element={<Detail />}></Route>
@@ -50,7 +54,6 @@ function App() {
           <Footer />
         </AuthProvider>
       </AuthContextProvider>
-
     </div>
   );
 }

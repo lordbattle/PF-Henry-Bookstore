@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { checkSchema } = require("express-validator");
 const { userNewSchema, userPutSchema } = require("../schemas/userSchema");
 const { validateRequest } = require("../middleware/validateRequest");
+const { userGoogleMiddelware } = require("../middleware/userGoogleMiddelware");
 
 const {
   getUsersHandler,
@@ -15,7 +16,13 @@ const UsersRouter = Router();
 
 UsersRouter.get("/", getUsersHandler)
   .get("/:idUsers", getUsersIdHandler)
-  .post("/", checkSchema(userNewSchema), validateRequest, postUsersIdHandler)
+  .post(
+    "/",
+    userGoogleMiddelware,
+    checkSchema(userNewSchema),
+    validateRequest,
+    postUsersIdHandler
+  )
   .put(
     "/:idUsers",
     checkSchema(userPutSchema),

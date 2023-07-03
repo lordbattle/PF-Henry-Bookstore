@@ -1,8 +1,9 @@
+import SearchBar from "../SearchBar/SearchBar";
+import { Link, useNavigate } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
 import useStorage from "../LocalStorage/LocalStorage"
-import { Link } from "react-router-dom";
-import SearchBar from "../SearchBar/SearchBar";
 import { useState, useEffect } from "react";
+
 const Nav = () => {
 
   const { cart } = useStorage();
@@ -47,7 +48,10 @@ const Nav = () => {
             </Link>
           </span>{" "}
           <span className="p-2 ms-0 link-as-text">
-            <Link to={"/profile"} className="text-decoration-none fs-5 text-reset">
+            <Link
+              to={"/profile"}
+              className="text-decoration-none fs-5 text-reset"
+            >
               Profile
             </Link>
           </span>
@@ -84,8 +88,18 @@ const Nav = () => {
             Log in
           </Link>
 
-          <Link to={"/login"} className="text-decoration-none fs-5 text-reset">
+          <Link
+            to={"/register"}
+            className="text-decoration-none fs-5 text-reset"
+          >
             Sign up
+          </Link>
+
+          <Link
+            to={"/logout"}
+            className="text-decoration-none  fs-5 text-reset"
+          >
+            Log out
           </Link>
         </div>
       </Stack>

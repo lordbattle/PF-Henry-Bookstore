@@ -11,6 +11,11 @@ const typeUser = [
   "banned",
   "googleUser",
   "profilePic",
+
+  //google firebase
+  "email",
+  "displayName",
+  "uid",
 ];
 
 const cleanData = (arr, obj) => {

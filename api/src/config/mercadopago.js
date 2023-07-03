@@ -1,4 +1,4 @@
-/* const mercadopago = require("mercadopago");
+ const mercadopago = require("mercadopago");
 
 const { MERCADOPAGO_ACCESS_TOKEN } = process.env;
 
@@ -8,4 +8,4 @@ mercadopago.configure({
 
 module.exports = {
   mercadopago,
-}; */
+}; 

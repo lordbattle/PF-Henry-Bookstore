@@ -2,7 +2,7 @@ import useStorage from '../LocalStorage/LocalStorage'
 import { buyBook } from '../../redux/actions';
 import {initMercadoPago, Wallet} from "@mercadopago/sdk-react"
 import { useState, useEffect } from 'react';
-import {useParams} from "react-router-dom"
+import {useLocation} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
@@ -10,7 +10,9 @@ import "./Cart.module.css"
 
 export const Cart =()=>{
 const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
-const { status } = useParams();
+const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const status = queryParams.get("status");
     const handleIncreseAmount = (itemId)=>{
         const updateCart = cart.map((item)=>{
             if(item.id === itemId){
@@ -83,7 +85,7 @@ const { status } = useParams();
     };
 
     useEffect(() => {
-      if (status === "success") {
+      if (status === "approved") {
         Swal.fire({
           title: "Exit!",
           text: "Purchase successfully",
@@ -91,9 +93,8 @@ const { status } = useParams();
           confirmButtonText: "OK",
           backdrop: "rgba(53, 222, 53, 0.6)",
         });
-        addToPurchaseHistory();
-        localStorage.removeItem("cart");
-      } else if (status === "failure") {
+       
+      } else if (status === "rejected") {
         Swal.fire({
           title: "Failed",
           text: "Failed purchase",

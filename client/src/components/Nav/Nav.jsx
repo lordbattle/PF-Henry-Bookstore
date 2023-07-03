@@ -1,10 +1,33 @@
 import SearchBar from "../SearchBar/SearchBar";
 import { Link, useNavigate } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
+import useStorage from "../LocalStorage/LocalStorage"
+import { useState, useEffect } from "react";
 
 const Nav = () => {
+
+  const { cart } = useStorage();
+  const [totalItems, setTotalItems] = useState(0);
+  const [updateKey, setUpdateKey] = useState(0);
+
+  useEffect(() => {
+    setTotalItems(cart.length);
+  }, [cart]);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setUpdateKey((prevKey) => prevKey + 1);
+    };
+
+    window.addEventListener("cart", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("cart", handleStorageChange);
+    };
+  }, []);
+
   return (
-    <div
+    <div key={updateKey}
       className="px-2 py-3 border-0 bg_navbar text-white"
       style={{ backgroundColor: "#71a5e5" }}
     >
@@ -53,7 +76,7 @@ const Nav = () => {
               <img
                 src="https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360"
                 width={"25em"}
-              ></img>
+              ></img>{totalItems > 0 && <span className="badge bg-secondary">{totalItems}</span>}
             </Link>
           </span>
         </div>

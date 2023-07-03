@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import style from "../Login/Login.module.css";
 
+
+
 const Login = () => {
   const { user, loginWithGoogle } = UserAuth();
   console.log(user, "aqui");
@@ -42,6 +44,7 @@ const Login = () => {
   console.log("que es userlogin   " + userlogin);
 
   useEffect(() => {
+
     //Google
     if (user && user.displayName !== undefined) {
       console.log("Usuario logeado " + user.displayName);
@@ -107,11 +110,13 @@ const Login = () => {
     });
   };
 
+
   return (
     <div className={style.ContainerMain}>
       <div>
         <span>Welcome to The Literary Corner</span>
       </div>
+      <div>
       <Formik
         initialValues={{
           email: "",

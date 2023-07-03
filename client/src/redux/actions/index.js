@@ -103,7 +103,9 @@ export const getBooksByFilters = (obj) => {
       url = url.slice(0, -1);
       console.log(url);
 
-      const { data } = await axiosInstance.get(url)
+
+      const { data } = await axiosInstance.get(url);
+
 
       console.log("actions", data);
       return dispatch({
@@ -221,8 +223,10 @@ export function getCurrentUser(payload) {
   return async function (dispatch) {
     try {
       const user = await axiosInstance.post(`/users/register`, payload);
+
       
       console.log("Agregar usuario", user);
+
       return dispatch({
         type: GET_CURRENT_USER,
         payload: user.data,
@@ -254,6 +258,7 @@ export const postUsers = (payload) => {
   return async (dispatch) => {
     try {
       const dat = await axiosInstance.post("/users", payload);
+      console.log(" postUsers ", dat);
 
       return dispatch({
         type: POST_USERS,

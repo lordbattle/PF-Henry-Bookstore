@@ -21,6 +21,7 @@ export const initialState = {
   allUsers: [],
   user: [],
   users: [],
+  user:[],
   userDetail: {},
   currentUser: null,
 };

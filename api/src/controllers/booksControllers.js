@@ -172,7 +172,8 @@ const postBook = async (
   price,
   stock,
   authors,
-  genre
+  genre,
+  userlogin
 ) => {
   const { secure_url } = await cloudinary.uploader.upload(bookPic, {
     upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
@@ -196,8 +197,11 @@ const postBook = async (
     price,
     stock,
     authors,
-    genre,
+    genre
   });
+  //relacion de libro con usuario que lo crea 
+  // if(userlogin)
+  //   await newBook.addUser(userlogin);
   
   return newBook;
 };

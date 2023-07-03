@@ -13,13 +13,26 @@ export const useStorage = () =>{
          return [];
        }
       })
+
+      const [purchaseHistory, setPurchaseHistory] = useState(() => {
+            try {
+              const storedPurchaseHistory = localStorage.getItem("purchaseHistory");
+              return storedPurchaseHistory ? JSON.parse(storedPurchaseHistory) : [];
+            } catch (error) {
+              console.log(`ERROR DEL getItem de purchaseHistory ${error}`);
+              return [];
+            }
+      });
     
       useEffect(()=>{
         //almacena en el localstorage
         localStorage.setItem("cart", JSON.stringify(cart))
       },[cart])
-    
-    
+      
+      useEffect(() => {
+        localStorage.setItem("purchaseHistory", JSON.stringify(purchaseHistory));
+      }, [purchaseHistory]);
+
       const addToCart = (newItem)=>{
         const existingItem = cart.find((item)=> item.id === newItem.id);
         if(existingItem){
@@ -37,6 +50,11 @@ export const useStorage = () =>{
         setCart([...cart, newItem]);
       }
     }
-    return {cart, addToCart, setCart}
+
+    const addToPurchaseHistory = () => {
+      setPurchaseHistory([...purchaseHistory, ...cart]);
+      setCart([]);
+    };
+    return {cart, addToCart, setCart, purchaseHistory, addToPurchaseHistory}
 }
 export default useStorage;

@@ -1,7 +1,7 @@
-import localStorage from '../LocalStorage/LocalStorage'
+import useStorage from '../LocalStorage/LocalStorage'
 import { buyBook } from '../../redux/actions';
 import {initMercadoPago, Wallet} from "@mercadopago/sdk-react"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {useParams} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
@@ -9,8 +9,8 @@ import "./Cart.module.css"
 
 
 export const Cart =()=>{
-const {cart, addToCart, setCart} = localStorage();
-
+const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
+const { status } = useParams();
     const handleIncreseAmount = (itemId)=>{
         const updateCart = cart.map((item)=>{
             if(item.id === itemId){
@@ -29,7 +29,7 @@ const {cart, addToCart, setCart} = localStorage();
     const handleDecreaseAmount = (itemId) =>{
         const updateCart = cart.map((item)=>{
             if(item.id === itemId){
-                if(item.stock === 0){
+                if(item.stock === 1){
                     return item;
                 }
                 return{
@@ -82,32 +82,35 @@ const {cart, addToCart, setCart} = localStorage();
       }
     };
 
-    const {status} = useParams();
-    if(status === 'success'){
+    useEffect(() => {
+      if (status === "success") {
         Swal.fire({
           title: "Exit!",
-        text: "Purchase successfully",
-        icon: "success",
-        confirmButtonText: "OK",
-        backdrop: 'rgba(53, 222, 53, 0.6)'
+          text: "Purchase successfully",
+          icon: "success",
+          confirmButtonText: "OK",
+          backdrop: "rgba(53, 222, 53, 0.6)",
         });
-    }else if (status === 'failure'){
-      Swal.fire({
-        title: "Failed",
-        text: "Failed purchase",
-        icon: 'error',
-       confirmButtonText: "Retry",
-       backdrop: 'rgba(248, 40, 40, 0.8)'
-      });
-    }else if (status === 'pending') {
-      Swal.fire({
-        title: "Pending",
-        text: "Something went wrong",
-        icon: 'warning',
-       confirmButtonText: "Retry",
-       backdrop: 'rgba(243, 148, 23, 0.8)'
-      });
-    }
+        addToPurchaseHistory();
+        localStorage.removeItem("cart");
+      } else if (status === "failure") {
+        Swal.fire({
+          title: "Failed",
+          text: "Failed purchase",
+          icon: "error",
+          confirmButtonText: "Retry",
+          backdrop: "rgba(248, 40, 40, 0.8)",
+        });
+      } else if (status === "pending") {
+        Swal.fire({
+          title: "Pending",
+          text: "Something went wrong",
+          icon: "warning",
+          confirmButtonText: "Retry",
+          backdrop: "rgba(243, 148, 23, 0.8)",
+        });
+      }
+    }, [status, addToPurchaseHistory]);
 
 
 
@@ -127,7 +130,7 @@ const {cart, addToCart, setCart} = localStorage();
                     </div>
                     <div style={{display: 'flex', justifyContent: 'space-around', minWidth: '20rem', height: '2.5rem',backgroundColor: '#71a5e5', borderRadius: '8px', paddingTop: '3px'}}>
                     <div style={{display: 'flex', justifyContent: 'center'}}>
-                      <button onClick={() => handleDecreaseAmount(item.id)} className={style.decrease}>-</button>
+                    {item.stock > 1 && (<button onClick={() => handleDecreaseAmount(item.id)} className={style.decrease}>-</button>)}
                       <p style={{fontSize: '20px', marginLeft: '5px', marginRight: '5px'}}>Amount: {item.stock}</p>
                       <button onClick={() => handleIncreseAmount(item.id)} className={style.increase}>+</button>
                     </div>

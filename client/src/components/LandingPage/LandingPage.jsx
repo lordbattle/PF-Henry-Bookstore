@@ -17,7 +17,7 @@ const LandingPage = () => {
           </Button>
 
           <Button className={style.containerbtn}>
-            <Link to={"/login"} className={style.btn}>
+            <Link to={"/optionLoginOrRegister"} className={style.btn}>
               Log in | Register
             </Link>
           </Button>

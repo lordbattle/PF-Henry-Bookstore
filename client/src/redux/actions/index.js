@@ -13,6 +13,7 @@ import {
   CLEAN_USER_DETAIL,
   LOGING_USER,
   LOGOUT_USER,
+  POST_USERS,
   //VERIFY_USER,
 } from "../types/types.js";
 
@@ -101,7 +102,11 @@ export const getBooksByFilters = (obj) => {
       url = url.slice(0, -1);
       console.log(url);
 
+
       const { data } = await axiosInstance.get(url);
+
+
+      console.log("actions", data);
       return dispatch({
         type: FILTERS_BOOKS,
         payload: data,
@@ -217,6 +222,8 @@ export function getCurrentUser(payload) {
   return async function (dispatch) {
     try {
       const user = await axiosInstance.post(`/users/register`, payload);
+
+      
       console.log("Agregar usuario", user);
 
       return dispatch({
@@ -247,13 +254,19 @@ export const deleteUser = (idUser) => {
 };
 
 export const postUsers = (payload) => {
-  return async () => {
+  return async (dispatch) => {
     try {
       const dat = await axiosInstance.post("/users", payload);
+      console.log(" postUsers ", dat);
 
-      return dat;
+      return dispatch({
+        type: POST_USERS,
+        payload: dat,
+      });
     } catch (error) {
+      alert(`Cath del postUser ${error}`);
       console.log(error);
+      throw new Error(error);
     }
   };
 };

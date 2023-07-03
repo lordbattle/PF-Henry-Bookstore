@@ -12,6 +12,7 @@ import {
   CLEAN_USER_DETAIL,
   LOGING_USER,
   LOGOUT_USER,
+  POST_USERS
 } from "../types/types.js";
 
 export const initialState = {
@@ -76,6 +77,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         currentUser: action.payload,
+      };
+
+      case POST_USERS : 
+      return {
+       ...state,
+       currentUser: action.payload,
       };
 
     case DELETE_USER:

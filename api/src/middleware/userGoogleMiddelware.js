@@ -2,12 +2,12 @@ const bcrypt = require("bcryptjs");
 /* Propiedades que faltan:
 age, location, genres, phone,   */
 const userGoogleMiddelware = (req, res, next) => {
-  let { email, displayName, uid } = req.body;
+  let { email, displayName, uid, name } = req.body;
 
   console.log("Estoy en el middelwar google");
   console.log(req.body);
 
-  if (displayName) {
+  if (displayName && !name) {
     console.log("Entre al if del midelware");
     const randomDigits = Math.floor(10000 + Math.random() * 90000);
     displayName = displayName.split(" ");
@@ -34,8 +34,13 @@ const userGoogleMiddelware = (req, res, next) => {
     req.body.age = age;
     req.body.location = location;
     req.body.phone = phone;
-  }
+  } else if (displayName && name){
+    let emailLower = email.toLowerCase();
+    let password = uid.slice(0, 19);
 
+    req.body.email = emailLower;
+    req.body.password = password;
+  }
   next();
 };
 

@@ -24,16 +24,16 @@ const Login = () => {
   const handleGoogle = async () => {
     try {
       await loginWithGoogle();
-      dispatch(postUsers(user));
       Swal.fire({
         icon: "success",
         title: `Welcome to The LiteraryCorner`,
         //title: `Welcome ${user.displayName}`,
         text: "Login with Google successful",
       });
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
       console.log(user);
-      //await logingUserAsync(user);
-      //navigate("/home");
     } catch (error) {
       alert(error);
     }

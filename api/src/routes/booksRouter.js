@@ -11,7 +11,6 @@ const {
 } = require("../handlers/booksHandlers");
 const uploadImageBook = require("../middleware/uploadImageBook");
 const BooksRouter = Router();
-const { createAccessToken } = require("../helpers/createAccesToken");
 
 BooksRouter.get("/", getBooksHandler)
   .get("/:idBook", getBooksIdHandler)

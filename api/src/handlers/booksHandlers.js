@@ -114,12 +114,12 @@ const postBooksHandler = async (req, res) => {
       averageRating,
       usersRating,
       identifier,
-      bookPic,
+      req.file.path,
       price,
       stock,
       authors,
       genre,
-      userlogin
+      //userlogin
     );
     res.status(200).json(newBook);
   } catch (error) {

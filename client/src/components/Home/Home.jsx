@@ -1,11 +1,29 @@
 import Card from "../Card/Card";
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
+import { UserAuth } from "../../context/AuthContextFirebase";
+import { logingUser, postUsers } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const { user } = UserAuth();
+  const dispatch = useDispatch();
+  //const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("HOME USER AQUI  ", user);
+    setTimeout(() => {
+      dispatch(postUsers(user));
+    }, 10000);
+
+    setTimeout(() => {
+      dispatch(logingUser(user));
+    }, 10000);
+  }, []);
+
   const { books } = useSelector((state) => state);
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);
@@ -25,8 +43,6 @@ const Home = () => {
       orderTitle: "nue",
     });
   }, [setFilters]);
-
-  console.log(books);
 
   return (
     <div className="d-flex flex-column" ref={componentRef}>
@@ -48,4 +64,3 @@ const Home = () => {
 };
 
 export default Home;
-

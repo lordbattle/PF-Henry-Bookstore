@@ -1,0 +1,5 @@
+.hover_options option:hover {
+    background-color: #6182b4;
+    color: rgb(255, 255, 255, 0.5) !important;
+    cursor: pointer;
+}

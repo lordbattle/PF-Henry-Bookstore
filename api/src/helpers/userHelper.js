@@ -11,6 +11,11 @@ const typeUser = [
   "banned",
   "googleUser",
   "profilePic",
+
+  //google firebase
+  "email",
+  "displayName",
+  "uid",
 ];
 
 const cleanData = (arr, obj) => {
@@ -48,9 +53,12 @@ const defineOrder = (orderString) => {
   return order;
 };
 
+const hasRepeatingValues = (arr) => new Set(arr).size < arr.length;
+
 module.exports = {
   typeUser,
   cleanData,
   someOrder,
   defineOrder,
+  hasRepeatingValues,
 };

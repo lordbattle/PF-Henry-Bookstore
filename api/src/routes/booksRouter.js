@@ -7,16 +7,21 @@ const {
   getBooksIdHandler,
   postBooksHandler,
   putBooksHandler,
-  deleteBooksHandler
+  deleteBooksHandler,
 } = require("../handlers/booksHandlers");
+const uploadImageBook = require("../middleware/uploadImageBook");
 const BooksRouter = Router();
-
 
 BooksRouter.get("/", getBooksHandler)
   .get("/:idBook", getBooksIdHandler)
-  .post("/", checkSchema(bookNewSchema), validateRequest, postBooksHandler)
+  .post(
+    "/",
+    uploadImageBook,
+    checkSchema(bookNewSchema),
+    validateRequest,
+    postBooksHandler
+  )
   .put("/:idBook", checkSchema(bookPutSchema), validateRequest, putBooksHandler)
   .delete("/:idBook", deleteBooksHandler);
-
 
 module.exports = BooksRouter;

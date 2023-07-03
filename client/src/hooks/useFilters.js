@@ -1,40 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getBooksByFilters } from "../redux/actions/index";
 
 const useFilters = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
-    rating: "all",
-    price: "all",
+    author: "all",
     genre: "all",
+    page: 1,
+    limit: 10,
+    price: 0,
+    orderPrice: "nue",
+    orderTitle: "nue",
   });
 
-  const filtersBooks = (arr) => {
-    return arr.filter((book) => {
+  const dispatch = useDispatch();
 
-        return (
-          (filters.genre === "all" ||
-            book.genre.toLowerCase() === filters.genre.toLowerCase())
-        );
-      }).sort((a, b) => {
-        if (filters.rating === "Menor") {
-          return a.averageRating - b.averageRating;
-        } else if (filters.rating === "Mayor") {
-          return b.averageRating - a.averageRating;
-        }
+  const filtersBooks = (obj) => {
+    const options = {
+      ...obj,
+      page: currentPage,
+    };
 
-
-        return 0;
-      }).sort((a, b) => {
-        if (filters.price === "Menor") {
-          return a.price - b.price;
-        } else if (filters.price === "Mayor") {
-          return b.price - a.price;
-        }
-
-        return 0;
-      });
+    try {
+       dispatch(getBooksByFilters(options));
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  return { setFilters, filtersBooks };
+  useEffect(() => {
+    try {
+      filtersBooks(filters);
+    } catch (error) {
+      console.log(error.message);
+    }
+    
+  }, [currentPage,filters]);
+
+  return { setFilters, setCurrentPage, currentPage };
 };
 
 export default useFilters;

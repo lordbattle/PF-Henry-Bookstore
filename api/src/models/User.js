@@ -9,14 +9,9 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
       userName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        uniquie: true,
-      },
-      email: {
         type: DataTypes.STRING,
         allowNull: false,
         uniquie: true,
@@ -25,21 +20,34 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        uniquie: true,
+      },
       age: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       location: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       genres: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       profilePic: {
         type: DataTypes.STRING,
@@ -63,8 +71,8 @@ module.exports = (sequelize) => {
       },
       googleUser: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },      
+        defaultValue: false,
+      },
       notifications: {
         type: DataTypes.JSON,
       },

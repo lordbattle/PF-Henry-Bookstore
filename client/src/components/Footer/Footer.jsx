@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <>
-      <footer className="py-4 mt-3 bg-dark fixed-bottom position-relative">
+      <footer className="py-4 mt-3 fixed-bottom position-relative" style={{backgroundColor: '#71a5e5'}}>
         <div className="position-relative d-flex justify-content-around  m-0 text-center align-items-start">
           <div>
             <p className="text-white fs-4 text-reset">TheLiteraryCorner</p>

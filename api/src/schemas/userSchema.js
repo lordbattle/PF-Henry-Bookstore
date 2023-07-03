@@ -5,6 +5,7 @@ const {
   isStartsWithLetter,
   isStringNumberStartValidate,
   isStringValidate,
+  isStringOnlyLetter,
   isUsernameValidate,
   isPasswordValidate,
   isPhoneValidate,
@@ -64,10 +65,52 @@ const userNewSchema = {
       },
     },
   },
-  age: {
+  name: {
     notEmpty: {
-      errorMessage: "Age is required",
+      errorMessage: "The name is required",
     },
+
+    custom: {
+      options: (value) => {
+        if (!isEmptyField(value)) {
+          throw new Error("The name is required");
+        } else if (!isStringOnlyLetter(value)) {
+          throw new Error("The name can only contain letters");
+        } else {
+          return true;
+        }
+      },
+    },
+
+    isLength: {
+      options: { max: 35 },
+      errorMessage: `name must contain max 35 characters`,
+    },
+  },
+  lastName: {
+    notEmpty: {
+      errorMessage: "The lastName is required",
+    },
+
+    custom: {
+      options: (value) => {
+        if (!isEmptyField(value)) {
+          throw new Error("The lastName is required");
+        } else if (!isStringOnlyLetter(value)) {
+          throw new Error("The lastname can only contain letters");
+        } else {
+          return true;
+        }
+      },
+    },
+
+    isLength: {
+      options: { max: 35 },
+      errorMessage: `lastname must contain max 35 characters`,
+    },
+  },
+  age: {
+    //notEmpty: {errorMessage: "Age is required",},
     isInt: {
       errorMessage: "Age must be an integer",
     },
@@ -87,18 +130,15 @@ const userNewSchema = {
     },
   },
   location: {
-    notEmpty: true,
+    //notEmpty: true,
     errorMessage: "Location is required",
   },
   genres: {
-    notEmpty: { errorMessage: "Genders are required" },
     isIn: { options: ["male", "female"] },
     errorMessage: "Genders male or female",
   },
   phone: {
-    notEmpty: {
-      errorMessage: "Phone is required",
-    },
+    //notEmpty: {errorMessage: "Phone is required"},
     custom: {
       options: (value) => {
         if (!isPhoneValidate(value)) {
@@ -135,12 +175,10 @@ const userNewSchema = {
     errorMessage: "Admin must be a boolean value",
   },
   googleUser: {
-    notEmpty: {
-      errorMessage: "GoogleUser is required",
+    custom: {
+      options: isEmptyBoolean,
     },
-    isBoolean: {
-      errorMessage: "GoogleUser must be a boolean value",
-    },
+    errorMessage: "GoogleUser must be a boolean value",
   },
 };
 

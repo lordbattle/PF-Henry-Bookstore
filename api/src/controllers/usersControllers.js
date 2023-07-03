@@ -5,49 +5,156 @@ const { Op } = require("sequelize");
 const { API_CLOUDINARY_USERS_UPLOAD_PRESET } = process.env;
 
 const { cloudinary } = require("../services/cloudinaryService");
+const {
+  userFilterAndPagination,
+} = require("../helpers/userFilterAndPagination");
 
-const getAllUsers = async (name, page, limit, sort, rol) => {
+const getAllUsers = async (
+  userName,
+  name,
+  lastName,
+  location,
+  genres,
+  active,
+  banned,
+  admin,
+  googleUser,
+  orderUsername,
+  orderName,
+  orderEmail,
+  page,
+  limit
+) => {
   try {
+    const whereCondition = {};
+
+    if (userName) {
+      whereCondition.userName = {
+        [Op.iLike]: `%${userName}%`,
+      };
+    }
+
+    if (name) {
+      whereCondition.name = {
+        [Op.iLike]: `%${name}%`,
+      };
+    }
+
+    if (lastName) {
+      whereCondition.lastName = {
+        [Op.iLike]: `%${lastName}%`,
+      };
+    }
+
+    if (location) {
+      whereCondition.location = {
+        [Op.iLike]: `%${location}%`,
+      };
+    }
+
+    if (genres) {
+      whereCondition.genres = {
+        [Op.iLike]: `%${genres}%`,
+      };
+    }
+
+    if (active !== undefined) {
+      whereCondition.active = active;
+    }
+
+    if (banned !== undefined) {
+      whereCondition.banned = banned;
+    }
+
+    if (admin !== undefined) {
+      whereCondition.admin = admin;
+    }
+
+    if (googleUser !== undefined) {
+      whereCondition.googleUser = googleUser;
+    }
+
     const count = await User.count({
-      where: {
-        userName: {
-          [Op.iLike]: `%${name}%`,
-        },
-        admin: {
-          [Op.in]: [...rol],
-        },
-      },
+      where: whereCondition,
     });
 
-    if (count === 0) return { count, results: [] };
+    if (count === 0) {
+      return { count, results: [] };
+    }
 
-    const results = await User.findAll({
-      where: {
-        userName: {
-          [Op.iLike]: `%${name}%`,
-        },
-        admin: {
-          [Op.in]: [...rol],
-        },
-      },
+    /* const results = await User.findAll({
+      where: whereCondition,
       limit,
-      offset: page,
-      order: [...sort],
+      offset: page * limit,
+      order: sort,
+    }); */
+
+    let userBySearch = await User.findAll({
+      where: whereCondition,
     });
+
+    if (orderUsername || orderName || orderEmail || page || limit)
+      return userFilterAndPagination(
+        userBySearch,
+        orderUsername,
+        orderName,
+        orderEmail,
+        page,
+        limit
+      );
+     else {
+      return userBySearch;
+    }
 
     return { count, results };
   } catch (e) {
-    throw Error(e.message);
+    throw new Error(e.message);
+  }
+};
+
+const findUserStatus = async (active) => {
+  try {
+    console.log("controller", active);
+    const statusBoolean = JSON.parse(active); // Convierte el parámetro en minúsculas antes de convertirlo en booleano
+
+    const result = await User.findAll({
+      where: {
+        active: statusBoolean,
+      },
+      attributes: ["id", "userName"],
+    });
+
+    return result;
+  } catch (error) {
+    throw Error(error.message);
   }
 };
 
 const getUserById = async (id) => {
   try {
-    const user = await User.findByPk(+id);
+    const user = await User.findByPk(id);
 
     if (!user) throw Error("There is no user with the specified id");
 
     return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+const findUserName = async (userName) => {
+  try {
+    const userByname = await User.findOne({
+      where: {
+        userName: {
+          [Op.iLike]: `%${userName}%`,
+        },
+      },
+    });
+
+    if (!userByname) throw Error("There is no user with the specified name");
+
+    return userByname;
   } catch (e) {
     throw Error(e.message);
   }
@@ -107,53 +214,55 @@ const registerUser = async (data) => {
 };
 
 //------|  PUT/  |---------->
-    const putUser = async (id, updatedData) => {
-      try {
-        const user = await User.findByPk(+id);
-    
-        if (!user) {
-          throw Error("There is no user with the specified id");
-        }
-    
-        const { email, ...rest } = updatedData;
-    
-        if (email) {
-          const salt = bcrypt.genSaltSync();
-          const hashedEmail = bcrypt.hashSync(email, salt);
-          user.email = hashedEmail;
-        }
-    
-        Object.assign(user, rest);
-        await user.save();
-    
-        return user;
-      } catch (e) {
-        throw Error(e.message);
-      }
-    };
-      
-     //------|  deleteUser/:id  |---------->
-    const deleteUser = async (idUsers) => {
-      try {
-        const user = await User.findByPk(+idUsers);
-    
-        if (!user) {
-          throw Error("There is no user with the specified id");
-        }
-    
-        user.active = false;
-        await user.save();
-    
-        return user;
-      } catch (e) {
-        throw Error(e.message);
-      }
-    };
+const putUser = async (id, updatedData) => {
+  try {
+    const user = await User.findByPk(id);
+
+    if (!user) {
+      throw Error("There is no user with the specified id");
+    }
+
+    const { email, ...rest } = updatedData;
+
+    if (email) {
+      const salt = bcrypt.genSaltSync();
+      const hashedEmail = bcrypt.hashSync(email, salt);
+      user.email = hashedEmail;
+    }
+
+    Object.assign(user, rest);
+    await user.save();
+
+    return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+//------|  deleteUser/:id  |---------->
+const deleteUser = async (idUsers) => {
+  try {
+    const user = await User.findByPk(idUsers);
+
+    if (!user) {
+      throw Error("There is no user with the specified id");
+    }
+
+    user.active = false;
+    await user.save();
+
+    return user;
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
 
 module.exports = {
   getAllUsers,
   getUserById,
   registerUser,
+  findUserStatus,
+  findUserName,
   putUser,
   deleteUser,
 };

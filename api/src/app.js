@@ -2,7 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const mainRouter = require("./routes/index.js");
+const mainRouter = require("./routes/index");
 require("dotenv").config();
 const { CORS_URL } = process.env;
 
@@ -24,11 +24,11 @@ server.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  res.setHeader("Permissions-Policy", "ch-ua-form-factor");
   next();
 });
 
 server.use("/", mainRouter);
-
 
 server.use((err, req, res, next) => {
   const status = err.status || 500;

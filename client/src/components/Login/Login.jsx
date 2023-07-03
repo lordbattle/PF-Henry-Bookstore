@@ -95,7 +95,7 @@ const Login = () => {
     }
   }, [userlogin]);
 
-  const logingUserAsync = (payload) => {
+  /* const logingUserAsync = (payload) => {
     return new Promise((resolve, reject) => {
       dispatch(logingUser(payload))
         .then((response) => {
@@ -105,7 +105,7 @@ const Login = () => {
           reject(error);
         });
     });
-  };
+  }; */
 
   return (
     <div className={style.ContainerMain}>
@@ -138,13 +138,13 @@ const Login = () => {
           }}
           onSubmit={async (values) => {
             try {
-              await logingUserAsync(values);
+              await dispatch(logingUser(values));
               Swal.fire({
                 icon: "success",
                 title: `Welcome to The LiteraryCorner`,
                 text: "Login successful",
               });
-              navigate("/home");
+              //navigate("/home");
             } catch (error) {
               Swal.fire({
                 icon: "error",

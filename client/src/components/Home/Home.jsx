@@ -6,7 +6,7 @@ import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logingUser, postUsers } from "../../redux/actions";
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 
 const Home = () => {
   const { user } = UserAuth();
@@ -17,11 +17,11 @@ const Home = () => {
     console.log("HOME USER AQUI  ", user);
     setTimeout(() => {
       dispatch(postUsers(user));
-    }, 10000);
+    }, 3000);
 
     setTimeout(() => {
       dispatch(logingUser(user));
-    }, 10000);
+    }, 4000);
   }, []);
 
   const { books } = useSelector((state) => state);

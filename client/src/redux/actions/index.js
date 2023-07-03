@@ -19,7 +19,7 @@ import {
 
 import axiosInstance from "../../api/axiosInstance.js";
 import Cookies from "js-cookie";
-import Logout from "../../components/Logout/Logout.jsx";
+
 
 //BOOKS
 //?
@@ -231,8 +231,8 @@ export function getCurrentUser(payload) {
         type: GET_CURRENT_USER,
         payload: user.data,
       });
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error.message);
     }
   };
 }
@@ -257,15 +257,15 @@ export const deleteUser = (idUser) => {
 export const postUsers = (payload) => {
   return async (dispatch) => {
     try {
-      const dat = await axiosInstance.post("/users", payload);
-      console.log(" postUsers ", dat);
+      const data = await axiosInstance.post("/users", payload);
+      console.log(" postUsers ", data);
 
       return dispatch({
         type: POST_USERS,
-        payload: dat,
+        payload: data,
       });
     } catch (error) {
-      alert(`Cath del postUser ${error}`);
+    /*  alert(`Error postUsers ${error}`); */
       console.log(error);
       throw new Error(error);
     }
@@ -283,7 +283,7 @@ export const editUser = (idUser, updatedProduct) => {
       alert(data);
     } catch (error) {
       console.log(error);
-      alert(`Cath del editUser ${error}`);
+      /* alert(`Cath del editUser ${error}`); */
     }
   };
 };
@@ -340,7 +340,7 @@ export function logingUser(user) {
       const baseData = await axiosInstance.post(`/authUser/login`, user);
       dispatch({ type: LOGING_USER, payload: baseData.data });
     } catch (error) {
-      alert(`Cath del loginUser ${error}`);
+     /*  alert(`Cath del loginUser ${error}`); */
       return error.respose.data
     }
   };

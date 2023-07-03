@@ -7,40 +7,43 @@ const userGoogleMiddelware = (req, res, next) => {
   console.log("Estoy en el middelwar google");
   console.log(req.body);
 
-  if (displayName && !name) {
-    console.log("Entre al if del midelware");
-    const randomDigits = Math.floor(10000 + Math.random() * 90000);
-    displayName = displayName.split(" ");
-    let userName = `${displayName.join("").slice(0, 12)}${randomDigits}`;
+  if (displayName) {
+    if (displayName && !name) {
+      console.log("Entre al if del midelware");
+      const randomDigits = Math.floor(10000 + Math.random() * 90000);
+      displayName = displayName.split(" ");
+      let userName = `${displayName.join("").slice(0, 12)}${randomDigits}`;
 
-    let emailLower = email.toLowerCase();
-    let password = uid.slice(0, 19);
-    let name = displayName[0];
-    let lastName = displayName[1];
-    let googleUser = true;
+      let emailLower = email.toLowerCase();
+      let password = uid.slice(0, 19);
+      let name = displayName[0];
+      let lastName = displayName[1];
+      let googleUser = true;
 
-    let age = 18;
-    let location = "not specified";
-    let phone = "+54-000-000-0000";
+      let age = 18;
+      let location = "not specified";
+      let phone = "+54-000-000-0000";
 
-    req.body.userName = userName;
-    req.body.lastName = lastName;
-    req.body.email = emailLower;
-    req.body.name = name;
-    req.body.password = password;
-    req.body.lastName = lastName;
-    req.body.googleUser = googleUser;
+      req.body.userName = userName;
+      req.body.lastName = lastName;
+      req.body.email = emailLower;
+      req.body.name = name;
+      req.body.password = password;
+      req.body.lastName = lastName;
+      req.body.googleUser = googleUser;
 
-    req.body.age = age;
-    req.body.location = location;
-    req.body.phone = phone;
-  } else if (displayName && name){
-    let emailLower = email.toLowerCase();
-    let password = uid.slice(0, 19);
+      req.body.age = age;
+      req.body.location = location;
+      req.body.phone = phone;
+    } else if (displayName && name) {
+      let emailLower = email.toLowerCase();
+      let password = uid.slice(0, 19);
 
-    req.body.email = emailLower;
-    req.body.password = password;
+      req.body.email = emailLower;
+      req.body.password = password;
+    }
   }
+
   next();
 };
 

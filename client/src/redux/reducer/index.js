@@ -20,8 +20,7 @@ export const initialState = {
   details: [],
   allUsers: [],
   user: [],
-  users: [],
-  user:[],
+  users: [], 
   userDetail: {},
   currentUser: null,
 };

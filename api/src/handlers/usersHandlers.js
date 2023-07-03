@@ -18,7 +18,6 @@ const getUsersHandler = async (req, res) => {
   const rol = (req.query.rol && [req.query.rol]) || [true, false];
 
   const active = req.query.active;
-  
 
   try {
     const results = await getAllUsers(name, page, limit, sort, rol, active);
@@ -28,7 +27,7 @@ const getUsersHandler = async (req, res) => {
   }
 };
 
-//GET USER BY STATUS 
+//GET USER BY STATUS
 /* const getUsersByStatus = async(req,res)=> {
    const {active} = req.query;
 
@@ -41,7 +40,6 @@ const getUsersHandler = async (req, res) => {
     res.status(400).json(error.message)
   }
 } */
-
 
 //GET USER BY userName
 /* const getUsersByName = async (req, res) => {
@@ -72,10 +70,10 @@ const getUsersIdHandler = async (req, res) => {
 const postUsersIdHandler = async (req, res) => {
   const data = cleanData(typeUser, req.body);
 
+  
   try {
     const results = await registerUser(data);
     const emailSent = await sendNewUserEmail(results.email, results.userName);
-
     res.status(200).json({ success: true, results, emailSent });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });

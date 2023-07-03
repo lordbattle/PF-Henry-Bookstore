@@ -36,8 +36,10 @@ export function AuthContextProvider({ children }) {
   const login = (email, password) =>
     signInWithEmailAndPassword(auth, email, password);
 
-  const logout = () => signOut(auth);
+  const logout = () => {
+    signOut(auth)};
 
+   
   //Login Google
   const loginWithGoogle = () => {
     const googleProvider = new GoogleAuthProvider();

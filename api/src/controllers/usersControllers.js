@@ -35,15 +35,15 @@ const getAllUsers = async (name, page, limit, sort, rol, active) => {
       order: [...sort],
     });
 
-    const activeStatus = await User.findAll({
+    /* const activeStatus = await User.findAll({
       where:{
         active: active
       }, 
 
-    });
+    }); */
     
 
-    return { count, results, activeStatus };
+    return { count, results };
   } catch (e) {
     throw Error(e.message);
   }

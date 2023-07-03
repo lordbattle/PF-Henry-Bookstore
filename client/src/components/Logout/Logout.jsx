@@ -1,12 +1,25 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
+import { UserAuth } from "../../context/AuthContextFirebase";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../redux/actions";
 
 const Logout = () => {
-    const {logout} = useAuth0();
+  const dispatch = useDispatch();
+  const { logout } = UserAuth();
+  const navigate = useNavigate();
 
-    return (
-        <Button onClick={() => logout({returnTo: window.location.origin})}/>
-    )
-}
+  /* useEffect(() => {
+    dispatch(loginGoogle(user));
+  }, [user]); */
+
+  const handlerLogOut = async () => {
+    await logout();
+    dispatch(logoutUser());
+    navigate("/");
+  };
+
+  return <button onClick={handlerLogOut} />;
+
+};
 
 export default Logout;

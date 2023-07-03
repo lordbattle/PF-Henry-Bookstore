@@ -19,6 +19,7 @@ export const initialState = {
   books: [],
   details: [],
   allUsers: [],
+  user: [],
   users: [],
   userDetail: {},
   currentUser: null,
@@ -114,7 +115,7 @@ function rootReducer(state = initialState, action) {
         user: action.payload,
       };
 
-    case LOGOUT_USER:
+      case LOGOUT_USER:
       return {
         ...state,
         user: [],

@@ -19,6 +19,7 @@ import {
 
 import axiosInstance from "../../api/axiosInstance.js";
 import Cookies from "js-cookie";
+import Logout from "../../components/Logout/Logout.jsx";
 
 //BOOKS
 //?
@@ -335,6 +336,7 @@ export function logingUser(user) {
       dispatch({ type: LOGING_USER, payload: baseData.data });
     } catch (error) {
       alert(`Cath del loginUser ${error}`);
+      return error.respose.data
     }
   };
 }

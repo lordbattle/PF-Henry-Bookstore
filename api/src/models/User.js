@@ -22,11 +22,11 @@ module.exports = (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       lastName: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
@@ -35,19 +35,19 @@ module.exports = (sequelize) => {
       },
       age: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       location: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       genres: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        defaultValue: "Not specified"
       },
       profilePic: {
         type: DataTypes.STRING,

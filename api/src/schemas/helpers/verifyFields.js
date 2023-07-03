@@ -19,6 +19,9 @@ const regexPassword =
 //Telephone numbers in the format +xx-xxx-xxx-xxxx
 const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/;
 
+//Can only contain letters
+const regexOnlyLetter = /^[A-Za-z\s]+$/;
+
 const isEmptyBoolean = (value) => !value || typeof value === "boolean" || false;
 
 const isEmptyImageFile = (value) => {
@@ -51,6 +54,12 @@ const isStringValidate = (value) => {
   }
 };
 
+const isStringOnlyLetter = (value) => {
+  if (regexOnlyLetter.test(value)) {
+    return true;
+  }
+};
+
 const isUsernameValidate = (value) => {
   if (regexUsername.test(value)) {
     return true;
@@ -58,7 +67,8 @@ const isUsernameValidate = (value) => {
 };
 
 const isPasswordValidate = (value) => {
-  if (regexPassword.test(value)) {
+  if (value.length >= 17) {
+    regexPassword.test(value);
     return true;
   }
 };
@@ -76,6 +86,7 @@ module.exports = {
   isStartsWithLetter,
   isStringNumberStartValidate,
   isStringValidate,
+  isStringOnlyLetter,
   isUsernameValidate,
   isPasswordValidate,
   isPhoneValidate,

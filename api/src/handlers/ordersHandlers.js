@@ -3,6 +3,9 @@ const {
   receiveWebhook,
 } = require("../controllers/ordersControllers");
 const { sendPurchase } = require("../config/mailer");
+const { rejectExpiredOrdersJob } = require("../jobs/OrdersJob");
+
+rejectExpiredOrdersJob.start();
 
 //Post Orders
 const postOrderdHandler = async (req, res) => {

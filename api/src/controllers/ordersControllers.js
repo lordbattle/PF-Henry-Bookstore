@@ -1,184 +1,208 @@
 const { User, Book, Order, OrderItem, Bill, conn } = require("../db");
 const { Op } = require("sequelize");
+const moment = require("moment");
 
-const { MERCADOPAGO_NOTIFICATION_URL } = process.env;
+const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_BACK_URLS } = process.env;
 
 const { mercadopago } = require("../config/mercadopago");
 const { hasRepeatingValues } = require("../helpers/userHelper");
+const {
+  validateNumBooks,
+  createModelOrderItems,
+} = require("../helpers/orderHelper");
 
-// Validations prior to the creation of new orders
-const orderValidation = async (id_user, items) => {
-  try {
-    const user = await User.findByPk(+id_user);
-
-    // Check if user exists
-    if (!user) {
-      throw Error("There is no user with that id");
-    }
-
-    const BooksIds = items.map((item) => item.id);
-
-    // Verify that there are no duplicate values
-    if (hasRepeatingValues(BooksIds)) {
-      throw Error("Purchase order has duplicate products");
-    }
-
-    const { count: countBooks, rows: books } = await Book.findAndCountAll({
-      where: {
-        id: { [Op.in]: BooksIds },
-        active: true,
-      },
-    });
-
-    // Validate if books exist
-    if (countBooks < BooksIds.length) {
-      throw Error("One of the sent items does not exist");
-    }
-
-    // Validate if there is the number of books requested
-    if (
-      books.some((book) => {
-        const itemQuantity = items.find(
-          (item) => item.id === book.dataValues.id
-        )?.quantity;
-
-        return book.dataValues.stock < itemQuantity || itemQuantity < 1;
-      })
-    ) {
-      throw Error("There are not enough units of the book");
-    }
-
-    // Check if the user already has a pending order
-    const order = await Order.findOne({
-      where: {
-        userId: user.id,
-        status: "pending",
-      },
-      include: {
-        model: OrderItem,
-      },
-    });
-
-    return {
-      user,
-      books,
-      order,
-    };
-  } catch (e) {
-    throw Error(e.message);
-  }
+// Function allows you to generate an instance of the order model for users with pending orders
+// Parameters: userId
+const newInstanceOrderByUserID = async (userId) => {
+  return await Order.findOne({
+    where: {
+      userId,
+      status: "pending",
+    },
+    include: {
+      model: OrderItem,
+    },
+  });
 };
 
-//Create order items
-const createOrderItems = async (items, books) => {
-  const preOrderItems = books.map((book) => ({
-    ...book.dataValues,
-    unit_price: book.dataValues.price,
-    quantity: items.find((item) => item.id === book.id).quantity,
-  }));
+// Function validate existence of data sent with the db
+// if successful, returns instances of patrons, books, and order found
+const orderValidation = async (id_user, items) => {
+  const user = await User.findByPk(+id_user);
 
-  // Create type order items
-  const orderItems = preOrderItems.map((pre) => {
-    return {
-      title: pre.title,
-      unit_price: pre.unit_price,
-      quantity: pre.quantity,
-      bookId: pre.id,
-    };
+  // Check if user exists with id
+  if (!user) {
+    throw Error("There is no user with that id");
+  }
+
+  const BooksIds = items.map((item) => item.id);
+
+  // Verify that there are no duplicate values
+  if (hasRepeatingValues(BooksIds)) {
+    throw Error("Purchase order has duplicate products");
+  }
+
+  const { count: countBooks, rows: books } = await Book.findAndCountAll({
+    where: {
+      id: { [Op.in]: BooksIds },
+      active: true,
+    },
   });
 
-  // Full purchase value
-  const fullPurchaseValue = orderItems.reduce(
-    (acc, cur) => cur.unit_price * cur.quantity + acc,
-    0
-  );
+  // Validate if books exist
+  if (countBooks < BooksIds.length) {
+    throw Error("One of the sent items does not exist");
+  }
+
+  // Check if the user already has a pending order
+  const order = await newInstanceOrderByUserID(user.id);
 
   return {
-    orderItems,
-    fullPurchaseValue,
+    user,
+    books,
+    order,
   };
 };
 
-// Create order
-const createOrder = async (user, books, items) => {
-  const { orderItems, fullPurchaseValue } = await createOrderItems(
-    items,
-    books
+// Function change the stock of a book
+// Parameters: 1. instance of the orders, 2. boolean being true positive and false negative
+const changeStockBooks = async (order, sign = true) => {
+  const findBooksPromise = order.orderItems.map((item) =>
+    Book.findByPk(item.dataValues.bookId)
   );
+  const books = await Promise.all(findBooksPromise);
+
+  const updatedBooksPromise = order.orderItems.map((item) => {
+    const num = sign
+      ? item.dataValues.quantity
+      : -Math.abs(item.dataValues.quantity);
+
+    // Update the stock of books
+    const book = books.find((book) => book.id === item.dataValues.bookId);
+
+    book.set({ stock: book.stock + num });
+    return book.save();
+  });
+
+  await Promise.all(updatedBooksPromise);
+};
+
+// Function insert a new order in db
+// Create a preference to the payment market api
+// Parameters: 1. user instance, 2. instance of the books, 3. list of items to buy, 4. transaction
+// Returns: object with the status of the transaction, preference id and url to pay
+const createOrder = async (user, books, items, transaction) => {
+  // Validate that the number of books requested is correct
+  validateNumBooks(books, items);
+
+  const { orderItemsModel, fullPurchaseValue } = createModelOrderItems(
+    books,
+    items
+  );
+
+  // Defines the start date and end date on which the preference payment can be made
+  const startDate = moment().format();
+  const endDate = moment().add(3, "days").format();
+
   // Create order in the db
   const order = await Order.create(
     {
-      date: new Date(),
+      dueDate: endDate,
       status: "pending",
       total: fullPurchaseValue,
       invoiceStatus: "sin facturar",
       userId: user.id,
-      orderItems,
+      orderItems: orderItemsModel,
     },
     {
       include: [User, OrderItem],
+      transaction,
     }
   );
 
-  order.orderItems.forEach(async (item) => {
-    const book = await Book.findByPk(item.dataValues.bookId);
-
-    // Update the stock of books
-    book.set({ stock: book.stock - item.dataValues.quantity });
-    await book.save();
-  });
+  // Decrease the stock of books
+  await changeStockBooks(order, false);
 
   const itemPreferences = order.orderItems.map((oi) => oi.dataValues);
-
-  // Create type preferences
+  console.log("finalizo 1");
+  // Create model preferences
   const preferences = {
     metadata: { id_order: order.id, email: user.email },
-    payer: {
-      name: user.userName,
-      email: user.email,
-    },
     items: itemPreferences,
     back_urls: {
-      success: "http://localhost:5173/",
-      failure: "http://localhost:5173/",
-      pending: "http://localhost:5173/",
+      success: MERCADOPAGO_BACK_URLS,
+      failure: MERCADOPAGO_BACK_URLS,
+      pending: MERCADOPAGO_BACK_URLS,
     },
     notification_url: MERCADOPAGO_NOTIFICATION_URL,
     // This option will redirect the user to our website automatically
     auto_return: "approved",
+    expires: true,
+    expiration_date_from: moment(startDate).toISOString(true),
+    expiration_date_to: moment(endDate).toISOString(true),
   };
 
   // Create preference
   const results = await mercadopago.preferences.create(preferences);
 
   // Update the id and the total to pay
-  order.set({ preferenceId: results.body.id });
-  await order.save();
+  await order.update({ preferenceId: results.body.id }, { transaction });
 
   // Inserting the data if the whole process was successful
-  //await transaction.commit();
-
+  await transaction.commit();
+  console.log("finalizo 2");
   return { id: results.body.id, init_point: results.body.init_point };
 };
 
-// Update order by instance
-const updateOrderByInstance = async (items, books, order) => {
-  const { orderItems, fullPurchaseValue } = await createOrderItems(
-    items,
-    books
+// Function updates transactions and payment market api preferences when there is a pending order
+// Parameters: 1. instance of the books, 2. list of items to buy, 3. instance of the order 4. transaction
+// Returns: object with the status of the transaction, preference id and url to pay
+const updateOrderByInstance = async (books, items, order, transaction) => {
+  // Undo product quantity removal
+  await changeStockBooks(order, true);
+
+  // Validate that the number of books requested is correct
+  validateNumBooks(books, items);
+
+  const { orderItemsModel, fullPurchaseValue } = createModelOrderItems(
+    books,
+    items
   );
 
-  order.set(
-    {
-      orderItems,
-      total: fullPurchaseValue,
-    },
-    {
-      include: [OrderItem],
+  await order.update({ total: fullPurchaseValue }, { transaction });
+
+  const promiseDeleteItems = order.orderItems.reduce((acc, item) => {
+    if (orderItemsModel.some((oi) => oi.bookId === item.dataValues.bookId)) {
+      return acc;
     }
-  );
+    return [...acc, item.destroy({ transaction })];
+  }, []);
 
-  await order.save();
+  await Promise.all(promiseDeleteItems);
+
+  const promiseUpdateItems = orderItemsModel.map((oi) => {
+    if (
+      !order.orderItems.some((item) => item.dataValues.bookId === oi.bookId)
+    ) {
+      console.log("creacion");
+      return OrderItem.create({ ...oi, orderId: order.id }, { transaction });
+    }
+
+    const item = order.orderItems.find(
+      (item) => item.dataValues.bookId === oi.bookId
+    );
+
+    item.set(oi);
+    return item.save({ transaction });
+  });
+
+  const itemsUpdates = await Promise.all(promiseUpdateItems);
+
+  const newOrder = {};
+  newOrder.orderItems = itemsUpdates;
+  //console.log(newOrder.orderItems)
+  // Decrease the stock of books
+  await changeStockBooks(newOrder, false);
 
   const itemPreferences = order.orderItems.map((oi) => oi.dataValues);
 
@@ -187,26 +211,30 @@ const updateOrderByInstance = async (items, books, order) => {
     items: itemPreferences,
   });
 
+  // Inserting the data if the whole process was successful
+  await transaction.commit();
+
   return { id: results.body.id, init_point: results.body.init_point };
 };
 
-// Create and insert a new order both in the database and in the payment marking
+// Controller allows you to create new orders in db
+// It works by integrating the Mercado Pago API, which allows you to pay for purchases made by buyers
+// Update an order in case it has the pending status
 const insertOrder = async (id_user, items) => {
   // Transaction creation
-  //const transaction = await conn.transaction();
+  const transaction = await conn.transaction();
 
   try {
     // Previous validations
     const { user, books, order } = await orderValidation(id_user, items);
 
-    return order
-      ? await updateOrderByInstance(items, books, order)
-      : await createOrder(user, books, items);
-
-    //return await createOrder(user, books, items);
+    return !order
+      ? await createOrder(user, books, items, transaction)
+      : await updateOrderByInstance(books, items, order, transaction);
   } catch (e) {
     // Undo the insertion of the data in case of error
-    //await transaction.rollback();
+    await transaction.rollback();
+    console.log(e);
     throw Error(e.message);
   }
 };
@@ -228,8 +256,7 @@ const receiveWebhook = async (query) => {
 
       if (status === "approved") {
         // Create invoice
-        console.log("si entramos aqui", status === "approved");
-        const bill = await Bill.create(
+        await Bill.create(
           {
             date: new Date(),
             total: order.total,
@@ -247,21 +274,40 @@ const receiveWebhook = async (query) => {
 
         return paymentData.body.metadata;
       }
-      // Undo product quantity removal
-      order.orderItems.forEach(async (item) => {
-        const book = await Book.findByPk(item.dataValues.bookId);
 
-        // Update the stock of books
-        book.set({ stock: book.stock + item.dataValues.quantity });
-        await book.save();
-      });
+      return status;
     }
   } catch (e) {
     throw Error(e.message);
   }
 };
 
+const rejectExpiredOrders = async () => {
+  // Payment rejected
+  const orders = await Order.findAll({
+    where: {
+      status: "pending",
+      dueDate: {
+        [Op.lte]: moment().format(),
+      },
+    },
+    include: {
+      model: OrderItem,
+    },
+  });
+
+  orders.map(async (order) => {
+    // Update estatus order "reject"
+    order.set({ status: "reject" });
+    await order.save();
+
+    // Undo product quantity removal
+    await changeStockBooks(order, true);
+  });
+};
+
 module.exports = {
   insertOrder,
   receiveWebhook,
+  rejectExpiredOrders,
 };

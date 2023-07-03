@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      date: {
+      dueDate: {
         type: DataTypes.DATE,
         allowNull: false,
       },
@@ -30,7 +30,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
     },
-    { timestamps: false },
+    { timestamps: true },
     { sequelize, modelName: "orderItem" }
   );
 };

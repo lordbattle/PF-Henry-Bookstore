@@ -47,6 +47,13 @@
     align-items: center;
     justify-content: space-around;
 }
+.linea {
+    border-top: 1px solid black;
+    height: 2px;
+    max-width: 200px;
+    padding: 0;
+    margin: 20px auto 0 auto;
+  }
 
 .containerNumberInfo {
     position: relative;
@@ -54,8 +61,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    border-top: 1px solid rgb(62, 44, 221);
+    padding-top: 2%;
+   
 }
-
+.p{
+    position: relative;
+    color: #063b85;
+    left: -10em;
+    top: 2em;
+}
 .title {
     font-size: 28px !important;
     color: #0d66e1 !important;

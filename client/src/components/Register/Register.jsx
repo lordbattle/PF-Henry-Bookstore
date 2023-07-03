@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 //import { Link } from "react-router-dom";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
-import { postUsers ,  } from "../../redux/actions";
+import { postUsers, } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import Swal from "sweetalert2";
@@ -47,7 +47,7 @@ const Register = () => {
     }
     return count;
   }
-  
+
   return (
     <div className={style.formContainer}>
       <Formik
@@ -83,7 +83,7 @@ const Register = () => {
             } catch (error) {
               throw new Error(error);
             }
-        
+
             await signUp(values.email, values.password, values.name);
             setFormSubmitted(true);
             resetForm();
@@ -103,28 +103,7 @@ const Register = () => {
               text: "Something went wrong!",
             });
           }
-  
-          //DEVELOP
-        /*  return validations(values);
-        }
-        }
-        onSubmit={(values, { resetForm }) => {
 
-          values.googleUser = false;
-
-          const user = dispatch(postUsers(values));
-          
-          console.log(user, 'userrrrrrr')
-          user.then((response) => {
-            if(response.success ){
-              setFormSubmitted(true) 
-              setTimeout(() => setFormSubmitted(false), 6000) 
-              navigate('/Home')
-            }else{
-              alert(`${response.message}`) 
-              resetForm();
-            }
-          }) */
         }}
       >
         {({
@@ -221,48 +200,55 @@ const Register = () => {
             </label>
             <ErrorMessage name='location' component={() => (<div className='error'>{errors.location}</div>)} />
 
-
+            <p className={style.p}>Optional data for registration</p>
             <div className={style.containerNumberInfo}>
-              <label>
-                <Field
-                  placeholder='+ 18'
-                  type='text'
-                  className={style.input}
-                  id="age"
-                  name="age"
-                />
-                <span>Age</span>
-              </label>
-              <ErrorMessage name='age' component={() => (<div className='error'>{errors.age}</div>)} />
+              
+                <label>
+                  <Field
+                    placeholder='+ 18'
+                    type='text'
+                    className={style.input}
+                    id="age"
+                    name="age"
+                  />
+                  <span>Age</span>
+                </label>
+                <ErrorMessage name='age' component={() => (<div className='error'>{errors.age}</div>)} />
+              
 
-              <label>
-                <Field
-                  as='select'
-                  className={style.input}
-                  id="genres"
-                  name="genres"
-                >
-                  <option value="">  </option>
-                  <option value="male">Masculino</option>
-                  <option value="female">Femenino</option>
-                </Field>
+              
+                <label>
+                  <Field
+                    as='select'
+                    className={style.input}
+                    id="genres"
+                    name="genres"
+                  >
+                    <option value="">  </option>
+                    <option value="male">Masculino</option>
+                    <option value="female">Femenino</option>
+                  </Field>
 
-                <span>Genres</span>
-              </label>
-              <ErrorMessage name='genres' component={() => (<div className='error'>{errors.genres}</div>)} />
+                  <span>Genres</span>
+                </label>
+                <ErrorMessage name='genres' component={() => (<div className='error'>{errors.genres}</div>)} />
+              
 
 
-              <label>
-                <Field
-                  placeholder=" +COD-xxx-xxx-xxxx"
-                  type="text"
-                  className={style.input}
-                  id="phone"
-                  name="phone"
-                />
-                <span>Phone</span>
-              </label>
-              <ErrorMessage name='phone' component={() => (<div className='error'>{errors.phone}</div>)} />
+              
+                <label>
+                  <Field
+                    placeholder=" +COD-xxx-xxx-xxxx"
+                    type="text"
+                    className={style.input}
+                    id="phone"
+                    name="phone"
+                  />
+                  <span>Phone</span>
+                </label>
+                <ErrorMessage name='phone' component={() => (<div className='error'>{errors.phone}</div>)} />
+              
+
 
             </div>
 

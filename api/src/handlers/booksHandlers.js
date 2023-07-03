@@ -118,7 +118,8 @@ const postBooksHandler = async (req, res) => {
       price,
       stock,
       authors,
-      genre
+      genre,
+      userlogin
     );
     res.status(200).json(newBook);
   } catch (error) {

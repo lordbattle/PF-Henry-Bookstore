@@ -55,8 +55,11 @@ ReviewStore.belongsTo(Book);
 User.hasMany(ReviewStore);
 ReviewStore.belongsTo(User);
 
-User.belongsTo(Book, { through: "User_Book" });
-Book.belongsToMany(User, { through: "User_Book" });
+// User.belongsTo(Book, { through: "User_Book" });
+// Book.belongsToMany(User, { through: "User_Book" });
+User.belongsToMany(Book, { through: "User_BookCreate" });
+Book.hasOne(User, { through: "User_BookCreate" });
+
 
 // Order and Bill relations
 User.hasMany(Order, { foreignKey: "userId" });

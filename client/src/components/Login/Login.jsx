@@ -41,18 +41,18 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (userlogin) {
-      console.log(userlogin.userName);
-      Swal.fire({
-        icon: "success",
-        title: `Welcome ${userlogin.userName}`,
-        text: "You are logged in!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/home");
-        }
-      });
-    }
+    // if (userlogin && userlogin.userName !== 'undefined') {
+    //   console.log(userlogin.userName);
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: `Welcome ${userlogin.userName}`,
+    //     text: "You are logged in!",
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       navigate("/home");
+    //     }
+    //   });
+    // }
     if (userlogin && userlogin.error === "Invalid user") {
       Swal.fire({
         icon: "error",
@@ -92,6 +92,7 @@ const Login = () => {
       <div>
         <span>Welcome to The Literary Corner</span>
       </div>
+      <div>
       <Formik
         initialValues={{
           email: "",

@@ -1,11 +1,11 @@
 import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { postBooks } from "../../redux/actions";
+import { useDispatch, connect } from "react-redux";
+import { postBooks,getUsersByName, getUsers } from "../../redux/actions";
 import style from "../BooksForm/BooksForm.module.css";
 import image from "../../images/bookForm.png";
 
-const AddBookForm = () => {
+const AddBookForm = ( props ) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const [file, setFile] = useState();
@@ -19,11 +19,10 @@ const AddBookForm = () => {
     
     const formData = new FormData();
     if (!file) {
-
       alert("Please select an image"); 
       return; 
-
     }
+
     formData.append("bookPic", file);
     formData.append("title", data.title);
     formData.append("subtitle", data.subtitle);
@@ -39,16 +38,23 @@ const AddBookForm = () => {
     formData.append("averageRating", data.averageRating);
     formData.append("description", data.description);
 
+    const userlogin = dispatch(getUsersByName(props.user.userName));
+    formData.append("userlogin", data.userlogin);
     try {
       await dispatch(postBooks(formData));
       alert("Book added successfully");
     } catch (error) {
-      console.log(error);
-
-      setError(true); 
-
+      setError(true);
       alert("An error occurred while adding the book");
     }
+  };
+  const prueba = () => {
+    console.log( props.user,'user storeeee')
+    const userlogin = dispatch(getUsersByName(props.user.userName));
+    const userssss = dispatch(getUsers());
+    console.log(userlogin, 'userencontradoooooooo')
+
+    console.log(userssss, 'userrrrssss')
   };
 
   const handleImageChange = (event) => {
@@ -157,8 +163,11 @@ const AddBookForm = () => {
               onChange={handleImageChange}
             />
           </div>
-        </div>
+        </div>      
+
         <button type="submit" className={style.buttonBook}></button>
+        <button  onClick={prueba} ></button>
+
         <span className={style.spanButton}>Crear Book</span>
 
         <div className={style.containerSubDos}>
@@ -244,5 +253,12 @@ const AddBookForm = () => {
     </div>
   );
 };
+export function mapStateToProps(state) {
+  return {
+      user: state.user,
+  }
+}
 
-export default AddBookForm;
+
+export default connect(mapStateToProps, null)(AddBookForm);
+

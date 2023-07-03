@@ -3,10 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams, Link} from "react-router-dom"
 import { getBookById, deleteBook, activeBook, editBook } from "../../redux/actions";
 import style from '../Detail/Detail.module.css'
-
+import useStorage from "../LocalStorage/LocalStorage";
 const Detail = () =>{
+    const { addToCart } = useStorage();
     const {id} = useParams();
     const dispatch = useDispatch();
+
 
     useEffect(()=>{
         dispatch(getBookById(id))
@@ -17,6 +19,19 @@ const Detail = () =>{
     
     const {active, authors, averageRating, bookPic, description, genre, identifier, pages, publishedDate, publisher, subtitle, title, userRating, price, stock} = details;
    
+    const handleAddToCart = () => {
+        const newItem = {
+          id: id,
+          img: bookPic,
+          title: title,
+          price: price,
+          stock: 1,
+        };
+      
+        addToCart(newItem);
+      };
+
+
     const [editedProduct, setEditedProduct]=useState({
         title: title,
         subtitle: subtitle,
@@ -203,7 +218,7 @@ const Detail = () =>{
             </div>
             </div>
             <Link to="/home" style={{textDecoration: 'none'}}><p className={style.back}>Go back</p></Link>
-            </div>
+            <button className={style.back} onClick={handleAddToCart}>Add to cart</button></div> 
         </div>
     )
 }

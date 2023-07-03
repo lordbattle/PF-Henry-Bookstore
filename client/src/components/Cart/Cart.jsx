@@ -2,7 +2,7 @@ import useStorage from '../LocalStorage/LocalStorage'
 import { buyBook } from '../../redux/actions';
 import {initMercadoPago, Wallet} from "@mercadopago/sdk-react"
 import { useState, useEffect } from 'react';
-import {useParams} from "react-router-dom"
+import {useLocation} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
@@ -10,7 +10,9 @@ import "./Cart.module.css"
 
 export const Cart =()=>{
 const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
-const { status } = useParams();
+const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const status = queryParams.get("status");
     const handleIncreseAmount = (itemId)=>{
         const updateCart = cart.map((item)=>{
             if(item.id === itemId){
@@ -82,8 +84,12 @@ const { status } = useParams();
       }
     };
 
+    const [localStorageData, setLocalStorageData] = useState(useStorage());
+
     useEffect(() => {
-      if (status === "success") {
+      if (status === "approved") {
+        let{cart} = localStorageData;
+        setCart([])
         Swal.fire({
           title: "Exit!",
           text: "Purchase successfully",
@@ -91,9 +97,10 @@ const { status } = useParams();
           confirmButtonText: "OK",
           backdrop: "rgba(53, 222, 53, 0.6)",
         });
-        addToPurchaseHistory();
-        localStorage.removeItem("cart");
-      } else if (status === "failure") {
+        console.log("ESTO ES LO QUE TIENE EL LOCALSTORAGEDATA si approved", cart);
+      }
+    }, [status]);
+if (status === "rejected") {
         Swal.fire({
           title: "Failed",
           text: "Failed purchase",
@@ -110,7 +117,6 @@ const { status } = useParams();
           backdrop: "rgba(243, 148, 23, 0.8)",
         });
       }
-    }, [status, addToPurchaseHistory]);
 
 
 
@@ -148,7 +154,27 @@ const { status } = useParams();
       ) : (
         <p key="No books">No hay elementos en el carrito.</p>
       )}
+      <div>
+      {status === "approved" ? (
+        <div> <h3>Purchase history</h3>
+          {localStorageData.cart.length > 0 ? (
+            <div>
+              {localStorageData.cart.map((item) => (
+                <div key={item.id} className={style.card}>
+                  <img src={item.img} alt="Book" />
+                  <h3>{item.title}</h3>
+                  <p>${item.price}</p>
+
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No purchase history.</p>
+          )}
         </div>
+      ) : null}
+      </div>
+</div>
     )
 }
 export default Cart;

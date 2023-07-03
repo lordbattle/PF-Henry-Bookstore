@@ -56,6 +56,43 @@
   }
 }
 
+.empty{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  margin: 2rem;
+  width: 100%;
+  padding: 5rem;
+}
+
+.btnAdd{
+  border-radius: 8px;
+  width: 15em;
+  height: 3em;
+  background-color: #b7cff4;
+
+  &:hover{
+    box-shadow: 3px 3px 3px black;
+    background-color: #71a5e5;
+    color: white;
+  }
+}
+
+.main2 {
+  border-radius: 7px;
+  width: 99.7%;
+  height: 12em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 30px 10px;
+  margin: 3px;
+  background-color: #b7cff4;
+  border: 1px solid rgba(0, 0, 0);
+}
 
 .fade-backgroundSuccess {
     animation: fadeBackground 2s ease-in-out forwards;

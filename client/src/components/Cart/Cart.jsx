@@ -2,7 +2,7 @@ import useStorage from '../LocalStorage/LocalStorage'
 import { buyBook } from '../../redux/actions';
 import {initMercadoPago, Wallet} from "@mercadopago/sdk-react"
 import { useState, useEffect } from 'react';
-import {useLocation} from "react-router-dom"
+import {useLocation, Link} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
@@ -152,24 +152,31 @@ if (status === "rejected") {
           {Id && <Wallet initialization={{preferenceId: Id}}/>}
         </div>
       ) : (
-        <p key="No books">No hay elementos en el carrito.</p>
+        <div className={style.empty}> 
+              <img src='https://img.freepik.com/iconos-gratis/carrito-compras_318-820968.jpg' alt='empty' width={'20%'}></img>
+              <h3 style={{width: '100%', paddingTop: '1em'}}>There are no items in the cart</h3>
+              <Link to='/home' style={{width: '100%', paddingTop: '1em'}}><button className={style.btnAdd}>Add items</button></Link>
+            </div>
       )}
       <div>
       {status === "approved" ? (
-        <div> <h3>Purchase history</h3>
+        <div style={{backgroundColor: '#71a5e5', borderRadius: '20px', padding: '10px'}}>
+          <h3 style={{textAlign: 'center'}}>Purchase history</h3>,
           {localStorageData.cart.length > 0 ? (
             <div>
               {localStorageData.cart.map((item) => (
-                <div key={item.id} className={style.card}>
-                  <img src={item.img} alt="Book" />
-                  <h3>{item.title}</h3>
-                  <p>${item.price}</p>
+                <div key={item.id} className={style.main2}>
+                  <img src={item.img} alt="book image" style={{height: '11rem', width: '10rem',marginRight: '1rem'}}/>
+                  <h3 style={{fontSize: '25px', minWidth: '100rem'}}>{item.title}</h3>
+                  <p style={{fontSize: '20px'}}>${item.price}</p>
 
                 </div>
               ))}
             </div>
           ) : (
-            <p>No purchase history.</p>
+            <div className={style.empty}> 
+              <h3 style={{width: '100%', paddingTop: '1em'}}>You have no purchase history</h3>
+            </div>
           )}
         </div>
       ) : null}

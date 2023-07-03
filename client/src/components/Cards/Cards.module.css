@@ -33,8 +33,10 @@
   align-items:start;
 }
 
-/* .read:hover {
+.read:hover {
   color: white;
   background-color: #4d82bc;
   box-shadow: 4px 4px 3px black;
-} */
+  border-radius: 5px;
+  cursor: pointer;
+}

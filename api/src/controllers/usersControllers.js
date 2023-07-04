@@ -189,6 +189,7 @@ const registerUser = async (data) => {
       },
       { transaction }
     );
+    console.log(newUser,'newUser resgister userrr')
 
     //validation and update of the image for the user
     if (data.profilePic) {

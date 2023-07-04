@@ -1,13 +1,13 @@
-const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{0,}$/;
+/* const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{0,}$/;
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const regexUsername = /^[A-Za-z0-9][A-Za-z0-9--\s]*$/;
 const regexNameAndLastName = /^[a-zA-ZÀ-ÿ\s]{1,25}$/;
 const regexLocation = /^[a-zA-ZÀ-ÿ\s]{1,25}$/;
-const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/;
+const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/; */
 const validations = (values) => {
 
     let errors = {};
-    if (!values.name) {
+   /*  if (!values.name) {
         errors.name = "Please, insert a name";
     } else if (!regexNameAndLastName.test(values.name)) {
         if (values.name.length > 25) {
@@ -88,7 +88,7 @@ const validations = (values) => {
         errors.phone = "Please, insert a phone";
     } else if (!regexPhone.test(values.phone)) {
         errors.phone = 'invalid Format phone';
-    }
+    } */
     return errors;
 
 }

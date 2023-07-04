@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
       },
       age: {
         type: DataTypes.INTEGER,
-        defaultValue: "Not specified"
+        defaultValue: 18
       },
       location: {
         type: DataTypes.STRING,

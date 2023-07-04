@@ -15,10 +15,9 @@ import OptionLoginOrRegister from "./components/OptionLoginOrRegister/OptionLogi
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
-import { AuthContextProvider, UserAuth } from "./context/AuthContextFirebase";
+import { AuthContextProvider } from "./context/AuthContextFirebase";
 import Logout from "./components/Logout/Logout";
 // import Stack from 'react-bootstrap/Stack'
-//import { useAuth0 } from "@auth0/auth0-react";
 //import axios from "axios";
 
 //axios.defaults.baseURL = "http://localhost:3001";

@@ -49,11 +49,11 @@ const userNewSchema = {
     errorMessage: "Password is required",
 
     isLength: {
-      options: { min: 8, max: 20 },
-      errorMessage: `Password must contain between 8 and 20 characters`,
+      options: { min: 8, max: 10 },
+      errorMessage: `Password must contain between 8 and 10 characters`,
     },
 
-   /*  custom: {
+    custom: {
       options: (value) => {
         if (!isPasswordValidate(value)) {
           throw new Error(
@@ -63,7 +63,7 @@ const userNewSchema = {
           return true;
         }
       },
-    }, */
+    }, 
   },
   name: {
     notEmpty: {

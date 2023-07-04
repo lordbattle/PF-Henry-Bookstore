@@ -30,7 +30,7 @@ const isEmptyImageFile = (value) => {
   }
 };
 
-const isEmptyField = (value) => {
+const isEmptyField = (value) => {  
   if (value.trim()) {
     return true;
   }
@@ -67,7 +67,7 @@ const isUsernameValidate = (value) => {
 };
 
 const isPasswordValidate = (value) => {
-  if (value.length >= 17) {
+  if (value.length >= 8) {
     regexPassword.test(value);
     return true;
   }

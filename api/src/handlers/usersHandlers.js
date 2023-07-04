@@ -97,6 +97,8 @@ const postUsersIdHandler = async (req, res) => {
 
   try {
     const results = await registerUser(data);
+    console.log(results, ' results post userrrr ')
+
     const emailSent = await sendNewUserEmail(results.email, results.userName);
     res.status(200).json({ success: true, results, emailSent });
   } catch (e) {

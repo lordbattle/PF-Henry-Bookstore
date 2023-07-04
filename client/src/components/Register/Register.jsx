@@ -30,6 +30,7 @@ const Register = () => {
   }, [isAuthenticated]);
  */
   const postUsersAsync = (payload) => {
+    console.log("postUserAync",payload);
     return new Promise((resolve, reject) => {
       dispatch(postUsers(payload))
         .then((response) => {
@@ -69,7 +70,7 @@ const Register = () => {
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
-            console.log("FORM SENT");
+            console.log("datos form",values);
             // redux
             try {
               await postUsersAsync(values); // Esperar la resolución de la promesa

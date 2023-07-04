@@ -53,7 +53,7 @@ const userNewSchema = {
       errorMessage: `Password must contain between 8 and 20 characters`,
     },
 
-    custom: {
+   /*  custom: {
       options: (value) => {
         if (!isPasswordValidate(value)) {
           throw new Error(
@@ -63,7 +63,7 @@ const userNewSchema = {
           return true;
         }
       },
-    },
+    }, */
   },
   name: {
     notEmpty: {

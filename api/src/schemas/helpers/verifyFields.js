@@ -25,6 +25,10 @@ const regexOnlyLetter = /^[A-Za-z\s]+$/;
 //Can only contain letters and numbers
 const regexOnlyLetterNumber = /^[a-zA-Z0-9]+$/;
 
+// Matches an id type uuid version 4
+const regexpV4 =
+  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89AB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i;
+
 const isEmptyBoolean = (value) => !value || typeof value === "boolean" || false;
 
 const isEmptyImageFile = (value) => {
@@ -89,6 +93,9 @@ const isPhoneValidate = (value) => {
   }
 };
 
+const isArrayLength = (value) => !!value.length > 0;
+const isUuidV4 = (value) => regexpV4.test(value);
+
 module.exports = {
   isEmptyBoolean,
   isEmptyImageFile,
@@ -101,4 +108,6 @@ module.exports = {
   isPasswordValidate,
   isPasswordOnlyLetterNumber,
   isPhoneValidate,
+  isArrayLength,
+  isUuidV4,
 };

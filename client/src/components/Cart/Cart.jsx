@@ -59,8 +59,20 @@ const location = useLocation();
     const publicKey = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY;
     initMercadoPago(publicKey)
 
+    let loadingAlert; 
     const handleBuy = async () => {
       try {
+        loadingAlert = Swal.fire({
+          title: 'Loading...',
+          html: 'Preparing your purchase, wait...',
+          allowOutsideClick: false,
+          showCancelButton: false,
+          showConfirmButton: false,
+          onBeforeOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        
         console.log("HandleBuy clickeado");
         const id_user = 1; 
         const items = cart.map((item) => ({
@@ -78,7 +90,7 @@ const location = useLocation();
         const id = await buyBook(product)();
         if (id) {
           setId(id);
-        }
+        } loadingAlert.close()
       } catch (error) {
         console.log(`error del catch buyproduch ${error}`);
       }

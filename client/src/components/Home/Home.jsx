@@ -12,16 +12,19 @@ const Home = () => {
   const { user } = UserAuth();
   const dispatch = useDispatch();
   //const navigate = useNavigate();
-
+  
   useEffect(() => {
     console.log("HOME USER AQUI  ", user);
-    setTimeout(() => {
-      dispatch(postUsers(user));
-    }, 3000);
+    if (user) {
+      setTimeout(() => {
+        dispatch(postUsers(user));
+        console.log;
+      }, 3000);
 
-    setTimeout(() => {
-      dispatch(logingUser(user));
-    }, 4000);
+      setTimeout(() => {
+        dispatch(logingUser(user));
+      }, 4000);
+    }
   }, []);
 
   const { books } = useSelector((state) => state);

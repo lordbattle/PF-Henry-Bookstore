@@ -5,7 +5,7 @@ const userGoogleFindBd = async (req, res, next) => {
   let { email, displayName, uid, name , userName} = req.body;
 
   console.log("Estoy en el middleware google find BD");
-  console.log(req.body);
+  console.log("Que trae el req.body   " + req.body.userName);
 
   if (displayName || userName ) {
     console.log("Entré al if del middleware find BD");

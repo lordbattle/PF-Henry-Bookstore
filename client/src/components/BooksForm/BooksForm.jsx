@@ -1,12 +1,15 @@
 import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, connect } from "react-redux";
-import { postBooks,getUsersByName, getUsers } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { postBooks, getUsersByName, getUsers } from "../../redux/actions";
 import style from "../BooksForm/BooksForm.module.css";
 import image from "../../images/bookForm.png";
 
-const AddBookForm = ( props ) => {
+const AddBookForm = () => {
   const dispatch = useDispatch();
+
+  const userState = useSelector((state) => state.user);
+
   const inputRef = useRef(null);
   const [file, setFile] = useState();
   const {
@@ -16,11 +19,10 @@ const AddBookForm = ( props ) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    
     const formData = new FormData();
     if (!file) {
-      alert("Please select an image"); 
-      return; 
+      alert("Please select an image");
+      return;
     }
 
     formData.append("bookPic", file);
@@ -38,23 +40,23 @@ const AddBookForm = ( props ) => {
     formData.append("averageRating", data.averageRating);
     formData.append("description", data.description);
 
-    const userlogin = dispatch(getUsersByName(props.user.userName));
-    formData.append("userlogin", data.userlogin);
+  
+    formData.append("userlogin", userState.id);
+
     try {
       await dispatch(postBooks(formData));
       alert("Book added successfully");
     } catch (error) {
-      setError(true);
       alert("An error occurred while adding the book");
     }
   };
   const prueba = () => {
-    console.log( props.user,'user storeeee')
-    const userlogin = dispatch(getUsersByName(props.user.userName));
+    console.log(userState, "user storeeee");
+    const userlogin = dispatch(getUsersByName(userState.userName));
     const userssss = dispatch(getUsers());
-    console.log(userlogin, 'userencontradoooooooo')
+    console.log(userlogin, "userencontradoooooooo");
 
-    console.log(userssss, 'userrrrssss')
+    console.log(userssss, "userrrrssss");
   };
 
   const handleImageChange = (event) => {
@@ -80,6 +82,9 @@ const AddBookForm = ( props ) => {
 
   return (
     <div className={style.containerForm}>
+      <button onClick={prueba} style={{ width: "100px", height: "50px" }}>
+        PROBAR EN CONSOLA
+      </button>
       <form onSubmit={handleSubmit(onSubmit)} className={style.main}>
         <h1 className={style.h1Titulo}>NEW BOOK</h1>
         <img src={image} alt="imageBookForm" className={style.imageForm} />
@@ -163,10 +168,9 @@ const AddBookForm = ( props ) => {
               onChange={handleImageChange}
             />
           </div>
-        </div>      
+        </div>
 
         <button type="submit" className={style.buttonBook}></button>
-        <button  onClick={prueba} ></button>
 
         <span className={style.spanButton}>Crear Book</span>
 
@@ -253,12 +257,5 @@ const AddBookForm = ( props ) => {
     </div>
   );
 };
-export function mapStateToProps(state) {
-  return {
-      user: state.user,
-  }
-}
 
-
-export default connect(mapStateToProps, null)(AddBookForm);
-
+export default AddBookForm;

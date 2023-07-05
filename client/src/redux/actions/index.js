@@ -206,6 +206,7 @@ export const getUsers = () => {
 export const getUserById = (idUser) => {
   // name y lastname estan en null en el backend
   return async (dispatch) => {
+    console.log("Estoy en el action redux de getByid");
     try {
       const { data } = await axiosInstance.get(`/users/${idUser}`);
       console.log("LOG DEL GETID", data);
@@ -267,7 +268,7 @@ export const postUsers = (payload) => {
     } catch (error) {
     /*  alert(`Error postUsers ${error}`); */
       console.log(error);
-      throw new Error(error);
+      throw new Error(error.response.data);
     }
   };
 };

@@ -175,6 +175,7 @@ const postBook = async (
   genre,
   userlogin
 ) => {
+  console.log("LLego el userLogin?" + userlogin)
   const { secure_url } = await cloudinary.uploader.upload(bookPic, {
     upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
     /* resource_type: "image",

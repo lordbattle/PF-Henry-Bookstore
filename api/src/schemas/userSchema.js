@@ -8,6 +8,7 @@ const {
   isStringOnlyLetter,
   isUsernameValidate,
   isPasswordValidate,
+  isPasswordOnlyLetterNumber,
   isPhoneValidate,
 } = require("./helpers/verifyFields");
 
@@ -45,25 +46,50 @@ const userNewSchema = {
     },
   },
   password: {
-    notEmpty: true,
-    errorMessage: "Password is required",
+    notEmpty: {
+      errorMessage: "Password is required",
+    },
 
     isLength: {
-      options: { min: 8, max: 10 },
-      errorMessage: `Password must contain between 8 and 10 characters`,
+      options: { min: 8, max: 25 },
+      errorMessage: `Password must contain between 8 and 25 characters`,
     },
 
     custom: {
       options: (value) => {
-        if (!isPasswordValidate(value)) {
-          throw new Error(
-            "Password must have at least one uppercase letter, one lowercase letter, one number, and one special character"
+        /* console.log(
+          "Estoy en custom el value es  " +
+            value +
+            "   estoy en length es " +
+            value.length
+        ); */
+        if (value.length >= 19) {
+          console.log("length + 19");
+          if (!isPasswordOnlyLetterNumber(value)) {
+            throw new Error(
+              "Password must be 19 characters or more and can only contain letters and numbers."
+            );
+          }
+        } else if (value.length < 19) {
+          console.log(
+            "Estoy en custom el value es  " +
+              value +
+              "   estoy en length es " +
+              value.length
           );
-        } else {
-          return true;
+          console.log("length menor 19");
+          if (!isPasswordValidate(value)) {
+            console.log(
+              "estoy en el ig de passworvalidare que es value ?    " + value
+            );
+            throw new Error(
+              "Password must have at least one uppercase letter, one lowercase letter, one number, and one special character."
+            );
+          }
         }
+        return true;
       },
-    }, 
+    },
   },
   name: {
     notEmpty: {

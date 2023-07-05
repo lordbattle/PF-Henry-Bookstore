@@ -1,4 +1,5 @@
-const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{0,}$/;
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,18}$/;
+
 const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const regexUsername = /^[A-Za-z0-9][A-Za-z0-9--\s]*$/;
 const regexNameAndLastName = /^[a-zA-ZÀ-ÿ\s]{1,25}$/;
@@ -50,7 +51,7 @@ const validations = (values) => {
     if (!values.password) {
         errors.password = "Please, insert a password";
     } else if (!regexPassword.test(values.password)) {
-        errors.password = 'Minimum eight and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number, and one special character'
+        errors.password = 'Minimum eight and maximum 18 characters, at least one uppercase letter, one lowercase letter, one number, and one special character'
     }
 
     if (!values.location) {

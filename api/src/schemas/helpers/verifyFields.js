@@ -22,6 +22,9 @@ const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/;
 //Can only contain letters
 const regexOnlyLetter = /^[A-Za-z\s]+$/;
 
+//Can only contain letters and numbers
+const regexOnlyLetterNumber = /^[a-zA-Z0-9]+$/;
+
 const isEmptyBoolean = (value) => !value || typeof value === "boolean" || false;
 
 const isEmptyImageFile = (value) => {
@@ -30,7 +33,7 @@ const isEmptyImageFile = (value) => {
   }
 };
 
-const isEmptyField = (value) => {  
+const isEmptyField = (value) => {
   if (value.trim()) {
     return true;
   }
@@ -67,8 +70,15 @@ const isUsernameValidate = (value) => {
 };
 
 const isPasswordValidate = (value) => {
-  if (value.length >= 8) {
-    regexPassword.test(value);
+  console.log("regex entre " + value);
+  console.log("FUNCION REGEX   " + regexPassword.test(value));
+  if (regexPassword.test(value)) {
+    return true;
+  }
+};
+
+const isPasswordOnlyLetterNumber = (value) => {
+  if (regexOnlyLetterNumber.test(value)) {
     return true;
   }
 };
@@ -89,5 +99,6 @@ module.exports = {
   isStringOnlyLetter,
   isUsernameValidate,
   isPasswordValidate,
+  isPasswordOnlyLetterNumber,
   isPhoneValidate,
 };

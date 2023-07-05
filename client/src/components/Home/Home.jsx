@@ -12,14 +12,22 @@ const Home = () => {
   const { user } = UserAuth();
   const dispatch = useDispatch();
   //const navigate = useNavigate();
-
+  
   useEffect(() => {
     console.log("HOME USER AQUI  ", user);
-    setTimeout(() => {
-      dispatch(postUsers(user));
-      dispatch(logingUser(user));
-    }, 3000);
-  }, [user,dispatch]);
+
+    if (user) {
+      setTimeout(() => {
+        dispatch(postUsers(user));
+        console.log;
+      }, 3000);
+
+      setTimeout(() => {
+        dispatch(logingUser(user));
+      }, 4000);
+    }
+  }, []);
+
 
   const { books } = useSelector((state) => state);
   const { setFilters, setCurrentPage, currentPage } = useFilters();

@@ -1,51 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
-/* import { getUserById, cleanUserDetail } from "../../redux/actions/index";
-import { useEffect } from "react"; */
-
-import { UserAuth } from "../../context/AuthContextFirebase";
 import { getUserById } from "../../redux/actions";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
 const Profile = () => {
   const dispatch = useDispatch();
 
-  let userCurrent = useSelector((state) => state.userDetail);
   const userLogin = useSelector((state) => state.user);
-  //const [reload, setReload] = useState(false);
-
-  /* useEffect(() => {
-    dispatch(getUserById(userLogin.id));
-    return () => {
-      dispatch(cleanUserDetail());
-    };
-  }, []);
- */
+  const userCurrent = useSelector((state) => state.userDetail);
 
   useEffect(() => {
     dispatch(getUserById(userLogin.id));
-  }, [dispatch]);
+  }, [dispatch, userLogin.id]);
 
-  // no este trayendo el user, solo da undefined
-
-  /* const { currentUser } = useSelector((state) => state); */
-
-  console.log("holaa " + userLogin.userName);
-  console.log("PROBANDO TRAER USUARIO " + userCurrent.results.id);
-  console.log("PROBANDO TRAER USUARIO " + userCurrent.results.email);
-  console.log("PROBANDO TRAER USUARIO " + userCurrent.results.age);
-  console.log("PROBANDO TRAER USUARIO " + userCurrent.results.genres);
+  console.log("estado user del login: " + userLogin.id);
+  console.log("estado userDetail: ", userCurrent.results);
 
   return (
     <div style={{ height: "100vh" }}>
-      {userCurrent && (
+      {userCurrent.results && (
         <>
           <img src={userCurrent.results.profilePic} width="100px" />
-          <h4> username: {userCurrent.results.userName}</h4>
-          <h4> name: {userCurrent.results.name}</h4>
-          <h4> lastName: {userCurrent.results.lastName}</h4>
-          <h4> email: {userCurrent.results.email}</h4>
-          <h4> age: {userCurrent.results.age}</h4>
-          <h4> location: {userCurrent.results.location}</h4>
-          <h4> phone: {userCurrent.results.phone}</h4>
+          <h4>Username: {userCurrent.results.userName}</h4>
+          <h4>Name: {userCurrent.results.name}</h4>
+          <h4>Last Name: {userCurrent.results.lastName}</h4>
+          <h4>Email: {userCurrent.results.email}</h4>
+          <h4>Age: {userCurrent.results.age}</h4>
+          <h4>Location: {userCurrent.results.location}</h4>
+          <h4>Phone: {userCurrent.results.phone}</h4>
         </>
       )}
     </div>
@@ -53,3 +34,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

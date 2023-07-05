@@ -17,6 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import Logout from "./components/Logout/Logout";
+import EditProfile from "./components/EditProfile/EditProfile";
 // import Stack from 'react-bootstrap/Stack'
 //import axios from "axios";
 
@@ -48,6 +49,7 @@ function App() {
             <Route path="/detail/:id" element={<Detail />}></Route>
             <Route path="/createbook" element={<AddBookForm />}></Route>
             <Route path="/cart" element={<Cart />}></Route>
+            <Route path="/editprofile" element={<EditProfile/>}></Route>
           </Routes>
 
           <Footer />

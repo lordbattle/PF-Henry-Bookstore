@@ -159,6 +159,7 @@ if (status === "rejected") {
 
           <span style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', minWidth: '100%', textAlign: 'center'}}>
             <p style={{fontSize: '20px'}}>Total: ${totalCart}</p> 
+            <Link to='/home'><button className={style.btn}>Keep buying</button></Link>
             <button onClick={handleBuy} className={style.btn}>Buy</button>
           </span>
           {Id && <Wallet initialization={{preferenceId: Id}}/>}

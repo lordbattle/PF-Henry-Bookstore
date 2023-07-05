@@ -47,7 +47,8 @@
   background-color: #b7cff4;
   border: 1px black solid;
   border-radius: 4px;
-  width: 5rem;
+  width: 6rem;
+  margin: 0.2rem;
 
   &:hover{
     box-shadow: 3px 3px 3px black;

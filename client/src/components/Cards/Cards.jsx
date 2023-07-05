@@ -1,5 +1,6 @@
 import style from "../Cards/Cards.module.css";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const Cards = (props) => {
   const handlerCart = () => {
@@ -11,6 +12,17 @@ const Cards = (props) => {
       stock: 1,
     };
     props.addToCart(newItem);
+
+    Swal.fire({
+      position: 'bottom-end',
+      icon: 'success',
+      title: 'successfully added',
+      showConfirmButton: false,
+      timer: 700,
+      width: 300
+
+    })
+
     console.log("ENTREA NEW ITEM", newItem);
   };
 

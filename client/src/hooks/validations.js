@@ -39,7 +39,7 @@ const validations = (values) => {
 
     if (!values.userName) {
         errors.userName = "Please, insert a userName";
-    } else if (values.userName.length > 8) {
+    } else if (values.userName.length >= 8) {
         if (!regexUsername.test(values.userName)) {
             errors.userName = 'The username can only start with letters or numbers';
         }
@@ -72,8 +72,8 @@ const validations = (values) => {
         if ((ageNum % 1) != 0) {
             errors.age = ' The age cannot be decimal';
         } else {
-            if (ageNum > 100 || ageNum < 18) {
-                errors.age = 'The Age only of 18-100';
+            if (ageNum >= 90 || ageNum < 17) {
+                errors.age = 'The Age only of 18-90';
             }
         }
     } else {

@@ -17,12 +17,9 @@ const Home = () => {
     console.log("HOME USER AQUI  ", user);
     setTimeout(() => {
       dispatch(postUsers(user));
-    }, 3000);
-
-    setTimeout(() => {
       dispatch(logingUser(user));
-    }, 4000);
-  }, []);
+    }, 3000);
+  }, [user,dispatch]);
 
   const { books } = useSelector((state) => state);
   const { setFilters, setCurrentPage, currentPage } = useFilters();

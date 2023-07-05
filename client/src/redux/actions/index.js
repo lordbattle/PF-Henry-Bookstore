@@ -219,7 +219,8 @@ export const getUserById = (idUser) => {
   };
 };
 
-export function getCurrentUser(payload) {
+//Se espera se pueda usar despues en alguna funcion.
+/* export function getCurrentUser(payload) {
   return async function (dispatch) {
     try {
       const user = await axiosInstance.post(`/users/register`, payload);
@@ -235,7 +236,7 @@ export function getCurrentUser(payload) {
       console.log(error.message);
     }
   };
-}
+} */
 
 export const deleteUser = (idUser) => {
   //no lo elimina pero si ejecuata el respose en el backend

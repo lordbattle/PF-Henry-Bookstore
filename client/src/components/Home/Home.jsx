@@ -15,6 +15,7 @@ const Home = () => {
   
   useEffect(() => {
     console.log("HOME USER AQUI  ", user);
+
     if (user) {
       setTimeout(() => {
         dispatch(postUsers(user));
@@ -26,6 +27,7 @@ const Home = () => {
       }, 4000);
     }
   }, []);
+
 
   const { books } = useSelector((state) => state);
   const { setFilters, setCurrentPage, currentPage } = useFilters();

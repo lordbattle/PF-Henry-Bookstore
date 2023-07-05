@@ -109,8 +109,8 @@ const Login = () => {
 
   return (
     <div className={style.ContainerMain}>
-      <div>
-        <span>Welcome to The Literary Corner</span>
+      <div style={{ marginTop: '1rem'}}>
+        <span style={{fontSize: '30px'}}>Welcome to The Literary Corner</span>
       </div>
       <div>
         <Formik
@@ -166,7 +166,7 @@ const Login = () => {
               <div className="mb-4">
                 <label htmlFor="name" className="text-lg text-current">
                   Email
-                </label>
+                </label><br/>
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                   type="text"
@@ -185,7 +185,7 @@ const Login = () => {
               <div className="mb-4">
                 <label htmlFor="name" className="text-lg text-current">
                   Password
-                </label>
+                </label><br />
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                   type="password"
@@ -203,12 +203,12 @@ const Login = () => {
                 )}
               </div>
 
-              <div className="mt-8 flex flex-col gap-y-4">
+              <div className={style.options}>
                 <button
                   type="submit"
-                  className="active:scale-[0.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-white text-lg font-bold"
+                  className="active:scale-[0.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-violet-500 text-black text-lg font-bold"
                 >
-                  Sing in
+                  Sign in
                 </button>
                 <button
                   onClick={handleGoogle}
@@ -239,19 +239,19 @@ const Login = () => {
                       fill="#FBBC05"
                     />
                   </svg>
-                  Sing in with Google
+                  Sign in with Google
                 </button>
-                <Link
-                  to="/home"
-                  className="flex mt-8 justify-between text-violet-500 text-lg font-medium no-underline hover:underline"
-                >
-                  return home
-                </Link>
               </div>
             </form>
           )}
         </Formik>
       </div>
+                <Link
+                  to="/home"
+                  className={style.back}
+                >
+                  return home
+                </Link>
     </div>
   );
 };

@@ -3,8 +3,26 @@ import { Link, useNavigate } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
 import useStorage from "../LocalStorage/LocalStorage"
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { UserAuth } from "../../context/AuthContextFirebase";
+import { logoutUser } from "../../redux/actions";
 
 const Nav = () => {
+
+  const [isLogout, setIsLogout] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logout = UserAuth();
+
+  useEffect(() => {
+    setIsLogout(true);
+  }, []);
+  const handlerLogOut = async () => {
+    await logout();
+    dispatch(logoutUser());
+    navigate("/");
+  }
 
   const { cart } = useStorage();
   const [totalItems, setTotalItems] = useState(0);
@@ -25,6 +43,29 @@ const Nav = () => {
       window.removeEventListener("cart", handleStorageChange);
     };
   }, []);
+
+  function alert(){
+    Swal.fire({
+      title: 'Log out',
+      text: "Are you sure you want to log out?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Log out!',
+          handlerLogOut(),
+          'success'
+        )
+      } else{
+        navigate("/home")
+      }
+    })
+  }
 
   return (
     <div key={updateKey}
@@ -95,12 +136,9 @@ const Nav = () => {
             Sign up
           </Link>
 
-          <Link
-            to={"/logout"}
-            className="text-decoration-none  fs-5 text-reset"
-          >
-            Log out
-          </Link>
+          
+          <button style={{border: 'none', backgroundColor : '#71a5e5', fontSize: '20px'}} onClick={alert}>Log out</button>
+          
         </div>
       </Stack>
     </div>

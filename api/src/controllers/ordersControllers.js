@@ -3,13 +3,42 @@ const moment = require("moment");
 
 const { User, Book, Order, OrderItem, Bill, conn } = require("../db");
 const { mercadopago } = require("../config/mercadopago");
-const { hasRepeatingValues } = require("../helpers/userHelper");
+const { hasRepeatingValues, defineOrder } = require("../helpers/userHelper");
 const {
   validateNumBooks,
   createModelOrderItems,
 } = require("../helpers/orderHelper");
 
 const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_BACK_URLS } = process.env;
+
+// Controller: get order by id
+const getOrderById = async (id) => {
+  const order = await Order.findByPk(+id);
+
+  if (!order) {
+    throw Error("There is no order with the specified id");
+  }
+
+  return order;
+};
+
+// Controller: returns all available commands
+// includes function to paginate for each attribute in db
+const getAllOrders = async (data) => {
+  const { limit, page, sort, ...rest } = data;
+  const pagination = {
+    ...(limit && { limit }),
+    ...(page && { offset: page * limit }),
+  };
+  const order = { ...(sort && { order: defineOrder(sort) }) };
+
+  return await Order.findAndCountAll({
+    where: rest,
+    include: OrderItem,
+    ...pagination,
+    ...order,
+  });
+};
 
 // Function allows you to generate an instance of the order model for users with pending orders
 // Parameters: userId
@@ -74,7 +103,7 @@ const changeStockBooks = async (order, sign = true, transaction) => {
 
   const updatedBooksPromise = order.orderItems.map((item) => {
     const num = sign
-      ? item.dataValues.quantity
+      ? +item.dataValues.quantity
       : -Math.abs(item.dataValues.quantity);
 
     // Update the stock of books
@@ -110,7 +139,7 @@ const createOrder = async (user, books, items, transaction) => {
       dueDate: endDate,
       status: "pending",
       total: fullPurchaseValue,
-      invoiceStatus: "sin facturar",
+      invoiceStatus: "sin_facturar",
       userId: user.id,
       orderItems: orderItemsModel,
     },
@@ -208,7 +237,7 @@ const updateOrderByInstance = async (books, items, order, transaction) => {
     id: order.preferenceId,
     items: itemPreferences,
   });
-
+  console.log("aqui vamos 2");
   // Inserting the data if the whole process was successful
   await transaction.commit();
 
@@ -266,7 +295,7 @@ const receiveWebhook = async (query) => {
         );
 
         // Update invoice status
-        order.set({ status, invoiceStatus: "con factura" });
+        order.set({ status, invoiceStatus: "con_factura" });
         await order.save();
 
         return paymentData.body.metadata;
@@ -304,6 +333,8 @@ const rejectExpiredOrders = async () => {
 };
 
 module.exports = {
+  getOrderById,
+  getAllOrders,
   insertOrder,
   receiveWebhook,
   rejectExpiredOrders,

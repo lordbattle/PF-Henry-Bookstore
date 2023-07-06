@@ -94,7 +94,7 @@ const isPhoneValidate = (value) => {
 };
 
 const isArrayLength = (value) => !!value.length > 0;
-const isUuidV4 = (value) => regexpV4.test(value);
+const isNumberInteger = (value) => Number.isInteger(value);
 
 module.exports = {
   isEmptyBoolean,
@@ -109,5 +109,5 @@ module.exports = {
   isPasswordOnlyLetterNumber,
   isPhoneValidate,
   isArrayLength,
-  isUuidV4,
+  isNumberInteger,
 };

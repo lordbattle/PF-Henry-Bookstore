@@ -19,6 +19,8 @@ import { AuthContextProvider } from "./context/AuthContextFirebase";
 import Logout from "./components/Logout/Logout";
 
 import ChangePassword from "./components/EditPassword/EditPassword";
+import EditProfile from "./components/EditProfile/EditProfile";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 // import Stack from 'react-bootstrap/Stack'
 //import axios from "axios";
@@ -39,6 +41,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
 
+            <Route path="/dashboard" element={<Dashboard />} />
+
             <Route path="/home" element={<Home />}></Route>
 
             <Route path="/about" element={<About />}></Route>
@@ -47,7 +51,9 @@ function App() {
 
             <Route path="/logout" element={<Logout />}></Route>
 
-            <Route path="/optionLoginOrRegister" element={<OptionLoginOrRegister />}
+            <Route
+              path="/optionLoginOrRegister"
+              element={<OptionLoginOrRegister />}
             ></Route>
 
             <Route path="/profile" element={<Profile />}></Route>
@@ -61,7 +67,7 @@ function App() {
             <Route path="/createbook" element={<AddBookForm />}></Route>
 
             <Route path="/cart" element={<Cart />}></Route>
-            <Route path="/editprofile" element={<EditProfile/>}></Route>
+            <Route path="/editprofile" element={<EditProfile />}></Route>
           </Routes>
 
           <Footer />

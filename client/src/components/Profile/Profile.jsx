@@ -29,6 +29,7 @@ const Profile = () => {
           <h4>Age: {userCurrent.results.age}</h4>
           <h4>Location: {userCurrent.results.location}</h4>
           <h4>Phone: {userCurrent.results.phone}</h4>
+
            
            <Link
               to={"/ChangePassword"}
@@ -39,8 +40,15 @@ const Profile = () => {
         </div>
       )}
 
-        
 
+          <Link
+            to={"/ChangePassword"}
+            className="text-decoration-none fs-6 text-reset"
+          >
+            Edit password
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

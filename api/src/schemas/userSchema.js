@@ -175,13 +175,13 @@ const userNewSchema = {
       },
     },
   },
-  profilePic: {
+/*   profilePic: {
     custom: {
       options: isEmptyImageFile,
     },
     errorMessage: "The submitted file is not a .jpg, .jpeg, .png or .gif image",
     optional: true,
-  },
+  }, */
   active: {
     custom: {
       options: isEmptyBoolean,

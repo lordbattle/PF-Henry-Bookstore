@@ -110,6 +110,7 @@ const postUsersIdHandler = async (req, res) => {
 const putUsersHandler = async (req, res) => {
   const { idUsers } = req.params;
   const updatedData = cleanData(typeUser, req.body);
+ /*  const updatedData = req.body; */
 
   try {
     const results = await putUser(idUsers, updatedData);

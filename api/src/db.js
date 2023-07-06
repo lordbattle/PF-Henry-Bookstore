@@ -57,8 +57,8 @@ ReviewStore.belongsTo(User);
 
 // User.belongsTo(Book, { through: "User_Book" });
 // Book.belongsToMany(User, { through: "User_Book" });
-User.belongsToMany(Book, { through: "User_BookCreate" });
-Book.hasOne(User, { through: "User_BookCreate" });
+User.hasMany(Book, { foreignKey: 'userId' });
+Book.belongsTo(User, { foreignKey: 'userId' });
 
 
 // Order and Bill relations
@@ -78,11 +78,11 @@ Order.hasOne(Bill, { foreignKey: "orderId" });
 Bill.belongsTo(Order);
 
 module.exports = {
-  // Author,
-  // Book,
-  // Genre,
-  // ReviewStore,
-  // User, // para poder importar los modelos así: const { Product, User } = require('./db.js');
-  ...sequelize.models,
+  Author,
+  Book,
+  Genre,
+  ReviewStore,
+  User, // para poder importar los modelos así: const { Product, User } = require('./db.js');
+  //...sequelize.models,
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
 };

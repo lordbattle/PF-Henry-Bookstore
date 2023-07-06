@@ -76,6 +76,8 @@ module.exports = (sequelize) => {
       notifications: {
         type: DataTypes.JSON,
       },
+      
+
     },
     { timestamps: false }
   );

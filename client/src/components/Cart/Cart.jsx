@@ -12,8 +12,11 @@ import { useSelector } from 'react-redux';
 export const Cart =()=>{
 
   const user = useSelector(state=>state.currentUser)
-  const idUser = user.data.results.id
-  console.log("ESTO ES results", idUser)
+  const idUser=0;
+  if(user){
+    idUser = user.data.results.id
+  }
+console.log("ESTO ES results", idUser)
 
 const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
 const location = useLocation();
@@ -108,10 +111,10 @@ const location = useLocation();
         let{cart} = localStorageData;
         setCart([])
         Swal.fire({
-          title: "Exit!",
+          title: "Good job!",
           text: "Purchase successfully",
           icon: "success",
-          confirmButtonText: "OK",
+          confirmButtonText: "✔️",
           backdrop: "rgba(53, 222, 53, 0.6)",
         });
         console.log("ESTO ES LO QUE TIENE EL LOCALSTORAGEDATA si approved", cart);

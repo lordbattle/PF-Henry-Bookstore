@@ -189,7 +189,8 @@ export const buyBook = (payload) => {
           showCancelButton: true,
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
+          confirmButtonText: 'Log in | Sign Up',
+          cancelButtonText: 'Later'
         }).then((result) => {
           if (result.isConfirmed) {
             window.location.href = '/optionLoginOrRegister'

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "../EditProfile/EditProfile.module.css";
 import { useEffect, useState } from "react";
 import { editUser } from "../../redux/actions/index";
+import { useForm } from "react-hook-form";
 
 
 const EditProfile = () => {
@@ -9,42 +10,67 @@ const EditProfile = () => {
     name: "",
     lastName: "",
     userName: "",
+    email: "",
     phone: "",
-    profilePic: null, // Cambiado a null para almacenar la imagen seleccionada
+    profilePic: null,
     age: 0,
   });
   const [isChangeUser, setIsChangeUser] = useState(false);
+  const [file, setFile] = useState();
+
+  /*   "password":"holaMundo234@",
+  
+  "email": "miralapantalla@gmail.com", */
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const userCurrent = useSelector((state) => state.userDetail);
   const dispatch = useDispatch();
 
-  const handleChangeUser = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    if (name === "profilePic") {
-      // Obtén el archivo de la imagen seleccionada
-      const file = e.target.files[0];
-      setUserChange((prevUserChange) => ({
-        ...prevUserChange,
-        [name]: file,
-      }));
-    } else {
-      setUserChange((prevUserChange) => ({
-        ...prevUserChange,
-        [name]: value,
-      }));
-    }
-  };
+  /* "password":"holaMunDO234@",
+  "lastName": "Alvarez",
+  "email": "antonio1234@gmail.com", */
 
   let user = userCurrent.results;
 
-  console.log(user);
+  console.log("antes de entrar al sumbmit", userChange);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(editUser(user.id, userChange));
-    setIsChangeUser(true);
+  const onSubmit = async (data) => {
+    if (!data.name || !data.lastName) {
+      alert("Please fill in the required fields: name, lastName");
+      return;
+    }
+
+    const formData = new FormData();
+    if (!file) {
+      alert("Please select an image");
+      return;
+    }
+
+    formData.append("profilePic", file);
+    formData.append("name", data.name);
+    formData.append("lastName", data.lastName);
+    formData.append("email", data.email);
+    formData.append("userName", data.userName);
+    formData.append("phone", data.phone);
+    formData.append("age", data.age);
+
+    console.log("formData", formData);
+
+    try {
+      await dispatch(editUser(user.id, formData));
+      setIsChangeUser(true);
+    } catch (error) {
+      alert("An error occurred while updating your profile!");
+    }
+  };
+
+  const handleImageChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
   };
 
   useEffect(() => {
@@ -52,6 +78,7 @@ const EditProfile = () => {
       name: user.name,
       lastName: user.lastName,
       userName: user.userName,
+      email: user.email,
       phone: user.phone,
       profilePic: null,
       age: user.age,
@@ -61,51 +88,68 @@ const EditProfile = () => {
   return (
     <div className={style.containerForm}>
       <h4>Edit Your Profile</h4>
-      <form className="d-flex flex-column align-items-center gap-2" onSubmit={handleSubmit}>
+      <form
+        className="d-flex flex-column align-items-center gap-2"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <input
           type="text"
-          onChange={handleChangeUser}
-          name="name"
+          {...register("name", { required: true })}
           placeholder="Name"
-          value={userChange.name}
+          defaultValue={userChange.name}
         />
+        {errors.name && <span>Name is required</span>}
+
         <input
           type="text"
-          name="lastName"
+          {...register("lastName", { required: true })}
           placeholder="Last Name"
-          value={userChange.lastName}
-          onChange={handleChangeUser}
+          defaultValue={userChange.lastName}
         />
+        {errors.lastName && <span>Last Name is required</span>}
+
         <input
           type="text"
-          name="userName"
-          placeholder="UserName"
-          value={userChange.userName}
-          onChange={handleChangeUser}
+          {...register("email", { required: true })}
+          placeholder="Email"
+          defaultValue={userChange.email}
         />
+        {errors.email && <span>Email is required</span>}
+
         <input
           type="text"
-          name="phone"
+          {...register("userName", { required: true })}
+          placeholder="Username"
+          defaultValue={userChange.userName}
+        />
+        {errors.userName && <span>Username is required</span>}
+
+        <input
+          type="text"
+          {...register("phone", { required: true })}
           placeholder="Phone"
-          value={userChange.phone}
-          onChange={handleChangeUser}
+          defaultValue={userChange.phone}
         />
+        {errors.phone && <span>Phone is required</span>}
+
         <input
           type="file"
-          name="profilePic"
-          placeholder="Profile Pic"
-          onChange={handleChangeUser}
+          {...register("profilePic", { required: true })}
+          onChange={handleImageChange}
         />
+        {errors.profilePic && <span>Profile Picture is required</span>}
+
         <input
           type="text"
-          name="age"
+          {...register("age", { required: true })}
           placeholder="Age"
-          value={userChange.age}
-          onChange={handleChangeUser}
+          defaultValue={userChange.age}
         />
+        {errors.age && <span>Age is required</span>}
+
         <button type="submit">Save Profile</button>
       </form>
-      {isChangeUser && <div>El usuario se ha modificado</div>}
+      {isChangeUser && <div>The user has been modified</div>}
     </div>
   );
 };

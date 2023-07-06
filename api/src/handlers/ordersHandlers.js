@@ -1,18 +1,48 @@
 const {
+  getOrderById,
+  getAllOrders,
   insertOrder,
   receiveWebhook,
 } = require("../controllers/ordersControllers");
+const { cleanData } = require("../helpers/userHelper");
+const { typeGetAllOrdersParams } = require("../helpers/orderHelper");
 const { sendPurchase } = require("../config/mailer");
 const { rejectExpiredOrdersJob } = require("../jobs/OrdersJob");
 
 rejectExpiredOrdersJob.start();
 
+// Get order by id
+const getOrderByIdHandler = async (req, res) => {
+  try {
+    const results = await getOrderById(req.params.id);
+
+    res.status(200).json({ success: true, results });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ success: false, error: e.message });
+  }
+};
+
+// Get all orders
+const getOrdersHandler = async (req, res) => {
+  try {
+    const data = cleanData(typeGetAllOrdersParams, req.query);
+
+    const results = await getAllOrders(data);
+
+    res.status(200).json({ success: true, results });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({ success: false, error: e.message });
+  }
+};
+
 //Post Orders
 const postOrderdHandler = async (req, res) => {
-  const { id_user, items, total } = req.body;
+  const { id_user, items } = req.body;
 
   try {
-    const results = await insertOrder(id_user, items, total);
+    const results = await insertOrder(id_user, items);
 
     res.status(200).json({ success: true, results });
   } catch (e) {
@@ -37,6 +67,8 @@ const postReceiveWebhook = async (req, res) => {
 };
 
 module.exports = {
+  getOrderByIdHandler,
+  getOrdersHandler,
   postOrderdHandler,
   postReceiveWebhook,
 };

@@ -1,3 +1,16 @@
+// Array: defines the parameters that can be received
+const typeGetAllOrdersParams = [
+  "dueDate",
+  "status",
+  "total",
+  "invoiceStatus",
+  "createdAt",
+  "userId",
+  "limit",
+  "page",
+  "sort",
+];
+
 // Helper verifies the amount of books requested is in the allowed range,
 // being greater than 1 and less than the total stock of the db.
 // Parameters: 1. receive an array containing an instance of each requested book,
@@ -50,6 +63,7 @@ const createModelOrderItems = (books, items) => {
 };
 
 module.exports = {
+  typeGetAllOrdersParams,
   validateNumBooks,
   createModelOrderItems,
 };

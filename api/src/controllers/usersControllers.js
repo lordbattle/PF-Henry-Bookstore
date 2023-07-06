@@ -102,7 +102,7 @@ const getAllUsers = async (
         page,
         limit
       );
-     else {
+    else {
       return userBySearch;
     }
 
@@ -189,7 +189,7 @@ const registerUser = async (data) => {
       },
       { transaction }
     );
-    console.log(newUser,'newUser resgister userrr')
+    console.log(newUser, "newUser resgister userrr");
 
     //validation and update of the image for the user
     if (data.profilePic) {
@@ -217,26 +217,33 @@ const registerUser = async (data) => {
 //------|  PUT/  |---------->
 const putUser = async (id, updatedData) => {
   try {
-    const user = await User.findByPk(id);
-
-    if (!user) {
-      throw Error("There is no user with the specified id");
-    }
-
-    const { email, ...rest } = updatedData;
+    const { email, profilePic } = updatedData;
 
     if (email) {
       const salt = bcrypt.genSaltSync();
       const hashedEmail = bcrypt.hashSync(email, salt);
-      user.email = hashedEmail;
+      updatedData.email = hashedEmail;
     }
 
-    Object.assign(user, rest);
-    await user.save();
+    if (updatedData.profilePic) {
+      const { secure_url } = await cloudinary.uploader.upload(profilePic, {
+        upload_preset: API_CLOUDINARY_USERS_UPLOAD_PRESET,
+      });
 
-    return user;
+      updatedData.profilePic = secure_url;
+
+      const [updatedRowsCount] = await User.update(updatedData, {
+        where: { id: id },
+      });
+
+      if (updatedRowsCount[0] === 0) {
+        throw new Error("There is no user with the specified id");
+      }
+
+      return updatedRowsCount;
+    }
   } catch (e) {
-    throw Error(e.message);
+    throw new Error(e.message);
   }
 };
 

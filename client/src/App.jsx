@@ -17,7 +17,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import Logout from "./components/Logout/Logout";
-import EditProfile from "./components/EditProfile/EditProfile";
+
+import ChangePassword from "./components/EditPassword/EditPassword";
+
 // import Stack from 'react-bootstrap/Stack'
 //import axios from "axios";
 
@@ -36,18 +38,28 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
+
             <Route path="/home" element={<Home />}></Route>
+
             <Route path="/about" element={<About />}></Route>
+
             <Route path="/login" element={<Login />}></Route>
+
             <Route path="/logout" element={<Logout />}></Route>
-            <Route
-              path="/optionLoginOrRegister"
-              element={<OptionLoginOrRegister />}
+
+            <Route path="/optionLoginOrRegister" element={<OptionLoginOrRegister />}
             ></Route>
-            <Route path="/profile" element={<Profile />} />
+
+            <Route path="/profile" element={<Profile />}></Route>
+
+            <Route path="/changepassword" element={<ChangePassword />}></Route>
+
             <Route path="/register" element={<Register />}></Route>
+
             <Route path="/detail/:id" element={<Detail />}></Route>
+
             <Route path="/createbook" element={<AddBookForm />}></Route>
+
             <Route path="/cart" element={<Cart />}></Route>
             <Route path="/editprofile" element={<EditProfile/>}></Route>
           </Routes>

@@ -6,9 +6,20 @@ import {useLocation, Link} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
+import { useSelector } from 'react-redux';
 
 
 export const Cart =()=>{
+
+  const user = useSelector(state=>state.user)
+    let idUser=0;
+//HAY UN ERROR, SI ME MUEVO POR LA PAGINA, SE PIERDE 
+// LA DATA DE user PERO SI ME PARO EN cart VOY A home Y VUELVO A cart, ahi si me trae los datos
+      if(user){
+        idUser = user.id
+      }
+    console.log("ESTO ES results", user)
+
 const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
 const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -59,10 +70,21 @@ const location = useLocation();
     const publicKey = import.meta.env.VITE_MERCADOPAGO_PUBLIC_KEY;
     initMercadoPago(publicKey)
 
+    let loadingAlert; 
     const handleBuy = async () => {
       try {
-        console.log("HandleBuy clickeado");
-        const id_user = 1; 
+        loadingAlert = Swal.fire({
+          title: 'Loading...',
+          html: 'Preparing your purchase, wait...',
+          allowOutsideClick: false,
+          showCancelButton: false,
+          showConfirmButton: false,
+          onBeforeOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        
+        console.log("HandleBuy clickeado"); 
         const items = cart.map((item) => ({
           id: item.id,
           quantity: item.stock,
@@ -70,7 +92,7 @@ const location = useLocation();
 
 
         const product = {
-          id_user: id_user,
+          id_user: idUser,
           items: items,
 
         };
@@ -78,7 +100,7 @@ const location = useLocation();
         const id = await buyBook(product)();
         if (id) {
           setId(id);
-        }
+        loadingAlert.close()} 
       } catch (error) {
         console.log(`error del catch buyproduch ${error}`);
       }
@@ -91,10 +113,10 @@ const location = useLocation();
         let{cart} = localStorageData;
         setCart([])
         Swal.fire({
-          title: "Exit!",
+          title: "Good job!",
           text: "Purchase successfully",
           icon: "success",
-          confirmButtonText: "OK",
+          confirmButtonText: "✔️",
           backdrop: "rgba(53, 222, 53, 0.6)",
         });
         console.log("ESTO ES LO QUE TIENE EL LOCALSTORAGEDATA si approved", cart);
@@ -108,7 +130,7 @@ if (status === "rejected") {
           confirmButtonText: "Retry",
           backdrop: "rgba(248, 40, 40, 0.8)",
         });
-      } else if (status === "pending") {
+      } else if (status === "pending")  {
         Swal.fire({
           title: "Pending",
           text: "Something went wrong",
@@ -147,6 +169,7 @@ if (status === "rejected") {
 
           <span style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', minWidth: '100%', textAlign: 'center'}}>
             <p style={{fontSize: '20px'}}>Total: ${totalCart}</p> 
+            <Link to='/home'><button className={style.btn}>Keep buying</button></Link>
             <button onClick={handleBuy} className={style.btn}>Buy</button>
           </span>
           {Id && <Wallet initialization={{preferenceId: Id}}/>}

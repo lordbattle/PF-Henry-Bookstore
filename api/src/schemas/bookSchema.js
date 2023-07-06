@@ -54,9 +54,8 @@ const bookNewSchema = {
           throw new Error(
             "Only letters, numbers, commas, periods and double periods are accepted"
           );
-        } else {
-          return true;
         }
+        return true;
       },
     },
   },
@@ -184,7 +183,7 @@ const bookNewSchema = {
   //       }
   //     },
   //   },
-  // }, 
+  // },
   price: {
     in: "body",
     notEmpty: {
@@ -199,7 +198,9 @@ const bookNewSchema = {
         const min = 5;
         const max = 30000;
         if (price < min || price > max) {
-          throw new Error(`The price must be between USD ${min} and USD ${max}`);
+          throw new Error(
+            `The price must be between USD ${min} and USD ${max}`
+          );
         }
         return true;
       },

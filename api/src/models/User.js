@@ -53,7 +53,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue:
           "https://firebasestorage.googleapis.com/v0/b/henry-book-explorer.appspot.com/o/image?alt=media&token=3dccc098-e2c1-48ab-9539-ce0024b12996",
-          allowNull: false
         },
       active: {
         type: DataTypes.BOOLEAN,

@@ -215,9 +215,10 @@ const registerUser = async (data) => {
 };
 
 //------|  PUT/  |---------->
-const putUser = async (id, updatedData) => {
+const putUser = async (id, updatedData) => { 
+  const { email, profilePic } = updatedData;
   try {
-    const { email, profilePic } = updatedData;
+   
     
     if (email) {
       const salt = bcrypt.genSaltSync();
@@ -228,7 +229,7 @@ const putUser = async (id, updatedData) => {
     if (updatedData.profilePic) {
       const { secure_url } = await cloudinary.uploader.upload(profilePic, {
         upload_preset: API_CLOUDINARY_USERS_UPLOAD_PRESET,
-      });
+      })};
 
     updatedData.profilePic = secure_url;
 

@@ -11,6 +11,7 @@ import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
 import OptionLoginOrRegister from "./components/OptionLoginOrRegister/OptionLoginOrRegister";
+import EditProfile from "./components/EditProfile/EditProfile"
 
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -34,10 +35,10 @@ function App() {
 
   return (
     <div className="container">
-      {pathname !== "/" && <Nav />}
 
       <AuthContextProvider>
         <AuthProvider>
+          {pathname !== "/" && <Nav />}
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
 

@@ -4,16 +4,18 @@ import Stack from "react-bootstrap/Stack";
 import useStorage from "../LocalStorage/LocalStorage"
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logoutUser } from "../../redux/actions";
 
 const Nav = () => {
 
+  const user = useSelector(state=>state.user)
+
   const [isLogout, setIsLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logout = UserAuth();
+  const { logout } = UserAuth();
 
   useEffect(() => {
     setIsLogout(true);
@@ -56,9 +58,10 @@ const Nav = () => {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.isConfirmed) {
+        handlerLogOut()
         Swal.fire(
           'Log out!',
-          handlerLogOut(),
+          '',
           'success'
         )
       } else{
@@ -122,14 +125,15 @@ const Nav = () => {
               <img
                 src="https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360"
                 width={"25em"}
-              ></img>{totalItems > 0 && <span className="badge bg-secondary">{totalItems}</span>}
+              ></img><span className="badge bg-secondary">{totalItems}</span>
             </Link>
           </span>
         </div>
 
         <b className="vr" />
-
         <div className="w-25 d-flex justify-content-center gap-3">
+        {!user.id ? 
+        <>
           <Link to={"/login"} className="text-decoration-none  fs-5 text-reset">
             Log in
           </Link>
@@ -139,11 +143,14 @@ const Nav = () => {
             className="text-decoration-none fs-5 text-reset"
           >
             Sign up
-          </Link>
-
-          
+          </Link> 
+        </> 
+          : 
+        <>
           <button style={{border: 'none', backgroundColor : '#71a5e5', fontSize: '20px'}} onClick={alert}>Log out</button>
-          
+        </>
+        }
+        
         </div>
       </Stack>
     </div>

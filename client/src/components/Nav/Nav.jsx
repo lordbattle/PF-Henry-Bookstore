@@ -84,6 +84,11 @@ const Nav = () => {
         <div className="w-100 m-0 d-flex justify-content-end">
           {" "}
           <span className="p-2 ms-0 link-as-text">
+            <Link to={"/dashboard"} className="text-decoration-none fs-5 text-reset">
+              Dashboard
+            </Link>
+          </span>{" "}
+          <span className="p-2 ms-0 link-as-text">
             <Link to={"/home"} className="text-decoration-none fs-5 text-reset">
               Home
             </Link>

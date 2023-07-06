@@ -59,7 +59,7 @@ export const getBookById = (idBook) => {
 export const getBookByTitle = (title) => {
   return async (dispatch) => {
     try {
-      const { data } = await axiosInstance.get(`/books/?title=${title}`);
+      const { data } = await axiosInstance.get(`/books/`);
       console.log(title);
       return dispatch({
         type: GET_BOOK_TITLE,

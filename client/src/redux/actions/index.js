@@ -19,6 +19,7 @@ import {
 
 import axiosInstance from "../../api/axiosInstance.js";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 
 //BOOKS
@@ -181,6 +182,19 @@ export const buyBook = (payload) => {
       const { id } = data.results;
       return id;
     } catch (error) {
+        Swal.fire({
+          title: 'Log in or Sign up',
+          text: "You must log in to buy",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = '/optionLoginOrRegister'
+          }
+        })
       console.log(`Catch de buyBook ${error}`);
     }
   };

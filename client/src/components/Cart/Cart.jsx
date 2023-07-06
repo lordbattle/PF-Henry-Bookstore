@@ -6,9 +6,20 @@ import {useLocation, Link} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
-
+import { UserAuth } from '../../context/AuthContextFirebase';
 
 export const Cart =()=>{
+const {user} = UserAuth()
+let idUser;
+if (user) {
+  console.log("LOG DE PROVIDERDATA", user.providerData);
+  if (user.providerData && user.providerData.length > 0) {
+    idUser = user.providerData[0].uid;
+  }
+}
+console.log("ESTO ES IUSER DE FIREBASE", idUser)
+
+
 const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
 const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -73,8 +84,7 @@ const location = useLocation();
           }
         });
         
-        console.log("HandleBuy clickeado");
-        const id_user = 1; 
+        console.log("HandleBuy clickeado"); 
         const items = cart.map((item) => ({
           id: item.id,
           quantity: item.stock,
@@ -82,7 +92,7 @@ const location = useLocation();
 
 
         const product = {
-          id_user: id_user,
+          id_user: idUser,
           items: items,
 
         };
@@ -90,7 +100,7 @@ const location = useLocation();
         const id = await buyBook(product)();
         if (id) {
           setId(id);
-        } loadingAlert.close()
+        loadingAlert.close()} 
       } catch (error) {
         console.log(`error del catch buyproduch ${error}`);
       }

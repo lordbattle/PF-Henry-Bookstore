@@ -218,7 +218,7 @@ const registerUser = async (data) => {
 const putUser = async (id, updatedData) => {
   try {
     const { email, profilePic } = updatedData;
-    
+
     if (email) {
       const salt = bcrypt.genSaltSync();
       const hashedEmail = bcrypt.hashSync(email, salt);
@@ -230,17 +230,18 @@ const putUser = async (id, updatedData) => {
         upload_preset: API_CLOUDINARY_USERS_UPLOAD_PRESET,
       });
 
-    updatedData.profilePic = secure_url;
+      updatedData.profilePic = secure_url;
 
-    const [updatedRowsCount] = await User.update(updatedData, {
-      where: { id: id },
-    });
+      const [updatedRowsCount] = await User.update(updatedData, {
+        where: { id: id },
+      });
 
-    if (updatedRowsCount[0] === 0) {
-      throw new Error("There is no user with the specified id");
+      if (updatedRowsCount[0] === 0) {
+        throw new Error("There is no user with the specified id");
+      }
+
+      return updatedRowsCount;
     }
-
-    return updatedRowsCount;
   } catch (e) {
     throw new Error(e.message);
   }

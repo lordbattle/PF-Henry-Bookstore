@@ -36,7 +36,7 @@ const Profile = () => {
             >
               Edit password
             </Link>
-        </>
+        </div>
       )}
 
         

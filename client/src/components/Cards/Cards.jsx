@@ -15,9 +15,11 @@ const Cards = (props) => {
 
     Swal.fire({
       position: 'bottom-end',
-      icon: 'success',
       title: 'successfully added',
       showConfirmButton: false,
+      backdrop: "transparent",
+      color: "white",
+      background: "rgb(102, 187, 106)",
       timer: 700,
       width: 300
 

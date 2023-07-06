@@ -49,8 +49,6 @@ const Profile = () => {
           </Link>
         </div>
       )}
-    </div>
-  );
-};
+
 
 export default Profile;

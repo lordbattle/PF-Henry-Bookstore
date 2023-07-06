@@ -11,12 +11,14 @@ import { useSelector } from 'react-redux';
 
 export const Cart =()=>{
 
-  const user = useSelector(state=>state.currentUser)
-  const idUser=0;
-  if(user){
-    idUser = user.data.results.id
-  }
-console.log("ESTO ES results", idUser)
+  const user = useSelector(state=>state.user)
+    let idUser=0;
+//HAY UN ERROR, SI ME MUEVO POR LA PAGINA, SE PIERDE 
+// LA DATA DE user PERO SI ME PARO EN cart VOY A home Y VUELVO A cart, ahi si me trae los datos
+      if(user){
+        idUser = user.id
+      }
+    console.log("ESTO ES results", user)
 
 const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
 const location = useLocation();
@@ -128,7 +130,7 @@ if (status === "rejected") {
           confirmButtonText: "Retry",
           backdrop: "rgba(248, 40, 40, 0.8)",
         });
-      } else if (status === "pending") {
+      } else if (status === "pending")  {
         Swal.fire({
           title: "Pending",
           text: "Something went wrong",

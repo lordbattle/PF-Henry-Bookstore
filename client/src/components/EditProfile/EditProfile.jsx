@@ -1,55 +1,74 @@
 import { useDispatch, useSelector } from "react-redux";
 import style from "../EditProfile/EditProfile.module.css";
 import { useEffect, useState } from "react";
+import { editUser } from "../../redux/actions/index";
+
 
 const EditProfile = () => {
   const [userChange, setUserChange] = useState({
     name: "",
     lastName: "",
-    email: "",
     userName: "",
     phone: "",
-    profilePic: "",
+    profilePic: null, // Cambiado a null para almacenar la imagen seleccionada
     age: 0,
   });
+  const [isChangeUser, setIsChangeUser] = useState(false);
+
   const userCurrent = useSelector((state) => state.userDetail);
- // const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   const handleChangeUser = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setUserChange((propAfter) =>({
-        ...propAfter,
+
+    if (name === "profilePic") {
+      // Obtén el archivo de la imagen seleccionada
+      const file = e.target.files[0];
+      setUserChange((prevUserChange) => ({
+        ...prevUserChange,
+        [name]: file,
+      }));
+    } else {
+      setUserChange((prevUserChange) => ({
+        ...prevUserChange,
         [name]: value,
-      })
-    );
+      }));
+    }
   };
 
-  console.log("estoy en edit profile", userCurrent);
- // let user = userCurrent.results;
+  let user = userCurrent.results;
+
+  console.log(user);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+    dispatch(editUser(user.id, userChange));
+    setIsChangeUser(true);
+  };
 
-  //hoLa1234@ passaword
-
-  /* useEffect(() => {
-    setUserChange(user);
-  }, [user]); */
+  useEffect(() => {
+    setUserChange({
+      name: user.name,
+      lastName: user.lastName,
+      userName: user.userName,
+      phone: user.phone,
+      profilePic: null,
+      age: user.age,
+    });
+  }, [user]);
 
   return (
     <div className={style.containerForm}>
-      <h4>Edit you Profile</h4>
+      <h4>Edit Your Profile</h4>
       <form className="d-flex flex-column align-items-center gap-2" onSubmit={handleSubmit}>
         <input
           type="text"
           onChange={handleChangeUser}
           name="name"
           placeholder="Name"
-          
           value={userChange.name}
         />
-
         <input
           type="text"
           name="lastName"
@@ -57,15 +76,6 @@ const EditProfile = () => {
           value={userChange.lastName}
           onChange={handleChangeUser}
         />
-
-        <input
-          type="text"
-          name="email"
-          placeholder="Email"
-          value={userChange.email}
-          onChange={handleChangeUser}
-        />
-
         <input
           type="text"
           name="userName"
@@ -73,7 +83,6 @@ const EditProfile = () => {
           value={userChange.userName}
           onChange={handleChangeUser}
         />
-
         <input
           type="text"
           name="phone"
@@ -81,15 +90,12 @@ const EditProfile = () => {
           value={userChange.phone}
           onChange={handleChangeUser}
         />
-
         <input
-          type="text"
+          type="file"
           name="profilePic"
           placeholder="Profile Pic"
-          value={userChange.profilePic}
           onChange={handleChangeUser}
         />
-
         <input
           type="text"
           name="age"
@@ -97,8 +103,9 @@ const EditProfile = () => {
           value={userChange.age}
           onChange={handleChangeUser}
         />
-        <button value="Submit" >Save Profile</button>
+        <button type="submit">Save Profile</button>
       </form>
+      {isChangeUser && <div>El usuario se ha modificado</div>}
     </div>
   );
 };

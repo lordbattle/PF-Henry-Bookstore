@@ -274,18 +274,15 @@ export const postUsers = (payload) => {
   };
 };
 
-export const editUser = (idUser, updatedProduct) => {
-  // name y lastname estan en null en el backend
+export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
-      const { data } = await axiosInstance.put(
-        `/users/${idUser}`,
-        updatedProduct
-      );
-      alert(data);
+      const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
+      console.log("editUser", data);
+      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
     } catch (error) {
-      console.log(error);
-      /* alert(`Cath del editUser ${error}`); */
+      console.log(error.message);
+      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
     }
   };
 };

@@ -6,19 +6,14 @@ import {useLocation, Link} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
-import { UserAuth } from '../../context/AuthContextFirebase';
+import { useSelector } from 'react-redux';
+
 
 export const Cart =()=>{
-const {user} = UserAuth()
-let idUser;
-if (user) {
-  console.log("LOG DE PROVIDERDATA", user.providerData);
-  if (user.providerData && user.providerData.length > 0) {
-    idUser = user.providerData[0].uid;
-  }
-}
-console.log("ESTO ES IUSER DE FIREBASE", idUser)
 
+  const user = useSelector(state=>state.currentUser)
+  const idUser = user.data.results.id
+  console.log("ESTO ES results", idUser)
 
 const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
 const location = useLocation();

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../redux/actions";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+
 const Profile = () => {
   const dispatch = useDispatch();
 
@@ -18,8 +19,9 @@ const Profile = () => {
   return (
     <div style={{ height: "100vh" }}>
       {userCurrent.results && (
-        <>
+        <div className="w-50 d-flex flex-column align-items-center">
           <img src={userCurrent.results.profilePic} width="100px" />
+
           <h4>Username: {userCurrent.results.userName}</h4>
           <h4>Name: {userCurrent.results.name}</h4>
           <h4>Last Name: {userCurrent.results.lastName}</h4>
@@ -38,9 +40,9 @@ const Profile = () => {
       )}
 
         
+
     </div>
   );
 };
 
 export default Profile;
-

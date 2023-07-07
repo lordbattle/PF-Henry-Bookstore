@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import set from "./Filters.module.css";
 
 const Filters = (props) => {
-  const { books } = useSelector((state) => state);
+  const { books } = useSelector((state) => state.books);
 
   const { setFilters } = props;
 
@@ -31,13 +31,6 @@ const Filters = (props) => {
     setFilters((prevState) => ({
       ...prevState,
       author: e.target.value,
-    }));
-  };
-
-  const handleChangeOrderPrice = (e) => {
-    setFilters((prevState) => ({
-      ...prevState,
-      orderPrice: e.target.value,
     }));
   };
 

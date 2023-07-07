@@ -227,8 +227,6 @@ const putUser = async (id, updatedData) => {
       where: { id: id },
     });
 
-    console.log(updatedRowsCount);
-
     if (updatedRowsCount[0] === 0) {
       throw new Error("There is no user with the specified id");
     }

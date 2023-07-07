@@ -223,7 +223,6 @@ const putUser = async (id, updatedData) => {
       updatedData.email = hashedEmail;
     }
 
-
     const [updatedRowsCount] = await User.update(updatedData, {
       where: { id: id },
     });
@@ -231,7 +230,6 @@ const putUser = async (id, updatedData) => {
     if (updatedRowsCount[0] === 0) {
       throw new Error("There is no user with the specified id");
     }
-
     return updatedRowsCount;
   } catch (e) {
     throw new Error(e.message);

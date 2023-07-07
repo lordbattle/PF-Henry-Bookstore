@@ -1,14 +1,17 @@
 import SearchBar from "../SearchBar/SearchBar";
 import { Link, useNavigate } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
-import useStorage from "../LocalStorage/LocalStorage"
+import useStorage from "../LocalStorage/LocalStorage";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logoutUser } from "../../redux/actions";
+import { UseSelector } from "react-redux";
 
 const Nav = () => {
+
+  const user = useSelector(state=>state.user)
 
   const [isLogout, setIsLogout] = useState(false);
   const dispatch = useDispatch();
@@ -22,7 +25,7 @@ const Nav = () => {
     await logout();
     dispatch(logoutUser());
     navigate("/");
-  }
+  };
 
   const { cart } = useStorage();
   const [totalItems, setTotalItems] = useState(0);
@@ -44,31 +47,31 @@ const Nav = () => {
     };
   }, []);
 
-  function alert(){
+  function alert() {
     Swal.fire({
-      title: 'Log out',
+      title: "Log out",
       text: "Are you sure you want to log out?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Log out!',
-          handlerLogOut(),
-          'success'
-        )
-      } else{
-        navigate("/home")
+        handlerLogOut();
+        localStorage.setItem("userData", JSON.stringify([]));
+        localStorage.setItem("userDataLogin", JSON.stringify([]));
+        Swal.fire("Log out!", "", "success");
+      } else {
+        navigate("/home");
       }
-    })
+    });
   }
 
   return (
-    <div key={updateKey}
+    <div
+      key={updateKey}
       className="px-2 py-3 border-0 bg_navbar text-white"
       style={{ backgroundColor: "#71a5e5" }}
     >
@@ -84,7 +87,10 @@ const Nav = () => {
         <div className="w-100 m-0 d-flex justify-content-end">
           {" "}
           <span className="p-2 ms-0 link-as-text">
-            <Link to={"/dashboard"} className="text-decoration-none fs-5 text-reset">
+            <Link
+              to={"/dashboard"}
+              className="text-decoration-none fs-5 text-reset"
+            >
               Dashboard
             </Link>
           </span>{" "}
@@ -122,7 +128,8 @@ const Nav = () => {
               <img
                 src="https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360"
                 width={"25em"}
-              ></img>{totalItems > 0 && <span className="badge bg-secondary">{totalItems}</span>}
+              ></img>{totalItems > 0 && 
+              <span className="badge bg-secondary">{totalItems}</span>}
             </Link>
           </span>
         </div>
@@ -130,6 +137,8 @@ const Nav = () => {
         <b className="vr" />
 
         <div className="w-25 d-flex justify-content-center gap-3">
+        {!user.id ? 
+        <>
           <Link to={"/login"} className="text-decoration-none  fs-5 text-reset">
             Log in
           </Link>
@@ -139,11 +148,14 @@ const Nav = () => {
             className="text-decoration-none fs-5 text-reset"
           >
             Sign up
-          </Link>
-
-          
+          </Link> 
+        </> 
+          : 
+        <>
           <button style={{border: 'none', backgroundColor : '#71a5e5', fontSize: '20px'}} onClick={alert}>Log out</button>
-          
+        </>
+        }
+        
         </div>
       </Stack>
     </div>

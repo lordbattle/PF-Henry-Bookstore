@@ -17,12 +17,19 @@ const Logout = () => {
   useEffect(() => {
     setIsLogout(true);
   }, []);
+
+/*   const deleteLocalStorage = () => {
+    localStorage.setItem("userData", JSON.stringify([]));
+    localStorage.setItem("userDataLogin", JSON.stringify([]));
+  }; */
+  
   const handlerLogOut = async () => {
+    // deleteLocalStorage();
     await logout();
     dispatch(logoutUser());
     navigate("/");
   };
-
+  
   return (
     <>
       {isLogout ? (

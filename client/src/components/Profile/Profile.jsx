@@ -16,6 +16,10 @@ const Profile = () => {
   console.log("estado user del login: " + userLogin.id);
   console.log("estado userDetail: ", userCurrent.results);
 
+  setTimeout(() => {
+    localStorage.setItem("userData", JSON.stringify(userCurrent.results));
+  }, 3000);
+
   return (
     <div style={{ height: "100vh" }}>
       {userCurrent.results && (
@@ -29,17 +33,6 @@ const Profile = () => {
           <h4>Age: {userCurrent.results.age}</h4>
           <h4>Location: {userCurrent.results.location}</h4>
           <h4>Phone: {userCurrent.results.phone}</h4>
-
-           
-           <Link
-              to={"/ChangePassword"}
-              className="text-decoration-none fs-6 text-reset"
-            >
-              Edit password
-            </Link>
-        </div>
-      )}
-
 
           <Link
             to={"/ChangePassword"}

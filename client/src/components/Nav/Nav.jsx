@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { logoutUser } from "../../redux/actions";
+import { cleanUserDetail, logoutUser } from "../../redux/actions";
 
 const Nav = () => {
 
@@ -23,6 +23,7 @@ const Nav = () => {
   const handlerLogOut = async () => {
     await logout();
     dispatch(logoutUser());
+    //dispatch(cleanUserDetail());
     navigate("/");
   };
 

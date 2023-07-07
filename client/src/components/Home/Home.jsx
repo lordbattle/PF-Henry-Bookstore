@@ -5,14 +5,17 @@ import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { logingUser, postUsers } from "../../redux/actions";
+import { getBooksByFilters, logingUser, postUsers } from "../../redux/actions";
 /* import { useNavigate } from "react-router-dom"; */
 
 const Home = () => {
+  const userlogin = useSelector((state) => state.user);
+  const { books } = useSelector((state) => state.books);
+
   const { user } = UserAuth();
   const dispatch = useDispatch();
   //const navigate = useNavigate();
-  
+
   useEffect(() => {
     console.log("HOME USER AQUI  ", user);
 
@@ -28,15 +31,18 @@ const Home = () => {
     }
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
+  }, [userlogin]);
 
-  const { books } = useSelector((state) => state);
+  
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);
-
+  
   const handleScrollUp = () => {
     componentRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
+  
   useEffect(() => {
     setFilters({
       author: "all",
@@ -48,7 +54,7 @@ const Home = () => {
       orderTitle: "nue",
     });
   }, [setFilters]);
-
+  
   return (
     <div className="d-flex flex-column" ref={componentRef}>
       <div className="d-flex">

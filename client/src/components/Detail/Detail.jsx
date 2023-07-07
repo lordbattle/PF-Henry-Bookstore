@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams, Link} from "react-router-dom"
 import { getBookById, deleteBook, activeBook, editBook } from "../../redux/actions";
-import style from '../Detail/Detail.module.css'
 import useStorage from "../LocalStorage/LocalStorage";
+import style from '../Detail/Detail.module.css'
 const Detail = () =>{
+    
     const { addToCart } = useStorage();
     const {id} = useParams();
     const dispatch = useDispatch();

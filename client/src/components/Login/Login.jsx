@@ -37,9 +37,6 @@ const Login = () => {
       alert(error);
     }
   };
-  setTimeout(() => {
-    localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
-  }, 1000);
 
   useEffect(() => {
     //Google

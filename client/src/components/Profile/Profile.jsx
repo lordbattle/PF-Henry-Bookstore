@@ -13,9 +13,6 @@ const Profile = () => {
     dispatch(getUserById(userLogin.id));
   }, [dispatch, userLogin.id]);
 
-  console.log("estado user del login: " + userLogin.id);
-  console.log("estado userDetail: ", userCurrent.results);
-
   setTimeout(() => {
     localStorage.setItem("userData", JSON.stringify(userCurrent.results));
   }, 3000);
@@ -42,6 +39,8 @@ const Profile = () => {
           </Link>
         </div>
       )}
-
+    </div>
+  );
+};
 
 export default Profile;

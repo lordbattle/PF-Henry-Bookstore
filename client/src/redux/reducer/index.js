@@ -105,7 +105,7 @@ function rootReducer(state = initialState, action) {
     case CLEAN_USER_DETAIL:
       return {
         ...state,
-        userDetail: {},
+        userDetail: [],
       };
 
     //LOGIN
@@ -119,6 +119,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: [],
+        userDetail: []
       };
     default:
       return {

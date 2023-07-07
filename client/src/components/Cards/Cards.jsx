@@ -1,6 +1,6 @@
-import style from "../Cards/Cards.module.css";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import style from "../Cards/Cards.module.css";
 
 const Cards = (props) => {
   const handlerCart = () => {

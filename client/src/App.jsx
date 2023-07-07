@@ -12,15 +12,13 @@ import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
 import OptionLoginOrRegister from "./components/OptionLoginOrRegister/OptionLoginOrRegister";
 
-import { AuthProvider } from "./context/AuthContext";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./main.css";
-import { AuthContextProvider } from "./context/AuthContextFirebase";
-import Logout from "./components/Logout/Logout";
-
 import ChangePassword from "./components/EditPassword/EditPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
 import Dashboard from "./components/Dashboard/Dashboard";
+import { AuthContextProvider } from "./context/AuthContextFirebase";
+import { AuthProvider } from "./context/AuthContext";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./main.css";
 
 // import Stack from 'react-bootstrap/Stack'
 //import axios from "axios";
@@ -48,8 +46,6 @@ function App() {
             <Route path="/about" element={<About />}></Route>
 
             <Route path="/login" element={<Login />}></Route>
-
-            <Route path="/logout" element={<Logout />}></Route>
 
             <Route
               path="/optionLoginOrRegister"

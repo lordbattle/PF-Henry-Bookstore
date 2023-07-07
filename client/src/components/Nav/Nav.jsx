@@ -4,10 +4,9 @@ import Stack from "react-bootstrap/Stack";
 import useStorage from "../LocalStorage/LocalStorage";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logoutUser } from "../../redux/actions";
-import { UseSelector } from "react-redux";
 
 const Nav = () => {
 

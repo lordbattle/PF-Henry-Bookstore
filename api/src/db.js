@@ -78,11 +78,11 @@ Order.hasOne(Bill, { foreignKey: "orderId" });
 Bill.belongsTo(Order);
 
 module.exports = {
-  Author,
-  Book,
-  Genre,
-  ReviewStore,
-  User, // para poder importar los modelos así: const { Product, User } = require('./db.js');
+  // Author,
+  // Book,
+  // Genre,
+  // ReviewStore,
+  // User, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   ...sequelize.models,
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
 };

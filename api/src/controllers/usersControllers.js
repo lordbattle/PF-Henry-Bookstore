@@ -215,27 +215,19 @@ const registerUser = async (data) => {
 };
 
 //------|  PUT/  |---------->
-const putUser = async (id, updatedData) => { 
-  const { email, profilePic } = updatedData;
+const putUser = async (id, updatedData) => {
   try {
-   
-    
-    if (email) {
+    if (updatedData.email) {
       const salt = bcrypt.genSaltSync();
-      const hashedEmail = bcrypt.hashSync(email, salt);
+      const hashedEmail = bcrypt.hashSync(updatedData.email, salt);
       updatedData.email = hashedEmail;
     }
-
-    if (updatedData.profilePic) {
-      const { secure_url } = await cloudinary.uploader.upload(profilePic, {
-        upload_preset: API_CLOUDINARY_USERS_UPLOAD_PRESET,
-      })};
-
-    updatedData.profilePic = secure_url;
 
     const [updatedRowsCount] = await User.update(updatedData, {
       where: { id: id },
     });
+
+    console.log(updatedRowsCount);
 
     if (updatedRowsCount[0] === 0) {
       throw new Error("There is no user with the specified id");

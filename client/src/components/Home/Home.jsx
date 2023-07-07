@@ -1,11 +1,11 @@
 import Card from "../Card/Card";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getBooksByFilters, logingUser, postUsers } from "../../redux/actions";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { getBooksByFilters, logingUser, postUsers } from "../../redux/actions";
 /* import { useNavigate } from "react-router-dom"; */
 
 const Home = () => {
@@ -54,6 +54,8 @@ const Home = () => {
       orderTitle: "nue",
     });
   }, [setFilters]);
+
+  
   
   return (
     <div className="d-flex flex-column" ref={componentRef}>

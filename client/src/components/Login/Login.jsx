@@ -40,7 +40,7 @@ const Login = () => {
 
   useEffect(() => {
     //Google
-    if (user && user.displayName !== undefined) {
+    if (user && user.displayName !== undefined && userlogin.userName !== undefined) {
       console.log("Usuario logeado " + user.displayName);
       console.log("Usuario logeado user " + user);
       Swal.fire({

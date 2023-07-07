@@ -6,11 +6,14 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { cleanUserDetail, logoutUser } from "../../redux/actions";
+import { logoutUser } from "../../redux/actions";
 
 const Nav = () => {
 
   const user = useSelector(state=>state.user)
+  const userCurrent = useSelector((state) => state.userDetail);
+
+  console.log('user cuerret', userCurrent.results);
 
   const [isLogout, setIsLogout] = useState(false);
   const dispatch = useDispatch();
@@ -100,14 +103,15 @@ const Nav = () => {
               Home
             </Link>
           </span>{" "}
-          <span className="p-2 ms-0 link-as-text">
+          {userCurrent.results ? <span className="p-2 ms-0 link-as-text">
             <Link
               to={"/profile"}
               className="text-decoration-none fs-5 text-reset"
             >
-              Profile
+           {userCurrent.results.userName}
             </Link>
-          </span>
+          </span> : null}
+          
           <span className="p-2 ms-0 link-as-text">
             <Link
               to={"/about"}

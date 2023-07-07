@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import style from "../EditProfile/EditProfile.module.css";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { editUser } from "../../redux/actions/index";
 import { useForm } from "react-hook-form";
 import axios from "axios";

@@ -102,6 +102,7 @@ const postBooksHandler = async (req, res) => {
     stock,
     authors,
     genre,
+    userId
   } = req.body;
   try {
     const newBook = await postBook(
@@ -119,7 +120,7 @@ const postBooksHandler = async (req, res) => {
       stock,
       authors,
       genre,
-      //userlogin
+      userId
     );
     res.status(200).json(newBook);
   } catch (error) {

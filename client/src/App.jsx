@@ -17,7 +17,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import Logout from "./components/Logout/Logout";
+
+import ChangePassword from "./components/EditPassword/EditPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
+import Dashboard from "./components/Dashboard/Dashboard";
+
 // import Stack from 'react-bootstrap/Stack'
 //import axios from "axios";
 
@@ -30,26 +34,40 @@ function App() {
 
   return (
     <div className="container">
-      {pathname !== "/" && <Nav />}
 
       <AuthContextProvider>
         <AuthProvider>
+          {pathname !== "/" && <Nav />}
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
+
+            <Route path="/dashboard" element={<Dashboard />} />
+
             <Route path="/home" element={<Home />}></Route>
+
             <Route path="/about" element={<About />}></Route>
+
             <Route path="/login" element={<Login />}></Route>
+
             <Route path="/logout" element={<Logout />}></Route>
+
             <Route
               path="/optionLoginOrRegister"
               element={<OptionLoginOrRegister />}
             ></Route>
-            <Route path="/profile" element={<Profile />} />
+
+            <Route path="/profile" element={<Profile />}></Route>
+
+            <Route path="/changepassword" element={<ChangePassword />}></Route>
+
             <Route path="/register" element={<Register />}></Route>
+
             <Route path="/detail/:id" element={<Detail />}></Route>
+
             <Route path="/createbook" element={<AddBookForm />}></Route>
+
             <Route path="/cart" element={<Cart />}></Route>
-            <Route path="/editprofile" element={<EditProfile/>}></Route>
+            <Route path="/editprofile" element={<EditProfile />}></Route>
           </Routes>
 
           <Footer />

@@ -1,15 +1,44 @@
-const { User, Book, Order, OrderItem, Bill, conn } = require("../db");
 const { Op } = require("sequelize");
 const moment = require("moment");
 
-const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_BACK_URLS } = process.env;
-
+const { User, Book, Order, OrderItem, Bill, conn } = require("../db");
 const { mercadopago } = require("../config/mercadopago");
-const { hasRepeatingValues } = require("../helpers/userHelper");
+const { hasRepeatingValues, defineOrder } = require("../helpers/userHelper");
 const {
   validateNumBooks,
   createModelOrderItems,
 } = require("../helpers/orderHelper");
+
+const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_BACK_URLS } = process.env;
+
+// Controller: get order by id
+const getOrderById = async (id) => {
+  const order = await Order.findByPk(+id);
+
+  if (!order) {
+    throw Error("There is no order with the specified id");
+  }
+
+  return order;
+};
+
+// Controller: returns all available commands
+// includes function to paginate for each attribute in db
+const getAllOrders = async (data) => {
+  const { limit, page, sort, ...rest } = data;
+  const pagination = {
+    ...(limit && { limit }),
+    ...(page && { offset: page * limit }),
+  };
+  const order = { ...(sort && { order: defineOrder(sort) }) };
+
+  return await Order.findAndCountAll({
+    where: rest,
+    include: OrderItem,
+    ...pagination,
+    ...order,
+  });
+};
 
 // Function allows you to generate an instance of the order model for users with pending orders
 // Parameters: userId
@@ -66,22 +95,22 @@ const orderValidation = async (id_user, items) => {
 
 // Function change the stock of a book
 // Parameters: 1. instance of the orders, 2. boolean being true positive and false negative
-const changeStockBooks = async (order, sign = true) => {
+const changeStockBooks = async (order, sign = true, transaction) => {
   const findBooksPromise = order.orderItems.map((item) =>
-    Book.findByPk(item.dataValues.bookId)
+    Book.findByPk(item.dataValues.bookId, { transaction })
   );
   const books = await Promise.all(findBooksPromise);
 
   const updatedBooksPromise = order.orderItems.map((item) => {
     const num = sign
-      ? item.dataValues.quantity
+      ? +item.dataValues.quantity
       : -Math.abs(item.dataValues.quantity);
 
     // Update the stock of books
     const book = books.find((book) => book.id === item.dataValues.bookId);
 
     book.set({ stock: book.stock + num });
-    return book.save();
+    return book.save({ transaction });
   });
 
   await Promise.all(updatedBooksPromise);
@@ -110,7 +139,7 @@ const createOrder = async (user, books, items, transaction) => {
       dueDate: endDate,
       status: "pending",
       total: fullPurchaseValue,
-      invoiceStatus: "sin facturar",
+      invoiceStatus: "sin_facturar",
       userId: user.id,
       orderItems: orderItemsModel,
     },
@@ -121,10 +150,10 @@ const createOrder = async (user, books, items, transaction) => {
   );
 
   // Decrease the stock of books
-  await changeStockBooks(order, false);
+  await changeStockBooks(order, false, transaction);
 
   const itemPreferences = order.orderItems.map((oi) => oi.dataValues);
-  console.log("finalizo 1");
+
   // Create model preferences
   const preferences = {
     metadata: { id_order: order.id, email: user.email },
@@ -150,7 +179,7 @@ const createOrder = async (user, books, items, transaction) => {
 
   // Inserting the data if the whole process was successful
   await transaction.commit();
-  console.log("finalizo 2");
+
   return { id: results.body.id, init_point: results.body.init_point };
 };
 
@@ -159,7 +188,7 @@ const createOrder = async (user, books, items, transaction) => {
 // Returns: object with the status of the transaction, preference id and url to pay
 const updateOrderByInstance = async (books, items, order, transaction) => {
   // Undo product quantity removal
-  await changeStockBooks(order, true);
+  await changeStockBooks(order, true, transaction);
 
   // Validate that the number of books requested is correct
   validateNumBooks(books, items);
@@ -184,7 +213,6 @@ const updateOrderByInstance = async (books, items, order, transaction) => {
     if (
       !order.orderItems.some((item) => item.dataValues.bookId === oi.bookId)
     ) {
-      console.log("creacion");
       return OrderItem.create({ ...oi, orderId: order.id }, { transaction });
     }
 
@@ -198,11 +226,10 @@ const updateOrderByInstance = async (books, items, order, transaction) => {
 
   const itemsUpdates = await Promise.all(promiseUpdateItems);
 
-  const newOrder = {};
-  newOrder.orderItems = itemsUpdates;
-  //console.log(newOrder.orderItems)
+  const newOrder = { orderItems: itemsUpdates };
+
   // Decrease the stock of books
-  await changeStockBooks(newOrder, false);
+  await changeStockBooks(newOrder, false, transaction);
 
   const itemPreferences = order.orderItems.map((oi) => oi.dataValues);
 
@@ -210,7 +237,7 @@ const updateOrderByInstance = async (books, items, order, transaction) => {
     id: order.preferenceId,
     items: itemPreferences,
   });
-
+  console.log("aqui vamos 2");
   // Inserting the data if the whole process was successful
   await transaction.commit();
 
@@ -234,7 +261,6 @@ const insertOrder = async (id_user, items) => {
   } catch (e) {
     // Undo the insertion of the data in case of error
     await transaction.rollback();
-    console.log(e);
     throw Error(e.message);
   }
 };
@@ -269,7 +295,7 @@ const receiveWebhook = async (query) => {
         );
 
         // Update invoice status
-        order.set({ status, invoiceStatus: "con factura" });
+        order.set({ status, invoiceStatus: "con_factura" });
         await order.save();
 
         return paymentData.body.metadata;
@@ -302,11 +328,13 @@ const rejectExpiredOrders = async () => {
     await order.save();
 
     // Undo product quantity removal
-    await changeStockBooks(order, true);
+    await changeStockBooks(order, true, transaction);
   });
 };
 
 module.exports = {
+  getOrderById,
+  getAllOrders,
   insertOrder,
   receiveWebhook,
   rejectExpiredOrders,

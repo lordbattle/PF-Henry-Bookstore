@@ -217,11 +217,14 @@ const registerUser = async (data) => {
 //------|  PUT/  |---------->
 const putUser = async (id, updatedData) => {
   try {
+
     if (updatedData.email) {
+
       const salt = bcrypt.genSaltSync();
       const hashedEmail = bcrypt.hashSync(updatedData.email, salt);
       updatedData.email = hashedEmail;
     }
+
 
     const [updatedRowsCount] = await User.update(updatedData, {
       where: { id: id },
@@ -233,7 +236,9 @@ const putUser = async (id, updatedData) => {
       throw new Error("There is no user with the specified id");
     }
 
-    return updatedRowsCount;
+
+      return updatedRowsCount;
+    }
   } catch (e) {
     throw new Error(e.message);
   }

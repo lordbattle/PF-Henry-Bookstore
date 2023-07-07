@@ -83,6 +83,7 @@ const getUsersHandler = async (req, res) => {
 const getUsersIdHandler = async (req, res) => {
   const { idUsers } = req.params;
 
+
   try {
     const results = await getUserById(idUsers);
     res.status(200).json({ success: true, results });
@@ -97,7 +98,7 @@ const postUsersIdHandler = async (req, res) => {
 
   try {
     const results = await registerUser(data);
-    console.log(results, ' results post userrrr ')
+    console.log(results, " results post userrrr ");
 
     const emailSent = await sendNewUserEmail(results.email, results.userName);
     res.status(200).json({ success: true, results, emailSent });
@@ -110,7 +111,7 @@ const postUsersIdHandler = async (req, res) => {
 const putUsersHandler = async (req, res) => {
   const { idUsers } = req.params;
   const updatedData = cleanData(typeUser, req.body);
- /*  const updatedData = req.body; */
+
 
   try {
     const results = await putUser(idUsers, updatedData);

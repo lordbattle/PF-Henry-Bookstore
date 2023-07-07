@@ -1,7 +1,7 @@
 import SearchBar from "../SearchBar/SearchBar";
 import { Link, useNavigate } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
-import useStorage from "../LocalStorage/LocalStorage"
+import useStorage from "../LocalStorage/LocalStorage";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,7 @@ const Nav = () => {
     await logout();
     dispatch(logoutUser());
     navigate("/");
-  }
+  };
 
   const { cart } = useStorage();
   const [totalItems, setTotalItems] = useState(0);
@@ -46,32 +46,32 @@ const Nav = () => {
     };
   }, []);
 
-  function alert(){
+  function alert() {
     Swal.fire({
-      title: 'Log out',
+      title: "Log out",
       text: "Are you sure you want to log out?",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        handlerLogOut()
-        Swal.fire(
-          'Log out!',
-          '',
-          'success'
-        )
-      } else{
-        navigate("/home")
+
+        handlerLogOut();
+        localStorage.setItem("userData", JSON.stringify([]));
+        localStorage.setItem("userDataLogin", JSON.stringify([]));
+        Swal.fire("Log out!", "", "success");
+      } else {
+        navigate("/home");
       }
-    })
+    });
   }
 
   return (
-    <div key={updateKey}
+    <div
+      key={updateKey}
       className="px-2 py-3 border-0 bg_navbar text-white"
       style={{ backgroundColor: "#71a5e5" }}
     >
@@ -87,7 +87,10 @@ const Nav = () => {
         <div className="w-100 m-0 d-flex justify-content-end">
           {" "}
           <span className="p-2 ms-0 link-as-text">
-            <Link to={"/dashboard"} className="text-decoration-none fs-5 text-reset">
+            <Link
+              to={"/dashboard"}
+              className="text-decoration-none fs-5 text-reset"
+            >
               Dashboard
             </Link>
           </span>{" "}

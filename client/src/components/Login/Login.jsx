@@ -33,13 +33,13 @@ const Login = () => {
       setTimeout(() => {
         navigate("/");
       }, 3000);
-      console.log(user);
     } catch (error) {
       alert(error);
     }
   };
-
-  console.log("que es userlogin   " + userlogin);
+  setTimeout(() => {
+    localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
+  }, 1000);
 
   useEffect(() => {
     //Google
@@ -109,8 +109,8 @@ const Login = () => {
 
   return (
     <div className={style.ContainerMain}>
-      <div style={{ marginTop: '1rem'}}>
-        <span style={{fontSize: '30px'}}>Welcome to The Literary Corner</span>
+      <div style={{ marginTop: "1rem" }}>
+        <span style={{ fontSize: "30px" }}>Welcome to The Literary Corner</span>
       </div>
       <div>
         <Formik
@@ -166,7 +166,8 @@ const Login = () => {
               <div className="mb-4">
                 <label htmlFor="name" className="text-lg text-current">
                   Email
-                </label><br/>
+                </label>
+                <br />
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                   type="text"
@@ -185,7 +186,8 @@ const Login = () => {
               <div className="mb-4">
                 <label htmlFor="name" className="text-lg text-current">
                   Password
-                </label><br />
+                </label>
+                <br />
                 <input
                   className="w-full border-2 border-gray-100 rounded-xl p-3 mt-1 bg-transparent"
                   type="password"
@@ -246,12 +248,9 @@ const Login = () => {
           )}
         </Formik>
       </div>
-                <Link
-                  to="/home"
-                  className={style.back}
-                >
-                  return home
-                </Link>
+      <Link to="/home" className={style.back}>
+        return home
+      </Link>
     </div>
   );
 };

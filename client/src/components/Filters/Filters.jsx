@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import set from "./Filters.module.css";
 
 const Filters = (props) => {
-  const { books } = useSelector((state) => state.books);
+  const { books } = useSelector((state) => state);
 
   const { setFilters } = props;
 

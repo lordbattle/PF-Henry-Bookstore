@@ -24,7 +24,7 @@ const Card = ({ currentBooks }) => {
               imageLinks={v.bookPic}
               price={v.price}
               stock={v.stock}
-              addToCart={v.addToCart ? addToCart : null}
+              addToCart={addToCart}
             />
           );
         })

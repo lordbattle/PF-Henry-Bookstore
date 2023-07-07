@@ -7,7 +7,6 @@ import { logingUser, postUsers } from "../../redux/actions/index";
 
 import { useDispatch } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { element } from "prop-types";
 import validations from "../../hooks/validations";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -61,15 +60,12 @@ const Register = () => {
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
-            console.log("datos form", values);
-            // redux
-            values.age = parseInt(values.age);
             try {
               await postUsersAsync(values); // Esperar la resolución de la promesa
             } catch (error) {
               throw new Error(error);
             }
-            await signUp(values.email, values.password, values.name);
+            //await signUp(values.email, values.password, values.name);
             //setFormSubmitted(true);
             //setTimeout(() => setFormSubmitted(false), 2000);
             //dispatch(logingUser(values.email, values.password, values.userName));
@@ -165,7 +161,7 @@ const Register = () => {
             <label>
               <Field
                 placeholder=""
-                type="text"
+                type="password"
                 className={style.input}
                 id="password"
                 name="password"
@@ -217,7 +213,7 @@ const Register = () => {
                   id="genres"
                   name="genres"
                 >
-                  <option value=""> </option>
+                  <option value="Not specified"></option>
                   <option value="male">Masculino</option>
                   <option value="female">Femenino</option>
                 </Field>

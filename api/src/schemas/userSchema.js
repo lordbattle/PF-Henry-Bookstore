@@ -160,8 +160,10 @@ const userNewSchema = {
     errorMessage: "Location is required",
   },
   genres: {
-    isIn: { options: ["male", "female"] },
-    errorMessage: "Genders male or female",
+    isIn: {
+      options: [["male", "female", "Not specified"]],
+      errorMessage: "Genres must be male, female, or not specified",
+    },
   },
   phone: {
     //notEmpty: {errorMessage: "Phone is required"},

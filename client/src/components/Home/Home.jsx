@@ -1,7 +1,7 @@
 import Card from "../Card/Card";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBooksByFilters, logingUser, postUsers } from "../../redux/actions";
+import { logingUser, postUsers } from "../../redux/actions";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
@@ -29,7 +29,7 @@ const Home = () => {
         dispatch(logingUser(user));
       }, 4000);
     }
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     localStorage.setItem("userDataLogin", JSON.stringify(userlogin));

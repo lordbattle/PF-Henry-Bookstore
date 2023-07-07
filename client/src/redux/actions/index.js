@@ -142,6 +142,7 @@ export const postBooks = (payload) => {
       return dat;
     } catch (error) {
       console.log(error);
+      return error;
     }
   };
 };
@@ -293,7 +294,7 @@ export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
       console.log('antes de entrar a editUser', idUser, updatedUser);
-      const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
+      const { data } = await axiosInstance.put(`/users/${idUser}`,updatedUser);
       console.log("editUser", data);
       // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
     } catch (error) {

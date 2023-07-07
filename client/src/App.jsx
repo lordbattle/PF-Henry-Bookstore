@@ -32,10 +32,10 @@ function App() {
 
   return (
     <div className="container">
-      {pathname !== "/" && <Nav />}
 
       <AuthContextProvider>
         <AuthProvider>
+          {pathname !== "/" && <Nav />}
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
 

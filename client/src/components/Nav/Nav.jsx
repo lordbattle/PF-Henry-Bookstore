@@ -15,7 +15,7 @@ const Nav = () => {
   const [isLogout, setIsLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logout = UserAuth();
+  const { logout } = UserAuth();
 
   useEffect(() => {
     setIsLogout(true);
@@ -58,6 +58,7 @@ const Nav = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
+
         handlerLogOut();
         localStorage.setItem("userData", JSON.stringify([]));
         localStorage.setItem("userDataLogin", JSON.stringify([]));
@@ -127,14 +128,12 @@ const Nav = () => {
               <img
                 src="https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360"
                 width={"25em"}
-              ></img>{totalItems > 0 && 
-              <span className="badge bg-secondary">{totalItems}</span>}
+              ></img><span className="badge bg-secondary">{totalItems}</span>
             </Link>
           </span>
         </div>
 
         <b className="vr" />
-
         <div className="w-25 d-flex justify-content-center gap-3">
         {!user.id ? 
         <>

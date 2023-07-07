@@ -1,6 +1,8 @@
 const { validationResult } = require("express-validator");
 
 const validateRequest = (req, res, next) => {
+  console.log("validate body",req.body);
+  
   const errors = validationResult(req);
   console.log('empieza errores',errors, 'errors validaterequest')
 

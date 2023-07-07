@@ -1,9 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import style from "../EditProfile/EditProfile.module.css";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { editUser } from "../../redux/actions/index";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+/* const {REACT_APP_CLOUDINARY_CLOUD_NAME, REACT_APP_CLOUINARY_URL} = process.env; */
 
+const cloudinary_cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const cloudinary_url = import.meta.env.VITE_CLOUINARY_URL;
 
 const EditProfile = () => {
   const [userChange, setUserChange] = useState({
@@ -12,15 +16,12 @@ const EditProfile = () => {
     userName: "",
     email: "",
     phone: "",
-    profilePic: null,
+    profilePic: "",
     age: 0,
   });
   const [isChangeUser, setIsChangeUser] = useState(false);
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
 
-  /*   "password":"holaMundo234@",
-  
-  "email": "miralapantalla@gmail.com", */
   const {
     register,
     handleSubmit,
@@ -30,13 +31,19 @@ const EditProfile = () => {
   const userCurrent = useSelector((state) => state.userDetail);
   const dispatch = useDispatch();
 
-  /* "password":"holaMunDO234@",
-  "lastName": "Alvarez",
-  "email": "antonio1234@gmail.com", */
-
   let user = userCurrent.results;
 
-  console.log("antes de entrar al sumbmit", userChange);
+  /* useEffect(() => {
+    setUserChange({
+      name: user.name,
+      lastName: user.lastName,
+      userName: user.userName,
+      email: user.email,
+      phone: user.phone,
+      profilePic: "",
+      age: user.age,
+    });
+  }, [user]); */
 
   const onSubmit = async (data) => {
     if (!data.name || !data.lastName) {
@@ -44,46 +51,40 @@ const EditProfile = () => {
       return;
     }
 
-    const formData = new FormData();
-    if (!file) {
-      alert("Please select an image");
-      return;
-    }
-
-    formData.append("profilePic", file);
-    formData.append("name", data.name);
-    formData.append("lastName", data.lastName);
-    formData.append("email", data.email);
-    formData.append("userName", data.userName);
-    formData.append("phone", data.phone);
-    formData.append("age", data.age);
-
-    console.log("formData", formData);
-
     try {
-      await dispatch(editUser(user.id, formData));
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", `${cloudinary_cloud_name}`); // Corregir el nombre del preset de carga
+      const { data } = await axios.post(`${cloudinary_url}`, formData);
+
+      let { secure_url } = data;
+      console.log(secure_url);
+
+      let newObj = {
+        ...userChange,
+        profilePic: secure_url,
+      };
+
+      dispatch(editUser(user.id, newObj));
       setIsChangeUser(true);
     } catch (error) {
-      alert("An error occurred while updating your profile!");
+      console.log(error);
     }
+  };
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setUserChange((supUser) => ({
+      ...supUser,
+      [name]: value,
+    }));
   };
 
   const handleImageChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
+    const file = event.target.files[0];
+    setFile(file);
   };
-
-  useEffect(() => {
-    setUserChange({
-      name: user.name,
-      lastName: user.lastName,
-      userName: user.userName,
-      email: user.email,
-      phone: user.phone,
-      profilePic: null,
-      age: user.age,
-    });
-  }, [user]);
 
   return (
     <div className={style.containerForm}>
@@ -95,31 +96,35 @@ const EditProfile = () => {
         <input
           type="text"
           {...register("name", { required: true })}
-          placeholder="Name"
-          defaultValue={userChange.name}
+          placeholder={user.name}
+          onChange={handleChange}
+          value={userChange.name}
         />
         {errors.name && <span>Name is required</span>}
 
         <input
           type="text"
           {...register("lastName", { required: true })}
-          placeholder="Last Name"
-          defaultValue={userChange.lastName}
+          placeholder={user.lastName}
+          onChange={handleChange}
+          value={userChange.lastName}
         />
         {errors.lastName && <span>Last Name is required</span>}
 
         <input
           type="text"
           {...register("email", { required: true })}
-          placeholder="Email"
-          defaultValue={userChange.email}
+          placeholder={user.email}
+          onChange={handleChange}
+          defaultValue={userCurrent.email}
         />
         {errors.email && <span>Email is required</span>}
 
         <input
           type="text"
           {...register("userName", { required: true })}
-          placeholder="Username"
+          placeholder={user.userName}
+          onChange={handleChange}
           defaultValue={userChange.userName}
         />
         {errors.userName && <span>Username is required</span>}
@@ -127,7 +132,8 @@ const EditProfile = () => {
         <input
           type="text"
           {...register("phone", { required: true })}
-          placeholder="Phone"
+          placeholder={user.phone}
+          onChange={handleChange}
           defaultValue={userChange.phone}
         />
         {errors.phone && <span>Phone is required</span>}
@@ -142,7 +148,8 @@ const EditProfile = () => {
         <input
           type="text"
           {...register("age", { required: true })}
-          placeholder="Age"
+          placeholder={user.age}
+          onChange={handleChange}
           defaultValue={userChange.age}
         />
         {errors.age && <span>Age is required</span>}

@@ -1,13 +1,16 @@
 import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { postBooks, getUsersByName, getUsers } from "../../redux/actions";
+import { postBooks } from "../../redux/actions";
 import style from "../BooksForm/BooksForm.module.css";
 import image from "../../images/bookForm.png";
+import Swal from "sweetalert2";
+
 
 const AddBookForm = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const userState = useSelector((state) => state.user);
 
   const inputRef = useRef(null);
@@ -18,10 +21,18 @@ const AddBookForm = () => {
     formState: { errors },
   } = useForm();
 
+ 
+
   const onSubmit = async (data) => {
+
     const formData = new FormData();
     if (!file) {
-      alert("Please select an image");
+      Swal.fire({
+        icon: "error",
+        title: "Error image",
+        text: `"Please select an image"`,
+        backdrop: true,
+      });
       return;
     }
 
@@ -39,25 +50,46 @@ const AddBookForm = () => {
     formData.append("usersRating", data.usersRating);
     formData.append("averageRating", data.averageRating);
     formData.append("description", data.description);
+    formData.append("userId", userState.id);
 
-  
-    formData.append("userlogin", userState.id);
 
     try {
-      await dispatch(postBooks(formData));
-      alert("Book added successfully");
+
+      const response = await dispatch(postBooks(formData));
+      if (response.data) {
+        Swal.fire({
+          icon: "success",
+          title: "successfully!",
+          text: "Book added successfully!",
+          backdrop: true,
+        });
+        navigate('/home')
+      } else {
+        console.log('entro a error  ', data)
+        Swal.fire({
+          icon: "error",
+          title: "Error Data",
+          text: `${response.response.data.error}`,
+          backdrop: true,
+        });
+      }
     } catch (error) {
-      alert("An error occurred while adding the book");
+      Swal.fire({
+        icon: "error",
+        title: "Error Data",
+        text: `${error}`,
+        backdrop: true,
+      });
     }
   };
-  const prueba = () => {
-    console.log(userState, "user storeeee");
-    const userlogin = dispatch(getUsersByName(userState.userName));
-    const userssss = dispatch(getUsers());
-    console.log(userlogin, "userencontradoooooooo");
+  // const prueba = () => {
+  //   console.log(userState, "user storeeee");
+  //   const userlogin = dispatch(getUserById(userState.id));
+  //   const userssss = dispatch(getUsers());
+  //   console.log(userlogin, "userencontradoooooooo");
 
-    console.log(userssss, "userrrrssss");
-  };
+  //   console.log(userssss, "userrrrssss");
+  // };
 
   const handleImageChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -76,16 +108,14 @@ const AddBookForm = () => {
     return options;
   };
 
-  /*  const handleImageClick = () => {
-    inputRef.current.click();
-  }; */
 
   return (
     <div className={style.containerForm}>
-      <button onClick={prueba} style={{ width: "100px", height: "50px" }}>
+      {/* <button onClick={prueba} style={{ width: "100px", height: "50px" }}>
         PROBAR EN CONSOLA
-      </button>
+      </button> */}
       <form onSubmit={handleSubmit(onSubmit)} className={style.main}>
+        <p className={style.pId}>User ID : <span>{userState.id ? userState.id : 'undefined'}</span> </p>
         <h1 className={style.h1Titulo}>NEW BOOK</h1>
         <img src={image} alt="imageBookForm" className={style.imageForm} />
         <div className={style.containerSubUno}>

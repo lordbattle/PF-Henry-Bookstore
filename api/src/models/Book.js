@@ -92,6 +92,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      userId: {
+        type: DataTypes.INTEGER, // o el tipo de dato correspondiente al id de User
+       
+        references: {
+          model: 'users', // Nombre de la tabla de usuarios
+          key: 'id' // Nombre de la columna de clave primaria en la tabla de usuarios
+        }
+      }
     },
     { timestamps: false }
   );

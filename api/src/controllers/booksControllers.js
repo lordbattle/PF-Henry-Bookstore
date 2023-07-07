@@ -10,7 +10,7 @@ const { Op } = require("sequelize");
 const { API_CLOUDINARY_BOOKS_UPLOAD_PRESET } = process.env;
 
 const { cloudinary } = require("../services/cloudinaryService");
-
+const { getUserById } = require('./usersControllers');
 
 const saveAllBooksDb = async () => {
   try {
@@ -87,7 +87,7 @@ const saveAllBooksDb = async () => {
       }
     }
   } catch (error) {
-    console.log({error: error.message});
+    console.log({ error: error.message });
   }
 };
 
@@ -173,9 +173,9 @@ const postBook = async (
   stock,
   authors,
   genre,
-  userlogin
+  userId
 ) => {
-  console.log("LLego el userLogin?" + userlogin)
+  console.log("LLego el userLogin?" + userId)
   const { secure_url } = await cloudinary.uploader.upload(bookPic, {
     upload_preset: API_CLOUDINARY_BOOKS_UPLOAD_PRESET,
     /* resource_type: "image",
@@ -198,14 +198,25 @@ const postBook = async (
     price,
     stock,
     authors,
-    genre
+    genre, 
+    userId :userId 
   });
+  console.log(newBook, ' bookk prueba relacion ')
   //relacion de libro con usuario que lo crea 
   // if(userlogin)
-  //   await newBook.addUser(userlogin);
-  
+  // let userId ;
+  // try {
+  //   userId = await getUserById(pages)
+  // } catch (error) {
+  //   console.log(error, 'error en try bookk prueba ')
+  // }
+  // console.log(userId.id, 'user id encontrado en book')
+  // await userId.addUser(newBook);
+
   return newBook;
 };
+
+
 
 const putBook = async (
   idBook,

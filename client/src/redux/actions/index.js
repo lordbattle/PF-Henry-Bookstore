@@ -142,6 +142,7 @@ export const postBooks = (payload) => {
       return dat;
     } catch (error) {
       console.log(error);
+      return error;
     }
   };
 };

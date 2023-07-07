@@ -71,7 +71,7 @@ const validations = (values) => {
     if (ageNum % 1 !== 0) {
       errors.age = "The age cannot be decimal";
     } else {
-      if (ageNum >= 90 || ageNum < 17) {
+      if (ageNum >= 90 || ageNum <= 17) {
         errors.age = "The age must be between 18 and 90";
       }
     }

@@ -21,7 +21,7 @@ import {
 import axiosInstance from "../../api/axiosInstance.js";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import axios from "axios";
+//import axios from "axios";
 
 //BOOKS
 //?
@@ -74,8 +74,8 @@ export const getBookByTitle = (title) => {
 
 export const getPaginationBooks = () => {
   return async (dispatch) => {
-    let url = "http://localhost:3001/books/?limit=450";
-    const { data } = await axios.get(url);
+    //let url = "http://localhost:3001/books/";
+    const { data } = await axiosInstance.get("/books/?limit=450");
     return dispatch({
       type:GET_PAGINATION_USERS,
       payload: data.shift()

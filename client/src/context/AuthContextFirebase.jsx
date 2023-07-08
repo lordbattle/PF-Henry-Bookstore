@@ -56,8 +56,6 @@ export function AuthContextProvider({ children }) {
     });
   }, []);
 
-  console.log(user);
-
   return (
     <AuthContextFirebase.Provider
       value={{ signUp, login, user, logout, loginWithGoogle }}

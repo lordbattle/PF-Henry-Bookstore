@@ -6,25 +6,29 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { logoutUser } from "../../redux/actions";
+import { logoutUser, verifyUserToken } from "../../redux/actions";
+import Cookies from "js-cookie";
 
 const Nav = () => {
+  const user = useSelector((state) => state.user);
 
-  const user = useSelector(state=>state.user)
-
-  const [isLogout, setIsLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { logout } = UserAuth();
 
+  const cookies = Cookies.get();
   useEffect(() => {
-    setIsLogout(true);
+    dispatch(verifyUserToken(cookies.token));
   }, []);
+
+  console.log("se carga el estado de login?    " + user.id);
+
+  const userLoginLocal = JSON.parse(localStorage.getItem("userDataLogin"));
+
   const handlerLogOut = async () => {
     await logout();
     dispatch(logoutUser());
-    //dispatch(cleanUserDetail());
-    navigate("/");
+    navigate("/home");
   };
 
   const { cart } = useStorage();
@@ -59,7 +63,6 @@ const Nav = () => {
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-
         handlerLogOut();
         localStorage.setItem("userData", JSON.stringify([]));
         localStorage.setItem("userDataLogin", JSON.stringify([]));
@@ -100,15 +103,16 @@ const Nav = () => {
               Home
             </Link>
           </span>{" "}
-          {user.id ? <span className="p-2 ms-0 link-as-text">
-            <Link
-              to={"/profile"}
-              className="text-decoration-none fs-5 text-reset"
-            >
-           {user.userName}
-            </Link>
-          </span> : null}
-          
+          {userLoginLocal.id ? (
+            <span className="p-2 ms-0 link-as-text">
+              <Link
+                to={"/profile"}
+                className="text-decoration-none fs-5 text-reset"
+              >
+                {userLoginLocal.userName}
+              </Link>
+            </span>
+          ) : null}
           <span className="p-2 ms-0 link-as-text">
             <Link
               to={"/about"}
@@ -130,32 +134,44 @@ const Nav = () => {
               <img
                 src="https://cdn-icons-png.flaticon.com/512/107/107831.png?w=360"
                 width={"25em"}
-              ></img><span className="badge bg-secondary">{totalItems}</span>
+              ></img>
+              <span className="badge bg-secondary">{totalItems}</span>
             </Link>
           </span>
         </div>
 
         <b className="vr" />
         <div className="w-25 d-flex justify-content-center gap-3">
-        {!user.id ? 
-        <>
-          <Link to={"/login"} className="text-decoration-none  fs-5 text-reset">
-            Log in
-          </Link>
+          {!userLoginLocal.id ? (
+            <>
+              <Link
+                to={"/login"}
+                className="text-decoration-none fs-5 text-reset"
+              >
+                Log in
+              </Link>
 
-          <Link
-            to={"/register"}
-            className="text-decoration-none fs-5 text-reset"
-          >
-            Sign up
-          </Link> 
-        </> 
-          : 
-        <>
-          <button style={{border: 'none', backgroundColor : '#71a5e5', fontSize: '20px'}} onClick={alert}>Log out</button>
-        </>
-        }
-        
+              <Link
+                to={"/register"}
+                className="text-decoration-none fs-5 text-reset"
+              >
+                Sign up
+              </Link>
+            </>
+          ) : (
+            <>
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "#71a5e5",
+                  fontSize: "20px",
+                }}
+                onClick={alert}
+              >
+                Log out
+              </button>
+            </>
+          )}
         </div>
       </Stack>
     </div>

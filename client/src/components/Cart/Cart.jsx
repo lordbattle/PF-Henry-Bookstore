@@ -136,9 +136,9 @@ const location = useLocation();
         });
       }
       
-      // useEffect(()=>{      
-      //   dispatch(getPurchaseHistoryById(idUser))
-      // },[idUser]) //DESCOMENTAR Y CAMBIAR LO DE [IDUSER] CUANDO ESTE ARREGLADO EL REGISTER PARA COMPROBAR BIEN LA DATA Q TRAE
+      useEffect(()=>{      
+        dispatch(getPurchaseHistoryById(idUser))
+      },[idUser]) //DESCOMENTAR Y CAMBIAR LO DE [IDUSER] CUANDO ESTE ARREGLADO EL REGISTER PARA COMPROBAR BIEN LA DATA Q TRAE
 
 
     return(

@@ -1,18 +1,24 @@
 import Card from "../Card/Card";
 import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //import { logingUser, postUsers } from "../../redux/actions";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
+import { getPaginationBooks } from "../../redux/actions";
 //import { UserAuth } from "../../context/AuthContextFirebase";
 /* import { useNavigate } from "react-router-dom"; */
 
 const Home = () => {
   const { books, pagination } = useSelector((state) => state);
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPaginationBooks());
+  }, []);
+
   console.log("home pagination", pagination);
-  
+
   /*
 import { useDispatch, useSelector } from "react-redux";
 import { logingUser, postUsers,getPaginationBooks } from "../../redux/actions";
@@ -22,17 +28,13 @@ import Pagination from "../Pagination/Pagination";
 import { UserAuth } from "../../context/AuthContextFirebase";
 /* import { useNavigate } from "react-router-dom"; */
 
-
-
-/* const userlogin = useSelector((state) => state.user);
+  /* const userlogin = useSelector((state) => state.user);
   const { user } = UserAuth();
-  const dispatch = useDispatch();
   //const navigate = useNavigate();
   
 
   useEffect(() => {
     console.log("HOME USER AQUI  ", user);
-    dispatch(getPaginationBooks())
 
     if (user) {
       setTimeout(() => {
@@ -56,7 +58,6 @@ import { UserAuth } from "../../context/AuthContextFirebase";
   const handleScrollUp = () => {
     componentRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
 
   useEffect(() => {
     setFilters({

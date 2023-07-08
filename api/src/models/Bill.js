@@ -9,10 +9,6 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
     total: {
       type: DataTypes.INTEGER,
       allowNull: false,

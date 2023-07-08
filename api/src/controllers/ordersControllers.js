@@ -13,7 +13,7 @@ const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_BACK_URLS } = process.env;
 
 // Controller: get order by id
 const getOrderById = async (id) => {
-  const order = await Order.findByPk(+id);
+  const order = await Order.findByPk(+id, { include: OrderItem });
 
   if (!order) {
     throw Error("There is no order with the specified id");
@@ -267,6 +267,7 @@ const insertOrder = async (id_user, items) => {
 
 // Check payment status through notifications Webhook
 const receiveWebhook = async (query) => {
+  console.log(query);
   try {
     if (query.type === "payment") {
       const paymentData = await mercadopago.payment.findById(query["data.id"]);
@@ -284,7 +285,6 @@ const receiveWebhook = async (query) => {
         // Create invoice
         await Bill.create(
           {
-            date: new Date(),
             total: order.total,
             userId: order.userId,
             orderId: order.id,

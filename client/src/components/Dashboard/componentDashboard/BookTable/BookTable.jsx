@@ -2,10 +2,10 @@ import React from 'react';
 
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getBooksByFilters, getUsers } from "../../../redux/actions";
-import Filters from "../../Filters/Filters";
-import Pagination from "../../Pagination/Pagination";
-import useFilters from "../../../hooks/useFilters";
+import { getBooksByFilters, getUsers } from "../../../../redux/actions";
+import Filters from "../../../Filters/Filters";
+import Pagination from "../../../Pagination/Pagination";
+import useFilters from "../../../../hooks/useFilters";
 import { Link } from "react-router-dom";
 
 const BookTable = () => {

@@ -1,5 +1,5 @@
 import style from "./Dashboard.module.css";
-import BookTable from "./componentDashboard/BookTable";
+import BookTable from "./componentDashboard/BookTable/BookTable";
 import { useEffect, useState } from "react";
 
 

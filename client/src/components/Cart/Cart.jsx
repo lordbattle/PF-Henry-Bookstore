@@ -6,21 +6,20 @@ import {useLocation, Link} from "react-router-dom"
 import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getPurchaseHistoryById } from '../../redux/actions';
 
 export const Cart =()=>{
-
+  const dispatch = useDispatch();
   const user = useSelector(state=>state.user)
     let idUser=0;
-//HAY UN ERROR, SI ME MUEVO POR LA PAGINA, SE PIERDE 
-// LA DATA DE user PERO SI ME PARO EN cart VOY A home Y VUELVO A cart, ahi si me trae los datos
+
       if(user){
         idUser = user.id
       }
     console.log("ESTO ES results", user)
 
-const {cart, addToCart, setCart, addToPurchaseHistory} = useStorage();
+const {cart, setCart} = useStorage();
 const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const status = queryParams.get("status");
@@ -83,8 +82,7 @@ const location = useLocation();
             Swal.showLoading();
           }
         });
-        
-        console.log("HandleBuy clickeado"); 
+         
         const items = cart.map((item) => ({
           id: item.id,
           quantity: item.stock,
@@ -106,11 +104,9 @@ const location = useLocation();
       }
     };
 
-    const [localStorageData, setLocalStorageData] = useState(useStorage());
 
     useEffect(() => {
       if (status === "approved") {
-        let{cart} = localStorageData;
         setCart([])
         Swal.fire({
           title: "Good job!",
@@ -122,7 +118,7 @@ const location = useLocation();
         console.log("ESTO ES LO QUE TIENE EL LOCALSTORAGEDATA si approved", cart);
       }
     }, [status]);
-if (status === "rejected") {
+    if (status === "rejected") {
         Swal.fire({
           title: "Failed",
           text: "Failed purchase",
@@ -139,7 +135,10 @@ if (status === "rejected") {
           backdrop: "rgba(243, 148, 23, 0.8)",
         });
       }
-
+      
+      // useEffect(()=>{      
+      //   dispatch(getPurchaseHistoryById(idUser))
+      // },[idUser]) //DESCOMENTAR Y CAMBIAR LO DE [IDUSER] CUANDO ESTE ARREGLADO EL REGISTER PARA COMPROBAR BIEN LA DATA Q TRAE
 
 
     return(

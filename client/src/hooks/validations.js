@@ -83,7 +83,7 @@ const validations = (values) => {
   }
 
   if (!values.genres) {
-    values.genres = "Not specified";
+    values.genres = "not specified";
   }
 
   if (!values.phone) {
@@ -92,11 +92,11 @@ const validations = (values) => {
     errors.phone = "Invalid phone format";
   }
 
-  if (!values.passwordConfirmation) {
+  /* if (!values.passwordConfirmation) {
     errors.passwordConfirmation = "Please, confirm your password";
   } else if (values.passwordConfirmation !== values.password) {
     errors.passwordConfirmation = "Passwords do not match";
-  }
+  } */
 
 
 

@@ -406,3 +406,14 @@ export function verifyUserToken() {
     }
   };
 }
+
+export const getPurchaseHistoryById =(userId)=>{
+  return async (dispatch)=>{
+    try {
+      const data = await axiosInstance.get(`/bills/userId=${userId}`)
+      console.log("esto es data de getPurchaseById", data)
+    } catch (error) {
+      console.log("ERROR DEL CATCH getPurchaseHistoryById", error)
+    }
+  }
+}

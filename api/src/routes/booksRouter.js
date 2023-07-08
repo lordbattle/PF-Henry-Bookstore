@@ -3,6 +3,7 @@ const { checkSchema } = require("express-validator");
 const { bookNewSchema, bookPutSchema } = require("../schemas/bookSchema");
 const { validateRequest } = require("../middleware/validateRequest");
 const {
+  getPaginationBooksLength,
   getBooksHandler,
   getBooksIdHandler,
   postBooksHandler,

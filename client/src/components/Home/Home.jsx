@@ -9,15 +9,32 @@ import Pagination from "../Pagination/Pagination";
 /* import { useNavigate } from "react-router-dom"; */
 
 const Home = () => {
-  const { books } = useSelector((state) => state);
+  
   /* const userlogin = useSelector((state) => state.user);
+
+import { useDispatch, useSelector } from "react-redux";
+import { logingUser, postUsers,getPaginationBooks } from "../../redux/actions";
+import Filters from "../Filters/Filters";
+import useFilters from "../../hooks/useFilters";
+import Pagination from "../Pagination/Pagination";
+import { UserAuth } from "../../context/AuthContextFirebase";
+
+/* import { useNavigate } from "react-router-dom"; */
+
+  const userlogin = useSelector((state) => state.user);
+  const { books, pagination } = useSelector((state) => state);
+
+  console.log("home pagination", pagination);
+
 
   const { user } = UserAuth();
   const dispatch = useDispatch();
   //const navigate = useNavigate();
+  
 
   useEffect(() => {
     console.log("HOME USER AQUI  ", user);
+    dispatch(getPaginationBooks())
 
     if (user) {
       setTimeout(() => {
@@ -35,14 +52,14 @@ const Home = () => {
     localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
   }, [userlogin]); */
 
-  
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);
-  
+
   const handleScrollUp = () => {
     componentRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  
+
+
   useEffect(() => {
     setFilters({
       author: "all",
@@ -55,8 +72,6 @@ const Home = () => {
     });
   }, [setFilters]);
 
-  
-  
   return (
     <div className="d-flex flex-column" ref={componentRef}>
       <div className="d-flex">
@@ -70,6 +85,7 @@ const Home = () => {
           onPageChange={setCurrentPage}
           handleScrollUp={handleScrollUp}
           componentRef={componentRef}
+          pagination={pagination}
         />
       </div>
     </div>

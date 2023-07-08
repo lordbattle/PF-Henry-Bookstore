@@ -6,6 +6,7 @@ import {
   FILTERS_BOOKS,
   GET_USERS,
   GET_USER_ID,
+  GET_PAGINATION_USERS,
   GET_CURRENT_USER,
   DELETE_USER,
   GET_USERS_BY_STATUS,
@@ -22,6 +23,7 @@ export const initialState = {
   user: [],
   users: [],
   userDetail: [],
+  pagination: null,
   currentUser: null,
 };
 
@@ -40,6 +42,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: action.payload,
       };
+      case GET_PAGINATION_USERS:
+        return {
+          ...state,
+          pagination: action.payload,
+        }
     case GET_BOOK_TITLE:
       return {
         ...state,

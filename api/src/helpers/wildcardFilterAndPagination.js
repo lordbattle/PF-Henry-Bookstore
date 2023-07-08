@@ -39,10 +39,7 @@ const wildcardFilterAndPagination = (
     if (total < limitInt && pageInt > 1) {
       throw new Error("non-existent page number in the search");
     }
-    if (
-      total % limitInt === 1 &&
-      pageInt > Math.floor(total / limitInt) + 1
-    ) {
+    if (total % limitInt === 1 && pageInt > Math.floor(total / limitInt) + 1) {
       throw new Error("non-existent page number in the search");
     }
     if (total % limitInt === 0 && pageInt > total / limitInt) {
@@ -53,6 +50,17 @@ const wildcardFilterAndPagination = (
     const endIndex = startIndex + limitInt;
 
     return wildcard.slice(startIndex, endIndex);
+  }
+  if (limit) {
+    const limitInt = Number(limit);
+
+    if (limitInt === 0) {
+      throw new Error("limit cannot be zero");
+    }
+
+    const slootsBooks = wildcard.slice(0, limitInt);
+
+    return [slootsBooks.length];
   }
 
   return wildcard;

@@ -32,12 +32,15 @@ const getAllOrders = async (data) => {
   };
   const order = { ...(sort && { order: defineOrder(sort) }) };
 
-  return await Order.findAndCountAll({
+  const count = await Order.count({ where: rest });
+  const rows = await Order.findAll({
     where: rest,
     include: OrderItem,
     ...pagination,
     ...order,
   });
+
+  return { count, rows };
 };
 
 // Function allows you to generate an instance of the order model for users with pending orders

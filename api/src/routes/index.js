@@ -4,6 +4,7 @@ const UsersRouter = require("./usersRouter");
 const AuthRouter = require("./authRoutes");
 const ProfileRouter = require("./profileRoutes");
 const OrdersRouter = require("./ordersRouter");
+const BillsRouter = require("./billsRouter");
 const ChangePassRouter = require("./changePassRoutes");
 const { validateToken } = require("../middleware/validateToken");
 
@@ -14,28 +15,10 @@ mainRouter.use("/profileUser", ProfileRouter);
 mainRouter.use("/users", UsersRouter);
 mainRouter.use("/books", BooksRouter);
 mainRouter.use("/orders", OrdersRouter);
+mainRouter.use("/bills", BillsRouter);
 mainRouter.use("/changePassword", ChangePassRouter);
 
 module.exports = mainRouter;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const { Router } = require("express");
 // const bcrypt = require("bcrypt");

@@ -383,14 +383,14 @@ export function logoutUser() {
   };
 }
 
-export function verifyUser() {
+export function verifyUserToken() {
   return async (dispatch) => {
     try {
       const cookies = Cookies.get();
       console.log(cookies);
 
       if (cookies.token) {
-        const response = await axiosInstance.post(
+        const response = await axiosInstance.get(
           "/authUser/verifyuser",
           {},
           { headers: { Cookie: `token=${cookies.token}` } }

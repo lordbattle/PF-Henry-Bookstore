@@ -1,5 +1,17 @@
 import Card from "../Card/Card";
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+//import { logingUser, postUsers } from "../../redux/actions";
+import Filters from "../Filters/Filters";
+import useFilters from "../../hooks/useFilters";
+import Pagination from "../Pagination/Pagination";
+//import { UserAuth } from "../../context/AuthContextFirebase";
+/* import { useNavigate } from "react-router-dom"; */
+
+const Home = () => {
+  
+  /* const userlogin = useSelector((state) => state.user);
+
 import { useDispatch, useSelector } from "react-redux";
 import { logingUser, postUsers,getPaginationBooks } from "../../redux/actions";
 import Filters from "../Filters/Filters";
@@ -9,11 +21,11 @@ import { UserAuth } from "../../context/AuthContextFirebase";
 
 /* import { useNavigate } from "react-router-dom"; */
 
-const Home = () => {
   const userlogin = useSelector((state) => state.user);
   const { books, pagination } = useSelector((state) => state);
 
   console.log("home pagination", pagination);
+
 
   const { user } = UserAuth();
   const dispatch = useDispatch();
@@ -38,7 +50,7 @@ const Home = () => {
 
   useEffect(() => {
     localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
-  }, [userlogin]);
+  }, [userlogin]); */
 
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);

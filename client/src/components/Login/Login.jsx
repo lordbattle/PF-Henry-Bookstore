@@ -142,7 +142,7 @@ const Login = () => {
                   title: `Welcome to The LiteraryCorner`,
                   text: "Login successful",
                 });
-                navigate("/home");
+                navigate("/");
               } catch (error) {
                 Swal.fire({
                   icon: "error",

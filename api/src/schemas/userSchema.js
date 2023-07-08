@@ -161,7 +161,7 @@ const userNewSchema = {
   },
   genres: {
     isIn: {
-      options: [["male", "female", "Not specified"]],
+      options: [["male", "female", "not specified"]],
       errorMessage: "Genres must be male, female, or not specified",
     },
   },

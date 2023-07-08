@@ -367,7 +367,7 @@ export function logingUser(user) {
       dispatch({ type: LOGING_USER, payload: baseData.data });
     } catch (error) {
       /*  alert(`Cath del loginUser ${error}`); */
-      return error.respose.data;
+      throw new Error(error.response.data);
     }
   };
 }

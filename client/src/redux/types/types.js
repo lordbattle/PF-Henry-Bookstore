@@ -20,3 +20,5 @@ export const GET_PAGINATION_USERS = "GET_PAGINATION_USERS";
 export const LOGING_USER = "LOGING_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const VERIFY_USER = "VERIFY_USER";
+
+export const CHANGE_PASSWORD = "CHANGE_PASSWORD";

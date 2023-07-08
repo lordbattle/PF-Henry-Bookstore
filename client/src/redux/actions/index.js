@@ -15,6 +15,7 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
+  CHANGE_PASSWORD
   //VERIFY_USER,
 } from "../types/types.js";
 
@@ -417,3 +418,26 @@ export const getPurchaseHistoryById =(idUser)=>{
     }
   }
 }
+
+export const changePassword = (idUser, newPassword) => {
+  return async (dispatch) => {
+    try {
+      const response = await axiosInstance.put(`/profile/changePassword`, {
+        idUser,
+        newPassword,
+      });
+      
+      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
+
+      dispatch({
+        type: CHANGE_PASSWORD,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
+    }
+  };
+};
+
+//nr

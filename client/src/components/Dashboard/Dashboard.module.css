@@ -8,8 +8,26 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: red;
   }
-  
+  .dashboradMenu{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background-color: blue;
+  }
+  .menu{
+    position: relative;
+    background-color: blueviolet;
+    width: 10em;
+  }
+  .MenuAndContent{
+    position: relative;
+    background-color: chartreuse;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+  }
   h1 {
     text-align: center;
     margin-bottom: 30px;

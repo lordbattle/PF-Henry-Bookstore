@@ -1,28 +1,44 @@
 import style from "./Dashboard.module.css";
 import BookTable from "./componentDashboard/BookTable/BookTable";
+import UserTable from "./componentDashboard/userTable/UserTable";
 import { useEffect, useState } from "react";
-
 
 const Dashboard = () => {
   const [book, setBook] = useState(false);
+  const [user, setUser] = useState(false);
+
+
+
   const handleTrueBook = (e) => {
-    if (book === false)
+    if (book === false) {
+      setUser(false);
       setBook(true);
+    }
     else
       setBook(false)
+  }
 
-    console.log(book, ' cambio book estado ')
+  const handleTrueUser = (e) => {
+    if (user === false) {
+      setBook(false);
+      setUser(true);
+    }
+    else {
+      setUser(false);
+    }
   }
   useEffect(() => {
     handleTrueBook
   }, [book]);
   return (
     <div className={style.container}>
-      <h1>Dashboard</h1>
       <div className={style.MenuAndContent}>
+
         <div className={style.dashboradMenu}>
+
           <div className={style.menu}>
-            <div ><h2>Usuarios</h2></div>
+            <h1>Dashboard</h1>
+            <div onClick={handleTrueUser} ><h2>Usuarios</h2></div>
             <div onClick={handleTrueBook}><h2>Books</h2></div>
             <div><h2>Ventas</h2></div>
 
@@ -34,6 +50,7 @@ const Dashboard = () => {
             <li key={index}>{user}</li>
           ))}
         </ul> */}
+          {user ? <UserTable /> : <></>}
         </div>
         {
           book ? <BookTable /> : <></>

@@ -5,28 +5,36 @@ body {
   }
   
   .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: red;
+    max-width: 100%;
+    /* background-color: red; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
   .dashboradMenu{
     position: relative;
     display: flex;
     flex-direction: row;
-    background-color: blue;
+    justify-content: center;
+    text-align: center;
+    /* background-color: blue; */
+    width: 100%;
   }
   .menu{
     position: relative;
-    background-color: blueviolet;
-    width: 10em;
+    /* background-color: blueviolet; */
+    width: 100%;
+    text-align: center;
   }
   .MenuAndContent{
     position: relative;
-    background-color: chartreuse;
+    /* background-color: chartreuse;  */
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    width: 55em;
+    left: -4em;
   }
   h1 {
     text-align: center;

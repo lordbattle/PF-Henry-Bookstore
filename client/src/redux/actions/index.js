@@ -183,20 +183,20 @@ export const buyBook = (payload) => {
       const { id } = data.results;
       return id;
     } catch (error) {
-        Swal.fire({
-          title: 'Log in or Sign up',
-          text: "You must log in to buy",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Log in | Sign Up',
-          cancelButtonText: 'Later'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = '/optionLoginOrRegister'
-          }
-        })
+      Swal.fire({
+        title: 'Log in or Sign up',
+        text: "You must log in to buy",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Log in | Sign Up',
+        cancelButtonText: 'Later'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '/optionLoginOrRegister'
+        }
+      })
       console.log(`Catch de buyBook ${error}`);
     }
   };
@@ -207,6 +207,7 @@ export const buyBook = (payload) => {
 export const getUsers = () => {
   return async (dispatch) => {
     try {
+             
       const { data } = await axiosInstance.get("/users");
       console.log("LOG DATA ACTIONS", data);
       return dispatch({
@@ -283,7 +284,7 @@ export const postUsers = (payload) => {
         payload: data,
       });
     } catch (error) {
-    /*  alert(`Error postUsers ${error}`); */
+      /*  alert(`Error postUsers ${error}`); */
       console.log(error);
       throw new Error(error.response.data);
     }
@@ -294,7 +295,7 @@ export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
       console.log('antes de entrar a editUser', idUser, updatedUser);
-      const { data } = await axiosInstance.put(`/users/${idUser}`,updatedUser);
+      const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
       console.log("editUser", data);
       // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
     } catch (error) {
@@ -356,7 +357,7 @@ export function logingUser(user) {
       const baseData = await axiosInstance.post(`/authUser/login`, user);
       dispatch({ type: LOGING_USER, payload: baseData.data });
     } catch (error) {
-     /*  alert(`Cath del loginUser ${error}`); */
+      /*  alert(`Cath del loginUser ${error}`); */
       return error.respose.data
     }
   };

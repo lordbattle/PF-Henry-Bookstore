@@ -15,12 +15,9 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
-  CHANGE_PASSWORD,
   GET_ORDERS,
   HISTORY_PURCHASE,
-  CHANGE_PASSWORD
-
-  //VERIFY_USER,
+  CHANGE_PASSWORD,
 } from "../types/types.js";
 
 import axiosInstance from "../../api/axiosInstance.js";

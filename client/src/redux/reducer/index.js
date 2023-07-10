@@ -13,7 +13,8 @@ import {
   CLEAN_USER_DETAIL,
   LOGING_USER,
   LOGOUT_USER,
-  POST_USERS
+  POST_USERS,
+  GET_ORDERS
 } from "../types/types.js";
 
 export const initialState = {
@@ -22,6 +23,7 @@ export const initialState = {
   allUsers: [],
   user: [],
   users: [],
+  orders: {},
   userDetail: [],
   pagination: null,
   currentUser: null,
@@ -92,6 +94,12 @@ function rootReducer(state = initialState, action) {
        ...state,
        currentUser: action.payload,
       };
+
+      case GET_ORDERS:
+        return {
+          ...state,
+          orders: action.payload,
+        }
 
     case DELETE_USER:
       return {

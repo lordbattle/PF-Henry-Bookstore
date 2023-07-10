@@ -15,8 +15,11 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
+  CHANGE_PASSWORD,
+  GET_ORDERS,
   HISTORY_PURCHASE,
   CHANGE_PASSWORD
+
   //VERIFY_USER,
 } from "../types/types.js";
 
@@ -420,6 +423,21 @@ export const getPurchaseHistoryById =(idUser)=>{
       })
     } catch (error) {
       console.log("ERROR DEL CATCH getPurchaseHistoryById", error)
+    }
+  }
+}
+
+
+export const getAllOrders = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axiosInstance.get("/orders")
+      return dispatch({
+        type:GET_ORDERS,
+        payload:data.results
+      })  
+    } catch (error) {
+      console.error(error)
     }
   }
 }

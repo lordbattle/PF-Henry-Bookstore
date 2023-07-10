@@ -22,3 +22,4 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const VERIFY_USER = "VERIFY_USER";
 
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
+export const GET_ORDERS = "GET_ORDERS";

@@ -100,7 +100,6 @@ const Nav = () => {
             </Link>
           </span>{" "} 
           <span className="p-2 ms-0 link-as-text">
-            <Profile />
           </span>
           <span className="p-2 ms-0 link-as-text">
             <Link to={"/home"} className="text-decoration-none fs-5 text-reset">
@@ -164,7 +163,8 @@ const Nav = () => {
               </Link>
             </>
           ) : (
-            <>
+            <div style={{display: 'flex', textAlign: 'center'}}>
+              <Profile />
               <button
                 style={{
                   border: "none",
@@ -175,7 +175,7 @@ const Nav = () => {
               >
                 Log out
               </button>
-            </>
+            </div>
           )}
         </div>
       </Stack>

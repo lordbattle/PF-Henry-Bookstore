@@ -1,5 +1,6 @@
 import style from './OptionLoginOrRegister.module.css';
 import { useNavigate } from 'react-router-dom';
+
 const optionLoginOrRegister = () => {
     const navigate = useNavigate();
     const handleRegister = () =>{

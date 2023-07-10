@@ -15,9 +15,9 @@ import {
   LOGOUT_USER,
   POST_USERS,
 
-  GET_ORDERS
+  GET_ORDERS,
 
-  HISTORY_PURCHASE
+  HISTORY_PURCHASE,
 
 } from "../types/types.js";
 
@@ -76,7 +76,7 @@ function rootReducer(state = initialState, action) {
     case HISTORY_PURCHASE:
       return{
         ...state,
-        historyPurchase: action.payload
+        historyPurchase: action.payload,
       }
 
     //USER

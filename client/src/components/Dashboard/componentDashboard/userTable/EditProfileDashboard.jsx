@@ -1,16 +1,12 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import style from "./EditProfileDashboard.module.css";
 import { useState } from "react";
 import { editUser } from "../../../../redux/actions/index";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-/* const {REACT_APP_CLOUDINARY_CLOUD_NAME, REACT_APP_CLOUINARY_URL} = process.env; */
+import Swal from "sweetalert2";
 
-const cloudinary_cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-const cloudinary_url = import.meta.env.VITE_CLOUINARY_URL;
 
-const EditProfileDashboard = ({ setUserEdit, userEdit }) => {
-  console.log(userEdit, ' estamos en edit ')
+const EditProfileDashboard = ({ back, userEdit }) => {
+  const dispatch = useDispatch();
   const [userChange, setUserChange] = useState({
     banned: "",
     active: "",
@@ -18,124 +14,138 @@ const EditProfileDashboard = ({ setUserEdit, userEdit }) => {
   });
   const [isChangeUser, setIsChangeUser] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-
-
-  /* useEffect(() => {
-    setUserChange({
-      name: user.name,
-      lastName: user.lastName,
-      userName: user.userName,
-      email: user.email,
-      phone: user.phone,
-      profilePic: "",
-      age: user.age,
-    });
-  }, [user]); */
-
-  const onSubmit = async (data) => {
-    if (!data.name || !data.lastName) {
-      alert("Please fill in the required fields: name, lastName");
-      return;
+  const upInfo = async () => {
+    let newEdit = {
+      name: userEdit.name,
+      lastName: userEdit.lastName,
+      userName: userEdit.userName,
+      admin,
+      active,
+      banned
     }
 
+
+    newEdit = {
+      ...newEdit,
+      admin: userChange === '' ? userEdit.admin : userChange.admin === 'true' ? true : false,
+      active: userChange === '' ? userEdit.active : userChange.active === 'true' ? true : false,
+      banned: userChange === '' ? userEdit.banned : userChange.banned === 'true' ? true : false
+    }
+
+    console.log(newEdit, ' nuevo a mandar ')
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", `${cloudinary_cloud_name}`); // Corregir el nombre del preset de carga
-      const { data } = await axios.post(`${cloudinary_url}`, formData);
-
-      let { secure_url } = data;
-      console.log(secure_url);
-
-      let newObj = {
-        ...userChange,
-        profilePic: secure_url,
-      };
-
-      dispatch(editUser(user.id, newObj));
+      dispatch(editUser(userEdit.id, newEdit));
       setIsChangeUser(true);
+      Swal.fire({
+        icon: "success",
+        title: "Edit User!",
+        text: "User edited successfully!",
+        backdrop: true,
+      });
+      setTimeout(() => { back(); }, '1500')
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Upps !",
+        text: `Something went wrong ${error.response.data}`,
+        backdrop: true,
+      }); X
     }
+    // try {
+    //   const formData = new FormData();
+    //   formData.append("file", file);
+    //   formData.append("upload_preset", `${cloudinary_cloud_name}`); // Corregir el nombre del preset de carga
+    //   const { data } = await axios.post(`${cloudinary_url}`, formData);
+
+    //   let { secure_url } = data;
+    //   console.log(secure_url);
+
+    //   let newObj = {
+    //     ...userChange,
+    //     profilePic: secure_url,
+    //   };
+
+    //   dispatch(editUser(user.id, newObj));
+    //   setIsChangeUser(true);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUserChange((supUser) => ({
-      ...supUser,
-      [name]: value,
-    }));
-  };
 
-  const admin = () => {
+  const admin = (event) => {
+    setUserChange({
+      ...userChange,
+      [event.target.name]: event.target.defaultValue
+    })
+  }
 
+  const active = (event) => {
+    setUserChange({
+      ...userChange,
+      [event.target.name]: event.target.defaultValue
+    })
+  }
+
+  const banned = (event) => {
+    setUserChange({
+      ...userChange,
+      [event.target.name]: event.target.defaultValue
+    })
   }
 
   const handleReverse = () => {
-    setUserEdit([]);
+    back();
   }
   return (
     <div className={style.containerEdit}>
-      <h4>Edit User  ID: {userEdit.id}</h4>
+      <h2 style={{ fontWeight: 'bold' }}>Edit User  ID: {userEdit.id}</h2>
 
       <div className={style.containerSecond}>
         <div className={style.info}>
-          <button className={style.buttonVolver} onClick={handleReverse}>volver</button>
+          <button className={style.buttonVolver} onClick={handleReverse}>Back</button>
           <img className={style.imagePic} src={userEdit.profilePic} alt="profilePic" />
-          <h2>{userEdit.name}</h2>
-          <h2>{userEdit.lastName}</h2>
-          <label>UserName: {userEdit.userName}</label>
-          <label>Email: {userEdit.email}</label>
-          <label>Age: {userEdit.age}</label>
-          <label>Genres: {userEdit.genres}</label>
-          <label>Phone: {userEdit.phone}</label>
-          <label>location: {userEdit.location}</label>
-          <label>GoogleUser: {userEdit.googleUser ? 'true' : 'false'}</label>
-          <label>Active: {userEdit.active ? 'true' : 'false'}</label>
-          <label>Banned: {userEdit.banned ? 'true' : 'false'}</label>
-          <label>Admin: {userEdit.admin ? 'true' : 'false'}</label>
+          
+          <h2>{userEdit.name} {userEdit.lastName}</h2>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>UserName: </span></div><div className={style.dos}><p>{userEdit.userName}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Email: </span></div><div className={style.dos}><p>{userEdit.email}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Age: </span></div><div className={style.dos}><p>{userEdit.age}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Genres: </span></div><div className={style.dos}><p>{userEdit.genres}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Phone: </span></div><div className={style.dos}><p>{userEdit.phone}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>location: </span></div><div className={style.dos}><p>{userEdit.location}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>GoogleUser: </span></div><div className={style.dos}><p>{userEdit.googleUser ? 'true' : 'false'}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Active: </span></div><div className={style.dos}><p>{userEdit.active ? 'true' : 'false'}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Banned: </span></div><div className={style.dos}><p>{userEdit.banned ? 'true' : 'false'}</p></div></div>
+          <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Admin: </span></div><div className={style.dos}><p>{userEdit.admin ? 'true' : 'false'}</p></div></div>
+
         </div>
         <div className={style.formEdit}>
-          <form
-            className="d-flex flex-column align-items-center "
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <div>
-              <label>Admin</label>
-              <input type="radio" id="radioT" value="true" name='admin' onChange={admin} /> <label htmlFor="radioT">True</label><br />
+          <div>
+            <div className={style.divRadio}>
+              <span className={style.span}>Admin: </span>
+              <input type="radio" id="radioT" value="true" name='admin' onChange={admin} /> <label htmlFor="radioT">True</label>
               <input type="radio" id="radioF" value="false" name='admin' onChange={admin} /><label htmlFor="radioF">False</label>
 
             </div>
-            <div>
-              <label>Active</label>
-              <input type="radio" id="radioT" value="true" name='admin' onChange={admin} /> <label htmlFor="radioT">True</label><br />
-              <input type="radio" id="radioF" value="false" name='admin' onChange={admin} /><label htmlFor="radioF">False</label>
+            <div className={style.divRadio}>
+              <span className={style.span}>Active: </span>
+              <input type="radio" id="radioT" value="true" name='active' onChange={active} /> <label htmlFor="radioT">True</label>
+              <input type="radio" id="radioF" value="false" name='active' onChange={active} /><label htmlFor="radioF">False</label>
 
             </div>
-            <div>
-              <label>Banned</label>
-              <input type="radio" id="radioT" value="true" name='admin' onChange={admin} /> <label htmlFor="radioT">True</label><br />
-              <input type="radio" id="radioF" value="false" name='admin' onChange={admin} /><label htmlFor="radioF">False</label>
+            <div className={style.divRadio}>
+              <span className={style.span}>Banned: </span>
+              <input type="radio" id="radioT" value="true" name='banned' onChange={banned} /> <label htmlFor="radioT">True</label>
+              <input type="radio" id="radioF" value="false" name='banned' onChange={banned} /><label htmlFor="radioF">False</label>
 
             </div>
-            <input
-              type="text"
-              {...register("name", { required: true })}
-              placeholder={userEdit.name}
-              onChange={handleChange}
-              value={userChange.name}
-            />
-            {errors.name && <span>Name is required</span>}
-            <button type="submit">Save Profile</button>
-          </form>
-          {isChangeUser && <div>The user has been modified</div>}
+
+            <button className={style.buttonEdit} type="submit" onClick={upInfo}>Save Profile</button>
+
+            {isChangeUser && <div>The user has been modified</div>}
+         
+          </div>
+
         </div>
       </div>
     </div>

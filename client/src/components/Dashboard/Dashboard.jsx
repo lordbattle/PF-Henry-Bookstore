@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [book, setBook] = useState(false);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
 
 
 
@@ -13,9 +13,12 @@ const Dashboard = () => {
     if (book === false) {
       setUser(false);
       setBook(true);
+      preventDefault();
     }
     else
       setBook(false)
+      setUser(true);
+
   }
 
   const handleTrueUser = (e) => {
@@ -24,7 +27,7 @@ const Dashboard = () => {
       setUser(true);
     }
     else {
-      setUser(false);
+      setUser(true);
     }
   }
   useEffect(() => {

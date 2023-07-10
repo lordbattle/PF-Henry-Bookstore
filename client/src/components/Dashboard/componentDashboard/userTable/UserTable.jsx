@@ -6,10 +6,11 @@ import style from './UserTable.module.css';
 import EditProfileDashboard from './EditProfileDashboard';
 import { Link } from 'react-router-dom';
 import { isEmptyArray } from 'formik';
+import { set } from 'react-hook-form';
 
 const UserTable = () => {
     const dispatch = useDispatch();
-    const users = useSelector((state) => state.users.results);
+    let users = useSelector((state) => state.users.results);
     if (!users)
         dispatch(getUsers());
 
@@ -39,7 +40,10 @@ const UserTable = () => {
             return usersNews.slice(currentPage, currentPage + 3);
         }
     };
-
+    const back = () =>{
+        setUserEdit([])
+        users =dispatch(getUsers());
+    }
     const nextPage = () => {
         setCurrentPage(currentPage + 3);
     }
@@ -58,7 +62,7 @@ const UserTable = () => {
         <div className={style.containerMain} >
 
             {
-                !isEmptyArray(userEdit) ? <EditProfileDashboard setUserEdit={setUserEdit} userEdit={userEdit[0]} /> :
+                !isEmptyArray(userEdit) ? <EditProfileDashboard back={back} userEdit={userEdit[0]} /> :
                     <div >
                         <h1>Users Table</h1>
                         <input type="text"

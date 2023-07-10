@@ -15,6 +15,7 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
+  HISTORY_PURCHASE,
   CHANGE_PASSWORD
   //VERIFY_USER,
 } from "../types/types.js";
@@ -412,8 +413,11 @@ export function verifyUserToken() {
 export const getPurchaseHistoryById =(idUser)=>{
   return async (dispatch)=>{
     try {
-      const data = await axiosInstance.get(`/bills/userId=${idUser}`)
-      console.log("esto es data de getPurchaseById", data)
+      const {data} = await axiosInstance.get(`/bills?userId=${idUser}`)
+      return dispatch({
+        type: HISTORY_PURCHASE,
+        payload: data
+      })
     } catch (error) {
       console.log("ERROR DEL CATCH getPurchaseHistoryById", error)
     }

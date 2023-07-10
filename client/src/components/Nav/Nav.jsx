@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logoutUser, verifyUserToken } from "../../redux/actions";
 import Cookies from "js-cookie";
+import Profile from "../Profile/Profile";
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
@@ -88,7 +89,7 @@ const Nav = () => {
 
         <SearchBar />
 
-        <div className="w-100 m-0 d-flex justify-content-end">
+        <div className="w-100 m-0 d-flex justify-content-end align-items-center">
           {" "}
           <span className="p-2 ms-0 link-as-text">
             <Link
@@ -97,13 +98,16 @@ const Nav = () => {
             >
               Dashboard
             </Link>
-          </span>{" "}
+          </span>{" "} 
+          <span className="p-2 ms-0 link-as-text">
+            <Profile />
+          </span>
           <span className="p-2 ms-0 link-as-text">
             <Link to={"/home"} className="text-decoration-none fs-5 text-reset">
               Home
             </Link>
           </span>{" "}
-          {userLoginLocal.id ? (
+          {/* {userLoginLocal.id ? (
             <span className="p-2 ms-0 link-as-text">
               <Link
                 to={"/profile"}
@@ -112,7 +116,8 @@ const Nav = () => {
                 {userLoginLocal.userName}
               </Link>
             </span>
-          ) : null}
+          ) : null} */}
+         
           <span className="p-2 ms-0 link-as-text">
             <Link
               to={"/about"}

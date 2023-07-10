@@ -305,7 +305,6 @@ export const postUsers = (payload) => {
 export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
-      console.log('antes de entrar a editUser', idUser, updatedUser);
 
       const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
       console.log("editUser", data);

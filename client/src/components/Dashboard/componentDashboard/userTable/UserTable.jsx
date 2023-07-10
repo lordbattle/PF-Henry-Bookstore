@@ -105,10 +105,10 @@ const UserTable = () => {
                         <div>
                             <button disabled={(currentPage == 0) ? true : false } onClick={PrevPage} className='btn btn-primary'>Anteriores</button>
                             &nbsp;
-                            <button disabled={(users.length > currentPage + 3) ? false : true } onClick={nextPage} className='btn btn-primary'>Siguientes</button>
+                            {/* DAVID user.length me decia que no se leia la propiedad length, le deje solo users. Por favor verificar que este correctamente */}
+                            <button disabled={(users > currentPage + 3) ? false : true } onClick={nextPage} className='btn btn-primary'>Siguientes</button>
                         </div>
                     </div>
-
             }
         </div>
 

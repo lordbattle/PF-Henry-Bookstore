@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 
-import { logingUser, postUsers } from "../../redux/actions/index";
+import { logingUser, postUsers , getUsers } from "../../redux/actions/index";
 
 import { useDispatch } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
@@ -62,6 +62,7 @@ const Register = () => {
           try {
             try {
               await postUsersAsync(values); // Esperar la resolución de la promesa
+              dispatch(getUsers());
             } catch (error) {
               throw new Error(error);
             }

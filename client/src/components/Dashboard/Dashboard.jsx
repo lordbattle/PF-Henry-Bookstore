@@ -1,107 +1,77 @@
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getBooksByFilters, getUsers } from "../../redux/actions";
 import style from "./Dashboard.module.css";
-import Filters from "../Filters/Filters";
-import Pagination from "../Pagination/Pagination";
-import Card from "../Card/Card";
-import useFilters from "../../hooks/useFilters";
-import { Link } from "react-router-dom";
+import BookTable from "./componentDashboard/BookTable/BookTable";
+import UserTable from "./componentDashboard/userTable/UserTable";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-  const books = useSelector((state) => state.books);
+  const [book, setBook] = useState(false);
+  const [user, setUser] = useState(true);
+  const [sales, setSales] = useState(false);
 
+
+
+
+  const handleTrueBook = (e) => {
+    if (book === false) {
+      setUser(false);
+      setSales(false)
+      setBook(true);
+      preventDefault();
+    }
+    else
+    setSales(false)
+    setBook(false)
+    setUser(true);
+
+  }
+  const handleTrueSales = (e) => {
+    if (sales === false) {
+      setUser(false);
+      setBook(false);
+      setSales(true)
+      preventDefault();
+    }
+    else
+      setBook(false)
+    setSales(false)
+    setUser(true);
+
+  }
+
+  const handleTrueUser = (e) => {
+    if (user === false) {
+      setSales(false)
+      setBook(false);
+      setUser(true);
+    }
+    else {
+      setUser(true);
+    }
+  }
   useEffect(() => {
-    dispatch(getUsers());
-    dispatch(getBooksByFilters());
-  }, [dispatch]);
-
-  const { setFilters, setCurrentPage, currentPage } = useFilters();
-  const componentRef = useRef(null);
-
-  const handleScrollUp = () => {
-    componentRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    setFilters({
-      author: "all",
-      genre: "all",
-      page: 1,
-      limit: 10,
-      price: 0,
-      orderPrice: "nue",
-      orderTitle: "nue",
-    });
-  }, [setFilters]);
-
-  console.log(books);
+    handleTrueBook
+  }, [book]);
   return (
     <div className={style.container}>
-      <h1>Dashboard de Usuarios y Libros</h1>
-      <div>
-        <h2>Usuarios</h2>
-        {/* <ul className={style.user_list}>
-          {users.map((user, index) => (
-            <li key={index}>{user}</li>
-          ))}
-        </ul> */}
-      </div>
-      <div>
-        <div className="d-flex flex-column" ref={componentRef}>
-          <div className="d-flex">
-            <Filters setFilters={setFilters} />
-            <h2>Libros</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>ISBN</th>
-                  <th>Active</th>
-                </tr>
-              </thead>
-              <tbody>
-                {books.map((book, index) => (
-                  <tr key={index}>
-                    <td>{book.title}</td>
-                    <td>{book.identifier}</td>
-                    <td>{book.active ? "true" : "false"}</td>
-                    <td>
-                      <button >
-                      <Link to={`/detail/${book.id}`}>Ver detalle</Link>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* <p>{book.subtitle}</p>
-                <p>{book.publishedDate}</p>
-                <p>{book.publisher}</p>
-                <p>{book.description}</p>
-                <p>{book.pages}</p>
-                <p>{book.averageRating}</p>
-                <p>{book.usersRating}</p>
-                <p>{book.bookPic}</p>
-                <p>{book.price}</p>
-                <p>{book.stock}</p>
-                <p>{book.authors}</p>
-                <p>{book.genre}</p> */}
+      <div className={style.MenuAndContent}>
+
+        <div className={style.dashboradMenu}>
+
+          <div className={style.menu}>
+            <h1>Dashboard</h1>
+            <div className={style.divMenu} onClick={handleTrueUser} ><h2>Users</h2></div>
+            <div className={style.divMenu} onClick={handleTrueBook}><h2>Books</h2></div>
+            <div className={style.divMenu} onClick={handleTrueSales}><h2>Sales</h2></div>
           </div>
-          {/* <Card currentBooks={books} /> */}
+          {user ? <UserTable /> : <></>}
+          {book ? <BookTable /> : <></>}
+
+
         </div>
 
-        <div className="d-flex justify-content-center p-2">
-          <Pagination
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-            handleScrollUp={handleScrollUp}
-            componentRef={componentRef}
-          />
-        </div>
       </div>
+
+
     </div>
   );
 };

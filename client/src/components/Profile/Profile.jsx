@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../redux/actions";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {Link, NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logoutUser } from "../../redux/actions";
+import style from "./Profile.module.css";
 
 const Profile = () => {
+  const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch();
   const { logout } = UserAuth();
   const navigate = useNavigate();
@@ -51,43 +53,83 @@ const Profile = () => {
     });
   };
 
-  return (
-    <div
-      style={{ height: "100vh", margin: "0 auto", width: "50%" }}
-      className=" d-flex flex-column gap-3 text-center align-items-center"
-    >
-      {userCurrent.results && (
-        <div className=" d-flex  align-items-center justify-content-center gap-3 m-0">
-          <img src={userCurrent.results.profilePic} width="100px" />
+  const handleMouseEnter = () => {
+    setIsActive(true);
+    // Ejecutar la acción deseada aquí
+  };
 
-          <h4>{userCurrent.results.userName}</h4>
-        </div>
-      )}
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item">
-          <Link
-            to={"/editprofile"}
-            className="text-decoration-none fs-6 text-reset"
-          >
-            Edit Profile
-          </Link>
-        </li>
-        <li className="list-group-item">
-          <Link
-            to={"/ChangePassword"}
-            className="text-decoration-none fs-6 text-reset"
-          >
-            Reset Password
-          </Link>
-        </li>
-        <li className="list-group-item">
-          <button className="" onClick={alert}>
-            Log Out
-          </button>
-        </li>
-      </ul>
-    </div>
+  const handleMouseLeave = () => {
+    setIsActive(false);
+  };
+
+  return (
+    <>
+      <div className={style.dropdown}>
+        {userCurrent.results && (
+          <div className={style.dropdown_toggle} onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}>
+            {userCurrent.results.userName}
+          </div>
+        )}
+
+        {isActive && (
+          <ul className={style.dropdown_menu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+            {userCurrent.results && (
+              <li className={style.dropdown_item_profile} >
+                <img src={userCurrent.results.profilePic} width="70px" />
+                <h4>{userCurrent.results.userName}</h4>
+              </li>
+            )}
+            <li className={style.dropdown_item}>
+              <Link to={"/editprofile"} className="text-black text-decoration-none fs-6">Edit Profile</Link>
+            </li>
+            <li className={style.dropdown_item}>
+              <Link to={"/ChangePassword"} className="text-black text-decoration-none fs-6">Reset Password</Link>
+            </li>
+            <li className={style.dropdown_item}>
+              <NavLink className="text-black text-decoration-none fs-6" onClick={alert}>Log Out</NavLink>
+            </li>
+          </ul>
+        )}
+      </div>
+    </>
   );
 };
 
 export default Profile;
+
+/* <div className="text-center align-items-center dropdown">
+{userCurrent.results && (
+  <a
+    className="btn dropdown-toggle text-black d-flex align-items-center gap-1 p-0"
+    href="#"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    <h5 className="m-0 p-0">{userCurrent.results.userName}</h5>
+  </a>
+)}
+<ul className="dropdown-menu px-5" aria-labelledby="dropdownMenuLink">
+  {userCurrent.results && (
+    <li className="dropdown-item">
+      <img src={userCurrent.results.profilePic} width="100px" />
+
+      <h4>{userCurrent.results.userName}</h4>
+    </li>
+  )}
+  <li className="dropdown-item">
+    <Link to={"/editprofile"} className="text-decoration-none fs-6">
+      Edit Profile
+    </Link>
+  </li>
+  <li className=" dropdown-item">
+    <Link to={"/ChangePassword"} className="text-decoration-none fs-6 ">
+      Reset Password
+    </Link>
+  </li>
+  <li className=" dropdown-item">
+    <button onClick={alert}>Log Out</button>
+  </li>
+</ul>
+</div> */

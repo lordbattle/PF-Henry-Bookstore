@@ -11,6 +11,7 @@ import Detail from "./components/Detail/Detail";
 import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
 import OptionLoginOrRegister from "./components/OptionLoginOrRegister/OptionLoginOrRegister";
+import BookManager from "./components/Dashboard/componentDashboard/BookManager/BookManager";
 
 import ChangePassword from "./components/EditPassword/EditPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
@@ -28,7 +29,6 @@ import "./main.css";
 
 function App() {
   const { pathname } = useLocation();
-  //const { isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div className="container">
@@ -63,7 +63,10 @@ function App() {
             <Route path="/createbook" element={<AddBookForm />}></Route>
 
             <Route path="/cart" element={<Cart />}></Route>
+
             <Route path="/editprofile" element={<EditProfile />}></Route>
+
+            <Route path="/managebooks/:id" element={<BookManager />}></Route>
           </Routes>
 
           <Footer />

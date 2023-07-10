@@ -16,6 +16,7 @@ import {
   LOGOUT_USER,
   POST_USERS,
   HISTORY_PURCHASE,
+  CHANGE_PASSWORD
   //VERIFY_USER,
 } from "../types/types.js";
 
@@ -195,19 +196,19 @@ export const buyBook = (payload) => {
       return id;
     } catch (error) {
       Swal.fire({
-        title: "Log in or Sign up",
+        title: 'Log in or Sign up',
         text: "You must log in to buy",
-        icon: "warning",
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Log in | Sign Up",
-        cancelButtonText: "Later",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Log in | Sign Up',
+        cancelButtonText: 'Later'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = "/optionLoginOrRegister";
+          window.location.href = '/optionLoginOrRegister'
         }
-      });
+      })
       console.log(`Catch de buyBook ${error}`);
     }
   };
@@ -218,6 +219,7 @@ export const buyBook = (payload) => {
 export const getUsers = () => {
   return async (dispatch) => {
     try {
+             
       const { data } = await axiosInstance.get("/users");
       console.log("LOG DATA ACTIONS", data);
       return dispatch({
@@ -304,7 +306,7 @@ export const postUsers = (payload) => {
 export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
-      console.log("antes de entrar a editUser", idUser, updatedUser);
+
       const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
       console.log("editUser", data);
       // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
@@ -421,3 +423,26 @@ export const getPurchaseHistoryById =(idUser)=>{
     }
   }
 }
+
+export const changePassword = (idUser, newPassword) => {
+  return async (dispatch) => {
+    try {
+      const response = await axiosInstance.put(`/profile/changePassword`, {
+        idUser,
+        newPassword,
+      });
+      
+      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
+
+      dispatch({
+        type: CHANGE_PASSWORD,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
+    }
+  };
+};
+
+//nr

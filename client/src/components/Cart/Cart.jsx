@@ -12,12 +12,13 @@ import { getPurchaseHistoryById } from '../../redux/actions';
 export const Cart =()=>{
   const dispatch = useDispatch();
   const user = useSelector(state=>state.user)
+  const history = useSelector(state=>state.historyPurchase.results);
     let idUser=0;
 
       if(user){
         idUser = user.id
       }
-    console.log("ESTO ES results", user)
+    console.log("ESTO ES results", idUser)
 
 const {cart, setCart} = useStorage();
 const location = useLocation();
@@ -135,11 +136,11 @@ const location = useLocation();
           backdrop: "rgba(243, 148, 23, 0.8)",
         });
       }
-      
-      useEffect(()=>{      
-        dispatch(getPurchaseHistoryById(idUser))
-      },[idUser]) //DESCOMENTAR Y CAMBIAR LO DE [IDUSER] CUANDO ESTE ARREGLADO EL REGISTER PARA COMPROBAR BIEN LA DATA Q TRAE
 
+      useEffect(()=>{dispatch(getPurchaseHistoryById(idUser))   
+      },[idUser])
+
+      console.log("data del estado global", history)
 
     return(
         <div>
@@ -181,27 +182,29 @@ const location = useLocation();
             </div>
       )}
       <div>
-      {status === "approved" ? (
-        <div style={{backgroundColor: '#71a5e5', borderRadius: '20px', padding: '10px'}}>
-          <h3 style={{textAlign: 'center'}}>Purchase history</h3>,
-          {localStorageData.cart.length > 0 ? (
-            <div>
-              {localStorageData.cart.map((item) => (
-                <div key={item.id} className={style.main2}>
-                  <img src={item.img} alt="book image" style={{height: '11rem', width: '10rem',marginRight: '1rem'}}/>
-                  <h3 style={{fontSize: '25px', minWidth: '100rem'}}>{item.title}</h3>
-                  <p style={{fontSize: '20px'}}>${item.price}</p>
-
+        <h3>Historial de compras</h3>
+         {history && history.rows && history.rows.length > 0 ? (
+              history.rows.map((row) => (
+                <div key={row.id}>
+                  <h3>bought the day: {row.createdAt}</h3>
+                  <p>Order ID: {row.orderId}</p>
                 </div>
-              ))}
-            </div>
+              ))
+            ) : null}
+
+          {history && history.rows && history.rows.length > 0 ? (
+            history.rows[0].order.orderItems.map((orderItem) => (
+              <div key={orderItem.id}>
+                <p>{orderItem.title}</p>
+                <p>Price: ${orderItem.unit_price}</p>
+              </div>
+            ))
           ) : (
-            <div className={style.empty}> 
-              <h3 style={{width: '100%', paddingTop: '1em'}}>You have no purchase history</h3>
+            <div>
+              <h2>Historial de compras</h2>
+              <p>Aqui se renderizará el historial de sus compras</p>
             </div>
           )}
-        </div>
-      ) : null}
       </div>
 </div>
     )

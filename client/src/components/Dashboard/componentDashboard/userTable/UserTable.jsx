@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, getUserById } from '../../../../redux/actions';
+import { getUsers } from '../../../../redux/actions';
 import style from './UserTable.module.css';
 import EditProfileDashboard from './EditProfileDashboard';
-import { Link } from 'react-router-dom';
 import { isEmptyArray } from 'formik';
-import { set } from 'react-hook-form';
 
 const UserTable = () => {
     const dispatch = useDispatch();
@@ -40,12 +38,16 @@ const UserTable = () => {
             return usersNews.slice(currentPage, currentPage + 3);
         }
     };
-    const back = () =>{
+    const back = () => {
         setUserEdit([])
-        users =dispatch(getUsers());
+        users = dispatch(getUsers());
     }
     const nextPage = () => {
-        setCurrentPage(currentPage + 3);
+        if (users.length > currentPage + 3)
+            setCurrentPage(currentPage + 3);
+        
+
+        
     }
     const PrevPage = () => {
         if (currentPage > 0)
@@ -94,16 +96,16 @@ const UserTable = () => {
                                             <td >{googleUser ? 'true' : 'false'}</td>
                                             <td >{active ? 'true' : 'false'}</td>
                                             <td ><img src={profilePic} className={style.imageUser} alt={userName} /></td>
-                                            <td ><button key={id} name={id} onClick={handleEditUserId} >Edit</button></td>
+                                            <td ><button className={style.buttonEdit} key={id} name={id} onClick={handleEditUserId} >Edit</button></td>
                                         </tr>
                                     ))
                                 }
                             </tbody>
                         </table>
                         <div>
-                            <button onClick={PrevPage} className='btn btn-primary'>Anteriores</button>
+                            <button disabled={(currentPage == 0) ? true : false } onClick={PrevPage} className='btn btn-primary'>Anteriores</button>
                             &nbsp;
-                            <button onClick={nextPage} className='btn btn-primary'>Siguientes</button>
+                            <button disabled={(users.length > currentPage + 3) ? false : true } onClick={nextPage} className='btn btn-primary'>Siguientes</button>
                         </div>
                     </div>
 

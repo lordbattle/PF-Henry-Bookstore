@@ -6,10 +6,14 @@
     /* background-color: red; */
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
     text-align: center;
   }
+  .divMenu{
+    position: relative;
+  }
+  .divMenu:hover{
+    background-color: rgb(106, 106, 243);
+  } 
   .dashboradMenu{
     position: relative;
     display: flex;
@@ -28,13 +32,13 @@
     text-align: center;
 
   }
+  
   .MenuAndContent{
     position: relative;
     /* background-color: chartreuse;  */
     display: flex;
     flex-direction: row;
     width: 55em;
-    left: -4em;
   }
   h1 {
     text-align: center;

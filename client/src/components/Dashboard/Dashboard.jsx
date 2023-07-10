@@ -6,23 +6,41 @@ import { useEffect, useState } from "react";
 const Dashboard = () => {
   const [book, setBook] = useState(false);
   const [user, setUser] = useState(true);
+  const [sales, setSales] = useState(false);
+
 
 
 
   const handleTrueBook = (e) => {
     if (book === false) {
       setUser(false);
+      setSales(false)
       setBook(true);
       preventDefault();
     }
     else
+    setSales(false)
+    setBook(false)
+    setUser(true);
+
+  }
+  const handleTrueSales = (e) => {
+    if (sales === false) {
+      setUser(false);
+      setBook(false);
+      setSales(true)
+      preventDefault();
+    }
+    else
       setBook(false)
-      setUser(true);
+    setSales(false)
+    setUser(true);
 
   }
 
   const handleTrueUser = (e) => {
     if (user === false) {
+      setSales(false)
       setBook(false);
       setUser(true);
     }
@@ -41,23 +59,16 @@ const Dashboard = () => {
 
           <div className={style.menu}>
             <h1>Dashboard</h1>
-            <div onClick={handleTrueUser} ><h2>Usuarios</h2></div>
-            <div onClick={handleTrueBook}><h2>Books</h2></div>
-            <div><h2>Ventas</h2></div>
-
-
+            <div className={style.divMenu} onClick={handleTrueUser} ><h2>Users</h2></div>
+            <div className={style.divMenu} onClick={handleTrueBook}><h2>Books</h2></div>
+            <div className={style.divMenu} onClick={handleTrueSales}><h2>Sales</h2></div>
           </div>
-
-          {/* <ul className={style.user_list}>
-          {users.map((user, index) => (
-            <li key={index}>{user}</li>
-          ))}
-        </ul> */}
           {user ? <UserTable /> : <></>}
+          {book ? <BookTable /> : <></>}
+
+
         </div>
-        {
-          book ? <BookTable /> : <></>
-        }
+
       </div>
 
 

@@ -134,11 +134,13 @@ const getBookBySearch = async (
       whereClause.price = { [Op.between]: [5000, 30000] };
     }
   }
-  console.log(whereClause);
+
 
   let bookBySearch = await Book.findAll({
     where: whereClause,
   });
+
+ 
 
   if (orderTitle || orderPrice || orderStock || page || limit)
     return wildcardFilterAndPagination(
@@ -157,6 +159,8 @@ const getBookBySearch = async (
 const getBookById = async (idBook) => {
   return await Book.findByPk(idBook);
 };
+
+
 
 const postBook = async (
   title,

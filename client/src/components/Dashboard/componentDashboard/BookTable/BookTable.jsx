@@ -61,7 +61,7 @@ const BookTable = () => {
                     <td>{book.active ? "true" : "false"}</td>
                     <td>
                       <button >
-                      <Link to={`/detail/${book.id}`}>Ver detalle</Link>
+                      <Link to={`/ManageBooks/${book.id}`}>Ver detalle</Link>
                       </button>
                     </td>
                   </tr>

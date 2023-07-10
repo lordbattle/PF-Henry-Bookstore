@@ -72,13 +72,13 @@ const verifyToken = async (req, res) => {
       if (err) return res.status(401).json({ message: "Unauthorized" });
 
       const userFound = await User.findByPk(user.id);
-      if(!userFound) res.status(401).json({ message: "Unauthorized" })
-    });
+      if (!userFound) return res.status(401).json({ message: "Unauthorized" });
 
-    res.status(200).json({
-      id: userFound.id,
-      userName: userFound.userName,
-      email: userFound.email,
+      res.status(200).json({
+        id: userFound.id,
+        userName: userFound.userName,
+        email: userFound.email,
+      });
     });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });

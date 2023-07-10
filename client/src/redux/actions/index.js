@@ -7,6 +7,7 @@ import {
   GET_USERS,
   GET_USER_ID,
   GET_CURRENT_USER,
+  GET_PAGINATION_USERS,
   DELETE_USER,
   GET_USERS_BY_NAME,
   GET_USERS_BY_STATUS,
@@ -14,13 +15,14 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
+  CHANGE_PASSWORD
   //VERIFY_USER,
 } from "../types/types.js";
 
 import axiosInstance from "../../api/axiosInstance.js";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-
+//import axios from "axios";
 
 //BOOKS
 //?
@@ -71,6 +73,17 @@ export const getBookByTitle = (title) => {
   };
 };
 
+export const getPaginationBooks = () => {
+  return async (dispatch) => {
+    //let url = "http://localhost:3001/books/";
+    const { data } = await axiosInstance.get("/books/?limit=450");
+    return dispatch({
+      type:GET_PAGINATION_USERS,
+      payload: data.shift()
+    });
+  };
+};
+
 export const getBooksByFilters = (obj) => {
   return async (dispatch) => {
     try {
@@ -104,9 +117,7 @@ export const getBooksByFilters = (obj) => {
       url = url.slice(0, -1);
       console.log(url);
 
-
       const { data } = await axiosInstance.get(url);
-
 
       console.log("actions", data);
       return dispatch({
@@ -295,6 +306,7 @@ export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
       console.log('antes de entrar a editUser', idUser, updatedUser);
+
       const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
       console.log("editUser", data);
       // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
@@ -358,7 +370,7 @@ export function logingUser(user) {
       dispatch({ type: LOGING_USER, payload: baseData.data });
     } catch (error) {
       /*  alert(`Cath del loginUser ${error}`); */
-      return error.respose.data
+      throw new Error(error.response.data);
     }
   };
 }
@@ -374,14 +386,14 @@ export function logoutUser() {
   };
 }
 
-export function verifyUser() {
+export function verifyUserToken() {
   return async (dispatch) => {
     try {
       const cookies = Cookies.get();
       console.log(cookies);
 
       if (cookies.token) {
-        const response = await axiosInstance.post(
+        const response = await axiosInstance.get(
           "/authUser/verifyuser",
           {},
           { headers: { Cookie: `token=${cookies.token}` } }
@@ -397,3 +409,37 @@ export function verifyUser() {
     }
   };
 }
+
+export const getPurchaseHistoryById =(idUser)=>{
+  return async (dispatch)=>{
+    try {
+      const data = await axiosInstance.get(`/bills/userId=${idUser}`)
+      console.log("esto es data de getPurchaseById", data)
+    } catch (error) {
+      console.log("ERROR DEL CATCH getPurchaseHistoryById", error)
+    }
+  }
+}
+
+export const changePassword = (idUser, newPassword) => {
+  return async (dispatch) => {
+    try {
+      const response = await axiosInstance.put(`/profile/changePassword`, {
+        idUser,
+        newPassword,
+      });
+      
+      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
+
+      dispatch({
+        type: CHANGE_PASSWORD,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
+    }
+  };
+};
+
+//nr

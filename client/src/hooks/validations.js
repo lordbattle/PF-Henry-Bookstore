@@ -6,6 +6,9 @@ const regexUsername = /^[A-Za-z0-9][A-Za-z0-9--\s]*$/;
 const regexNameAndLastName = /^[a-zA-ZÀ-ÿ\s]{1,25}$/;
 const regexLocation = /^[a-zA-ZÀ-ÿ\s]{1,25}$/;
 const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/;
+
+
+
 const validations = (values) => {
   let errors = {};
   if (!values.name) {
@@ -80,7 +83,7 @@ const validations = (values) => {
   }
 
   if (!values.genres) {
-    values.genres = "Not specified";
+    values.genres = "not specified";
   }
 
   if (!values.phone) {
@@ -88,6 +91,15 @@ const validations = (values) => {
   } else if (!regexPhone.test(values.phone)) {
     errors.phone = "Invalid phone format";
   }
+
+  /* if (!values.passwordConfirmation) {
+    errors.passwordConfirmation = "Please, confirm your password";
+  } else if (values.passwordConfirmation !== values.password) {
+    errors.passwordConfirmation = "Passwords do not match";
+  } */
+
+
+
   return errors;
 };
 export default validations;

@@ -214,7 +214,7 @@ const Register = () => {
                   id="genres"
                   name="genres"
                 >
-                  <option value="Not specified"></option>
+                  <option value="not specified"></option>
                   <option value="male">Masculino</option>
                   <option value="female">Femenino</option>
                 </Field>

@@ -1,58 +1,27 @@
-import React, { useState, useEffect } from "react";
-
-import { getAuth } from "firebase/auth";
-import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { changePassword } from "../../redux/actions/index";
 
 const ChangePassword = () => {
-  const { user, getAccessTokenSilently } = getAuth();
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [profile, setProfileInfo] = useState(null);
+  
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    // Obtener información del perfil del usuario al cargar el componente
-    const fetchProfileInfo = async () => {
-      try {
-        const accessToken = await getAccessTokenSilently();
-        const response = await axios.get("/profile/profile", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        setProfileInfo(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchProfileInfo();
-  }, [getAccessTokenSilently]);
-
-  const handlePasswordChange = async (e) => {
-    e.preventDefault();
-
+  const handlePasswordChange = async () => {
     try {
-      const accessToken = await getAccessTokenSilently();
-      const response = await axios.put(
-        "/editpassword/changePassword",
-        { password },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      await dispatch(changePassword(currentPassword, newPassword));
 
-      if (response.status === 200) {
-        setSuccessMessage("Password changed successfully");
-        setPassword("");
-        setErrorMessage("");
-      } else {
-        setErrorMessage("Error al cambiar la contraseña");
-        setSuccessMessage("");
-      }
+      setSuccessMessage("Password changed successfully");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setErrorMessage("");
     } catch (error) {
       console.error(error);
       setErrorMessage("Failed to change password");
@@ -62,17 +31,42 @@ const ChangePassword = () => {
 
   return (
     <div>
-           <h2>Change Your Password</h2>
-      <form onSubmit={handlePasswordChange}>
-         <label>
-           You can change here :             
+      <h2>Change Your Password</h2>
+      <form onSubmit={handleSubmit(handlePasswordChange)}>
+        <label>
+          Current Password:
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("currentPassword", { required: true })}
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
           />
         </label>
-        <button type="submit">Change my password</button>
+        {errors.currentPassword && <p>Current Password is required</p>}
+        <label>
+          New Password:
+          <input
+            type="password"
+            {...register("newPassword", { required: true })}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+        </label>
+        {errors.newPassword && <p>New Password is required</p>}
+        <label>
+          Confirm Password:
+          <input
+            type="password"
+            {...register("confirmPassword", {
+              required: true,
+              validate: (value) => value === newPassword || "Passwords do not match"
+            })}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </label>
+        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+        <button type="submit">Change password</button>
       </form>
       {successMessage && <p>{successMessage}</p>}
       {errorMessage && <p>{errorMessage}</p>}

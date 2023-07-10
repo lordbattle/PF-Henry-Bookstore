@@ -2,8 +2,39 @@ import style from "../LandingPage/LandingPage.module.css";
 import { Row, Col, Image, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CarouselComp from "../Carousel/Carousel.jsx";
+import { useEffect } from "react";
+import { logingUser, postUsers } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { UserAuth } from "../../context/AuthContextFirebase";
 
 const LandingPage = () => {
+  const userlogin = useSelector((state) => state.user);
+
+  const { user } = UserAuth();
+  const dispatch = useDispatch();
+  //const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        dispatch(postUsers(user));
+      }, 3000);
+
+      setTimeout(() => {
+        dispatch(logingUser(user));
+      }, 3000);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
+  }, [userlogin]);
+
+  console.log("Landing USER AQUI  ", user);
+
+  console.log("Landing userlogin AQUI  ", userlogin);
+
+
   return (
     <div className={style.main}>
       <div className={style.head}>

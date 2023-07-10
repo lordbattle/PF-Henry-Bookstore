@@ -4,7 +4,7 @@ export const GET_BOOK_ID = "GET_BOOK_ID";
 export const GET_BOOK_TITLE = "GET_BOOK_TITLE";
 export const DELETE_BOOK = "DELETE_BOOK";
 export const FILTERS_BOOKS = "FILTERS_BOOKS";
-
+export const HISTORY_PURCHASE = "HISTORY_PURCHASE"
 //USERS
 export const GET_USERS = "GET_USERS";
 export const GET_USER_ID = "GET_USER_ID";

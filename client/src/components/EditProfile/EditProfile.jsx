@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import style from "../EditProfile/EditProfile.module.css";
-import { useState} from "react";
+import { useState } from "react";
 import { editUser } from "../../redux/actions/index";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-/* const {REACT_APP_CLOUDINARY_CLOUD_NAME, REACT_APP_CLOUINARY_URL} = process.env; */
+import styles from "./EditProfile.module.css";
 
 const cloudinary_cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const cloudinary_url = import.meta.env.VITE_CLOUINARY_URL;
@@ -33,18 +32,6 @@ const EditProfile = () => {
 
   let user = userCurrent.results;
 
-  /* useEffect(() => {
-    setUserChange({
-      name: user.name,
-      lastName: user.lastName,
-      userName: user.userName,
-      email: user.email,
-      phone: user.phone,
-      profilePic: "",
-      age: user.age,
-    });
-  }, [user]); */
-
   const onSubmit = async (data) => {
     if (!data.name || !data.lastName) {
       alert("Please fill in the required fields: name, lastName");
@@ -54,11 +41,10 @@ const EditProfile = () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_preset", `${cloudinary_cloud_name}`); // Corregir el nombre del preset de carga
+      formData.append("upload_preset", `${cloudinary_cloud_name}`);
       const { data } = await axios.post(`${cloudinary_url}`, formData);
 
       let { secure_url } = data;
-      console.log(secure_url);
 
       let newObj = {
         ...userChange,
@@ -87,12 +73,9 @@ const EditProfile = () => {
   };
 
   return (
-    <div className={style.containerForm}>
+    <div className={styles.containerForm}>
       <h4>Edit Your Profile</h4>
-      <form
-        className="d-flex flex-column align-items-center gap-2"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form className="d-flex flex-column align-items-center gap-2" onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
           {...register("name", { required: true })}
@@ -138,11 +121,7 @@ const EditProfile = () => {
         />
         {errors.phone && <span>Phone is required</span>}
 
-        <input
-          type="file"
-          {...register("profilePic", { required: true })}
-          onChange={handleImageChange}
-        />
+        <input type="file" {...register("profilePic", { required: true })} onChange={handleImageChange} />
         {errors.profilePic && <span>Profile Picture is required</span>}
 
         <input
@@ -156,9 +135,31 @@ const EditProfile = () => {
 
         <button type="submit">Save Profile</button>
       </form>
-      {isChangeUser && <div>The user has been modified</div>}
+      {isChangeUser && <div className={styles.isChangeUser}>The user has been modified</div>}
     </div>
   );
 };
 
 export default EditProfile;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

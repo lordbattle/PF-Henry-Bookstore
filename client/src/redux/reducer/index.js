@@ -14,7 +14,11 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
+
   GET_ORDERS
+
+  HISTORY_PURCHASE
+
 } from "../types/types.js";
 
 export const initialState = {
@@ -27,6 +31,7 @@ export const initialState = {
   userDetail: [],
   pagination: null,
   currentUser: null,
+  historyPurchase: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -67,6 +72,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+    
+    case HISTORY_PURCHASE:
+      return{
+        ...state,
+        historyPurchase: action.payload
+      }
 
     //USER
 

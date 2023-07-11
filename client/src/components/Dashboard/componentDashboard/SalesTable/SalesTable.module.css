@@ -15,23 +15,7 @@
     
     
     }
-    .buttonEdit{
-        width: 5em;
-        border-radius: 8px;
-        border: none;
-        box-shadow: 0px 2px 2px 0px rgb(109, 105, 105);
-    
-    }
-    .buttonEdit:hover{
-        background-color: #e6e1e1;
-    }
-    .imageUser{
-        position: relative;
-        width: 3.5em;
-        height: 4em;
-        border-radius: 10px;
-        box-shadow: 0px 2px 2px 0px rgb(109, 105, 105);
-    }
+  
     .thead{
         position: relative;
         height: 3em;
@@ -39,12 +23,12 @@
         background-color: rgb(158, 158, 237);
         box-shadow: 0px 2px 2px 0px rgb(109, 105, 105);
     }
-    .th, td {
+    tbody .td {
         position: relative;
         width: 150px;
-        word-wrap: break-word;
-        height: 5em;
         font-size: 18px;
+        text-transform: uppercase;
+       
     }
 
     .containerOrders {

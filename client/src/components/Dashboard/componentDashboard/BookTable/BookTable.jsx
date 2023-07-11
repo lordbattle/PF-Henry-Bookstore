@@ -7,6 +7,7 @@ import Filters from "../../../Filters/Filters";
 import Pagination from "../../../Pagination/Pagination";
 import useFilters from "../../../../hooks/useFilters";
 import { Link } from "react-router-dom";
+import style from "../BookTable/BookTable.module.css"
 
 const BookTable = () => {
 
@@ -41,16 +42,17 @@ const BookTable = () => {
 
     return (
         <div>
-        <div className="d-flex flex-column" ref={componentRef}>
-          <div className="d-flex">
+        <div className="d-flex" ref={componentRef}>
             <Filters setFilters={setFilters} />
+          <div className="d-flex flex-column">
             <h2>Libros</h2>
-            <table>
-              <thead>
+            <table className={style.table}>
+              <thead className={style.thead}>
                 <tr>
                   <th>Title</th>
                   <th>ISBN</th>
                   <th>Active</th>
+                  <th>Detail</th>
                 </tr>
               </thead>
               <tbody>
@@ -60,8 +62,8 @@ const BookTable = () => {
                     <td>{book.identifier}</td>
                     <td>{book.active ? "true" : "false"}</td>
                     <td>
-                      <button >
-                      <Link to={`/ManageBooks/${book.id}`}>Ver detalle</Link>
+                      <button style={{borderRadius: '10px'}}>
+                      <Link to={`/ManageBooks/${book.id}`} style={{color: 'white', textDecoration: 'none'}}>Ver detalle</Link>
                       </button>
                     </td>
                   </tr>

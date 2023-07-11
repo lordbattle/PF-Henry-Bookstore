@@ -7,6 +7,6 @@ const {
 const ChangePassRouter = Router();
 
 // Rutas para cambiar la contraseña
-ChangePassRouter.post("/", verifyCurrentPassword);
+ChangePassRouter.put("/", verifyCurrentPassword);
 
 module.exports = ChangePassRouter;

@@ -177,7 +177,7 @@ const userNewSchema = {
       },
     },
   },
-/*   profilePic: {
+  /*   profilePic: {
     custom: {
       options: isEmptyImageFile,
     },
@@ -207,6 +207,30 @@ const userNewSchema = {
       options: isEmptyBoolean,
     },
     errorMessage: "GoogleUser must be a boolean value",
+  },
+  securityQuestion: {
+    notEmpty: {
+      errorMessage: "The security question is required",
+    },
+
+    custom: {
+      options: (value) => {
+        if (!isEmptyField(value)) {
+          throw new Error("The security question is required");
+        } else if (!isUsernameValidate(value)) {
+          throw new Error(
+            "The security question can only start with letters or numbers"
+          );
+        } else {
+          return true;
+        }
+      },
+    },
+
+    isLength: {
+      options: { min: 6, max: 30 },
+      errorMessage: `Username must contain between 6 and 30 characters`,
+    },
   },
 };
 
@@ -256,6 +280,10 @@ const userPutSchema = {
   },
   googleUser: {
     ...userNewSchema.googleUser,
+    optional: true,
+  },
+  securityQuestion: {
+    ...userNewSchema.securityQuestion,
     optional: true,
   },
 };

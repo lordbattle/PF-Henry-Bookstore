@@ -79,8 +79,8 @@ export const getPaginationBooks = () => {
     //let url = "http://localhost:3001/books/";
     const { data } = await axiosInstance.get("/books/?limit=450");
     return dispatch({
-      type:GET_PAGINATION_USERS,
-      payload: data.shift()
+      type: GET_PAGINATION_USERS,
+      payload: data.shift(),
     });
   };
 };
@@ -196,20 +196,21 @@ export const buyBook = (payload) => {
       return id;
     } catch (error) {
       Swal.fire({
-        title: 'Log in or Sign up',
+        title: "Log in or Sign up",
         text: "You must log in to buy",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Log in | Sign Up',
-        cancelButtonText: 'Later'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Log in | Sign Up",
+        cancelButtonText: "Later",
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = '/optionLoginOrRegister'
+          window.location.href = "/optionLoginOrRegister";
         }
       })
       console.log(`Catch de buyBook `, error);
+
     }
   };
 };
@@ -219,7 +220,6 @@ export const buyBook = (payload) => {
 export const getUsers = () => {
   return async (dispatch) => {
     try {
-             
       const { data } = await axiosInstance.get("/users");
       console.log("LOG DATA ACTIONS", data);
       return dispatch({
@@ -235,7 +235,6 @@ export const getUsers = () => {
 export const getUserById = (idUser) => {
   // name y lastname estan en null en el backend
   return async (dispatch) => {
-    console.log("Estoy en el action redux de getByid");
     try {
       const { data } = await axiosInstance.get(`/users/${idUser}`);
       console.log("LOG DEL GETID", data);
@@ -244,7 +243,7 @@ export const getUserById = (idUser) => {
         payload: data,
       });
     } catch (error) {
-      alert(`Error catch getUsersbyid ${error}`);
+      throw new Error(error);
     }
   };
 };
@@ -306,7 +305,6 @@ export const postUsers = (payload) => {
 export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
-
       const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
       console.log("editUser", data);
       // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
@@ -410,54 +408,64 @@ export function verifyUserToken() {
   };
 }
 
-export const getPurchaseHistoryById =(idUser)=>{
-  return async (dispatch)=>{
+export const getPurchaseHistoryById = (idUser) => {
+  return async (dispatch) => {
     try {
-      const {data} = await axiosInstance.get(`/bills?userId=${idUser}`)
+      const { data } = await axiosInstance.get(`/bills?userId=${idUser}`);
       return dispatch({
         type: HISTORY_PURCHASE,
-        payload: data
-      })
-    } catch (error) {
-      console.log("ERROR DEL CATCH getPurchaseHistoryById", error)
-    }
-  }
-}
-
-
-export const getAllOrders = () => {
-  return async (dispatch) => {
-    try {
-      const {data} = await axiosInstance.get("/orders")
-      return dispatch({
-        type:GET_ORDERS,
-        payload:data.results
-      })  
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
-
-export const changePassword = (idUser, newPassword) => {
-  return async (dispatch) => {
-    try {
-      const response = await axiosInstance.put(`/profile/changePassword`, {
-        idUser,
-        newPassword,
-      });
-      
-      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
-
-      dispatch({
-        type: CHANGE_PASSWORD,
-        payload: response.data,
+        payload: data,
       });
     } catch (error) {
-      console.log(error.message);
-      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
+      console.log("ERROR DEL CATCH getPurchaseHistoryById", error);
     }
   };
 };
 
-//nr
+export const getAllOrders = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get("/orders");
+      return dispatch({
+        type: GET_ORDERS,
+        payload: data.results,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const changePasswordUser = (values) => {
+  return async (dispatch) => {
+    try {
+      await axiosInstance.put(`/profileUser/changePassword`, values);
+      return;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  };
+};
+
+export const forgotPassword = (email) => {
+  return async (dispatch) => {
+    try {
+      await axiosInstance.get(`/authUser/forgotPassword/${email}`);
+      return;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  };
+};
+
+export const forgotPasswordChange = (values) => {
+  console.log("Estoy en la action de forgotPasswordChange");
+  return async (dispatch) => {
+    try {
+      await axiosInstance.post(`/authUser/forgotPassword/`, values);
+      return;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  };
+};

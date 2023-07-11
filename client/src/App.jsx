@@ -15,12 +15,14 @@ import BookManager from "./components/Dashboard/componentDashboard/BookManager/B
 
 import ChangePassword from "./components/EditPassword/EditPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "./main.css";
+import PurchaseHistory from "./components/PurchaseHistory/PurchaseHistory";
 
 // import Stack from 'react-bootstrap/Stack'
 //import axios from "axios";
@@ -57,6 +59,8 @@ function App() {
 
             <Route path="/changepassword" element={<ChangePassword />}></Route>
 
+            <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
+
             <Route path="/register" element={<Register />}></Route>
 
             <Route path="/detail/:id" element={<Detail />}></Route>
@@ -68,6 +72,9 @@ function App() {
             <Route path="/editprofile" element={<EditProfile />}></Route>
 
             <Route path="/managebooks/:id" element={<BookManager />}></Route>
+            
+            <Route path="/purchasehistory" element={<PurchaseHistory/>}></Route>
+
           </Routes>
 
           <Footer />

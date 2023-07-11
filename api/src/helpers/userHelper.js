@@ -13,6 +13,7 @@ const typeUser = [
   "profilePic",
   "name",
   "lastName",
+  "securityQuestion",
   //google firebase
   "email",
   "displayName",

@@ -25,8 +25,8 @@ OrdersRouter.get("/:id", getOrderByIdHandler)
   .post("/webhook", postReceiveWebhook)
   .post(
     "/",
-    checkSchema(orderPostSchema, ["body"]),
-    validateRequest,
+    //checkSchema(orderPostSchema, ["body"]),
+    //validateRequest,
     postOrderdHandler
   );
 

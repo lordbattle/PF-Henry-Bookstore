@@ -1,14 +1,14 @@
-/* import { useAuth0 } from '@auth0/auth0-react' */
-/* import Register from '../Register/Register'; */
-
 import { Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { logingUser, logoutUser, postUsers } from "../../redux/actions";
-import Swal from "sweetalert2";
+import { logingUser, logoutUser } from "../../redux/actions";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 import style from "../Login/Login.module.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import ForgotPasswordForm from "../ForgotPassword/ForgotPasswordForm";
 
 const Login = () => {
   const { user, loginWithGoogle } = UserAuth();
@@ -19,7 +19,22 @@ const Login = () => {
   const navigate = useNavigate();
 
   const userlogin = useSelector((state) => state.user);
-  // const [loggedIn, setLoggedIn] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+
+  const handleForgotPassword = () => {
+    setShowForgotPasswordModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowForgotPasswordModal(false);
+  };
 
   const handleGoogle = async () => {
     try {
@@ -40,7 +55,11 @@ const Login = () => {
 
   useEffect(() => {
     //Google
-    if (user && user.displayName !== undefined && userlogin.userName !== undefined) {
+    if (
+      user &&
+      user.displayName !== undefined &&
+      userlogin.userName !== undefined
+    ) {
       console.log("Usuario logeado " + user.displayName);
       console.log("Usuario logeado user " + user);
       Swal.fire({
@@ -160,7 +179,7 @@ const Login = () => {
               handleChange,
               handleBlur,
             }) => (
-              <form onSubmit={handleSubmit} >
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="name" className={style.label}>
                     Email
@@ -178,7 +197,7 @@ const Login = () => {
                   />
                   <br />
                   {touched.email && errors.email && (
-                    <span style={{ color: 'red' }}>{errors.email}</span>
+                    <span style={{ color: "red" }}>{errors.email}</span>
                   )}
                 </div>
 
@@ -189,33 +208,38 @@ const Login = () => {
                   <br />
                   <input
                     className={style.input}
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
-                    placeholder=" **********"
+                    placeholder=""
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
                   <br />
+                  <button
+                    type="button"
+                    className={style.toggleButton}
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </button>
+                  <br />
                   {touched.password && errors.password && (
-                    <span style={{ color: 'red' }}>
-                      {errors.password}
-                    </span>
+                    <span style={{ color: "red" }}>{errors.password}</span>
                   )}
                 </div>
 
                 <div className={style.options}>
-                  <button
-                    type="submit"
-                    className={style.buttonSigIn}                  >
+                  <button type="submit" className={style.buttonSigIn}>
                     Sign in
                   </button>
 
                   <button
                     onClick={handleGoogle}
                     type="button"
-                    className={style.buttonSigInGoogle}                  >
+                    className={style.buttonSigInGoogle}
+                  >
                     <svg
                       width="24"
                       height="24"
@@ -250,9 +274,20 @@ const Login = () => {
         <Link to="/home" className={style.back}>
           Return home
         </Link>
+
+        <Button variant="primary" onClick={handleForgotPassword}>
+          Forgot my password
+        </Button>
+
+        <Modal show={showForgotPasswordModal} onHide={handleCloseModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Forgot your password?</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <ForgotPasswordForm onClose={handleCloseModal} />
+          </Modal.Body>
+        </Modal>
       </div>
-
-
     </div>
   );
 };

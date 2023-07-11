@@ -8,6 +8,7 @@ const {
   validateNumBooks,
   createModelOrderItems,
 } = require("../helpers/orderHelper");
+const { sendApprovedPayment, sendRejectedPayment } = require("../config/mailer");
 
 const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_BACK_URLS } = process.env;
 
@@ -274,6 +275,11 @@ const insertOrder = async (id_user, items) => {
 // Check payment status through notifications Webhook
 const receiveWebhook = async (query) => {
   console.log(query);
+  const user = await User.findByPk(id_user.query);
+  console.log("Que es id_user.query   ", id_user.query);
+  console.log("Que es user   ", user);
+
+
   try {
     if (query.type === "payment") {
       const paymentData = await mercadopago.payment.findById(query["data.id"]);
@@ -303,10 +309,10 @@ const receiveWebhook = async (query) => {
         // Update invoice status
         order.set({ status, invoiceStatus: "con_factura" });
         await order.save();
-
+        sendApprovedPayment(user.mail, user.userName)
         return paymentData.body.metadata;
       }
-
+      sendRejectedPayment(user.mail, user.userName)
       return status;
     }
   } catch (e) {

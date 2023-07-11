@@ -98,25 +98,13 @@ const Nav = () => {
             >
               Dashboard
             </Link>
-          </span>{" "} 
-          <span className="p-2 ms-0 link-as-text">
-          </span>
+          </span>{" "}
+          <span className="p-2 ms-0 link-as-text"></span>
           <span className="p-2 ms-0 link-as-text">
             <Link to={"/home"} className="text-decoration-none fs-5 text-reset">
               Home
             </Link>
           </span>{" "}
-          {/* {userLoginLocal.id ? (
-            <span className="p-2 ms-0 link-as-text">
-              <Link
-                to={"/profile"}
-                className="text-decoration-none fs-5 text-reset"
-              >
-                {userLoginLocal.userName}
-              </Link>
-            </span>
-          ) : null} */}
-         
           <span className="p-2 ms-0 link-as-text">
             <Link
               to={"/about"}
@@ -163,7 +151,7 @@ const Nav = () => {
               </Link>
             </>
           ) : (
-            <div style={{display: 'flex', textAlign: 'center'}}>
+            <div style={{ display: "flex", textAlign: "center" }}>
               <Profile />
               <button
                 style={{

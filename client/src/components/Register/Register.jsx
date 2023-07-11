@@ -1,33 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 //import { Link } from "react-router-dom";
 
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
-import { logingUser, postUsers , getUsers } from "../../redux/actions/index";
+import { postUsers, getUsers } from "../../redux/actions/index";
 
 import { useDispatch } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import validations from "../../hooks/validations";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import style from "./Register.module.css";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { signUp, loginWithGoogle } = UserAuth();
+  //const { signUp, loginWithGoogle } = UserAuth();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // FILTRO EL EMAIL QUE ME TRAE EL LOCALSTORAGE
-  /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
-  const userFilEmail = userEmail.email; */
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
-  /* useEffect(() => {
-    if (isAuthenticated) navigate("/home");
-  }, [isAuthenticated]);
- */
   const postUsersAsync = (payload) => {
     console.log("postUserAync", payload);
     return new Promise((resolve, reject) => {
@@ -54,12 +52,14 @@ const Register = () => {
           phone: "",
           name: "",
           lastName: "",
+          securityQuestion: "",
         }}
         validate={(values) => {
           return validations(values);
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
+            setFormSubmitted(true);
             try {
               await postUsersAsync(values); // Esperar la resolución de la promesa
               dispatch(getUsers());
@@ -67,8 +67,7 @@ const Register = () => {
               throw new Error(error);
             }
             //await signUp(values.email, values.password, values.name);
-            //setFormSubmitted(true);
-            //setTimeout(() => setFormSubmitted(false), 2000);
+            setTimeout(() => setFormSubmitted(false), 3000);
             //dispatch(logingUser(values.email, values.password, values.userName));
             Swal.fire({
               icon: "success",
@@ -162,12 +161,19 @@ const Register = () => {
             <label>
               <Field
                 placeholder=""
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className={style.input}
                 id="password"
                 name="password"
               />
               <span>password</span>
+              <button
+                type="button"
+                className={style.toggleButton}
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
             </label>
             <ErrorMessage
               name="password"
@@ -188,6 +194,24 @@ const Register = () => {
             <ErrorMessage
               name="location"
               component={() => <div className="error">{errors.location}</div>}
+            />
+
+            <label>
+              <Field
+                required=""
+                placeholder="What is the name of your favorite pet?"
+                type="text"
+                className={style.input}
+                id="securityQuestion"
+                name="securityQuestion"
+              />
+              <span>Security question</span>
+            </label>
+            <ErrorMessage
+              name="securityQuestion"
+              component={() => (
+                <div className="error">{errors.securityQuestion}</div>
+              )}
             />
 
             <p className={style.p}>Optional data for registration</p>
@@ -247,12 +271,9 @@ const Register = () => {
             </button>
 
             {formSubmitted && (
-              <p>
-                {formSubmitted && (
-                  <p className="exito"> Form submitted successfully</p>
-                )}
-              </p>
-            )}
+            <p className="exito"> Form submitted successfully</p>
+          )}
+
           </Form>
         )}
       </Formik>

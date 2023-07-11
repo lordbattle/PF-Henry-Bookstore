@@ -15,8 +15,9 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
+  GET_ORDERS,
+  HISTORY_PURCHASE,
   CHANGE_PASSWORD,
-  //VERIFY_USER,
 } from "../types/types.js";
 
 import axiosInstance from "../../api/axiosInstance.js";
@@ -304,8 +305,6 @@ export const postUsers = (payload) => {
 export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
-      console.log("antes de entrar a editUser", idUser, updatedUser);
-
       const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
       console.log("editUser", data);
       // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
@@ -412,13 +411,31 @@ export function verifyUserToken() {
 export const getPurchaseHistoryById = (idUser) => {
   return async (dispatch) => {
     try {
-      const data = await axiosInstance.get(`/bills/userId=${idUser}`);
-      console.log("esto es data de getPurchaseById", data);
+      const {data} = await axiosInstance.get(`/bills?userId=${idUser}`)
+      return dispatch({
+        type: HISTORY_PURCHASE,
+        payload: data
+      })
     } catch (error) {
       console.log("ERROR DEL CATCH getPurchaseHistoryById", error);
     }
   };
 };
+
+
+export const getAllOrders = () => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axiosInstance.get("/orders")
+      return dispatch({
+        type:GET_ORDERS,
+        payload:data.results
+      })  
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 export const changePassword = (idUser, newPassword) => {
   return async (dispatch) => {

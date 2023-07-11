@@ -4,7 +4,7 @@ export const GET_BOOK_ID = "GET_BOOK_ID";
 export const GET_BOOK_TITLE = "GET_BOOK_TITLE";
 export const DELETE_BOOK = "DELETE_BOOK";
 export const FILTERS_BOOKS = "FILTERS_BOOKS";
-
+export const HISTORY_PURCHASE = "HISTORY_PURCHASE"
 //USERS
 export const GET_USERS = "GET_USERS";
 export const GET_USER_ID = "GET_USER_ID";
@@ -22,3 +22,4 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const VERIFY_USER = "VERIFY_USER";
 
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
+export const GET_ORDERS = "GET_ORDERS";

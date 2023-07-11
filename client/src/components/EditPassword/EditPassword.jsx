@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { changePassword } from "../../redux/actions/index";
+import styles from "./editPassword.module.css";
 
 const ChangePassword = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -30,31 +31,33 @@ const ChangePassword = () => {
   };
 
   return (
-    <div>
-      <h2>Change Your Password</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Change Your Password</h2>
       <form onSubmit={handleSubmit(handlePasswordChange)}>
-        <label>
-          Current Password:
+        <div className={styles.inputContainer}>
+          <label className={styles.label}>Current Password:</label>
           <input
             type="password"
             {...register("currentPassword", { required: true })}
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
+            className={styles.inputField}
           />
-        </label>
-        {errors.currentPassword && <p>Current Password is required</p>}
-        <label>
-          New Password:
+          {errors.currentPassword && <p className={styles.error}>Current Password is required</p>}
+        </div>
+        <div className={styles.inputContainer}>
+          <label className={styles.label}>New Password:</label>
           <input
             type="password"
             {...register("newPassword", { required: true })}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
+            className={styles.inputField}
           />
-        </label>
-        {errors.newPassword && <p>New Password is required</p>}
-        <label>
-          Confirm Password:
+          {errors.newPassword && <p className={styles.error}>New Password is required</p>}
+        </div>
+        <div className={styles.inputContainer}>
+          <label className={styles.label}>Confirm Password:</label>
           <input
             type="password"
             {...register("confirmPassword", {
@@ -63,13 +66,14 @@ const ChangePassword = () => {
             })}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            className={styles.inputField}
           />
-        </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
-        <button type="submit">Change password</button>
+          {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword.message}</p>}
+        </div>
+        <button type="submit" className={styles.button}>Change password</button>
       </form>
-      {successMessage && <p>{successMessage}</p>}
-      {errorMessage && <p>{errorMessage}</p>}
+      {successMessage && <p className={styles.success}>{successMessage}</p>}
+      {errorMessage && <p className={styles.error}>{errorMessage}</p>}
     </div>
   );
 };

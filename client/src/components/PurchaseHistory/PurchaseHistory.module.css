@@ -1,0 +1,37 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    border-radius: 10px;
+    padding-bottom: 2rem;
+    background-color: #71a5e5;
+}
+
+.product{
+    text-align: left;
+    width: 98%;
+    margin: 8px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #b7cff4;
+    display: flex;
+    flex-direction: column;
+}
+
+.purchase{
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #71a5e5;
+    font-size: 18px;
+}
+
+.empty{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    margin: 2rem;
+    width: 100%;
+    padding: 5rem;
+}

@@ -64,7 +64,7 @@ const SalesTable = () => {
   return (
     <>
       <div className={style.containerOrders}>
-        <h3>Orders</h3>
+        <h3>Sales</h3>
 
         <table className={style.table}>
           <thead className={style.thead}>

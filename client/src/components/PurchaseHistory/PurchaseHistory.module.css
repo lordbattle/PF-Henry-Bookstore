@@ -35,3 +35,17 @@
     width: 100%;
     padding: 5rem;
 }
+
+.btnAdd{
+    border-radius: 8px;
+    width: 15em;
+    height: 3em;
+    background-color: #b7cff4;
+
+    &:hover{
+        box-shadow: 3px 3px 3px black;
+        background-color: #7aa5da;
+        color: white;
+        cursor: pointer;
+        }
+}

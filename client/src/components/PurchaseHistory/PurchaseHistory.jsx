@@ -12,20 +12,17 @@ export const PurchaseHistory = () =>{
         if(user){
           idUser = user.id
         }
-         console.log("ESTO ES ID DE USER", idUser)
+        console.log("ESTO ES ID DE USER", idUser)
 
-     useEffect(()=>{dispatch(getPurchaseHistoryById(idUser))   
-     },[idUser])
-   
-     console.log("data del estado global", history)   
-
-     let totalSpent = 0;
-      history.rows.map((row)=>{
-        totalSpent += row.order.total
-      })
-
-     return (
+    useEffect(()=>{dispatch(getPurchaseHistoryById(idUser))   
+    },[idUser])
+  
+    console.log("data del estado global", history)   
+    let totalSpent = 0
+    return (
       <div className={style.container}>
+        {history && history.rows && history.rows.length > 0 ? (
+         history.rows.map((row)=>{ totalSpent += row.order.total })) : null}
         <h3 style={{color: 'white', marginTop: '10px'}}>Historial de compras: ${totalSpent}</h3>
         {history && history.rows && history.rows.length > 0 ? (
           history.rows.map((row) => (
@@ -49,9 +46,9 @@ export const PurchaseHistory = () =>{
           ))
         ) : (
           <div className={style.empty}> 
-              <img src='https://img.freepik.com/iconos-gratis/carrito-compras_318-820968.jpg' alt='empty' width={'20%'}></img>
-              <h3 style={{width: '100%', paddingTop: '1em'}}>There are no items in the cart</h3>
-              <Link to='/home' style={{width: '100%', paddingTop: '1em'}}><button className={style.btnAdd}>Add items</button></Link>
+              <img src='https://cdn-icons-png.flaticon.com/512/2037/2037300.png' alt='empty' width={'20%'}></img>
+              <h3 style={{width: '100%', paddingTop: '1em'}}>You have no purchase history</h3>
+              <Link to='/home' style={{width: '100%', paddingTop: '1em'}}><button className={style.btnAdd}>Buy</button></Link>
             </div>
         )}
       </div>

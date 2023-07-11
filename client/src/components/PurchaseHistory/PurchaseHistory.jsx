@@ -19,31 +19,32 @@ export const PurchaseHistory = () =>{
      console.log("data del estado global", history)   
 
      return (
-        <div>
+      <div>
         <h3>Historial de compras</h3>
-         {history && history.rows && history.rows.length > 0 ? (
-              history.rows.map((row) => (
-                <div key={row.id}>
-                  <h3>bought the day: {row.createdAt}</h3>
-                  <p>Order ID: {row.orderId}</p>
-                </div>
-              ))
-            ) : null}
-
-          {history && history.rows && history.rows.length > 0 ? (
-            history.rows[0].order.orderItems.map((orderItem) => (
-              <div key={orderItem.id}>
-                <p>{orderItem.title}</p>
-                <p>Price: ${orderItem.unit_price}</p>
-              </div>
-            ))
-          ) : (
-            <div>
-              <p>Aqui se renderizará el historial de sus compras</p>
+        {history && history.rows && history.rows.length > 0 ? (
+          history.rows.map((row) => (
+            <div key={row.id}>
+              <h3>bought the day: {row.createdAt}</h3>
+              <p>Order ID: {row.orderId}</p>
+              <p>Total: ${row.order.total}</p> {/* Renderizar el total de la orden */}
+    
+              {row.order && row.order.orderItems && row.order.orderItems.length > 0 ? (
+                row.order.orderItems.map((orderItem) => (
+                  <div key={orderItem.id}>
+                    <p>{orderItem.title}</p>
+                    <p>Price: ${orderItem.unit_price}</p>
+                  </div>
+                ))
+              ) : null}
             </div>
-          )}
+          ))
+        ) : (
+          <div>
+            <p>Aqui se renderizará el historial de sus compras</p>
+          </div>
+        )}
       </div>
-     )
+    ) 
 
 }
 export default PurchaseHistory

@@ -48,5 +48,14 @@
     color: green;
   }
 
+  .profilePic {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin-left: 5px;
+  }
+  
+
 
 

@@ -1,9 +1,12 @@
-
+  * {
+    margin: 0;
+    padding: 0;
+  }
   
   .container {
-    max-width: 100%;
-    height: 103%;
-    /* background-color: red; */
+    width: 100%;
+    height: 100vh;
+    border: 2px solid black;
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -14,32 +17,37 @@
   .divMenu:hover{
     background-color: rgb(106, 106, 243);
   } 
-  .dashboradMenu{
+/*   .dashboradMenu{
     position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    text-align: center;
-    /* background-color: blue; */
-    width: 100%;
-  }
-  .menu{
-    position: relative;
-    background-color: rgb(126, 162, 246);
-    left: -1.1em;
-    width: 110%;
-    height: 103%;
-    text-align: center;
+    width: 40%;
+    border: 2px solid blue;
 
-  }
-  
-  .MenuAndContent{
+  } */
+  .menu{
+   display: flex;
+   justify-content: center;
     position: relative;
-    /* background-color: chartreuse;  */
-    display: flex;
-    flex-direction: row;
-    width: 55em;
+    background-color: transparent;
+    /* left: -1.1em; */
+    width: 20%;
+    height: auto;
+    text-align: center;
+    border: 2px solid red;
+    ;
   }
+
+  .positionFixed {
+    width: 20%;
+    position: fixed; 
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(138, 43, 226);
+    padding: 20px 0;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px rgb(138, 43, 226, 0.5) ;
+  }
+
   h1 {
     text-align: center;
     margin-bottom: 30px;

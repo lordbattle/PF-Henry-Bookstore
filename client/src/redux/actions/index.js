@@ -209,7 +209,7 @@ export const buyBook = (payload) => {
           window.location.href = '/optionLoginOrRegister'
         }
       })
-      console.log(`Catch de buyBook ${error}`);
+      console.log(`Catch de buyBook `, error);
     }
   };
 };

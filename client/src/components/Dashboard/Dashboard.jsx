@@ -34,10 +34,10 @@ const Dashboard = () => {
 
   return (
     <div className={style.container}>
-      <div className={style.MenuAndContent}>
-        <div className={style.dashboradMenu}>
+     
+      
           <div className={style.menu}>
-            <h1>Dashboard</h1>
+            <div className={style.positionFixed}><h1>Dashboard</h1>
             <div className={style.divMenu} onClick={handleTrueUser}>
               <h2>Users</h2>
             </div>
@@ -45,14 +45,15 @@ const Dashboard = () => {
               <h2>Books</h2>
             </div>
             <div className={style.divMenu} onClick={handleTrueSales}>
-              <h2>Sales</h2>
+              <h2>Sales</h2></div>
+            
             </div>
           </div>
           {user ? <UserTable /> : null}
           {book ? <BookTable /> : null}
           {sales ? <SalesTable /> : null}
-        </div>
-      </div>
+        
+    
     </div>
   );
 };

@@ -155,6 +155,8 @@ const createOrder = async (user, books, items, transaction) => {
   // Decrease the stock of books
   await changeStockBooks(order, false, transaction);
 
+  console.log("completed aqui");
+
   const itemPreferences = order.orderItems.map((oi) => oi.dataValues);
 
   // Create model preferences
@@ -173,16 +175,17 @@ const createOrder = async (user, books, items, transaction) => {
     expiration_date_from: moment(startDate).toISOString(true),
     expiration_date_to: moment(endDate).toISOString(true),
   };
-
+ 
   // Create preference
   const results = await mercadopago.preferences.create(preferences);
-
+console.log("ANTES DEL RETURN");
   // Update the id and the total to pay
   await order.update({ preferenceId: results.body.id }, { transaction });
 
   // Inserting the data if the whole process was successful
   await transaction.commit();
 
+ 
   return { id: results.body.id, init_point: results.body.init_point };
 };
 

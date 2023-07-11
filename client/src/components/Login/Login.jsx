@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import style from "../Login/Login.module.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import ForgotPasswordForm from "../ForgotPassword/ForgotPasswordForm";
 
 const Login = () => {
@@ -18,6 +19,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   const userlogin = useSelector((state) => state.user);
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
@@ -201,14 +208,22 @@ const Login = () => {
                   <br />
                   <input
                     className={style.input}
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
-                    placeholder=" **********"
+                    placeholder=""
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
+                  <br />
+                  <button
+                    type="button"
+                    className={style.toggleButton}
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </button>
                   <br />
                   {touched.password && errors.password && (
                     <span style={{ color: "red" }}>{errors.password}</span>

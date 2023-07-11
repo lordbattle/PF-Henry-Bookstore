@@ -65,7 +65,7 @@ const sendForgottenPassword = async (toEmail, name) => {
                         <h4 style="color: #1ec6ff; font-size: 18px; font-weight: Medium; letter-spacing: 2px; margin-bottom: 10px;">We received a request to reset your The Literary Corner password.</h4>
                         <p style="color: #1ec6ff; font-size: 15px; line-height: 1.9; margin-bottom: 40px;">If you do not request the password change, <br> reject this email</p>
                         <h1 style="font-size: 45px; font-weight: bold; color: #1ec6ff; margin: 0 0 45px;">Click on the link below for continue with your password reset:</h1>
-                        <a style="display: inline-block; color: #1ec6ff; text-decoration: none; background: rgb(63, 76, 119); padding: 12px 30px; color: white; font-size: 14px; font-weight: bold; line-height: 1.4; border: 1px solid transparent; border-radius: 30px; cursor: pointer;" href=${MAILER_LINK_FRONT}/login>Link to change your forgotten password</a>
+                        <a style="display: inline-block; color: #1ec6ff; text-decoration: none; background: rgb(63, 76, 119); padding: 12px 30px; color: white; font-size: 14px; font-weight: bold; line-height: 1.4; border: 1px solid transparent; border-radius: 30px; cursor: pointer;" href=${MAILER_LINK_FRONT}/forgotpassword>Link to change your forgotten password</a>
                     </div>
                 </div>
             </div>

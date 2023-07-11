@@ -164,13 +164,12 @@ const EditPassword = () => {
               Submit password change form
             </button>
 
-            {formSubmitted && (
-              <p>
+            
                 {formSubmitted && (
                   <p className="exito"> Form submitted successfully</p>
                 )}
-              </p>
-            )}
+              
+            
           </Form>
         )}
       </Formik>

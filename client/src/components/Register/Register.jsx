@@ -271,12 +271,9 @@ const Register = () => {
             </button>
 
             {formSubmitted && (
-              <p>
-                {formSubmitted && (
-                  <p className="exito"> Form submitted successfully</p>
-                )}
-              </p>
-            )}
+            <p className="exito"> Form submitted successfully</p>
+          )}
+
           </Form>
         )}
       </Formik>

@@ -27,32 +27,30 @@ const Dashboard = () => {
     setUser(true);
   };
 
- /*  useEffect(() => {
+  /*  useEffect(() => {
     // Aquí no estás llamando a la función handleTrueBook, solo la estás pasando como referencia
     handleTrueBook();
   }, [book]); */
 
   return (
     <div className={style.container}>
-      <div className={style.MenuAndContent}>
-        <div className={style.dashboradMenu}>
-          <div className={style.menu}>
-            <h1>Dashboard</h1>
-            <div className={style.divMenu} onClick={handleTrueUser}>
-              <h2>Users</h2>
-            </div>
-            <div className={style.divMenu} onClick={handleTrueBook}>
-              <h2>Books</h2>
-            </div>
-            <div className={style.divMenu} onClick={handleTrueSales}>
-              <h2>Sales</h2>
-            </div>
+      <div className={style.menu}>
+        <div className={style.positionFixed}>
+          <h1 className="border-bottom border-secondary-subtle bg-white">Dashboard</h1>
+          <div className={style.divMenu} onClick={handleTrueUser}>
+            <h4>Users</h4>
           </div>
-          {user ? <UserTable /> : null}
-          {book ? <BookTable /> : null}
-          {sales ? <SalesTable /> : null}
+          <div className={style.divMenu} onClick={handleTrueBook}>
+            <h4>Books</h4>
+          </div>
+          <div className={style.divMenu} onClick={handleTrueSales}>
+            <h4>Sales</h4>
+          </div>
         </div>
       </div>
+      {user ? <UserTable /> : null}
+      {book ? <BookTable /> : null}
+      {sales ? <SalesTable /> : null}
     </div>
   );
 };

@@ -20,6 +20,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./main.css";
 import PurchaseHistory from "./components/PurchaseHistory/PurchaseHistory";
 

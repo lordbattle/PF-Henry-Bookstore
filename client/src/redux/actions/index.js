@@ -208,8 +208,9 @@ export const buyBook = (payload) => {
         if (result.isConfirmed) {
           window.location.href = "/optionLoginOrRegister";
         }
-      });
-      console.log(`Catch de buyBook ${error}`);
+      })
+      console.log(`Catch de buyBook `, error);
+
     }
   };
 };

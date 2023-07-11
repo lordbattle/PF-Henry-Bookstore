@@ -1,19 +1,24 @@
-.containerMain{
-position: relative;
-/* background-color: rgb(179, 208, 249); */
-width: 400%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-text-align: center;
+.containerUsers {
+    width: 80%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items:center ;
 }
+
+.containTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .table{
     position: relative;
      /* background-color: coral;  */
     table-layout: fixed;
     -ms-text-combine-horizontal: all;
     overscroll-behavior-y:contain;
-    width: 100%;
+    width: 90%;
     text-align: center;
     overflow: scroll;
     scroll-behavior: auto;
@@ -51,7 +56,7 @@ text-align: center;
     position: relative;
     width: 150px;
     word-wrap: break-word;
-    height: 10em;
+    height: 5em;
 }
 
 /* .table {

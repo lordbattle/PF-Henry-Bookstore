@@ -1,70 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 
-  
-  .container {
-    max-width: 100%;
-    height: 103%;
-    /* background-color: red; */
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-  }
-  .divMenu{
-    position: relative;
-  }
-  .divMenu:hover{
-    background-color: rgb(106, 106, 243);
-  } 
-  .dashboradMenu{
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    text-align: center;
-    /* background-color: blue; */
-    width: 100%;
-  }
-  .menu{
-    position: relative;
-    background-color: rgb(126, 162, 246);
-    left: -1.1em;
-    width: 110%;
-    height: 103%;
-    text-align: center;
+.container {
+  width: 100%;
+  height: 100vh;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+.divMenu {
+  position: relative;
+  cursor: pointer;
+}
+.divMenu:hover {
+  background-color: rgb(106, 106, 243);
+}
 
-  }
-  
-  .MenuAndContent{
-    position: relative;
-    /* background-color: chartreuse;  */
-    display: flex;
-    flex-direction: row;
-    width: 55em;
-  }
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .user_list,
-  .book_list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .user_list li,
-  .book_list li {
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-  }
-  
-  .user_list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .book_list li {
-    display: block;
-  }
+.menu {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  background-color: transparent;
+  width: 20%;
+  height: auto;
+  text-align: center;
+  border: 2px solid red;
+  align-items: center;
+}
+
+.positionFixed {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(138, 43, 226);
+  padding: 20px 0;
+  border-radius:0 10px 10px 0;
+  row-gap: 5px;
+  box-shadow: 3px 3px 5px rgb(138, 43, 226, 0.5);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.user_list,
+.book_list {
+  list-style: none;
+  padding: 0;
+}
+
+.user_list li,
+.book_list li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.user_list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book_list li {
+  display: block;
+}

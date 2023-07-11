@@ -21,6 +21,7 @@ import { AuthContextProvider } from "./context/AuthContextFirebase";
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./main.css";
+import PurchaseHistory from "./components/PurchaseHistory/PurchaseHistory";
 
 // import Stack from 'react-bootstrap/Stack'
 //import axios from "axios";
@@ -70,6 +71,9 @@ function App() {
             <Route path="/editprofile" element={<EditProfile />}></Route>
 
             <Route path="/managebooks/:id" element={<BookManager />}></Route>
+            
+            <Route path="/purchasehistory" element={<PurchaseHistory/>}></Route>
+
           </Routes>
 
           <Footer />

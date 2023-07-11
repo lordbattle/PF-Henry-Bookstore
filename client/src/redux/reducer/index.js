@@ -19,6 +19,8 @@ import {
 
   HISTORY_PURCHASE,
 
+  GET_ORDERS_BY_STATUS
+
 } from "../types/types.js";
 
 export const initialState = {
@@ -147,6 +149,26 @@ function rootReducer(state = initialState, action) {
         user: [],
         userDetail: []
       };
+    //ORDERS
+
+    case GET_ORDERS_BY_STATUS:
+
+    const allOrders = state.orders.rows
+      console.log('esto es el orders', allOrders)
+    const ordersFilter = action.payload === 'Filter by status' ? 
+    state.orders : allOrders.map(status => {
+      if((action.payload === 'approved') && (status.status === "approved")) return console.log('aprobado funciona')
+
+      if((action.payload === 'pending') && (status.status === "pending")) return console.log('pendiente funciona')
+
+      if((action.payload === 'reject') && (status.status === "reject")) return console.log('rechazado funciona')
+    })
+
+      return {
+        ...state,
+        orders: ordersFilter
+      };
+
     default:
       return {
         ...state,

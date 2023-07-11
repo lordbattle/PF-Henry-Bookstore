@@ -18,6 +18,7 @@ import {
   GET_ORDERS,
   HISTORY_PURCHASE,
   CHANGE_PASSWORD,
+  GET_ORDERS_BY_STATUS
 } from "../types/types.js";
 
 import axiosInstance from "../../api/axiosInstance.js";
@@ -469,3 +470,10 @@ export const forgotPasswordChange = (values) => {
     }
   };
 };
+
+export const getOrdersByStatus = (payload) => {
+  return {
+      type: GET_ORDERS_BY_STATUS,
+      payload: payload
+  }
+}

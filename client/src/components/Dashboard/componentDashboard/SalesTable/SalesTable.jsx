@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrders } from "../../../../redux/actions";
 import style from "./SalesTable.module.css";
+import { getOrdersByStatus } from '../../../../redux/actions'
 
 const SalesTable = () => {
   let orderStatus = (order) => {
@@ -61,10 +62,24 @@ const SalesTable = () => {
     dispatch(getAllOrders());
   }, [dispatch]);
 
+  function handleFilterByStatus(event){
+    event.preventDefault()
+    dispatch(getOrdersByStatus(event.target.value))
+}
+
   return (
     <>
       <div className={style.containerOrders}>
         <h3>Sales</h3>
+        <div className="d-flex">
+        <div className={style.filters}>
+                <select defaultValue='Filter by status' onChange={event => handleFilterByStatus(event)}>
+                    <option disabled>Filter by status</option>
+                    <option key='approved' value='approved'>APPROVED</option>
+                    <option key='pending' value='pending'>PENDING</option>
+                    <option key='reject' value='reject'>REJECT</option>
+                </select>
+        </div>
 
         <table className={style.table}>
           <thead className={style.thead}>
@@ -94,6 +109,7 @@ const SalesTable = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </>
   );

@@ -23,3 +23,6 @@ export const VERIFY_USER = "VERIFY_USER";
 
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 export const GET_ORDERS = "GET_ORDERS";
+
+//SALES
+export const GET_ORDERS_BY_STATUS = "GET_ORDERS_BY_STATUS"

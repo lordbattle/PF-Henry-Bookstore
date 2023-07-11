@@ -6,12 +6,16 @@
 .container {
   width: 100%;
   height: 100vh;
-  border: 2px solid black;
   display: flex;
   flex-direction: row;
   text-align: center;
+  padding: 5px;
 }
 .divMenu {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
   position: relative;
   cursor: pointer;
 }
@@ -24,16 +28,15 @@
   justify-content: center;
   position: relative;
   background-color: transparent;
-  width: 20%;
+  min-width: 20%;
   height: auto;
   text-align: center;
-  border: 2px solid red;
   align-items: center;
 }
 
 .positionFixed {
   width: 100%;
-  height: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background-color: rgb(138, 43, 226);

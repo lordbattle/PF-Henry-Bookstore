@@ -3,6 +3,7 @@ import BookTable from "./componentDashboard/BookTable/BookTable";
 import SalesTable from "./componentDashboard/SalesTable/SalesTable";
 import UserTable from "./componentDashboard/userTable/UserTable";
 import { useState } from "react";
+import boxicons from "boxicons"
 
 const Dashboard = () => {
   const [book, setBook] = useState(false);
@@ -36,15 +37,15 @@ const Dashboard = () => {
     <div className={style.container}>
       <div className={style.menu}>
         <div className={style.positionFixed}>
-          <h1 className="border-bottom border-secondary-subtle bg-white">Dashboard</h1>
+          <h2>Dashboard</h2>
           <div className={style.divMenu} onClick={handleTrueUser}>
-            <h4>Users</h4>
+          <box-icon name='user' ></box-icon><span style={{fontSize: '24px'}}>Users</span>
           </div>
           <div className={style.divMenu} onClick={handleTrueBook}>
-            <h4>Books</h4>
+          <box-icon name='book-bookmark' ></box-icon><span style={{fontSize: '24px'}}>Books</span>
           </div>
           <div className={style.divMenu} onClick={handleTrueSales}>
-            <h4>Sales</h4>
+          <box-icon name='credit-card' type='solid' ></box-icon><span style={{fontSize: '24px'}}>Sales</span>
           </div>
         </div>
       </div>

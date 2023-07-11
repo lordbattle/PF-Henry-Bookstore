@@ -19,6 +19,4 @@ async function verifyCurrentPassword(req, res, next) {
 
 module.exports = {
   verifyCurrentPassword,
-  
 };
-

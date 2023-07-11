@@ -15,6 +15,7 @@ import BookManager from "./components/Dashboard/componentDashboard/BookManager/B
 
 import ChangePassword from "./components/EditPassword/EditPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import { AuthProvider } from "./context/AuthContext";
@@ -55,6 +56,8 @@ function App() {
             <Route path="/profile" element={<Profile />}></Route>
 
             <Route path="/changepassword" element={<ChangePassword />}></Route>
+
+            <Route path="/forgotpassword" element={<ForgotPassword />}></Route>
 
             <Route path="/register" element={<Register />}></Route>
 

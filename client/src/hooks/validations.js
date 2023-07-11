@@ -7,8 +7,6 @@ const regexNameAndLastName = /^[a-zA-ZÀ-ÿ\s]{1,25}$/;
 const regexLocation = /^[a-zA-ZÀ-ÿ\s]{1,25}$/;
 const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/;
 
-
-
 const validations = (values) => {
   let errors = {};
   if (!values.name) {
@@ -38,13 +36,11 @@ const validations = (values) => {
   }
 
   if (!values.userName) {
-    errors.userName = "Please, insert a userName";
-  } else if (values.userName.length >= 8) {
-    if (!regexUsername.test(values.userName)) {
-      errors.userName = "The username can only start with letters or numbers";
-    }
-  } else {
-    errors.userName = " Username must contain between 8 and 20 characters ";
+    errors.userName = "The username is required";
+  } else if (!regexUsername.test(values.userName)) {
+    errors.userName = "The username can only start with letters or numbers";
+  } else if (values.userName.length < 8 || values.userName.length > 20) {
+    errors.userName = "Username must contain between 8 and 20 characters";
   }
 
   if (!values.password) {
@@ -65,6 +61,19 @@ const validations = (values) => {
     } else {
       errors.location = "The name can only have letters and spaces ";
     }
+  }
+
+  if (!values.securityQuestion) {
+    errors.securityQuestion = "The security question is required";
+  } else if (!regexUsername.test(values.securityQuestion)) {
+    errors.securityQuestion =
+      "The security question can only start with letters or numbers";
+  } else if (
+    values.securityQuestion.length < 6 ||
+    values.securityQuestion.length > 30
+  ) {
+    errors.securityQuestion =
+      "The security question must contain between 6 and 30 characters";
   }
 
   if (!values.age) {
@@ -97,8 +106,6 @@ const validations = (values) => {
   } else if (values.passwordConfirmation !== values.password) {
     errors.passwordConfirmation = "Passwords do not match";
   } */
-
-
 
   return errors;
 };

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 //import { Link } from "react-router-dom";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 
-import { logingUser, postUsers , getUsers } from "../../redux/actions/index";
+import { postUsers, getUsers } from "../../redux/actions/index";
 
 import { useDispatch } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
@@ -54,12 +54,14 @@ const Register = () => {
           phone: "",
           name: "",
           lastName: "",
+          securityQuestion: "",
         }}
         validate={(values) => {
           return validations(values);
         }}
         onSubmit={async (values, { resetForm }) => {
           try {
+            setFormSubmitted(true);
             try {
               await postUsersAsync(values); // Esperar la resolución de la promesa
               dispatch(getUsers());
@@ -67,8 +69,7 @@ const Register = () => {
               throw new Error(error);
             }
             //await signUp(values.email, values.password, values.name);
-            //setFormSubmitted(true);
-            //setTimeout(() => setFormSubmitted(false), 2000);
+            setTimeout(() => setFormSubmitted(false), 3000);
             //dispatch(logingUser(values.email, values.password, values.userName));
             Swal.fire({
               icon: "success",
@@ -188,6 +189,22 @@ const Register = () => {
             <ErrorMessage
               name="location"
               component={() => <div className="error">{errors.location}</div>}
+            />
+
+            <label>
+              <Field
+                required=""
+                placeholder="What is the name of your favorite pet?"
+                type="text"
+                className={style.input}
+                id="securityQuestion"
+                name="securityQuestion"
+              />
+              <span>Security question</span>
+            </label>
+            <ErrorMessage
+              name="securityQuestion"
+              component={() => <div className="error">{errors.securityQuestion}</div>}
             />
 
             <p className={style.p}>Optional data for registration</p>

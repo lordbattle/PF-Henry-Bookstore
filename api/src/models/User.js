@@ -35,25 +35,25 @@ module.exports = (sequelize) => {
       },
       age: {
         type: DataTypes.INTEGER,
-        defaultValue: 18
+        defaultValue: 18,
       },
       location: {
         type: DataTypes.STRING,
-        defaultValue: "Not specified"
+        defaultValue: "Not specified",
       },
       genres: {
         type: DataTypes.STRING,
-        defaultValue: "Not specified"
+        defaultValue: "Not specified",
       },
       phone: {
         type: DataTypes.STRING,
-        defaultValue: "Not specified"
+        defaultValue: "Not specified",
       },
       profilePic: {
         type: DataTypes.STRING,
         defaultValue:
           "https://firebasestorage.googleapis.com/v0/b/henry-book-explorer.appspot.com/o/image?alt=media&token=3dccc098-e2c1-48ab-9539-ce0024b12996",
-        },
+      },
       active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
@@ -76,8 +76,10 @@ module.exports = (sequelize) => {
       notifications: {
         type: DataTypes.JSON,
       },
-      
-
+      securityQuestion: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     { timestamps: false }
   );

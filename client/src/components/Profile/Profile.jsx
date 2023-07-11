@@ -99,6 +99,14 @@ const Profile = () => {
               </Link>
             </li>
             <li className={style.dropdown_item}>
+            <Link
+                to={"/purchasehistory"}
+                className="text-black text-decoration-none fs-6"
+              >
+                Purchase history
+              </Link>
+            </li>
+            <li className={style.dropdown_item}>
               <NavLink
                 className="text-black text-decoration-none fs-6"
                 onClick={alert}

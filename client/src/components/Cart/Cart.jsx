@@ -7,12 +7,13 @@ import Swal from "sweetalert2"
 import style from "../Cart/Cart.module.css"
 import "./Cart.module.css"
 import { useDispatch, useSelector } from 'react-redux';
-import { getPurchaseHistoryById } from '../../redux/actions';
+
 
 export const Cart =()=>{
+
   const dispatch = useDispatch();
   const user = useSelector(state=>state.user)
-  const history = useSelector(state=>state.historyPurchase.results);
+
     let idUser=0;
 
       if(user){
@@ -137,10 +138,6 @@ const location = useLocation();
         });
       }
 
-      useEffect(()=>{dispatch(getPurchaseHistoryById(idUser))   
-      },[idUser])
-
-      console.log("data del estado global", history)
 
     return(
         <div>
@@ -181,31 +178,7 @@ const location = useLocation();
               <Link to='/home' style={{width: '100%', paddingTop: '1em'}}><button className={style.btnAdd}>Add items</button></Link>
             </div>
       )}
-      <div>
-        <h3>Historial de compras</h3>
-         {history && history.rows && history.rows.length > 0 ? (
-              history.rows.map((row) => (
-                <div key={row.id}>
-                  <h3>bought the day: {row.createdAt}</h3>
-                  <p>Order ID: {row.orderId}</p>
-                </div>
-              ))
-            ) : null}
-
-          {history && history.rows && history.rows.length > 0 ? (
-            history.rows[0].order.orderItems.map((orderItem) => (
-              <div key={orderItem.id}>
-                <p>{orderItem.title}</p>
-                <p>Price: ${orderItem.unit_price}</p>
-              </div>
-            ))
-          ) : (
-            <div>
-              <h2>Historial de compras</h2>
-              <p>Aqui se renderizará el historial de sus compras</p>
-            </div>
-          )}
-      </div>
+      
 </div>
     )
 }

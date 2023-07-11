@@ -1,7 +1,7 @@
 import { useState } from "react";
 //import { Link } from "react-router-dom";
 
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import { postUsers, getUsers } from "../../redux/actions/index";
 
@@ -10,24 +10,22 @@ import { UserAuth } from "../../context/AuthContextFirebase";
 import validations from "../../hooks/validations";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import style from "./Register.module.css";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { signUp, loginWithGoogle } = UserAuth();
+  //const { signUp, loginWithGoogle } = UserAuth();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // FILTRO EL EMAIL QUE ME TRAE EL LOCALSTORAGE
-  /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
-  const userFilEmail = userEmail.email; */
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
-  /* useEffect(() => {
-    if (isAuthenticated) navigate("/home");
-  }, [isAuthenticated]);
- */
   const postUsersAsync = (payload) => {
     console.log("postUserAync", payload);
     return new Promise((resolve, reject) => {
@@ -163,12 +161,19 @@ const Register = () => {
             <label>
               <Field
                 placeholder=""
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className={style.input}
                 id="password"
                 name="password"
               />
               <span>password</span>
+              <button
+                type="button"
+                className={style.toggleButton}
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </button>
             </label>
             <ErrorMessage
               name="password"
@@ -204,7 +209,9 @@ const Register = () => {
             </label>
             <ErrorMessage
               name="securityQuestion"
-              component={() => <div className="error">{errors.securityQuestion}</div>}
+              component={() => (
+                <div className="error">{errors.securityQuestion}</div>
+              )}
             />
 
             <p className={style.p}>Optional data for registration</p>

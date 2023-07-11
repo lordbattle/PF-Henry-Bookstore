@@ -234,7 +234,6 @@ export const getUsers = () => {
 export const getUserById = (idUser) => {
   // name y lastname estan en null en el backend
   return async (dispatch) => {
-    console.log("Estoy en el action redux de getByid");
     try {
       const { data } = await axiosInstance.get(`/users/${idUser}`);
       console.log("LOG DEL GETID", data);
@@ -243,7 +242,7 @@ export const getUserById = (idUser) => {
         payload: data,
       });
     } catch (error) {
-      alert(`Error catch getUsersbyid ${error}`);
+      throw new Error(error);
     }
   };
 };
@@ -411,49 +410,38 @@ export function verifyUserToken() {
 export const getPurchaseHistoryById = (idUser) => {
   return async (dispatch) => {
     try {
-      const {data} = await axiosInstance.get(`/bills?userId=${idUser}`)
+      const { data } = await axiosInstance.get(`/bills?userId=${idUser}`);
       return dispatch({
         type: HISTORY_PURCHASE,
-        payload: data
-      })
+        payload: data,
+      });
     } catch (error) {
       console.log("ERROR DEL CATCH getPurchaseHistoryById", error);
     }
   };
 };
 
-
 export const getAllOrders = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axiosInstance.get("/orders")
+      const { data } = await axiosInstance.get("/orders");
       return dispatch({
-        type:GET_ORDERS,
-        payload:data.results
-      })  
+        type: GET_ORDERS,
+        payload: data.results,
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-}
+  };
+};
 
-export const changePassword = (idUser, newPassword) => {
+export const changePasswordUser = (values) => {
   return async (dispatch) => {
     try {
-      const response = await axiosInstance.put(`/profile/changePassword`, {
-        idUser,
-        newPassword,
-      });
-
-      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
-
-      dispatch({
-        type: CHANGE_PASSWORD,
-        payload: response.data,
-      });
+      await axiosInstance.put(`/profileUser/changePassword`, values);
+      return;
     } catch (error) {
-      console.log(error.message);
-      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
+      throw new Error(error.response.data.message);
     }
   };
 };
@@ -470,7 +458,7 @@ export const forgotPassword = (email) => {
 };
 
 export const forgotPasswordChange = (values) => {
-  console.log('Estoy en la action de forgotPasswordChange');
+  console.log("Estoy en la action de forgotPasswordChange");
   return async (dispatch) => {
     try {
       await axiosInstance.post(`/authUser/forgotPassword/`, values);

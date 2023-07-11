@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getUserById } from "../../redux/actions";
 import { useEffect, useState } from "react";
-import {Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import { logoutUser } from "../../redux/actions";
@@ -55,7 +55,6 @@ const Profile = () => {
 
   const handleMouseEnter = () => {
     setIsActive(true);
-    // Ejecutar la acción deseada aquí
   };
 
   const handleMouseLeave = () => {
@@ -64,30 +63,48 @@ const Profile = () => {
 
   return (
     <>
-      <div className={style.dropdown}>
+      <div
+        className={style.dropdown}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {userCurrent.results && (
-          <div className={style.dropdown_toggle} onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}>
+          <div className={style.dropdown_toggle}>
             {userCurrent.results.userName}
           </div>
         )}
 
         {isActive && (
-          <ul className={style.dropdown_menu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
+          <ul className={style.dropdown_menu}>
             {userCurrent.results && (
-              <li className={style.dropdown_item_profile} >
+              <li className={style.dropdown_item_profile}>
                 <img src={userCurrent.results.profilePic} width="70px" />
                 <h4>{userCurrent.results.userName}</h4>
               </li>
             )}
             <li className={style.dropdown_item}>
-              <Link to={"/editprofile"} className="text-black text-decoration-none fs-6">Edit Profile</Link>
+              <Link
+                to={"/editprofile"}
+                className="text-black text-decoration-none fs-6"
+              >
+                Edit Profile
+              </Link>
             </li>
             <li className={style.dropdown_item}>
-              <Link to={"/ChangePassword"} className="text-black text-decoration-none fs-6">Reset Password</Link>
+              <Link
+                to={"/ChangePassword"}
+                className="text-black text-decoration-none fs-6"
+              >
+                Reset Password
+              </Link>
             </li>
             <li className={style.dropdown_item}>
-              <NavLink className="text-black text-decoration-none fs-6" onClick={alert}>Log Out</NavLink>
+              <NavLink
+                className="text-black text-decoration-none fs-6"
+                onClick={alert}
+              >
+                Log Out
+              </NavLink>
             </li>
           </ul>
         )}

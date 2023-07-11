@@ -17,41 +17,6 @@ const Home = () => {
     dispatch(getPaginationBooks());
   }, []);
 
-  console.log("home pagination", pagination);
-
-  /*
-import { useDispatch, useSelector } from "react-redux";
-import { logingUser, postUsers,getPaginationBooks } from "../../redux/actions";
-import Filters from "../Filters/Filters";
-import useFilters from "../../hooks/useFilters";
-import Pagination from "../Pagination/Pagination";
-import { UserAuth } from "../../context/AuthContextFirebase";
-/* import { useNavigate } from "react-router-dom"; */
-
-  /* const userlogin = useSelector((state) => state.user);
-  const { user } = UserAuth();
-  //const navigate = useNavigate();
-  
-
-  useEffect(() => {
-    console.log("HOME USER AQUI  ", user);
-
-    if (user) {
-      setTimeout(() => {
-        dispatch(postUsers(user));
-        console.log;
-      }, 3000);
-
-      setTimeout(() => {
-        dispatch(logingUser(user));
-      }, 4000);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
-  }, [userlogin]); */
-
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);
 

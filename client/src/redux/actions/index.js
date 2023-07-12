@@ -60,11 +60,25 @@ export const getBookById = (idBook) => {
   };
 };
 
+export const getBookAll = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axiosInstance.get(`/books`);
+      return dispatch({
+        type: GET_BOOK_TITLE,
+        payload: data,
+      });
+    } catch (error) {
+      alert(`Error catch getbooksAll ${error}`);
+    }
+  };
+};
+
 export const getBookByTitle = (title) => {
   return async (dispatch) => {
     try {
       const { data } = await axiosInstance.get(`/books/?title=${title}`);
-      console.log(title);
+      console.log(title , ' soy titulo action ');
       return dispatch({
         type: GET_BOOK_TITLE,
         payload: data,

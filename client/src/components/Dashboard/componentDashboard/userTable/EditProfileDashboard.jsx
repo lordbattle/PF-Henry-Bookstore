@@ -49,27 +49,9 @@ const EditProfileDashboard = ({ back, userEdit }) => {
         title: "Upps !",
         text: `Something went wrong ${error.response.data}`,
         backdrop: true,
-      }); X
+      }); 
     }
-    // try {
-    //   const formData = new FormData();
-    //   formData.append("file", file);
-    //   formData.append("upload_preset", `${cloudinary_cloud_name}`); // Corregir el nombre del preset de carga
-    //   const { data } = await axios.post(`${cloudinary_url}`, formData);
-
-    //   let { secure_url } = data;
-    //   console.log(secure_url);
-
-    //   let newObj = {
-    //     ...userChange,
-    //     profilePic: secure_url,
-    //   };
-
-    //   dispatch(editUser(user.id, newObj));
-    //   setIsChangeUser(true);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    
   };
 
 

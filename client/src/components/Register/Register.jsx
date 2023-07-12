@@ -72,6 +72,7 @@ const Register = () => {
             Swal.fire({
               icon: "success",
               title: "Registered Welcome!",
+
               text: "You are now part of The Litary Corner!",
               backdrop: true,
             });
@@ -157,28 +158,36 @@ const Register = () => {
               name="userName"
               component={() => <div className="error">{errors.userName}</div>}
             />
+            <div className={style.containerMainPassword}>
+              <div className={style.containerPassword} >
+                <label>
+                  <Field
+                    placeholder=""
+                    type={showPassword ? "text" : "password"}
+                    className={style.inputPassword
+                    }
+                    id="password"
+                    name="password"
+                  />
+                  <span>password</span>
+                </label>
+                <ErrorMessage
+                  name="password"
+                  component={() => <div className="error">{errors.password}</div>}
+                />
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className={style.toggleButton}
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                </button>
+              </div>
 
-            <label>
-              <Field
-                placeholder=""
-                type={showPassword ? "text" : "password"}
-                className={style.input}
-                id="password"
-                name="password"
-              />
-              <span>password</span>
-              <button
-                type="button"
-                className={style.toggleButton}
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? <FaEye /> : <FaEyeSlash />}
-              </button>
-            </label>
-            <ErrorMessage
-              name="password"
-              component={() => <div className="error">{errors.password}</div>}
-            />
+            </div>
+
 
             <label>
               <Field
@@ -220,7 +229,7 @@ const Register = () => {
                 <Field
                   placeholder="+ 18"
                   type="text"
-                  className={style.input}
+                  className={style.inputOptional}
                   id="age"
                   name="age"
                 />
@@ -234,7 +243,7 @@ const Register = () => {
               <label>
                 <Field
                   as="select"
-                  className={style.input}
+                  className={style.inputOptional}
                   id="genres"
                   name="genres"
                 >
@@ -254,7 +263,7 @@ const Register = () => {
                 <Field
                   placeholder=" +COD-xxx-xxx-xxxx"
                   type="text"
-                  className={style.input}
+                  className={style.inputOptional}
                   id="phone"
                   name="phone"
                 />
@@ -271,8 +280,8 @@ const Register = () => {
             </button>
 
             {formSubmitted && (
-            <p className="exito"> Form submitted successfully</p>
-          )}
+              <p className="exito"> Form submitted successfully</p>
+            )}
 
           </Form>
         )}

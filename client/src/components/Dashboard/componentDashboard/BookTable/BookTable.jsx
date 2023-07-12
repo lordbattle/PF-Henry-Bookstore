@@ -135,7 +135,7 @@ const BookTable = () => {
             <input
               type="text"
               className="mb-2 form-control w-25"
-              placeholder="Search User"
+              placeholder="Search Title Book "
               onChange={onChangeSearch}
               value={search}
             />

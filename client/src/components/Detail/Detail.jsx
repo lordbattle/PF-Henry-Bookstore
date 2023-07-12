@@ -4,6 +4,7 @@ import {useParams, Link} from "react-router-dom"
 import { getBookById, deleteBook, activeBook, editBook } from "../../redux/actions";
 import useStorage from "../LocalStorage/LocalStorage";
 import style from '../Detail/Detail.module.css'
+import Swal from "sweetalert2";
 const Detail = () =>{
     
     const { addToCart } = useStorage();
@@ -30,6 +31,16 @@ const Detail = () =>{
         };
       
         addToCart(newItem);
+        Swal.fire({
+            position: "bottom-end",
+            title: "successfully added",
+            showConfirmButton: false,
+            backdrop: "transparent",
+            color: "white",
+            background: "rgb(102, 187, 106)",
+            timer: 700,
+            width: 300,
+          });
       };
 
 

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo3 from '../../images/logo3.png'
 
 const Footer = () => {
   return (
@@ -6,7 +7,7 @@ const Footer = () => {
       <footer className="py-4 mt-3 fixed-bottom position-relative" style={{backgroundColor: '#71a5e5'}}>
         <div className="position-relative d-flex justify-content-around  m-0 text-center align-items-start">
           <div>
-            <p className="text-white fs-4 text-reset">TheLiteraryCorner</p>
+            <p className="text-white fs-4 text-reset"><img src={logo3} width={'200px'} height={'80px'}></img></p>
           </div>
           <div className="m-0 d-flex flex-column">
             <Link to={"/home"} className="text-white fs-5 text-decoration-none">

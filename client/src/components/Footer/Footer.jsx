@@ -18,7 +18,7 @@ const Footer = () => {
             </Link>
           </div>
           <div className="m-0">
-            <p className="m-0 fs-5">Further Information</p>
+            <p className="m-0 fs-5 text-white">Further Information</p>
             <p className="m-0 text-white-50">Privacy Policy</p>
             <p className="m-0 text-white-50">Terms & Conditions</p>
           </div>

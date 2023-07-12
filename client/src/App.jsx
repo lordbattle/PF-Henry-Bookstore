@@ -77,7 +77,7 @@ function App() {
 
           </Routes>
 
-          {pathname !== "/dashboard" && <Footer />}
+          {pathname !== "/dashboard" || "/" && <Footer />}
         </AuthProvider>
       </AuthContextProvider>
     </div>

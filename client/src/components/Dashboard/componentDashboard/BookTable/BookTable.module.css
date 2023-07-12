@@ -157,6 +157,17 @@ tbody .td {
 
 
 }
+.divErrorVacioTable{
+    background-color: rgb(245, 152, 152);
+    width: 601%;
+    height: 6em;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
 .nextDisabled {
     background: 284de0;

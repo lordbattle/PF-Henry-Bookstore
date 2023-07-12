@@ -1,5 +1,5 @@
 import SearchBar from "../SearchBar/SearchBar";
-import { Link, json, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate, useLocation } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
 import useStorage from "../LocalStorage/LocalStorage";
 import { useState, useEffect } from "react";
@@ -82,7 +82,7 @@ const Nav = () => {
       }
     });
   }
-
+  const { pathname } = useLocation();
   return (
     <div
       key={updateKey}
@@ -95,8 +95,9 @@ const Nav = () => {
             <img src={prueba1} height={'75px'}></img>
           </Link>
         </span>
-
-        <SearchBar />
+        
+        {pathname === "/home" && <SearchBar />}
+        
 
         <div className="w-100 m-0 d-flex justify-content-end align-items-center">
           {" "}

@@ -49,9 +49,9 @@ const EditProfileDashboard = ({ back, userEdit }) => {
         title: "Upps !",
         text: `Something went wrong ${error.response.data}`,
         backdrop: true,
-      }); 
+      });
     }
-    
+
   };
 
 
@@ -87,7 +87,7 @@ const EditProfileDashboard = ({ back, userEdit }) => {
         <div className={style.info}>
           <button className={style.buttonVolver} onClick={handleReverse}>Back</button>
           <img className={style.imagePic} src={userEdit.profilePic} alt="profilePic" />
-          
+
           <h2>{userEdit.name} {userEdit.lastName}</h2>
           <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>UserName: </span></div><div className={style.dos}><p>{userEdit.userName}</p></div></div>
           <div className={style.rowsInfo}><div className={style.uno}><span className={style.span}>Email: </span></div><div className={style.dos}><p>{userEdit.email}</p></div></div>
@@ -122,12 +122,11 @@ const EditProfileDashboard = ({ back, userEdit }) => {
 
             </div>
 
-            <button className={style.buttonEdit} type="submit" onClick={upInfo}>Save Profile</button>
 
-            {isChangeUser && <div>The user has been modified</div>}
-         
+
           </div>
-
+          <button className={style.buttonEdit} type="submit" onClick={upInfo}>Save Profile</button>
+          {isChangeUser && <div>The user has been modified</div>}
         </div>
       </div>
     </div>

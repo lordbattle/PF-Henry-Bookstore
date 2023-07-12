@@ -41,23 +41,16 @@ const Cards = (props) => {
         <div className={style.contain_title}>
           <section className="d-flex justify-content-start flex-column pl-5 w-100">
             <h3 className="m-0">{props.title}</h3>
-            <span>name author {props.author}</span>
+            <span>author's: {props.author}</span>
           </section>
           <section className="d-flex w-100 align-items-start justify-content-center gap-5">
             <div className="w-50 d-flex flex-column pl-5">
               {" "}
               <p className="m-0 fs-3 text-start">
-                ${props.price}{" "}
-                <span style={{ color: "#4cbd49" }} className="fs-6">
-                  15% OFF
-                </span>
+                ${props.price}
+                
               </p>
-              <p className="m-0 text-start">
-                en{" "}
-                <span style={{ color: "#4cbd49" }}>
-                  12 x ${Math.round(props.price / 12)}.00 sin intereses.
-                </span>
-              </p>
+          
             </div>
             <div className="w-50">
               {" "}
@@ -74,6 +67,7 @@ const Cards = (props) => {
               justifyContent: "center",
               textDecoration: "none",
               width: "auto",
+              fontSize: '20px'
             }}
           >
             Read more
@@ -83,8 +77,9 @@ const Cards = (props) => {
             className={style.read}
             style={{
               display: "flex",
-              marginTop: "1vh",
+              margin: "1vh",
               justifyContent: "center",
+              fontSize: '20px'
             }}
           >
             Add to cart
@@ -135,7 +130,7 @@ const Cards = (props) => {
           >
             <span
               className={style.read}
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{ display: "flex", justifyContent: "center"}}
             >
               Read more
             </span>

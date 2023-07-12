@@ -9,6 +9,8 @@ import { UserAuth } from "../../context/AuthContextFirebase";
 import { logoutUser, verifyUserToken } from "../../redux/actions";
 import Cookies from "js-cookie";
 import Profile from "../Profile/Profile";
+import prueba1 from '../../images/prueba1.png'
+
 
 const Nav = () => {
   const user = useSelector((state) => state.user);
@@ -77,13 +79,13 @@ const Nav = () => {
   return (
     <div
       key={updateKey}
-      className="px-2 py-3 border-0 bg_navbar text-white"
+      className="px-3 border-0 bg_navbar text-white"
       style={{ backgroundColor: "#71a5e5" }}
     >
       <Stack direction="horizontal" gap={3}>
         <span className="p-2 link-as-text">
           <Link to={"/"} className="text-decoration-none fs-4 text-reset">
-            TheLiteraryCorner
+            <img src={prueba1} height={'75px'}></img>
           </Link>
         </span>
 

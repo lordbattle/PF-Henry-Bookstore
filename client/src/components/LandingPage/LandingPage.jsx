@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { logingUser, postUsers } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
+import logo5 from '../../images/logo5.png'
 
 const LandingPage = () => {
   const userlogin = useSelector((state) => state.user);
@@ -38,7 +39,7 @@ const LandingPage = () => {
   return (
     <div className={style.main}>
       <div className={style.head}>
-        <h1 style={{ fontSize: "50px" }}>The literary corner</h1>
+        <img src={logo5} width={'700px'} height={'150px'}></img>
         <p style={{ fontSize: "20px" }}>A great place to buy a good book.</p>
         <div className={style.btns}>
           <Button className={style.containerbtn}>

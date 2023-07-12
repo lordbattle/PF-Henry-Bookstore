@@ -27,18 +27,18 @@
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    top: 15px;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+    justify-items: auto;
     width: 35em;
     background-color: #63c090;
     padding: 20px;
-    border-radius: 20px ;
+    border-radius: 20px;
     position: relative;
+    top: 15px;
     text-align: center;
-}
+  }
 
 .containerNames {
     position: relative;

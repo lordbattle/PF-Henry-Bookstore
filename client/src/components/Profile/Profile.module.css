@@ -4,8 +4,8 @@
 }
 
 .dropdown {
-  user-select: none;
-  width: fit-content;
+  /* user-select: none; */
+  width:auto;
   margin: 0 auto;
   position: relative;
   color: black;
@@ -33,11 +33,12 @@
 .dropdown .dropdown_menu {
   gap: 5px;
   position: absolute;
-  top: 100%;
+  top: 85%;
+  
   background-color: white;
   padding: 0 13px;
   list-style: none;
-  width: fit-content;
+  width:max-content;
   border-radius: 10px;
   z-index: 4;
   box-shadow: 0 2px 4px rgba(113, 165, 229, 0.5);

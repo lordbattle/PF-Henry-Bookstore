@@ -6,7 +6,11 @@ const { User } = require("../db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { generateForgotPassword } = require("../controllers/authControllers");
-const { sendForgottenPassword, sendPasswordChange } = require("../config/mailer");
+const {
+  sendForgottenPassword,
+  sendPasswordChange,
+  sendContactAdm,
+} = require("../config/mailer");
 
 //Loging user
 
@@ -61,6 +65,22 @@ const logoutUser = async (req, res) => {
     res.status(200).send("Successful user logout");
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+const contactAdm = async (req, res) => {
+  const { name, email, affair, message } = req.body;
+  console.log("Estoy en el handler de contactAdm");
+  console.log("name es    ", name);
+  console.log("email es    ", email);
+  console.log("Affair es    ", affair);
+  console.log("message es    ", message);
+
+  try {
+    const emailSent = await sendContactAdm(email, name, affair, message);
+    res.status(200).json({ success: true, email, emailSent });
+  } catch (e) {
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
@@ -159,6 +179,7 @@ const verifyToken = async (req, res) => {
 module.exports = {
   loginUser,
   logoutUser,
+  contactAdm,
   forgotPasswordChange,
   forgotPasswordUser,
   verifyToken,

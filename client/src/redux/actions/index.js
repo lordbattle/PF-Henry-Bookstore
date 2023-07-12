@@ -475,12 +475,24 @@ export const forgotPassword = (email) => {
 };
 
 export const forgotPasswordChange = (values) => {
-  console.log("Estoy en la action de forgotPasswordChange");
   return async () => {
     try {
-      await axiosInstance.post(`/authUser/forgotPassword/`, values);
+      await axiosInstance.post(`/authUser/forgotPassword`, values);
       return;
     } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  };
+};
+
+export const contactAdm = (values) => {
+  console.log("Estoy en la action de contactAdm");
+  return async () => {
+    try {
+      let data = await axiosInstance.post(`/authUser/contact`, values);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
       throw new Error(error.response.data.message);
     }
   };

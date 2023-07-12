@@ -3,6 +3,7 @@ import Nav from "./components/Nav/Nav";
 import LandingPage from "./components/LandingPage/LandingPage";
 import About from "./components/About/About";
 import Home from "./components/Home/Home";
+import ContactForm from "./components/ContactForm/ContactForm";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Footer from "./components/Footer/Footer.jsx";
@@ -12,10 +13,9 @@ import AddBookForm from "./components/BooksForm/BooksForm";
 import Profile from "./components/Profile/Profile";
 import OptionLoginOrRegister from "./components/OptionLoginOrRegister/OptionLoginOrRegister";
 import BookManager from "./components/Dashboard/componentDashboard/BookManager/BookManager";
-
 import ChangePassword from "./components/EditPassword/EditPassword";
+import Forgotpassword from "./components/ForgotPassword/Forgotpassword";
 import EditProfile from "./components/EditProfile/EditProfile";
-//import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import { AuthProvider } from "./context/AuthContext";
@@ -35,7 +35,6 @@ function App() {
 
   return (
     <div className="container">
-
       <AuthContextProvider>
         <AuthProvider>
           {pathname !== "/" && <Nav />}
@@ -48,6 +47,8 @@ function App() {
 
             <Route path="/about" element={<About />}></Route>
 
+            <Route path="/contact" element={<ContactForm />}></Route>
+
             <Route path="/login" element={<Login />}></Route>
 
             <Route
@@ -59,7 +60,7 @@ function App() {
 
             <Route path="/changepassword" element={<ChangePassword />}></Route>
 
-            {/*<Route path="/forgotpassword" element={<ForgotPassword />}></Route>*/}
+            <Route path="/forgotpassword" element={<Forgotpassword />}></Route>
 
             <Route path="/register" element={<Register />}></Route>
 
@@ -72,12 +73,14 @@ function App() {
             <Route path="/editprofile" element={<EditProfile />}></Route>
 
             <Route path="/managebooks/:id" element={<BookManager />}></Route>
-            
-            <Route path="/purchasehistory" element={<PurchaseHistory/>}></Route>
 
+            <Route
+              path="/purchasehistory"
+              element={<PurchaseHistory />}
+            ></Route>
           </Routes>
 
-          {pathname !== "/dashboard" || "/" && <Footer />}
+          {pathname !== "/dashboard" || ("/" && <Footer />)}
         </AuthProvider>
       </AuthContextProvider>
     </div>

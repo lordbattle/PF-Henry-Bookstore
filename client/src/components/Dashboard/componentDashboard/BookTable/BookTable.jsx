@@ -11,7 +11,7 @@ import { RxCrossCircled } from "react-icons/rx";
 let books = [];
 let bookByTitle = [];
 const BOTONES_A_MOSTRAR = 3;
-const CANTIDAD_POR_PAGINA = 8;
+const CANTIDAD_POR_PAGINA = 7;
 const BOTONES_HERMANOS = 1;
 
 const BookTable = () => {

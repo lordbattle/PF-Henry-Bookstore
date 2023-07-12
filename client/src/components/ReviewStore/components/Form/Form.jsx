@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+import Swal from "sweetalert2";
 import Starts from "../Starts/Starts";
 
 const Form = ({
@@ -21,6 +21,11 @@ const Form = ({
   };
 
   const handleSubmit = async (event) => {
+    Swal.fire(
+      'Published review',
+      '',
+      'success'
+    )
     event.preventDefault();
 
     const {

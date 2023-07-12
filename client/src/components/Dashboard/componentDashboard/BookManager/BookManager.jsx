@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { getBookById, deleteBook, activeBook, editBook } from "../../../../redux/actions";
 import style from '../BookManager/BookManager.module.css';
+import Swal from "sweetalert2";
 
 const BookManager = () => {
   const { id } = useParams();
@@ -17,8 +18,13 @@ const BookManager = () => {
 
   const { active, authors, averageRating, bookPic, description, genre, identifier, pages, publishedDate, publisher, subtitle, title, userRating, price, stock } = details;
 
-  const handleDeleteBook = () => {
-    dispatch(deleteBook(id));
+  const handleDeleteBook = async() => {
+    await Swal.fire(
+      'The product was deleted',
+      '',
+      'error'
+    )
+    dispatch(deleteBook(id))
     window.location = "/dashboard";
   };
 

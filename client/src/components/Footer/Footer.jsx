@@ -28,7 +28,7 @@ const Footer = () => {
             <Link to={"/about"} className="text-white-50 text-decoration-none">
               About Us
             </Link>
-            <Link className="m-0 text-white-50 text-decoration-none">
+            <Link to={"contact"} className="m-0 text-white-50 text-decoration-none">
               Contact us
               </Link>
           </div>

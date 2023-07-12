@@ -22,18 +22,6 @@ const BookManager = () => {
     window.location = "/dashboard";
   };
 
-  const handleAddToCart = () => {
-    const newItem = {
-      id: id,
-      img: bookPic,
-      title: title,
-      price: price,
-      stock: 1,
-    };
-
-    addToCart(newItem);
-  };
-
   const [editedProduct, setEditedProduct] = useState({
     title: title,
     subtitle: subtitle,

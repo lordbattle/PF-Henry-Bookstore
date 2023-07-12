@@ -4,7 +4,7 @@ const ReviewStore = ({ rating, numberOfStars, comment }) => {
   return (
     <div>
       <Starts rating={rating} numberOfStars={numberOfStars} />
-      <input type="text" name="comment" placeholder="comment" defaultValue={comment} />
+      <p style={{fontSize: '20px', paddingLeft: '7px'}}>{comment}</p>
     </div>
   );
 };

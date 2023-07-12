@@ -40,7 +40,7 @@ const LandingPage = () => {
     <div className={style.main}>
       <div className={style.head}>
         <img src={logo5} width={'700px'} height={'150px'}></img>
-        <p style={{ fontSize: "20px" }}>A great place to buy a good book.</p>
+        <p style={{ fontSize: "20px", padding:"20px" }}>A great place to buy a good book.</p>
         <div className={style.btns}>
           <Button className={style.containerbtn}>
             <Link to={"/home"} className={style.btn}>
@@ -53,11 +53,12 @@ const LandingPage = () => {
               Log in | Register
             </Link>
           </Button>
+          <CarouselComp />
         </div>
       </div>
       <Row>
-        <CarouselComp />
-        <Col
+        
+        {/* <Col
           xs={5}
           className="d-flex align-items-center"
           style={{ padding: "5px 120px" }}
@@ -74,10 +75,10 @@ const LandingPage = () => {
         >
           <h1>LIFE IS TOO SHORT TO READ A BAD BOOK</h1>
           <h2>"Unleash Your Imagination, One Page at a Time"</h2>
-        </Col>
+        </Col> */}
       </Row>
 
-      <Row>
+      {/* <Row>
         <Col xs={3} style={{ padding: "20px 0px 30px" }}>
           <Image
             src="https://images.vexels.com/media/users/3/151287/isolated/preview/90111e412b99189ef799b3d7a697097d-mujer-leyendo-libro-silueta-gente-leyendo.png"
@@ -100,7 +101,7 @@ const LandingPage = () => {
             realms of imagination and knowledge. Happy reading!"
           </h3>
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 };

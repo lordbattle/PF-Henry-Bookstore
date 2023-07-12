@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrders } from "../../../../redux/actions";
 import style from "./SalesTable.module.css";
-import { getOrdersByStatus } from '../../../../redux/actions'
+import { updateOrderStatus } from "../../../../redux/actions";
+import useSalesFilters from "../../../../hooks/useSalesFilters";
 
 const SalesTable = () => {
   let orderStatus = (order) => {
@@ -54,33 +55,53 @@ const SalesTable = () => {
     }
   };
   const dispatch = useDispatch();
-
   const orders = useSelector((state) => state.orders);
 
   let arrayOrders = orders.rows;
+
+  const { statusFilter, setStatusFilter, filterByStatus } = useSalesFilters();
+
+  const handleFilterByStatus = (e) => {
+    setStatusFilter({
+      ...statusFilter,
+      statusFil: e.target.value,
+    });
+  };
+
+  const newArray = filterByStatus(arrayOrders);
+
   useEffect(() => {
     dispatch(getAllOrders());
   }, [dispatch]);
 
-  function handleFilterByStatus(event){
-    event.preventDefault()
-    dispatch(getOrdersByStatus(event.target.value))
-}
+  const handleChangeStatus = async (e, id) => {
+    e.preventDefault();
+    const newStatus = {
+      status: e.target.value,
+    };
+
+    await dispatch(updateOrderStatus(id, newStatus));
+
+    setTimeout(() => {
+      dispatch(getAllOrders());
+    }, 700);
+  };
 
   return (
     <>
       <div className={style.containerOrders}>
-        <h3>Sales</h3>
-        <div className="d-flex">
+        <h3>Sales</h3>{" "}
         <div className={style.filters}>
-                <select defaultValue='Filter by status' onChange={event => handleFilterByStatus(event)}>
-                    <option disabled>Filter by status</option>
-                    <option key='approved' value='approved'>APPROVED</option>
-                    <option key='pending' value='pending'>PENDING</option>
-                    <option key='reject' value='reject'>REJECT</option>
-                </select>
+          <select
+            value={statusFilter.statusFil}
+            onChange={handleFilterByStatus}
+          >
+            <option value="all">Filter by status</option>
+            <option value="approved">APPROVED</option>
+            <option value="pending">PENDING</option>
+            <option value="reject">REJECT</option>
+          </select>
         </div>
-
         <table className={style.table}>
           <thead className={style.thead}>
             <tr>
@@ -91,10 +112,11 @@ const SalesTable = () => {
               <th>OrderItems</th>
               <th>Payday</th>
               <th>Invoice Status</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            {arrayOrders?.map((order) => (
+            {newArray?.map((order) => (
               <tr key={order.id}>
                 <td className={style.td}>{order.id}</td>
                 <td className={style.td}>${order.total}.00</td>
@@ -105,11 +127,18 @@ const SalesTable = () => {
                 <td className={style.td}>
                   {order.invoiceStatus.split("_").join(" ")}
                 </td>
+                <td className={style.btnStatus}>
+                  <select onChange={(e) => handleChangeStatus(e, order.id)}>
+                    <option value="not">Change Value</option>
+                    <option value="approved">APPROVED</option>
+                    <option value="pending">PENDING</option>
+                    <option value="reject">REJECT</option>
+                  </select>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        </div>
       </div>
     </>
   );

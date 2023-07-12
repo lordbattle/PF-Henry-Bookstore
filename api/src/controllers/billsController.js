@@ -46,6 +46,8 @@ const getAllBills = async (data) => {
   return { count, rows };
 };
 
+
+
 module.exports = {
   getBillById,
   getAllBills,

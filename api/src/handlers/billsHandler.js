@@ -1,6 +1,6 @@
 const { cleanData } = require("../helpers/userHelper");
 const { typeGetAllOrdersQuery } = require("../helpers/billHelper");
-const { getBillById, getAllBills } = require("../controllers/billsController");
+const { getBillById, getAllBills,putStatusOrder } = require("../controllers/billsController");
 
 // Get bill by id
 const getBillByIdHandler = async (req, res) => {
@@ -27,6 +27,7 @@ const getBillsHandler = async (req, res) => {
     res.status(400).json({ success: false, error: e.message });
   }
 };
+
 
 module.exports = {
   getBillByIdHandler,

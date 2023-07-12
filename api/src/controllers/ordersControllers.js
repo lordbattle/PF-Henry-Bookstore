@@ -344,10 +344,37 @@ const rejectExpiredOrders = async () => {
   });
 };
 
+const putStatusOrder= async(id,status)=>{
+  try {
+    if (status === "not") {
+      const order = await Order.findByPk(id); // Obtén la orden actual sin modificar
+      return order;
+    }
+
+    const orderToUpdate = await Order.findByPk(id);
+    if (!orderToUpdate) {
+      throw new Error(`No se encontró ninguna orden con el ID ${id}.`);
+    }
+
+    const updatedOrder = await Order.update(
+      { status: status }, // Actualiza la propiedad 'status' con el valor pasado como parámetro
+      { where: { id: id }, returning: true } // Agrega el parámetro 'returning: true' para obtener el objeto de pedido actualizado
+    );
+
+   
+
+    return updatedOrder[1][0]; // Devuelve el objeto de pedido actualizado
+  } catch (error) {
+    throw new Error(error);
+  }
+ 
+}
+
 module.exports = {
   getOrderById,
   getAllOrders,
   insertOrder,
   receiveWebhook,
   rejectExpiredOrders,
+  putStatusOrder
 };

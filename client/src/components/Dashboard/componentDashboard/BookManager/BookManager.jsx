@@ -109,7 +109,7 @@ const BookManager = () => {
         </div>
 
         <div className='d-flex p-3'>
-          <img src={bookPic} alt="Imagen del libro" width='35%' />
+          <img src={bookPic} alt="Imagen del libro" className={style.img} />
           <div className={style.advancedDetail}>
 
             {isEditing && (
@@ -220,12 +220,12 @@ const BookManager = () => {
             {!isEditing && (
               <>
                  <h1 style={{width: '100%',fontSize: '30px'}}>{title}</h1>
-            <h2 style={{fontSize: '20px'}}>{subtitle}</h2>
+            <h2 style={{fontSize: '18px'}}>{subtitle}</h2>
             <p style={{fontSize: '20px'}}>Price: ${price}</p>
             <p style={{fontSize: '20px'}}>Stock: {stock}</p>
             <p style={{fontSize: '20px'}}>Author's: {authors}</p>
-            <p style={{fontSize: '18px', maxHeight: '60%'}}>{description}</p>
-            <p style={{width: '50%', fontSize: '20px'}}>Rating global: {averageRating}</p> <p style={{width: '50%', fontSize: '20px'}}>Rating de usuarios: {userRating}</p>
+            <p style={{fontSize: '20px', maxHeight: '60%', borderRadius: '20px', paddingLeft: '8px', backgroundColor: '#71a6e2'}}>{description}</p>
+            <p style={{width: '50%', fontSize: '20px'}}>Rating global: {averageRating}</p> <p style={{width: '50%', fontSize: '20px'}}></p>
             <p style={{width: '33.3%', fontSize: '18px'}}>Categories: {genre}</p>
             <p style={{width: '33.3%', fontSize: '18px'}}>Pages: {pages}</p>
             <p style={{width: '33.3%', fontSize: '18px'}}>{publisher} : {publishedDate}</p>

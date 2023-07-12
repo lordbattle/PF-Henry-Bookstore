@@ -22,9 +22,7 @@ export const PurchaseHistory = () =>{
     let totalSpent = 0
     return (
       <div className={style.container}>
-        {history && history.rows && history.rows.length > 0 ? (
-         history.rows.map((row)=>{ totalSpent += row.order.total })) : null}
-        <h3 style={{color: 'white', marginTop: '10px'}}>Historial de compras: ${totalSpent}</h3>
+        <h3 style={{color: 'white', marginTop: '10px'}}>Historial de compras</h3>
         {history && history.rows && history.rows.length > 0 ? (
           history.rows.map((row) => (
             <div key={row.id} className={style.product}>

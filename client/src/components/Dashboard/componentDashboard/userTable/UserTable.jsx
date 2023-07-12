@@ -18,10 +18,9 @@ const UserTable = () => {
   useEffect(() => {}, [dispatch]);
   console.log(users);
   const handleEditUserId = (event) => {
-    console.log(event.target.name, "  boton id");
+
     let userSearch = users.filter((user) => user.id == event.target.name);
     setUserEdit(userSearch);
-    console.log(userSearch, " usuario buscado");
     // setUserEdit(event.tarjet.context)
   };
 

@@ -18,6 +18,7 @@ import {
   GET_ORDERS,
   HISTORY_PURCHASE,
   CHANGE_PASSWORD,
+  UPDATE_STATUS_ORDER,
   GET_ORDERS_BY_STATUS
 } from "../types/types.js";
 
@@ -475,7 +476,7 @@ export const forgotPassword = (email) => {
 
 export const forgotPasswordChange = (values) => {
   console.log("Estoy en la action de forgotPasswordChange");
-  return async (dispatch) => {
+  return async () => {
     try {
       await axiosInstance.post(`/authUser/forgotPassword/`, values);
       return;
@@ -484,6 +485,18 @@ export const forgotPasswordChange = (values) => {
     }
   };
 };
+
+export const updateOrderStatus = (id, status) =>{
+  return async() => {
+    try {
+      await axiosInstance.put(`/orders/${id}`, status)
+    return;
+    } catch (error) {
+      throw new Error(error)
+    }
+    
+  }
+}
 
 export const getOrdersByStatus = (payload) => {
   return {

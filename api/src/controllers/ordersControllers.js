@@ -8,7 +8,10 @@ const {
   validateNumBooks,
   createModelOrderItems,
 } = require("../helpers/orderHelper");
-const { sendApprovedPayment, sendRejectedPayment } = require("../config/mailer");
+const {
+  sendApprovedPayment,
+  sendRejectedPayment,
+} = require("../config/mailer");
 
 const { MERCADOPAGO_NOTIFICATION_URL, MERCADOPAGO_BACK_URLS } = process.env;
 
@@ -162,7 +165,7 @@ const createOrder = async (user, books, items, transaction) => {
 
   // Create model preferences
   const preferences = {
-    metadata: { id_order: order.id, email: user.email },
+    metadata: { id_order: order.id, user_id: user.id },
     items: itemPreferences,
     back_urls: {
       success: MERCADOPAGO_BACK_URLS,
@@ -176,17 +179,16 @@ const createOrder = async (user, books, items, transaction) => {
     expiration_date_from: moment(startDate).toISOString(true),
     expiration_date_to: moment(endDate).toISOString(true),
   };
- 
+
   // Create preference
   const results = await mercadopago.preferences.create(preferences);
-console.log("ANTES DEL RETURN");
+  console.log("ANTES DEL RETURN");
   // Update the id and the total to pay
   await order.update({ preferenceId: results.body.id }, { transaction });
 
   // Inserting the data if the whole process was successful
   await transaction.commit();
 
- 
   return { id: results.body.id, init_point: results.body.init_point };
 };
 
@@ -274,12 +276,6 @@ const insertOrder = async (id_user, items) => {
 
 // Check payment status through notifications Webhook
 const receiveWebhook = async (query) => {
-  console.log(query);
-  const user = await User.findByPk(id_user.query);
-  console.log("Que es id_user.query   ", id_user.query);
-  console.log("Que es user   ", user);
-
-
   try {
     if (query.type === "payment") {
       const paymentData = await mercadopago.payment.findById(query["data.id"]);
@@ -292,6 +288,8 @@ const receiveWebhook = async (query) => {
       const order = await Order.findByPk(paymentData.body.metadata.id_order, {
         include: [OrderItem],
       });
+
+      const user = await User.findByPk(paymentData.body.metadata.user_id);
 
       if (status === "approved") {
         // Create invoice
@@ -309,10 +307,16 @@ const receiveWebhook = async (query) => {
         // Update invoice status
         order.set({ status, invoiceStatus: "con_factura" });
         await order.save();
-        sendApprovedPayment(user.mail, user.userName)
+
+        // Send email if payment is approved
+        sendApprovedPayment(user.email, user.userName);
+
         return paymentData.body.metadata;
       }
-      sendRejectedPayment(user.mail, user.userName)
+
+      // Send mail in case of counting the payment
+      sendRejectedPayment(user.email, user.userName);
+
       return status;
     }
   } catch (e) {
@@ -344,10 +348,34 @@ const rejectExpiredOrders = async () => {
   });
 };
 
+const putStatusOrder = async (id, status) => {
+  try {
+    if (status === "not") {
+      const order = await Order.findByPk(id); // Obtén la orden actual sin modificar
+      return order;
+    }
+
+    const orderToUpdate = await Order.findByPk(id);
+    if (!orderToUpdate) {
+      throw new Error(`No se encontró ninguna orden con el ID ${id}.`);
+    }
+
+    const updatedOrder = await Order.update(
+      { status: status }, // Actualiza la propiedad 'status' con el valor pasado como parámetro
+      { where: { id: id }, returning: true } // Agrega el parámetro 'returning: true' para obtener el objeto de pedido actualizado
+    );
+
+    return updatedOrder[1][0]; // Devuelve el objeto de pedido actualizado
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   getOrderById,
   getAllOrders,
   insertOrder,
   receiveWebhook,
   rejectExpiredOrders,
+  putStatusOrder,
 };

@@ -86,9 +86,9 @@ const Detail = () =>{
         <div className={style.main}>
             <div className={style.container}>
                 <div className={style.detail}>
-                <h2>ID DEL LIBRO: {id}</h2>
+                {/* <h2>ID DEL LIBRO: {id}</h2>
                 <h4>{active===true? ( <button onClick={()=>{dispatch(deleteBook(id));}} className={style.deleteButtom}>Deshabilitar producto</button> ):(<button onClick={()=>(dispatch(activeBook(id)))} className={style.deleteButtom}>Habilitar producto</button>)}</h4>
-                <h4><button onClick={()=>setIsEditing(true)} className={style.deleteButtom}>Edit product</button></h4>
+                <h4><button onClick={()=>setIsEditing(true)} className={style.deleteButtom}>Edit product</button></h4> */}
                 </div>
 
             <div className='d-flex p-3'>

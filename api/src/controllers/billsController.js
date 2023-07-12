@@ -1,4 +1,4 @@
-const { User, Book, Order, OrderItem, Bill, conn } = require("../db");
+const { Book, Order, OrderItem, ReviewStore, Bill } = require("../db");
 
 // Controller: get bill by id
 const getBillById = async (id) => {
@@ -7,7 +7,7 @@ const getBillById = async (id) => {
       model: Order,
       include: {
         model: OrderItem,
-        include: Book,
+        include: [{ model: Book }, { model: ReviewStore, require: false }],
       },
     },
   });
@@ -36,7 +36,7 @@ const getAllBills = async (data) => {
       model: Order,
       include: {
         model: OrderItem,
-        include: Book,
+        include: [{ model: Book }, { model: ReviewStore, require: false }],
       },
     },
     ...pagination,
@@ -45,6 +45,8 @@ const getAllBills = async (data) => {
 
   return { count, rows };
 };
+
+
 
 module.exports = {
   getBillById,

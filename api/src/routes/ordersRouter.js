@@ -11,6 +11,7 @@ const {
   getOrdersHandler,
   postOrderdHandler,
   postReceiveWebhook,
+  putOrderStatusHnadler
 } = require("../handlers/ordersHandlers");
 
 const OrdersRouter = Router();
@@ -28,6 +29,6 @@ OrdersRouter.get("/:id", getOrderByIdHandler)
     //checkSchema(orderPostSchema, ["body"]),
     //validateRequest,
     postOrderdHandler
-  );
+  ).put("/:idItem", putOrderStatusHnadler);;
 
 module.exports = OrdersRouter;

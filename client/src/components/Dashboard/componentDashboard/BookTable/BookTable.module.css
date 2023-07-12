@@ -140,7 +140,6 @@ tbody .td {
     cursor: pointer;
     color: white;   
     background: #5973d0;
-    pointer-events: none;
 }
 
 .prevDisabled {

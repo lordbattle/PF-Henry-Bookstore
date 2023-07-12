@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { getPurchaseHistoryById } from '../../redux/actions';
+import ReviewStore from '../ReviewStore/components/ReviewStore/ReviewStore'
 import style from '../PurchaseHistory/PurchaseHistory.module.css'
 import { Link } from "react-router-dom";
 export const PurchaseHistory = () =>{
@@ -34,7 +35,16 @@ export const PurchaseHistory = () =>{
               {row.order && row.order.orderItems && row.order.orderItems.length > 0 ? (
                 row.order.orderItems.map((orderItem) => (
                   <div key={orderItem.id}>
-                    <Link to={`/detail/${orderItem.bookId}`} style={{textDecoration: 'none'}}><p>{orderItem.title}</p></Link>
+                    <div>
+                      <Link to={`/detail/${orderItem.bookId}`} style={{textDecoration: 'none'}}><p>{orderItem.title}</p></Link>
+                    </div>
+                    <div>
+                      <ReviewStore 
+                        reviewStore={orderItem.reviewStore} 
+                        bookId={orderItem.bookId}
+                        userId={row.order.userId}
+                        orderItemId={orderItem.id}/>
+                    </div>
                   </div>
                 ))
                 

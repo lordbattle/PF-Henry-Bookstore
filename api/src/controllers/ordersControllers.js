@@ -274,10 +274,10 @@ const insertOrder = async (id_user, items) => {
 
 // Check payment status through notifications Webhook
 const receiveWebhook = async (query) => {
-  console.log(query);
+  /*console.log(query);
   const user = await User.findByPk(id_user.query);
   console.log("Que es id_user.query   ", id_user.query);
-  console.log("Que es user   ", user);
+  console.log("Que es user   ", user);*/
 
 
   try {
@@ -309,10 +309,10 @@ const receiveWebhook = async (query) => {
         // Update invoice status
         order.set({ status, invoiceStatus: "con_factura" });
         await order.save();
-        sendApprovedPayment(user.mail, user.userName)
+        //sendApprovedPayment(user.mail, user.userName)
         return paymentData.body.metadata;
       }
-      sendRejectedPayment(user.mail, user.userName)
+      //sendRejectedPayment(user.mail, user.userName)
       return status;
     }
   } catch (e) {

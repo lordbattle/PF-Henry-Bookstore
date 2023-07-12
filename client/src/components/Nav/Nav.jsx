@@ -1,22 +1,29 @@
 import SearchBar from "../SearchBar/SearchBar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, json, useNavigate } from "react-router-dom";
 import Stack from "react-bootstrap/Stack";
 import useStorage from "../LocalStorage/LocalStorage";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { logoutUser, verifyUserToken } from "../../redux/actions";
+import { logoutUser, verifyUserToken, getUserById } from "../../redux/actions";
 import Cookies from "js-cookie";
 import Profile from "../Profile/Profile";
 import prueba1 from '../../images/prueba1.png'
 
 
 const Nav = () => {
-  const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user);
+  const userCurrent = useSelector((state) => state.userDetail);
+
+  let userActive = userCurrent.results;
+
+
+
+
   const { logout } = UserAuth();
 
   const cookies = Cookies.get();
@@ -94,12 +101,15 @@ const Nav = () => {
         <div className="w-100 m-0 d-flex justify-content-end align-items-center">
           {" "}
           <span className="p-2 ms-0 link-as-text">
-            <Link
-              to={"/dashboard"}
-              className="text-decoration-none fs-5 text-reset"
-            >
-              Dashboard
-            </Link>
+            {
+              userActive?.admin ? <Link
+                to={"/dashboard"}
+                className="text-decoration-none fs-5 text-reset"
+              >
+                Dashboard
+              </Link>
+                : <></>
+            }
           </span>{" "}
           <span className="p-2 ms-0 link-as-text"><Profile /></span>
           <span className="p-2 ms-0 link-as-text">
@@ -116,12 +126,15 @@ const Nav = () => {
             </Link>
           </span>
           <span className="p-2 ms-0 link-as-text">
-            <Link
-              to={"/createbook"}
-              className="text-decoration-none fs-5 text-reset"
-            >
-              Publish Books
-            </Link>
+            {
+              userActive?.admin ? <Link
+                to={"/createbook"}
+                className="text-decoration-none fs-5 text-reset"
+              >
+                Publish Books
+              </Link>
+                : <></>
+            }
           </span>
           <span className="p-2 ms-0 link-as-text">
             <Link to={"/cart"}>
@@ -153,8 +166,8 @@ const Nav = () => {
               </Link>
             </>
           ) : (
-            <div style={{ display: "flex", textAlign: "center" , width:""}}>
-              
+            <div style={{ display: "flex", textAlign: "center", width: "" }}>
+
               <button
                 style={{
                   border: "none",

@@ -4,12 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBooksByFilters, getBookAll } from "../../../../redux/actions";
 import { useFuncionRangoDePaginacion, DOTS } from '../../utils/usePaginationRange'
-import Filters from "../../../Filters/Filters";
-import Pagination from "../../../Pagination/Pagination";
-import useFilters from "../../../../hooks/useFilters";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import style from "../BookTable/BookTable.module.css"
+import { RxCrossCircled } from "react-icons/rx";
 let books = [];
 let bookByTitle = [];
 const BOTONES_A_MOSTRAR = 3;
@@ -32,14 +30,18 @@ const BookTable = () => {
   const verifiActived = () => {
     if (actived === 'false') {
       if (bookByTitle.length !== 0) {
-        bookByTitle = bookByTitle.filter((book) => book.active === false)
+        let filter = bookByTitle.filter((book) => book.active === false)
+        bookByTitle = filter
       } else {
-        bookByTitle = bookByTitle.filter((book) => book.active === true)
+        let filter = bookByTitle.filter((book) => book.active === true)
+        bookByTitle = filter ;
       }
       if (books.length !== 0) {
-        books = books.filter((book) => book.active === false)
+        let filter = books.filter((book) => book.active === false)
+        books = filter ;
       } else {
-        books = books.filter((book) => book.active === true)
+        let filter = books.filter((book) => book.active === true)
+        books = filter
       }
     }
   }
@@ -159,7 +161,10 @@ const BookTable = () => {
               </tr>
             </thead>
             <tbody>
-              {booksPaginaActual().map((book, index) => (
+              {booksPaginaActual().length === 0 ? 
+              <div className={style.divErrorVacioTable}> <RxCrossCircled name='RxCrossCircled' style={{width:'80px',height:'35px'}} ></RxCrossCircled><label>  Upss!! <br /> There are no books to render with the supplied filters!</label></div>
+              :
+              booksPaginaActual().map((book, index) => (
                 <tr key={index}>
                   <td>{book.title}</td>
                   <td>{book.identifier}</td>
@@ -172,7 +177,8 @@ const BookTable = () => {
                     </button>
                   </td>
                 </tr>
-              ))}
+              ))
+              }
             </tbody>
           </table>
         </div>

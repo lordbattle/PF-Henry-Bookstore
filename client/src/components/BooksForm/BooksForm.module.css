@@ -160,7 +160,6 @@
 }
 
 .buttonBook:hover {
-  box-shadow: 0 0 7px black;
   border-radius: 15%;
 }
 
@@ -172,3 +171,14 @@ input,
 textarea {
   color: black;
 }
+
+.imagePreview{
+  max-Width: "250px";
+  max-Height: "200px";
+
+}
+
+/*style={{
+                  maxWidth: "250px",
+                  maxHeight: "200px",
+                }}*/

@@ -3,6 +3,7 @@ const {
   getAllOrders,
   insertOrder,
   receiveWebhook,
+  putStatusOrder,
 } = require("../controllers/ordersControllers");
 const { cleanData } = require("../helpers/userHelper");
 const { typeGetAllOrdersParams } = require("../helpers/orderHelper");
@@ -66,9 +67,23 @@ const postReceiveWebhook = async (req, res) => {
   }
 };
 
+const putOrderStatusHnadler = async (req, res) => {
+  try {
+    const { idItem } = req.params;
+    const { status } = req.body;
+
+    const result = await putStatusOrder(idItem, status);
+
+    res.status(200).json({ success: true, result });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
 module.exports = {
   getOrderByIdHandler,
   getOrdersHandler,
   postOrderdHandler,
   postReceiveWebhook,
+  putOrderStatusHnadler,
 };

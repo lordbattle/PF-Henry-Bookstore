@@ -66,7 +66,7 @@ const changePassword = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
-    // Actualizar la contraseña del usuario
+    // Update user password 
     const salt = bcrypt.genSaltSync();
     const newPasswordHash = bcrypt.hashSync(newPassword, salt);
 
@@ -79,9 +79,8 @@ const changePassword = async (req, res, next) => {
     const emailSent = await sendPasswordChange(
       userFound.email,
       userFound.userName,
-      newPassword
     );
-    // Respuesta exitosa
+    
     res.status(200).json({
       success: true,
       message: "Password changed successfully",

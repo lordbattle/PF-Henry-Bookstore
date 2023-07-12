@@ -101,12 +101,6 @@ const validations = (values) => {
     errors.phone = "Invalid phone format";
   }
 
-  /* if (!values.passwordConfirmation) {
-    errors.passwordConfirmation = "Please, confirm your password";
-  } else if (values.passwordConfirmation !== values.password) {
-    errors.passwordConfirmation = "Passwords do not match";
-  } */
-
   return errors;
 };
 export default validations;

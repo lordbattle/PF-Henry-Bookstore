@@ -7,14 +7,19 @@ import {
   activeBook,
   editBook,
 } from "../../../../redux/actions";
-import { useForm } from "react-hook-form";
-import style from '../BookManager/BookManager.module.css';
+import validationsFormBook from "../../../../hooks/validationsFormBook";
+import { FaStar } from "react-icons/fa";
+import style from "../BookManager/BookManager.module.css";
 import Swal from "sweetalert2";
 
 const BookManager = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+
+  useEffect(() => {
+    dispatch(getBookById(id));
+  }, [dispatch, id]);
+
   const details = useSelector((state) => state.details);
   console.log("log del details", details);
 
@@ -36,53 +41,79 @@ const BookManager = () => {
     stock,
   } = details;
 
-
-  /*const handleDeleteBook = async () => {
+  /* const handleDeleteBook = async () => {
     await Swal.fire("The product was deleted", "", "error");
-    dispatch(deleteBook(id));*/
-
-  useEffect(() => {
-    dispatch(getBookById(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    setValue("title", title);
-    setValue("subtitle", subtitle);
-    setValue("price", price);
-    setValue("stock", stock);
-    setValue("authors", authors);
-    setValue("description", description);
-    setValue("bookPic", bookPic);
-    setValue("averageRating", averageRating);
-    setValue("genre", genre);
-    setValue("pages", pages);
-    setValue("publishedDate", publishedDate);
-    setValue("publisher", publisher);
-    setValue("identifier", identifier);
-  }, [title, subtitle, price, stock, authors, description, bookPic, averageRating, genre, pages, publishedDate, publisher, identifier, setValue]);
-
-  const handleDeleteBook = async () => {
-    await Swal.fire(
-      'The product was deleted',
-      '',
-      'error'
-    )
-    dispatch(deleteBook(id))
-
+    dispatch(deleteBook(id));
     window.location = "/dashboard";
-  };
+  }; */
+
+  const [editedProduct, setEditedProduct] = useState({
+    title: title,
+    subtitle: subtitle,
+    price: price,
+    stock: stock,
+    authors: authors,
+    description: description,
+    bookPic: bookPic,
+    averageRating: averageRating,
+    genre: genre,
+    pages: pages,
+    publishedDate: publishedDate,
+    publisher: publisher,
+    identifier: identifier,
+  });
+
+  useEffect(() => {
+    setEditedProduct({
+      title: title,
+      subtitle: subtitle,
+      price: price,
+      stock: stock,
+      authors: authors,
+      description: description,
+      bookPic: bookPic,
+      averageRating: averageRating,
+      genre: genre,
+      pages: pages,
+      publishedDate: publishedDate,
+      publisher: publisher,
+      identifier: identifier,
+    });
+  }, [
+    title,
+    subtitle,
+    price,
+    stock,
+    authors,
+    description,
+    bookPic,
+    averageRating,
+    genre,
+    pages,
+    publishedDate,
+    publisher,
+    identifier,
+  ]);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditedProduct({ ...editedProduct, [name]: value });
+    validateField(name, value);
   };
 
   const handleEditProduct = (e) => {
     e.preventDefault();
 
     const editedProductCopy = { ...editedProduct }; // Crear una copia del objeto editedProduct
+
+    const validationErrors = validationsFormBook(editedProduct);
+    if (Object.keys(validationErrors).length > 0) {
+      setValidationErrors(validationErrors);
+      return;
+    }
 
     // Eliminar las propiedades vacías o no completadas del objeto editedProductCopy
     Object.keys(editedProductCopy).forEach((key) => {
@@ -95,7 +126,41 @@ const BookManager = () => {
     setIsEditing(false);
 
     window.location.reload();
+  };
 
+  const validateField = (fieldName, value) => {
+    const validationErrors = validationsFormBook({ [fieldName]: value });
+    setValidationErrors((prevErrors) => ({
+      ...prevErrors,
+      [fieldName]: validationErrors[fieldName] || "",
+    }));
+  };
+
+  const renderRatingStars = (averageRating) => {
+    const rating = Math.round(averageRating); // Redondear el rating
+
+    let starIcons = "";
+    switch (rating) {
+      case 1:
+        starIcons = "🌟";
+        break;
+      case 2:
+        starIcons = "🌟🌟";
+        break;
+      case 3:
+        starIcons = "🌟🌟🌟";
+        break;
+      case 4:
+        starIcons = "🌟🌟🌟🌟";
+        break;
+      case 5:
+        starIcons = "🌟🌟🌟🌟🌟";
+        break;
+      default:
+        break;
+    }
+
+    return starIcons;
   };
 
   return (
@@ -146,8 +211,7 @@ const BookManager = () => {
         <div className="d-flex p-3">
           <img src={bookPic} alt="Imagen del libro" className={style.img} />
           <div className={style.advancedDetail}>
-
-            /*{isEditing && (
+            {isEditing && (
               <div className="d-flex flex-column">
                 <label style={{ fontSize: "23px" }}>
                   Title:
@@ -157,117 +221,201 @@ const BookManager = () => {
                     name="title"
                     value={editedProduct.title}
                     onChange={handleInputChange}
-                    style={{ minWidth: "20rem" }} */
-
-            {isEditing ? (
-              <form onSubmit={handleSubmit(handleEditProduct)} className="d-flex flex-column">
-                <label style={{ fontSize: '23px' }}>Title:
-                  <input
-                    placeholder="TITLE"
-                    type="text"
-                    {...register("title", { required: false, maxLength: 50 })}
-                    style={{ minWidth: '20rem' }}
+                    style={{ minWidth: "20rem" }}
                   />
-                  {errors.title && <p>Title is required and should have a maximum of 50 characters</p>}
+                  {validationErrors.title && (
+                    <span className={style.error}>
+                      {validationErrors.title}
+                    </span>
+                  )}
                 </label>
-
-                <label style={{ fontSize: '20px' }}>Subtitle:
+                <label style={{ fontSize: "20px" }}>
+                  Subtitle:
                   <input
                     placeholder="SUBTITLE"
                     type="text"
-                    {...register("subtitle", { required: true })}
-                    style={{ minWidth: '20rem' }}
+                    name="subtitle"
+                    value={editedProduct.subtitle}
+                    onChange={handleInputChange}
+                    style={{ minWidth: "20rem" }}
                   />
-                  {errors.subtitle && <p>Subtitle is required</p>}
+                  {validationErrors.subtitle && (
+                    <span className={style.error}>
+                      {validationErrors.subtitle}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Price:
+                <label style={{ fontSize: "18px" }}>
+                  Price:
                   <input
                     placeholder="PRICE"
                     type="number"
-                    {...register("price", { required: true })}
-                    style={{ maxWidth: '5rem' }}
+                    name="price"
+                    value={editedProduct.price}
+                    onChange={handleInputChange}
+                    style={{ maxWidth: "5rem" }}
                   />
-                  {errors.price && <p>Price is required</p>}
+                  {validationErrors.price && (
+                    <span className={style.error}>
+                      {validationErrors.price}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Stock:
+                <label style={{ fontSize: "18px" }}>
+                  Stock:
                   <input
                     placeholder="STOCK"
                     type="number"
-                    {...register("stock", { required: true })}
-                    style={{ maxWidth: '3.5rem' }}
+                    name="stock"
+                    value={editedProduct.stock}
+                    onChange={handleInputChange}
+                    style={{ maxWidth: "3.5rem" }}
                   />
-                  {errors.stock && <p>Stock is required</p>}
+                  {validationErrors.stock && (
+                    <span className={style.error}>
+                      {validationErrors.stock}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Author's:
+                <label style={{ fontSize: "18px" }}>
+                  Author's:
                   <input
                     placeholder="AUTHOR'S"
                     type="text"
-                    {...register("authors", { required: true })}
-                    style={{ minWidth: '20rem' }}
+                    name="authors"
+                    value={editedProduct.authors}
+                    onChange={handleInputChange}
+                    style={{ minWidth: "20rem" }}
                   />
-                  {errors.authors && <p>Author's is required</p>}
+                  {validationErrors.authors && (
+                    <span className={style.error}>
+                      {validationErrors.authors}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Genres:
+                <label style={{ fontSize: "18px" }}>
+                  Genres:
                   <input
                     placeholder="GENRES"
                     type="text"
-                    {...register("genre", { required: true })}
-                    style={{ minWidth: '20rem' }}
+                    name="genre"
+                    value={editedProduct.genre}
+                    onChange={handleInputChange}
+                    style={{ minWidth: "20rem" }}
                   />
-                  {errors.genre && <p>Genres is required</p>}
+                  {validationErrors.genre && (
+                    <span className={style.error}>
+                      {validationErrors.genre}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Identifier:
+                <label style={{ fontSize: "18px" }}>
+                  Identifier:
                   <input
                     placeholder="IDENTIFIER"
                     type="text"
-                    {...register("identifier", { required: true, maxLength: 13, pattern: /^\d*$/ })}
-                    style={{ maxWidth: '8rem' }}
+                    name="identifier"
+                    value={editedProduct.identifier}
+                    onChange={handleInputChange}
+                    style={{ maxWidth: "8rem" }}
                   />
-                  {errors.identifier && <p>Identifier is required and should be a number with a maximum of 13 digits</p>}
+                  {validationErrors.identifier && (
+                    <span className={style.error}>
+                      {validationErrors.identifier}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Publisher:
+                <label style={{ fontSize: "18px" }}>
+                  Publisher:
                   <input
                     placeholder="PUBLISHER"
                     type="text"
-                    {...register("publisher", { required: true })}
-                    style={{ minWidth: '20rem' }}
+                    name="publisher"
+                    value={editedProduct.publisher}
+                    onChange={handleInputChange}
+                    style={{ minWidth: "20rem" }}
                   />
-                  {errors.publisher && <p>Publisher is required</p>}
+                  {validationErrors.publisher && (
+                    <span className={style.error}>
+                      {validationErrors.publisher}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Published date:
+                <label style={{ fontSize: "18px" }}>
+                  Published date:
                   <input
                     placeholder="PUBLISHED DATE"
                     type="text"
-                    {...register("publishedDate", { required: true })}
-                    style={{ maxWidth: '3rem' }}
+                    name="publishedDate"
+                    value={editedProduct.publishedDate}
+                    onChange={handleInputChange}
+                    style={{ maxWidth: "3rem" }}
                   />
-                  {errors.publishedDate && <p>Published date is required</p>}
+                  {validationErrors.publishedDate && (
+                    <span className={style.error}>
+                      {validationErrors.publishedDate}
+                    </span>
+                  )}
                 </label>
-                <label style={{ fontSize: '18px' }}>Description:</label>
+                <label style={{ fontSize: "18px" }}>Description:</label>
                 <textarea
                   placeholder="DESCRIPTION"
-                  {...register("description", { required: true })}
-                ></textarea>
-                {errors.description && <p>Description is required</p>}
+                  name="description"
+                  value={editedProduct.description}
+                  onChange={handleInputChange}
+                />
+                {validationErrors.description && (
+                  <span className={style.error}>
+                    {validationErrors.description}
+                  </span>
+                )}
+                <br />
                 <div className="d-flex justify-content-around">
-                  <button className={style.cancel} onClick={() => setIsEditing(false)}>Cancel update</button>
-                  <button className={style.update} type="submit">Update product</button>
+                  <button
+                    className={style.cancel}
+                    onClick={() => setIsEditing(false)}
+                  >
+                    Cancel update
+                  </button>
+                  <button className={style.update} onClick={handleEditProduct}>
+                    Update product
+                  </button>
                 </div>
-              </form>
-            ) : (
-              <>
-                <h1 style={{ width: '100%', fontSize: '30px' }}>{title}</h1>
-                <h2 style={{ fontSize: '18px' }}>{subtitle}</h2>
-                <p style={{ fontSize: '20px' }}>Price: ${price}</p>
-                <p style={{ fontSize: '20px' }}>Stock: {stock}</p>
-                <p style={{ fontSize: '20px' }}>Author's: {authors}</p>
-                <p style={{ fontSize: '20px', maxHeight: '60%', borderRadius: '20px', paddingLeft: '8px', backgroundColor: '#71a6e2' }}>{description}</p>
-                <p style={{ width: '50%', fontSize: '20px' }}>Rating global: {averageRating}</p> <p style={{ width: '50%', fontSize: '20px' }}></p>
-                <p style={{ width: '33.3%', fontSize: '18px' }}>Categories: {genre}</p>
-                <p style={{ width: '33.3%', fontSize: '18px' }}>Pages: {pages}</p>
-                <p style={{ width: '33.3%', fontSize: '18px' }}>{publisher} : {publishedDate}</p>
-                <p style={{ fontSize: '20px' }}>ISBN : {identifier}</p>
+              </div>
+            )}
 
+            {!isEditing && (
+              <>
+                <h1 style={{ width: "100%", fontSize: "30px" }}>{title}</h1>
+                <h2 style={{ fontSize: "18px" }}>{subtitle}</h2>
+                <p style={{ fontSize: "20px" }}>Price: ${price}</p>
+                <p style={{ fontSize: "20px" }}>Stock: {stock}</p>
+                <p style={{ fontSize: "20px" }}>Author's: {authors}</p>
+                <p
+                  style={{
+                    fontSize: "20px",
+                    maxHeight: "60%",
+                    borderRadius: "20px",
+                    paddingLeft: "8px",
+                    backgroundColor: "#71a6e2",
+                  }}
+                >
+                  {description}
+                </p>
+                <p style={{ width: "50%", fontSize: "20px" }}>
+                  Rating global: {renderRatingStars(averageRating)}
+                </p>{" "}
+                <p style={{ width: "50%", fontSize: "20px" }}></p>
+                <p style={{ width: "33.3%", fontSize: "18px" }}>
+                  Categories: {genre}
+                </p>
+                <p style={{ width: "33.3%", fontSize: "18px" }}>
+                  Pages: {pages}
+                </p>
+                <p style={{ width: "33.3%", fontSize: "18px" }}>
+                  {publisher} : {publishedDate}
+                </p>
+                <p style={{ fontSize: "20px" }}>ISBN : {identifier}</p>
               </>
             )}
           </div>

@@ -2,10 +2,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { editUser, getUserById } from "../../redux/actions/index";
 import { useForm } from "react-hook-form";
+import validationsEditProfile from "../../hooks/validationsEditProfile";
 import axios from "axios";
 import Swal from "sweetalert2";
 import styles from "./EditProfile.module.css";
-import validationsEditProfile from "../../hooks/validationsEditProfile";
 
 const cloudinary_cloud_name = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const cloudinary_url = import.meta.env.VITE_CLOUINARY_URL;

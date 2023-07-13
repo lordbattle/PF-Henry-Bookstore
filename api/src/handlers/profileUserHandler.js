@@ -50,9 +50,7 @@ const updateProfileUser = async (req, res) => {
 // Controlador para verificar la contraseña actual del usuario
 const changePassword = async (req, res, next) => {
   const { userId, currentPassword, newPassword } = req.body;
-  console.log(userId);
-  console.log(currentPassword);
-  console.log(newPassword);
+  
   try {
     const userFound = await User.findByPk(userId);
 
@@ -72,9 +70,6 @@ const changePassword = async (req, res, next) => {
 
     userFound.password = newPasswordHash;
     await userFound.save();
-
-    console.log(userFound.email);
-    console.log(userFound.userName);
 
     const emailSent = await sendPasswordChange(
       userFound.email,

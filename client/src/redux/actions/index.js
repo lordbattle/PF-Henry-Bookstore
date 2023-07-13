@@ -19,7 +19,7 @@ import {
   HISTORY_PURCHASE,
   CHANGE_PASSWORD,
   UPDATE_STATUS_ORDER,
-  GET_ORDERS_BY_STATUS
+  GET_ORDERS_BY_STATUS,
 } from "../types/types.js";
 
 import axiosInstance from "../../api/axiosInstance.js";
@@ -79,7 +79,7 @@ export const getBookByTitle = (title) => {
   return async (dispatch) => {
     try {
       const { data } = await axiosInstance.get(`/books/?title=${title}`);
-      console.log(title , ' soy titulo action ');
+      console.log(title, " soy titulo action ");
       return dispatch({
         type: GET_BOOK_TITLE,
         payload: data,
@@ -92,7 +92,6 @@ export const getBookByTitle = (title) => {
 
 export const getPaginationBooks = () => {
   return async (dispatch) => {
-    //let url = "http://localhost:3001/books/";
     const { data } = await axiosInstance.get("/books/?limit=450");
     return dispatch({
       type: GET_PAGINATION_USERS,
@@ -236,9 +235,8 @@ export const buyBook = (payload) => {
         if (result.isConfirmed) {
           window.location.href = "/optionLoginOrRegister";
         }
-      })
+      });
       console.log(`Catch de buyBook `, error);
-
     }
   };
 };
@@ -316,15 +314,12 @@ export const postUsers = (payload) => {
   return async (dispatch) => {
     try {
       const data = await axiosInstance.post("/users", payload);
-      console.log(" postUsers ", data);
 
       return dispatch({
         type: POST_USERS,
         payload: data,
       });
     } catch (error) {
-      /*  alert(`Error postUsers ${error}`); */
-      console.log(error);
       throw new Error(error.response.data);
     }
   };
@@ -333,12 +328,9 @@ export const postUsers = (payload) => {
 export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
-      const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
-      console.log("editUser", data);
-      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
+      await axiosInstance.put(`/users/${idUser}`, updatedUser);
     } catch (error) {
-      console.log(error.message);
-      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
+      throw new Error(error);
     }
   };
 };
@@ -510,21 +502,20 @@ export const contactAdm = (values) => {
   };
 };
 
-export const updateOrderStatus = (id, status) =>{
-  return async() => {
+export const updateOrderStatus = (id, status) => {
+  return async () => {
     try {
-      await axiosInstance.put(`/orders/${id}`, status)
-    return;
+      await axiosInstance.put(`/orders/${id}`, status);
+      return;
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
-    
-  }
-}
+  };
+};
 
 export const getOrdersByStatus = (payload) => {
   return {
-      type: GET_ORDERS_BY_STATUS,
-      payload: payload
-  }
-}
+    type: GET_ORDERS_BY_STATUS,
+    payload: payload,
+  };
+};

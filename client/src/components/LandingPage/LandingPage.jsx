@@ -1,5 +1,4 @@
 import style from "../LandingPage/LandingPage.module.css";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CarouselComp from "../Carousel/Carousel.jsx";
 import { useEffect } from "react";

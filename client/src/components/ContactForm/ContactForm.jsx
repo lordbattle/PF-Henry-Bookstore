@@ -56,7 +56,7 @@ const ContactForm = () => {
             <p className={style.message}>Send us an email</p>
 
             <label>
-              <Field
+              <Field style={{width: '78vh'}}
                 placeholder=""
                 type="text"
                 className={style.inputNames}

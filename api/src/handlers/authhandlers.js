@@ -96,7 +96,7 @@ const forgotPasswordUser = async (req, res) => {
     }
 
     if (userFound.banned === true) {
-      return res.status(200).json({ message: "User banned" });
+      throw new Error(`User banned`);
     }
 
     const emailSent = await sendForgottenPassword(
@@ -106,7 +106,7 @@ const forgotPasswordUser = async (req, res) => {
 
     res.status(200).json({ success: true, email, emailSent });
   } catch (e) {
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res.status(400).json({ success: false, message: e.message });
   }
 };
 

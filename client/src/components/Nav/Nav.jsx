@@ -19,6 +19,8 @@ const Nav = ({paginaActual, setPaginaActual}) => {
   const userCurrent = useSelector((state) => state.userDetail);
   const totalItems = useSelector((state) => state.totalItemSCart);
 
+
+
   let userActive = userCurrent.results;
   const { logout } = UserAuth();
 
@@ -27,6 +29,9 @@ const Nav = ({paginaActual, setPaginaActual}) => {
     dispatch(verifyUserToken(cookies.token));
   }, []);
 
+  useEffect(()=>{
+    
+  },[totalItems]);
   console.log("se carga el estado de login?    " + user.id);
 
   const userLoginLocal = JSON.parse(localStorage.getItem("userDataLogin"));
@@ -38,11 +43,16 @@ const Nav = ({paginaActual, setPaginaActual}) => {
   };
 
   const { cart } = useStorage();
+
+  console.log(cart , 'soy cart de nav     ')
+  // const [totalItems, setTotalItems] = useState(0);
   const [updateKey, setUpdateKey] = useState(0);
 
-  useEffect(() => {
-    
-  }, [totalItems]);
+  // useEffect(() => {
+  //   setTotalItems(cart.length);
+  // }, [cart]);
+
+ 
 
   useEffect(() => {
     const handleStorageChange = () => {

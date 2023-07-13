@@ -88,15 +88,16 @@ const EditPassword = () => {
               />
               <span>User Name</span>
             </label>
-
-            <label>
-              <Field
-                id="currentPassword"
-                name="currentPassword"
-                type={showCurrentPassword ? "text" : "password"}
-                className={style.input}
-              />
-              <span>Current Password:</span>
+            <div className={style.divlabel}>
+              <label>
+                <Field
+                  id="currentPassword"
+                  name="currentPassword"
+                  type={showCurrentPassword ? "text" : "password"}
+                  className={style.input}
+                />
+                <span>Current Password:</span>
+              </label>
               <button
                 type="button"
                 className={style.toggleButton}
@@ -104,23 +105,25 @@ const EditPassword = () => {
               >
                 {showCurrentPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
-            </label>
-            <ErrorMessage
-              name="currentPassword"
-              component={() => (
-                <div className="error">{errors.currentPassword}</div>
-              )}
-            />
-
-            <label>
-              <Field
-                required=""
-                type={showNewPassword ? "text" : "password"}
-                className={style.input}
-                id="newPassword"
-                name="newPassword"
+              <ErrorMessage
+                name="currentPassword"
+                component={() => (
+                  <div className={style.errorMessage}>{errors.currentPassword}</div>
+                )}
               />
-              <span>New Password:</span>
+            </div>
+
+            <div className={style.divlabel}>
+              <label>
+                <Field
+                  required=""
+                  type={showNewPassword ? "text" : "password"}
+                  className={style.input}
+                  id="newPassword"
+                  name="newPassword"
+                />
+                <span>New Password:</span>
+              </label>
               <button
                 type="button"
                 className={style.toggleButton}
@@ -128,23 +131,26 @@ const EditPassword = () => {
               >
                 {showNewPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
-            </label>
+            </div>
             <ErrorMessage
               name="newPassword"
               component={() => (
-                <div className="error">{errors.newPassword}</div>
+                <div ><span className={style.errorMessage}>{errors.newPassword}</span></div>
               )}
             />
 
-            <label>
-              <Field
-                required=""
-                type={showConfirmPassword ? "text" : "password"}
-                className={style.input}
-                id="confirmPassword"
-                name="confirmPassword"
-              />
-              <span>Confirm Password:</span>
+            <div className={style.divlabel}>
+              <label>
+                <Field
+                  required=""
+                  type={showConfirmPassword ? "text" : "password"}
+                  className={style.input}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                />
+                <span>Confirm Password:</span>
+
+              </label>
               <button
                 type="button"
                 className={style.toggleButton}
@@ -152,11 +158,12 @@ const EditPassword = () => {
               >
                 {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
               </button>
-            </label>
+            </div>
+
             <ErrorMessage
               name="confirmPassword"
               component={() => (
-                <div className="error">{errors.confirmPassword}</div>
+                <div><span  className={style.errorMessage}>{errors.confirmPassword}</span></div>
               )}
             />
 
@@ -164,12 +171,12 @@ const EditPassword = () => {
               Submit password change form
             </button>
 
-            
-                {formSubmitted && (
-                  <p className="exito"> Form submitted successfully</p>
-                )}
-              
-            
+
+            {formSubmitted && (
+              <p className="exito"> Form submitted successfully</p>
+            )}
+
+
           </Form>
         )}
       </Formik>

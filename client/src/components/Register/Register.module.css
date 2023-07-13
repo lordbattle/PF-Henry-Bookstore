@@ -45,6 +45,7 @@
 .containerNames {
     position: relative;
     display: flex;
+    left: -3em;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
@@ -57,14 +58,23 @@
     flex-direction: row;
 }
 .containerPassword{
-    position: relative;
+    position: relative;    
     width: 60%;
+    display: flex;
+    flex-direction: column;
 }
 .toggleButton{
     position: relative;
     top:0.5em;
     left: 9em;
     border-radius: 10px;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+
+.toggleButton:hover {
+    background-color: rgb(177, 237, 206);
 }
 .linea {
     border-top: 1px solid black;
@@ -164,7 +174,7 @@
 }
 
 .form label .inputPassword {
-    width: 28em;
+    width: 27em;
     padding: 10px 10px 20px 10px;
     outline: 0;
     border: 1px solid rgba(105, 105, 105, 0.397);

@@ -14,11 +14,10 @@ import {
   LOGING_USER,
   LOGOUT_USER,
   POST_USERS,
-
+  DECREMENT_ITEMS,
+  INCREMENT_ITEMS,
   GET_ORDERS,
-
   HISTORY_PURCHASE,
-
   GET_ORDERS_BY_STATUS
 
 } from "../types/types.js";
@@ -34,6 +33,7 @@ export const initialState = {
   pagination: null,
   currentUser: null,
   historyPurchase: [],
+  totalItemSCart:0
 };
 
 function rootReducer(state = initialState, action) {
@@ -41,6 +41,16 @@ function rootReducer(state = initialState, action) {
   let filteredUsers = state.users;
 
   switch (action.type) {
+    case INCREMENT_ITEMS:
+    return {
+      ...state,
+      totalItemSCart : state.totalItemSCart + action.payload
+    }
+    case DECREMENT_ITEMS:
+      return{
+        ...state,
+        totalItemSCart : state.totalItemSCart === 0 ? 0 : state.totalItemSCart - action.payload
+      }
     case GET_BOOKS:
       return {
         ...state,

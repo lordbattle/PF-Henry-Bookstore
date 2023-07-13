@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import style from "../Cards/Cards.module.css";
+import { useDispatch } from "react-redux";
+import { incrementItemCart } from "../../redux/actions";
 
 const Cards = (props) => {
+  const dispatch = useDispatch();
+
   const handlerCart = () => {
     const newItem = {
       id: props.id,
@@ -23,7 +27,7 @@ const Cards = (props) => {
       timer: 700,
       width: 300,
     });
-
+    dispatch(incrementItemCart());
     console.log("ENTREA NEW ITEM", newItem);
   };
 

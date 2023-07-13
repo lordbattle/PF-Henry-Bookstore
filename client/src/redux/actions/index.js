@@ -17,6 +17,8 @@ import {
   POST_USERS,
   GET_ORDERS,
   HISTORY_PURCHASE,
+  INCREMENT_ITEMS,
+  DECREMENT_ITEMS,
   CHANGE_PASSWORD,
   UPDATE_STATUS_ORDER,
   GET_ORDERS_BY_STATUS,
@@ -326,7 +328,18 @@ export const editUser = (idUser, updatedUser) => {
     }
   };
 };
-
+export const incrementItemCart = ( ) => {
+  return{
+      type :INCREMENT_ITEMS,
+      payload :1
+  }
+}
+export const decrementItemCart = (value ) => {
+  return{
+      type :DECREMENT_ITEMS,
+      payload : value
+  }
+}
 export const activeUser = (idUser) => {
   //FUNCIONANDO CORRECTAMENTE
   return async () => {

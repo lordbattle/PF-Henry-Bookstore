@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Filters from "../Filters/Filters";
 import useFilters from "../../hooks/useFilters";
 import Pagination from "../Pagination/Pagination";
-import { getPaginationBooks } from "../../redux/actions";
+import { getBookAll, getPaginationBooks } from "../../redux/actions";
 import { useFuncionRangoDePaginacion, DOTS } from "../Dashboard/utils/usePaginationRange";
 //import { UserAuth } from "../../context/AuthContextFirebase";
 /* import { useNavigate } from "react-router-dom"; */
@@ -23,13 +23,21 @@ const Home = ({paginaActual, setPaginaActual}) => {
 
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);
+  const [ up , setUp ] = useState(false);
 
   
-  useEffect(() => {
+  /* useEffect(() => {
     setFilters({
     });
-  }, [setFilters]);
-  // const [paginaActual, setPaginaActual] = useState(1);
+  }, [setFilters]); */
+
+  useEffect(()=>{
+    if(!up){
+      dispatch(getBookAll());
+      setUp(true)
+    }
+  },[up])
+
 
   let totalDePaginas = Math.ceil((books.length) / CANTIDAD_POR_PAGINA)
   console.log(books, ' soy librossss a renderizar' , totalDePaginas , ' total de paginas')

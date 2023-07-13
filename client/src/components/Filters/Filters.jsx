@@ -9,7 +9,7 @@ const Filters = (props) => {
   //sirve para cargar el la copia del array y despues desmotar el aray original.
 
   const handleChangeGenre = (e) => {
-    props.setPaginaActual(1)
+    props.setPaginaActual(1);
     setFilters((prevState) => ({
       ...prevState,
       genre: e.target.value,
@@ -19,26 +19,25 @@ const Filters = (props) => {
   const btnReset = (e) => {
     e.preventDefault();
     setFilters({
-      price: 0,
+      /* price: 0,
       genre: "all",
       author: "all",
       limit: 10,
       orderPrice: "neu",
-      orderTitle: "neu",
+      orderTitle: "neu", */
     });
   };
 
   const handleChangeAuthors = (e) => {
-    props.setPaginaActual(1)
+    props.setPaginaActual(1);
     setFilters((prevState) => ({
       ...prevState,
       author: e.target.value,
     }));
   };
 
-
   const handleChangeOrderTitle = (e) => {
-    props.setPaginaActual(1)
+    props.setPaginaActual(1);
     setFilters((prevState) => ({
       ...prevState,
       orderTitle: e.target.value,
@@ -46,7 +45,7 @@ const Filters = (props) => {
   };
 
   const handleChangePrice = (e) => {
-    props.setPaginaActual(1)
+    props.setPaginaActual(1);
     setFilters((prevState) => ({
       ...prevState,
       price: e.target.value,
@@ -115,7 +114,10 @@ const Filters = (props) => {
         className="d-flex flex-column align-items-center h-25 py-3"
       >
         <div className="d-flex gap-2 align-items-center">
-          <button   style={{backgroundColor:'#0B57BD' , borderRadius:'6px'}}  onClick={btnReset}>
+          <button
+            style={{ backgroundColor: "#0B57BD", borderRadius: "6px" }}
+            onClick={btnReset}
+          >
             Reset
           </button>
         </div>
@@ -124,7 +126,7 @@ const Filters = (props) => {
             <label className="text-white fs-5">Authors</label>
             <div className={set.hover_options}>
               <select
-                style={{ backgroundColor: '#4D95F5' }}
+                style={{ backgroundColor: "#4D95F5" }}
                 className="text-white border-bottom border-white border-opacity-50 py-1"
                 onChange={(e) => handleChangeAuthors(e)}
               >
@@ -187,7 +189,7 @@ const Filters = (props) => {
             <label className="text-white fs-5">Genre</label>
             <div className={set.hover_options}>
               <select
-                style={{ backgroundColor: '#4D95F5' }}
+                style={{ backgroundColor: "#4D95F5" }}
                 className="text-white border-bottom border-white border-opacity-50 py-1"
                 onChange={(e) => handleChangeGenre(e)}
               >
@@ -254,7 +256,6 @@ const Filters = (props) => {
         </div>
       </section>
     </div>
-
   );
 };
 

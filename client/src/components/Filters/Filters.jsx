@@ -115,7 +115,7 @@ const Filters = (props) => {
         className="d-flex flex-column align-items-center h-25 py-3"
       >
         <div className="d-flex gap-2 align-items-center">
-          <button className="btn bg-success py-1 px-2" onClick={btnReset}>
+          <button   style={{backgroundColor:'#0B57BD' , borderRadius:'6px'}}  onClick={btnReset}>
             Reset
           </button>
         </div>

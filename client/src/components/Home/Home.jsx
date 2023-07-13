@@ -14,25 +14,22 @@ const BOTONES_A_MOSTRAR = 3;
 const CANTIDAD_POR_PAGINA = 6;
 const BOTONES_HERMANOS = 1;
 
-const Home = () => {
+const Home = ({paginaActual, setPaginaActual}) => {
+
   const { books, pagination } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getPaginationBooks());
-  }, []);
+ 
 
   const { setFilters, setCurrentPage, currentPage } = useFilters();
   const componentRef = useRef(null);
 
-  const handleScrollUp = () => {
-    componentRef.current.scrollIntoView({ behavior: "smooth" });
-  };
+  
   useEffect(() => {
     setFilters({
     });
   }, [setFilters]);
-  const [paginaActual, setPaginaActual] = useState(1);
+  // const [paginaActual, setPaginaActual] = useState(1);
 
   let totalDePaginas = Math.ceil((books.length) / CANTIDAD_POR_PAGINA)
   console.log(books, ' soy librossss a renderizar' , totalDePaginas , ' total de paginas')

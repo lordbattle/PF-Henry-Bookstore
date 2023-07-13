@@ -48,7 +48,7 @@ const EditPassword = () => {
           console.log("Que es values  ", values);
           try {
             setFormSubmitted(true);
-            setTimeout(() => setFormSubmitted(false), 3000);
+            setTimeout(() => setFormSubmitted(false), 5000);
             try {
               await dispatch(changePasswordUser(values)); // Esperar la resolución de la promesa
             } catch (error) {

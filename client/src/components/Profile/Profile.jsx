@@ -21,7 +21,7 @@ const Profile = () => {
 
   setTimeout(() => {
     localStorage.setItem("userData", JSON.stringify(userCurrent.results));
-  }, 3000);
+  }, 1000);
 
   //logout------------------
   const handlerLogOut = async () => {

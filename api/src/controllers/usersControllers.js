@@ -217,12 +217,6 @@ const registerUser = async (data) => {
 //------|  PUT/  |---------->
 const putUser = async (id, updatedData) => {
   try {
-    if (updatedData.email) {
-      const salt = bcrypt.genSaltSync();
-      const hashedEmail = bcrypt.hashSync(updatedData.email, salt);
-      updatedData.email = hashedEmail;
-    }
-
     const [updatedRowsCount] = await User.update(updatedData, {
       where: { id: id },
     });
@@ -242,15 +236,22 @@ const deleteUser = async (idUsers) => {
     const user = await User.findByPk(idUsers);
 
     if (!user) {
-      throw Error("There is no user with the specified id");
+      throw new Error("There is no user with the specified id");
     }
 
     user.active = false;
+
+    if (user.email) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedEmail = await bcrypt.hash(user.email, salt);
+      user.email = hashedEmail;
+    }
+
     await user.save();
 
     return user;
-  } catch (e) {
-    throw Error(e.message);
+  } catch (error) {
+    throw new Error(error.message);
   }
 };
 

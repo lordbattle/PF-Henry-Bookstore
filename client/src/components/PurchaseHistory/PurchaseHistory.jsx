@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 export const PurchaseHistory = () =>{
 
     const dispatch = useDispatch();
-    const user = useSelector(state=>state.user)
+    let userDataLocalPersistent =
+    JSON.parse(localStorage.getItem("userDataLoginPersistent")) || null;
     const history = useSelector(state=>state.historyPurchase.results);
       let idUser=0;
-        if(user){
-          idUser = user.id
-        }
-        console.log("ESTO ES ID DE USER", idUser)
+      if (userDataLocalPersistent) {
+        idUser = userDataLocalPersistent.id;
+      }
 
     useEffect(()=>{dispatch(getPurchaseHistoryById(idUser))   
     },[idUser])

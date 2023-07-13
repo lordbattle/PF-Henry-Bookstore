@@ -87,7 +87,7 @@ const Login = () => {
       });
     }
 
-    if (userlogin && userlogin.error === "Invalid user") {
+    /* if (userlogin && userlogin.error === "Invalid user") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -108,7 +108,7 @@ const Login = () => {
           dispatch(logoutUser());
         }
       });
-    }
+    } */
   }, [userlogin]);
 
   const logingUserAsync = (payload) => {
@@ -163,11 +163,21 @@ const Login = () => {
                 });
                 navigate("/");
               } catch (error) {
-                Swal.fire({
-                  icon: "error",
-                  title: "Oops...",
-                  text: "User or password incorrect",
-                });
+                console.log("Propiedad 'errorMessage':", error.message);
+
+                if (error.message === "User banned") {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "User banned!",
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "User or password incorrect",
+                  });
+                }
               }
             }}
           >

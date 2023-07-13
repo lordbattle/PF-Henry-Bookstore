@@ -151,11 +151,7 @@ export const deleteBook = (idBook) => {
     try {
       const response = await axiosInstance.delete(`/books/${idBook}`);
       const data = response.data;
-      Swal.fire(
-        'The product was successfully disabled',
-        '',
-        'success'
-      )
+      Swal.fire("The product was successfully disabled", "", "success");
       return dispatch({
         type: DELETE_BOOK,
         payload: data,
@@ -184,11 +180,7 @@ export const activeBook = (idBook) => {
       const { data } = await axiosInstance.put(`/books/${idBook}`, {
         active: true,
       });
-      Swal.fire(
-        'The product was successfully enabled',
-        '',
-        'success'
-      )
+      Swal.fire("The product was successfully enabled", "", "success");
     } catch (error) {
       alert(`Catch del activeBook ${error}`);
     }
@@ -202,11 +194,7 @@ export const editBook = (idBook, updatedProduct) => {
         `/books/${idBook}`,
         updatedProduct
       );
-      Swal.fire(
-        'The product was successfully edit',
-        '',
-        'success'
-      );
+      Swal.fire("The product was successfully edit", "", "success");
     } catch (error) {
       console.log(error);
       alert(`Cath del editBook ${error}`);
@@ -387,8 +375,7 @@ export function logingUser(user) {
       const baseData = await axiosInstance.post(`/authUser/login`, user);
       dispatch({ type: LOGING_USER, payload: baseData.data });
     } catch (error) {
-      /*  alert(`Cath del loginUser ${error}`); */
-      throw new Error(error.response.data);
+      throw new Error(error.response.data.message);
     }
   };
 }
@@ -470,9 +457,10 @@ export const changePasswordUser = (values) => {
 export const forgotPassword = (email) => {
   return async (dispatch) => {
     try {
-      await axiosInstance.get(`/authUser/forgotPassword/${email}`);
-      return;
+      let data = await axiosInstance.get(`/authUser/forgotPassword/${email}`);
+      console.log("error catch  ", data.data);
     } catch (error) {
+      console.log(error.response.data.message);
       throw new Error(error.response.data.message);
     }
   };
@@ -482,7 +470,6 @@ export const forgotPasswordChange = (values) => {
   return async () => {
     try {
       await axiosInstance.post(`/authUser/forgotPassword`, values);
-      return;
     } catch (error) {
       throw new Error(error.response.data.message);
     }

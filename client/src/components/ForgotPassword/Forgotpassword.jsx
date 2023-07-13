@@ -5,7 +5,7 @@ import validationsForgotPassword from "../../hooks/validationsForgotPassword";
 import { forgotPasswordChange } from "../../redux/actions/index";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Swal from "sweetalert2";
-import style from "./Forgotpassword.module.css";
+import style from "../ForgotPassword/ForgotPassword.module.css";
 
 const Forgotpassword = () => {
   const dispatch = useDispatch();

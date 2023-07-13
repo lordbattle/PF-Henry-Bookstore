@@ -419,7 +419,6 @@ export function verifyUserToken() {
           "/authUser/verifyuser",
           {},
           {
-            credentials: "include",
             headers: { Cookie: `token=${cookies.token}` },
           }
         );

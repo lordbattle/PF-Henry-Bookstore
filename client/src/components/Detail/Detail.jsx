@@ -218,7 +218,7 @@ const Detail = () =>{
             <p style={{fontSize: '20px'}}>Price: ${price}</p>
             <p style={{fontSize: '20px'}}>Stock: {stock}</p>
             <p style={{fontSize: '20px'}}>Author's: {authors}</p>
-            <p style={{fontSize: '20px', maxHeight: '60%', borderRadius: '20px', paddingLeft: '8px', backgroundColor: '#71a6e2'}}>Description: {description}</p>
+            <p style={{fontSize: '20px', maxHeight: '100%', borderRadius: '20px', wordBreak: 'break-word', paddingLeft: '8px', backgroundColor: '#71a6e2'}}>Description: {description}</p>
             <p style={{width: '50%', fontSize: '20px'}}>Global rating: {averageRating}</p> <p style={{width: '50%', fontSize: '20px'}}></p>
             <p style={{width: '33.3%', fontSize: '18px'}}>Categories: {genre}</p>
             <p style={{width: '33.3%', fontSize: '18px'}}>Pages: {pages}</p>

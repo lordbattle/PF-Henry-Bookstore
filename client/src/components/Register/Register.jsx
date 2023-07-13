@@ -1,23 +1,17 @@
 import { useState } from "react";
-//import { Link } from "react-router-dom";
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
-
 import { postUsers, getUsers } from "../../redux/actions/index";
-
 import { useDispatch } from "react-redux";
-import { UserAuth } from "../../context/AuthContextFirebase";
-import validations from "../../hooks/validations";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import style from "./Register.module.css";
+import Loading from "../Loading/Loading";
+import validations from "../../hooks/validations";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  //const { signUp, loginWithGoogle } = UserAuth();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -57,22 +51,23 @@ const Register = () => {
         validate={(values) => {
           return validations(values);
         }}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
           try {
+            setSubmitting(true);
             setFormSubmitted(true);
             try {
-              await postUsersAsync(values); // Esperar la resolución de la promesa
+              await postUsersAsync(values);
               dispatch(getUsers());
             } catch (error) {
               throw new Error(error);
             }
-            //await signUp(values.email, values.password, values.name);
-            setTimeout(() => setFormSubmitted(false), 3000);
-            //dispatch(logingUser(values.email, values.password, values.userName));
+            setTimeout(() => {
+              setSubmitting(false);
+              setFormSubmitted(false);
+            }, 3000);
             Swal.fire({
               icon: "success",
               title: "Registered Welcome!",
-
               text: "You are now part of The Litary Corner!",
               backdrop: true,
             });
@@ -86,7 +81,7 @@ const Register = () => {
           }
         }}
       >
-        {({ errors }) => (
+        {({ errors, isSubmitting }) => (
           <Form className={style.form}>
             <p className={style.title}>Register</p>
             <p className={style.message}>
@@ -159,13 +154,12 @@ const Register = () => {
               component={() => <div className="error">{errors.userName}</div>}
             />
             <div className={style.containerMainPassword}>
-              <div className={style.containerPassword} >
+              <div className={style.containerPassword}>
                 <label>
                   <Field
                     placeholder=""
                     type={showPassword ? "text" : "password"}
-                    className={style.inputPassword
-                    }
+                    className={style.inputPassword}
                     id="password"
                     name="password"
                   />
@@ -173,7 +167,9 @@ const Register = () => {
                 </label>
                 <ErrorMessage
                   name="password"
-                  component={() => <div className="error">{errors.password}</div>}
+                  component={() => (
+                    <div className="error">{errors.password}</div>
+                  )}
                 />
               </div>
               <div>
@@ -185,9 +181,7 @@ const Register = () => {
                   {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </button>
               </div>
-
             </div>
-
 
             <label>
               <Field
@@ -202,7 +196,9 @@ const Register = () => {
             </label>
             <ErrorMessage
               name="location"
-              component={() => <div className="error">{errors.location}</div>}
+              component={() => (
+                <div className="error">{errors.location}</div>
+              )}
             />
 
             <label>
@@ -256,7 +252,9 @@ const Register = () => {
               </label>
               <ErrorMessage
                 name="genres"
-                component={() => <div className="error">{errors.genres}</div>}
+                component={() => (
+                  <div className="error">{errors.genres}</div>
+                )}
               />
 
               <label>
@@ -275,14 +273,13 @@ const Register = () => {
               />
             </div>
 
-            <button className={style.submit} type="submit">
-              Register
+            <button className={style.submit} type="submit" disabled={isSubmitting}>
+              {isSubmitting ? <Loading /> : "Register"}
             </button>
 
             {formSubmitted && (
-              <p className="exito"> Form submitted successfully</p>
+              <p className="exito">Form submitted successfully</p>
             )}
-
           </Form>
         )}
       </Formik>
@@ -291,3 +288,4 @@ const Register = () => {
 };
 
 export default Register;
+

@@ -412,7 +412,7 @@ export function verifyUserToken() {
   return async (dispatch) => {
     try {
       const cookies = Cookies.get();
-      console.log(cookies);
+      console.log("cookies que es  ", cookies);
 
       if (cookies.token) {
         const response = await axiosInstance.get(

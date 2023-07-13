@@ -21,19 +21,32 @@ const LandingPage = () => {
         try {
           await new Promise((resolve) => {
             setTimeout(() => {
-              resolve(dispatch(logingUser(user)));
+              resolve(dispatch(postUsers(user)));
             }, 3000);
           });
+          try {
+            await new Promise((resolve) => {
+              resolve(dispatch(logingUser(user)));
+            });
+          } catch (error) {
+            Swal.fire({
+              icon: "error",
+              title: `Usuario bloqueado: ${user.displayName}`,
+              text: "Estás bloqueado",
+            });
+            logout();
+          }
+          
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: `User banned: ${user.displayName}`,
-            text: "Estás baneado",
+            title: `...Ops`,
+            text: "Ocurrio un error",
           });
-          logout()
+          logout();
         }
       };
-  
+
       loginUser();
     }
   }, [user, dispatch]);
@@ -53,11 +66,14 @@ const LandingPage = () => {
           <img src={logo5} width={"auto"} height={"150px"}></img>
           <p>A great place to buy a good book.</p>
         </article>
-        
         <article className={style.btns}>
-          <Link to={"/home"} className={style.btn}>Our Books</Link>
-            <p className="m-0 text-white">-o-</p>
-          <Link to={"/optionLoginOrRegister"} className={style.btn}>Log in | Register</Link>
+          <Link to={"/home"} className={style.btn}>
+            Our Books
+          </Link>
+          <p className="m-0 text-white">-o-</p>
+          <Link to={"/optionLoginOrRegister"} className={style.btn}>
+            Log in | Register
+          </Link>
         </article>
       </section>
     </main>

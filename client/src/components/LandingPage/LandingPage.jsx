@@ -36,7 +36,6 @@ const LandingPage = () => {
             });
             logout();
           }
-          
         } catch (error) {
           Swal.fire({
             icon: "error",
@@ -51,8 +50,18 @@ const LandingPage = () => {
     }
   }, [user, dispatch]);
 
+  let userDataLocalPersistent =
+    JSON.parse(localStorage.getItem("userDataLoginPersistent")) || null;
+
   useEffect(() => {
     localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
+    dispatch(logingUser(userDataLocalPersistent));
+    if (!userDataLocalPersistent) {
+      localStorage.setItem(
+        "userDataLoginPersistent",
+        JSON.stringify(userlogin)
+      );
+    }
   }, [userlogin]);
 
   return (

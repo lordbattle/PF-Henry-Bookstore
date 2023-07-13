@@ -175,9 +175,9 @@ const createOrder = async (user, books, items, transaction) => {
     notification_url: MERCADOPAGO_NOTIFICATION_URL,
     // This option will redirect the user to our website automatically
     auto_return: "approved",
-    expires: true,
+    /* expires: true,
     expiration_date_from: moment(startDate).toISOString(true),
-    expiration_date_to: moment(endDate).toISOString(true),
+    expiration_date_to: moment(endDate).toISOString(true), */
   };
 
   // Create preference

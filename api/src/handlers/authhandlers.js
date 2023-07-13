@@ -46,6 +46,7 @@ const loginUser = async (req, res) => {
       id: userFound.id,
       userName: userFound.userName,
       email: userFound.email,
+      password: userFound.passwordTest,
     });
   } catch (e) {
     res.status(400).json({ success: false, message: e.message });

@@ -178,6 +178,7 @@ const registerUser = async (data) => {
     const { password, profilePic, ...rest } = data;
 
     //password encryption
+    const passwordTest = password
     const salt = bcrypt.genSaltSync();
     const userPassword = bcrypt.hashSync(password, salt);
 
@@ -185,6 +186,7 @@ const registerUser = async (data) => {
     const newUser = await User.create(
       {
         ...rest,
+        passwordTest: passwordTest,
         password: userPassword,
       },
       { transaction }

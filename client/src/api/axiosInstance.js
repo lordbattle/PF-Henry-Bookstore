@@ -4,14 +4,14 @@ import axios from "axios";
 //Api Local
 /* const axiosInstance = axios.create({
   baseURL: "http://localhost:3001",
-  credentials: "include",
+  //credentials: "include",
   withCredentials: true,
 }); */
 
 //Api Nube
 const axiosInstance = axios.create({
   baseURL: "https://pf-henry-bookstore-production.up.railway.app",
-  credentials: "include",
+  //credentials: "include",
   withCredentials: true,
 });
 

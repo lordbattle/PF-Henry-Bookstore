@@ -58,7 +58,7 @@ const Forgotpassword = () => {
             </p>
 
             <label>
-              <Field
+              <Field style={{width: '80vh'}}
                 id="email"
                 name="email"
                 type="text"
@@ -72,7 +72,7 @@ const Forgotpassword = () => {
             />
 
             <label>
-              <Field
+              <Field style={{width: '80vh'}}
                 required=""
                 placeholder="What is the name of your favorite pet?"
                 type="text"

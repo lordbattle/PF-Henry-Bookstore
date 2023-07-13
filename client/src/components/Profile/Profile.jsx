@@ -15,9 +15,12 @@ const Profile = () => {
   const userLogin = useSelector((state) => state.user);
   const userCurrent = useSelector((state) => state.userDetail);
 
+  let userDataLocalPersistent =
+  JSON.parse(localStorage.getItem("userDataLoginPersistent")) || null;
+  
   useEffect(() => {
-    dispatch(getUserById(userLogin.id));
-  }, [dispatch, userLogin.id]);
+    dispatch(getUserById(userDataLocalPersistent.id));
+  }, [dispatch]);
 
   setTimeout(() => {
     localStorage.setItem("userData", JSON.stringify(userCurrent.results));

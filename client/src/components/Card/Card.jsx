@@ -8,7 +8,7 @@ const Card = ({ currentBooks }) => {
   return (
     <div className="d-flex justify-content-center flex-column w-100 h-100 border border-black px-2">
       {currentBooks ? (
-        currentBooks.map((v) => {
+        currentBooks?.map((v) => {
           return (
             <Cards
               active={v.active}

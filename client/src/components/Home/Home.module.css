@@ -1,0 +1,124 @@
+.pagination {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.paginationItem {
+    background: #5973d0;
+    box-shadow: 0 0 7px #787777;
+    border: #5c5b5b;
+    padding: 10px 15px;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.paginationItem span {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+}
+
+.prev {
+
+    background: #284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    color: white;
+
+}
+
+.next {
+    background: 284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    color: white;
+}
+
+.paginationItemActive {
+    text-align: center;
+    box-shadow: 0 0 7px #787777;
+    border: #5c5b5b;
+    padding: 10px 15px;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;   
+    background: #35457e;
+    pointer-events: none;
+}
+.paginationItemNotActive{
+    text-align: center;
+    box-shadow: 0 0 7px #787777;
+    border: #5c5b5b;
+    padding: 10px 15px;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;   
+    background: #5973d0;
+}
+
+.prevDisabled {
+    background: 284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    pointer-events: none;
+    box-shadow: none;
+    color: #787777;
+    pointer-events:none;
+
+
+}
+.divErrorVacioTable{
+    background-color: rgb(245, 152, 152);
+    width: 601%;
+    height: 6em;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nextDisabled {
+    background: 284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    pointer-events: none;
+    box-shadow: none;
+    color: #787777;
+    pointer-events:none;
+
+}

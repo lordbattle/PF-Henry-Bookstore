@@ -9,6 +9,7 @@ const Filters = (props) => {
   //sirve para cargar el la copia del array y despues desmotar el aray original.
 
   const handleChangeGenre = (e) => {
+    props.setPaginaActual(1)
     setFilters((prevState) => ({
       ...prevState,
       genre: e.target.value,
@@ -28,6 +29,7 @@ const Filters = (props) => {
   };
 
   const handleChangeAuthors = (e) => {
+    props.setPaginaActual(1)
     setFilters((prevState) => ({
       ...prevState,
       author: e.target.value,
@@ -36,6 +38,7 @@ const Filters = (props) => {
 
 
   const handleChangeOrderTitle = (e) => {
+    props.setPaginaActual(1)
     setFilters((prevState) => ({
       ...prevState,
       orderTitle: e.target.value,
@@ -43,6 +46,7 @@ const Filters = (props) => {
   };
 
   const handleChangePrice = (e) => {
+    props.setPaginaActual(1)
     setFilters((prevState) => ({
       ...prevState,
       price: e.target.value,
@@ -105,152 +109,152 @@ const Filters = (props) => {
   const newArrayAuthors = propertiesAuthors(books);
 
   return (
-    <section
-      style={{ background: "#7097d1" }}
-      className="d-flex flex-column align-items-center h-25 py-3"
-    >
-      <div className="d-flex gap-2 align-items-center">
-        <button className="btn bg-success py-1 px-2" onClick={btnReset}>
-          Reset
-        </button>
-      </div>
-      <div className="d-flex gap-2 flex-column">
-        <section id="title" className="py-1 px-2 ">
-          <label className="text-white fs-5">Authors</label>
-          <div className={set.hover_options}>
-            {" "}
-            <option
-              className="text-white border-bottom border-white border-opacity-50 py-1"
-              onClick={(e) => handleChangeAuthors(e)}
-              value="all"
-            >
-              ALL
-            </option>
-            {newArrayAuthors?.map((item) => (
-              <option
-                key={item.id}
-                onClick={(e) => handleChangeAuthors(e)}
+    <div className={set.containerfilter}>
+      <section
+        style={{ background: "#7097d1", height: "100%" }}
+        className="d-flex flex-column align-items-center h-25 py-3"
+      >
+        <div className="d-flex gap-2 align-items-center">
+          <button className="btn bg-success py-1 px-2" onClick={btnReset}>
+            Reset
+          </button>
+        </div>
+        <div className="d-flex gap-2 flex-column">
+          <section id="title" className="py-1 px-2 ">
+            <label className="text-white fs-5">Authors</label>
+            <div className={set.hover_options}>
+              <select
+                style={{ backgroundColor: '#4D95F5' }}
                 className="text-white border-bottom border-white border-opacity-50 py-1"
-                value={item.author
-                  .trim()
-                  .split(" ")
-                  .slice(0, 2)
-                  .filter((char) => char !== ".")
-                  .join(" ")
-                  .toLowerCase()}
+                onChange={(e) => handleChangeAuthors(e)}
               >
-                {item.author.toUpperCase()}
-              </option>
-            ))}
-          </div>
-        </section>
-      </div>
-      <div className="d-flex gap-2 align-items-center my-3 ">
-        <section className="py-1 px-2">
-          <label className="text-white fs-5">Price</label>
-          <div className={set.hover_options}>
-            <option
-              className="text-white border-bottom border-white border-opacity-50 py-1"
-              value={0}
-              onClick={(e) => handleChangePrice(e)}
-            >
-              Everything
-            </option>
-            <option
-              className="text-white border-bottom border-white border-opacity-50 py-1"
-              value={1}
-              onClick={(e) => handleChangePrice(e)}
-            >
-              Hasta $500
-            </option>
-            <option
-              className="text-white border-bottom border-white border-opacity-50 py-1"
-              value={2}
-              onClick={(e) => handleChangePrice(e)}
-            >
-              $500 - $5,000
-            </option>
-            <option
-              className="text-white py-1"
-              value={3}
-              onClick={(e) => handleChangePrice(e)}
-            >
-              Mas de $5,000
-            </option>
-          </div>
-        </section>
-      </div>
-      <div className="d-flex gap-2 align-items-center my-3">
-        <section id="genre" className="py-1 px-2">
-          <label className="text-white fs-5">Genre</label>
-          <div className={set.hover_options}>
-            <option
-              className="text-white border-bottom border-white border-opacity-50 py-1"
-              value="all"
-            >
-              ALL
-            </option>
-            {newArrayGenres &&
-              newArrayGenres?.map((obj) => {
-                return (
+                <option value="all">ALL</option>
+                {newArrayAuthors?.map((item) => (
                   <option
-                    key={obj.id}
-                    onClick={(e) => handleChangeGenre(e)}
-                    value={obj.genre}
-                    className="text-white border-bottom border-white border-opacity-50 py-1 "
+                    key={item.id}
+                    value={item.author
+                      .trim()
+                      .split(" ")
+                      .slice(0, 2)
+                      .filter((char) => char !== ".")
+                      .join(" ")
+                      .toLowerCase()}
                   >
-                    {obj.genre}
+                    {item.author.toUpperCase()}
                   </option>
-                );
-              })}
-          </div>
-        </section>
-      </div>{" "}
-      <div className="d-flex gap-2 align-items-center">
-        <section className="py-1 px-2">
-          {" "}
-          <label className="text-white fs-5">Order Title</label>
-          <div className={set.hover_options}>
-            <option
-              onClick={(e) => handleChangeOrderTitle(e)}
-              value="asc"
-              className="text-white border-bottom border-white border-opacity-50 py-1 "
-            >
-              A-Z
-            </option>
-            <option
-              onClick={(e) => handleChangeOrderTitle(e)}
-              value="desc"
-              className="text-white border-bottom border-white border-opacity-50 py-1 "
-            >
-              Z-A
-            </option>
-          </div>
-        </section>
-      </div>
-      <div className="d-flex gap-2 align-items-center">
-        <section id="Oprice" className="py-1 px-2">
-          <label className="text-white fs-5">Order Price</label>
-          <div className={set.hover_options}>
+                ))}
+              </select>
+            </div>
+          </section>
+        </div>
+        <div className="d-flex gap-2 align-items-center my-3 ">
+          <section className="py-1 px-2">
+            <label className="text-white fs-5">Price</label>
+            <div className={set.hover_options}>
+              <option
+                className="text-white border-bottom border-white border-opacity-50 py-1"
+                value={0}
+                onClick={(e) => handleChangePrice(e)}
+              >
+                Everything
+              </option>
+              <option
+                className="text-white border-bottom border-white border-opacity-50 py-1"
+                value={1}
+                onClick={(e) => handleChangePrice(e)}
+              >
+                Hasta $500
+              </option>
+              <option
+                className="text-white border-bottom border-white border-opacity-50 py-1"
+                value={2}
+                onClick={(e) => handleChangePrice(e)}
+              >
+                $500 - $5,000
+              </option>
+              <option
+                className="text-white py-1"
+                value={3}
+                onClick={(e) => handleChangePrice(e)}
+              >
+                Mas de $5,000
+              </option>
+            </div>
+          </section>
+        </div>
+        <div className="d-flex gap-2 align-items-center my-3">
+          <section id="genre" className="py-1 px-2">
+            <label className="text-white fs-5">Genre</label>
+            <div className={set.hover_options}>
+              <select
+                style={{ backgroundColor: '#4D95F5' }}
+                className="text-white border-bottom border-white border-opacity-50 py-1"
+                onChange={(e) => handleChangeGenre(e)}
+              >
+                <option value="all">ALL</option>
+                {newArrayGenres &&
+                  newArrayGenres?.map((obj) => {
+                    return (
+                      <option
+                        key={obj.id}
+                        value={obj.genre}
+                        className="text-white border-bottom border-white border-opacity-50 py-1"
+                      >
+                        {obj.genre}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
+          </section>
+        </div>{" "}
+        <div className="d-flex gap-2 align-items-center">
+          <section className="py-1 px-2">
             {" "}
-            <option
-              className="text-white border-bottom border-white border-opacity-50 py-1 "
-              onClick={(e) => handleChangeOrderTitle(e)}
-              value="asc"
-            >
-              Ascendente
-            </option>
-            <option
-              className="text-white border-bottom border-white border-opacity-50 py-1 "
-              onClick={(e) => handleChangeOrderTitle(e)}
-              value="desc"
-            >
-              Desendente
-            </option>
-          </div>
-        </section>
-      </div>
-    </section>
+            <label className="text-white fs-5">Order Title</label>
+            <div className={set.hover_options}>
+              <option
+                onClick={(e) => handleChangeOrderTitle(e)}
+                value="asc"
+                className="text-white border-bottom border-white border-opacity-50 py-1 "
+              >
+                A-Z
+              </option>
+              <option
+                onClick={(e) => handleChangeOrderTitle(e)}
+                value="desc"
+                className="text-white border-bottom border-white border-opacity-50 py-1 "
+              >
+                Z-A
+              </option>
+            </div>
+          </section>
+        </div>
+        <div className="d-flex gap-2 align-items-center">
+          <section id="Oprice" className="py-1 px-2">
+            <label className="text-white fs-5">Order Price</label>
+            <div className={set.hover_options}>
+              {" "}
+              <option
+                className="text-white border-bottom border-white border-opacity-50 py-1 "
+                onClick={(e) => handleChangeOrderTitle(e)}
+                value="asc"
+              >
+                Ascendente
+              </option>
+              <option
+                className="text-white border-bottom border-white border-opacity-50 py-1 "
+                onClick={(e) => handleChangeOrderTitle(e)}
+                value="desc"
+              >
+                Desendente
+              </option>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+
   );
 };
 

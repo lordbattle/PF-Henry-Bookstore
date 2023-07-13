@@ -20,7 +20,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import { AuthContextProvider } from "./context/AuthContextFirebase";
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { useState } from "react";
 import "./main.css";
 import PurchaseHistory from "./components/PurchaseHistory/PurchaseHistory";
 
@@ -32,18 +32,19 @@ import PurchaseHistory from "./components/PurchaseHistory/PurchaseHistory";
 
 function App() {
   const { pathname } = useLocation();
+  const [paginaActual, setPaginaActual] = useState(1);
 
   return (
     <div className="container">
       <AuthContextProvider>
         <AuthProvider>
-          {pathname !== "/" && <Nav />}
+          {pathname !== "/" && <Nav paginaActual={paginaActual} setPaginaActual={setPaginaActual} />}
           <Routes>
             <Route path="/" element={<LandingPage />}></Route>
 
             <Route path="/dashboard" element={<Dashboard />} />
 
-            <Route path="/home" element={<Home />}></Route>
+            <Route path="/home" element={<Home paginaActual={paginaActual} setPaginaActual={setPaginaActual} />}></Route>
 
             <Route path="/about" element={<About />}></Route>
 

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import {useDispatch} from 'react-redux'
 import { getBookByTitle } from '../../redux/actions'
 
-const SearchBar = () => {
+const SearchBar = ({setPaginaActual}) => {
 
     const dispatch = useDispatch();
     const [title, setTitle] = useState('');
@@ -15,6 +15,7 @@ const SearchBar = () => {
 
     function handleSubmit(event){
         event.preventDefault();
+        setPaginaActual(1);
         if(title){
             dispatch(getBookByTitle(title));
             setTitle('')

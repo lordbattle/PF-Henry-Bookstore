@@ -12,7 +12,7 @@ import Profile from "../Profile/Profile";
 import prueba1 from '../../images/prueba1.png'
 
 
-const Nav = () => {
+const Nav = ({paginaActual, setPaginaActual}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -91,7 +91,7 @@ const Nav = () => {
           </Link>
         </span>
         
-        {pathname === "/home" && <SearchBar />}
+        {pathname === "/home" && <SearchBar setPaginaActual={setPaginaActual} />}
         
 
         <div className="w-100 m-0 d-flex justify-content-end align-items-center">

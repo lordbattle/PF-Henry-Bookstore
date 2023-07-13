@@ -1,43 +1,83 @@
-*{
-    color: black;
-    font-family: 'Oswald';
+* {
+  color: black;
+  font-family: "Oswald";
+  margin: 0;
+  padding: 0;
 }
 
-*::-webkit-scrollbar {
-    display: none;  /* Ocultar scroll */
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+row-gap: 80px;
+  align-items: center;
+  background-color: #84b6f4;
+  width: 100%;
+
 }
 
-.head{
-    background-color: #84b6f4;
-    color: black;
-    width: 100% !important;
-    padding: 0;
-    text-align: center;
+.contain_Register {
+  width: auto;
+  height: 40%;
+  display: flex;
+  align-items: flex-end;
+  
+  background-color: #e31b68;
+  border-radius: 15px;
 }
 
-.btns{
-    background-color: #84b6f4;
-    padding: 5px;
+.head {
+  color: black;
+  padding: 0;
+  text-align: center;
 }
 
-.btn{
-    color: black;
-    text-decoration: none;
+.containLogo {
+  
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
 }
 
-.btn:hover{
-    color: white;
-    text-decoration: none;
+.btns {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  
+  align-items: center;
+  width: auto;
+  text-align: center;
+  padding: 10px 20px;
 }
 
-.containerbtn{
-    background-color: #c4dafa;
-    border: none;
-    margin-right: 3px;
-    margin-left: 3px;
+.btn {
+  color: black;
+  text-decoration: none;
+  width: auto;
+  text-decoration: none;  
+  background-image: linear-gradient(to right top, #b92b27, #be1b5a, #aa338a, #7b50af, #1565c0);
+  border: 0;
+  border-radius: .25rem;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.125rem; /* 18px */
+  font-weight: 600;
+  line-height: 1.75rem; /* 28px */
+  padding: 1rem 1.25rem;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-.containerbtn:hover{
-    background-color: #5e9bdc;
-    box-shadow: 3px 3px 3px #668ebe;
+.btn:hover {
+  box-shadow: none;
+  text-decoration: none;
+  color: rgb(255, 255, 255, 0.6);
 }
+

@@ -12,7 +12,6 @@ const { sendNewUserEmail } = require("../config/mailer");
 const getUsersHandler = async (req, res) => {
   const limit = req.query.limit || 20;
   const page = req.query.page || 1;
-  // const sort = (req.query.sort && defineOrder(req.query.sort)) || [["id"]];
 
   const {
     userName,
@@ -52,33 +51,6 @@ const getUsersHandler = async (req, res) => {
   }
 };
 
-//GET USER BY STATUS
-/* const getUsersByStatus = async(req,res)=> {
-   const {active} = req.query;
-
-   console.log(active);
-  try {
-    const result = await findUserStatus(active)
-
-    res.status(200).json({ result });
-  } catch (error) {
-    res.status(400).json(error.message)
-  }
-} */
-
-//GET USER BY userName
-/* const getUsersByName = async (req, res) => {
-  const { username } = req.query;
-
-  try {
-    const result = await findUserName(username);
-
-    res.status(200).json({ result });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-}; */
-
 //Get Users by Id
 const getUsersIdHandler = async (req, res) => {
   const { idUsers } = req.params;
@@ -97,6 +69,8 @@ const postUsersIdHandler = async (req, res) => {
 
   try {
     const results = await registerUser(data);
+    console.log(results, " results post userrrr ");
+
     const emailSent = await sendNewUserEmail(results.email, results.userName);
     res.status(200).json({ success: true, results, emailSent });
   } catch (e) {

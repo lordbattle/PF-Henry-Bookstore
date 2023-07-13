@@ -1,4 +1,6 @@
 const { User } = require("../db");
+const bcrypt = require("bcryptjs");
+const { sendPasswordChange } = require("../config/mailer");
 
 //Profile user
 
@@ -45,7 +47,48 @@ const updateProfileUser = async (req, res) => {
   }
 };
 
+// Controlador para verificar la contraseña actual del usuario
+const changePassword = async (req, res, next) => {
+  const { userId, currentPassword, newPassword } = req.body;
+  
+  try {
+    const userFound = await User.findByPk(userId);
+
+    if (!userFound) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, userFound.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    // Update user password 
+    const salt = bcrypt.genSaltSync();
+    const newPasswordHash = bcrypt.hashSync(newPassword, salt);
+
+    userFound.password = newPasswordHash;
+    await userFound.save();
+
+    const emailSent = await sendPasswordChange(
+      userFound.email,
+      userFound.userName,
+    );
+    
+    res.status(200).json({
+      success: true,
+      message: "Password changed successfully",
+      emailSent,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getProfileUser,
   updateProfileUser,
+  changePassword,
 };

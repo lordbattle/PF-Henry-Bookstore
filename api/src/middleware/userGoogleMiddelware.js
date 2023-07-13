@@ -21,6 +21,7 @@ const userGoogleMiddelware = (req, res, next) => {
       let googleUser = true;
 
       let age = 18;
+      let genres = "not specified";
       let location = "not specified";
       let phone = "+54-000-000-0000";
 
@@ -33,8 +34,10 @@ const userGoogleMiddelware = (req, res, next) => {
       req.body.googleUser = googleUser;
 
       req.body.age = age;
+      req.body.genres = genres;
       req.body.location = location;
       req.body.phone = phone;
+      req.body.securityQuestion = name+lastName+age
     } else if (displayName && name) {
       let emailLower = email.toLowerCase();
       let password = uid.slice(0, 19);

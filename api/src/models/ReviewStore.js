@@ -17,15 +17,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      create_date: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      edit_date: {
-        type: DataTypes.DATEONLY,
-        defaultValue: null,
-      },
     },
-    { timestamps: false }
+    { timestamps: true }
   );
 };

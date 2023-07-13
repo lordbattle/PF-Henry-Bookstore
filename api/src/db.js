@@ -1,10 +1,10 @@
-require('dotenv').config();
+require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DIALECT, DB_PORT } = process.env;
-
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DIALECT, DB_PORT } =
+  process.env;
 
 const sequelize = new Sequelize(
   `${DB_DIALECT}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
@@ -39,7 +39,8 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Author, Book, Genre, ReviewStore, User, Order, OrderItem, Bill } = sequelize.models;
+const { Author, Book, Genre, ReviewStore, User, Order, OrderItem, Bill } =
+  sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -49,17 +50,10 @@ const { Author, Book, Genre, ReviewStore, User, Order, OrderItem, Bill } = seque
 // Book.belongsTo(Genre, { through: "Book_Genre" });
 // Genre.belongsToMany(Book, { through: "Book_Genre" });
 
-Book.hasMany(ReviewStore);
-ReviewStore.belongsTo(Book);
-
-User.hasMany(ReviewStore);
-ReviewStore.belongsTo(User);
-
 // User.belongsTo(Book, { through: "User_Book" });
 // Book.belongsToMany(User, { through: "User_Book" });
-User.belongsToMany(Book, { through: "User_BookCreate" });
-Book.hasOne(User, { through: "User_BookCreate" });
-
+User.hasMany(Book, { foreignKey: "userId" });
+Book.belongsTo(User, { foreignKey: "userId" });
 
 // Order and Bill relations
 User.hasMany(Order, { foreignKey: "userId" });
@@ -76,6 +70,16 @@ Bill.belongsTo(User);
 
 Order.hasOne(Bill, { foreignKey: "orderId" });
 Bill.belongsTo(Order);
+
+// ReviewStore relations
+Book.hasMany(ReviewStore, { foreignKey: "bookId" });
+ReviewStore.belongsTo(Book);
+
+User.hasMany(ReviewStore, { foreignKey: "userId" });
+ReviewStore.belongsTo(User);
+
+OrderItem.hasOne(ReviewStore, { foreignKey: "orderItemId" });
+ReviewStore.belongsTo(OrderItem);
 
 module.exports = {
   // Author,

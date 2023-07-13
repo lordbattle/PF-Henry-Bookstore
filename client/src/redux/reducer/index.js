@@ -6,13 +6,20 @@ import {
   FILTERS_BOOKS,
   GET_USERS,
   GET_USER_ID,
+  GET_PAGINATION_USERS,
   GET_CURRENT_USER,
   DELETE_USER,
   GET_USERS_BY_STATUS,
   CLEAN_USER_DETAIL,
   LOGING_USER,
   LOGOUT_USER,
-  POST_USERS
+  POST_USERS,
+  DECREMENT_ITEMS,
+  INCREMENT_ITEMS,
+  GET_ORDERS,
+  HISTORY_PURCHASE,
+  GET_ORDERS_BY_STATUS
+
 } from "../types/types.js";
 
 export const initialState = {
@@ -20,9 +27,13 @@ export const initialState = {
   details: [],
   allUsers: [],
   user: [],
-  users: [], 
-  userDetail: {},
+  users: [],
+  orders: {},
+  userDetail: [],
+  pagination: null,
   currentUser: null,
+  historyPurchase: [],
+  totalItemSCart:0
 };
 
 function rootReducer(state = initialState, action) {
@@ -30,6 +41,16 @@ function rootReducer(state = initialState, action) {
   let filteredUsers = state.users;
 
   switch (action.type) {
+    case INCREMENT_ITEMS:
+    return {
+      ...state,
+      totalItemSCart : state.totalItemSCart + action.payload
+    }
+    case DECREMENT_ITEMS:
+      return{
+        ...state,
+        totalItemSCart : state.totalItemSCart === 0 ? 0 : state.totalItemSCart - action.payload
+      }
     case GET_BOOKS:
       return {
         ...state,
@@ -40,6 +61,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         details: action.payload,
       };
+      case GET_PAGINATION_USERS:
+        return {
+          ...state,
+          pagination: action.payload,
+        }
     case GET_BOOK_TITLE:
       return {
         ...state,
@@ -58,6 +84,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+    
+    case HISTORY_PURCHASE:
+      return{
+        ...state,
+        historyPurchase: action.payload,
+      }
 
     //USER
 
@@ -77,14 +109,20 @@ function rootReducer(state = initialState, action) {
     case GET_CURRENT_USER:
       return {
         ...state,
-        currentUser: action.payload,
+        userDetail: action.payload,
       };
 
       case POST_USERS : 
       return {
-       ...state,
-       currentUser: action.payload,
+        ...state,
+        userDetail: action.payload,
       };
+
+      case GET_ORDERS:
+        return {
+          ...state,
+          orders: action.payload,
+        }
 
     case DELETE_USER:
       return {
@@ -105,7 +143,7 @@ function rootReducer(state = initialState, action) {
     case CLEAN_USER_DETAIL:
       return {
         ...state,
-        userDetail: {},
+        userDetail: [],
       };
 
     //LOGIN
@@ -119,7 +157,28 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         user: [],
+        userDetail: []
       };
+    //ORDERS
+
+    case GET_ORDERS_BY_STATUS:
+
+    const allOrders = state.orders.rows
+      console.log('esto es el orders', allOrders)
+    const ordersFilter = action.payload === 'Filter by status' ? 
+    state.orders : allOrders.map(status => {
+      if((action.payload === 'approved') && (status.status === "approved")) return console.log('aprobado funciona')
+
+      if((action.payload === 'pending') && (status.status === "pending")) return console.log('pendiente funciona')
+
+      if((action.payload === 'reject') && (status.status === "reject")) return console.log('rechazado funciona')
+    })
+
+      return {
+        ...state,
+        orders: ordersFilter
+      };
+
     default:
       return {
         ...state,

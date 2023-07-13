@@ -24,21 +24,23 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
+ }
 
 .form {
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
     top: 15px;
     gap: 20px;
+
     width: 35em;
     background-color: #63c090;
     padding: 20px;
-    border-radius: 20px ;
+    border-radius: 20px;
     position: relative;
+    top: 15px;
     text-align: center;
-}
+  }
 
 .containerNames {
     position: relative;
@@ -46,6 +48,23 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    gap: 2em;
+}
+.containerMainPassword{
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+.containerPassword{
+    position: relative;
+    width: 60%;
+}
+.toggleButton{
+    position: relative;
+    top:0.5em;
+    left: 9em;
+    border-radius: 10px;
 }
 .linea {
     border-top: 1px solid black;
@@ -63,12 +82,13 @@
     justify-content: space-around;
     border-top: 1px solid rgb(62, 44, 221);
     padding-top: 2%;
+    gap: 1.5em;
    
 }
 .p{
     position: relative;
     color: #063b85;
-    left: -10em;
+    left: 0.2em;
     top: 2em;
 }
 .title {
@@ -114,24 +134,27 @@
 
 
 
-.flex {
-    display: flex;
-    width: 100%;
-    gap: 6px;
-}
+
 
 .form label {
     position: relative;
 }
 
 .form label .input {
-    width: 100%;
+    width: 32em;
     padding: 10px 10px 20px 10px;
     outline: 0;
     border: 1px solid rgba(105, 105, 105, 0.397);
     border-radius: 10px;
 }
 
+.form label .inputOptional {
+    width: 9em;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+}
 .form label .inputNames {
     width: 13em;
     padding: 10px 10px 20px 10px;
@@ -139,6 +162,16 @@
     border: 1px solid rgba(105, 105, 105, 0.397);
     border-radius: 10px;
 }
+
+.form label .inputPassword {
+    width: 28em;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+}
+
+
 
 .form label .input+span {
     position: absolute;
@@ -149,7 +182,15 @@
     cursor: text;
     transition: 0.3s ease;
 }
-
+.form label .inputOptional+span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
 .form label .inputNames+span {
     position: absolute;
     left: 10px;
@@ -159,6 +200,17 @@
     cursor: text;
     transition: 0.3s ease;
 }
+
+.form label .inputPassword+span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
 
 .form label .input:placeholder-shown+span {
     top: 15px;
@@ -171,6 +223,15 @@
     color: grey;
     ;
 }
+.form label .inputPassword:placeholder-shown+span {
+    top: 15px;
+    font-size: 0.9em;
+}
+.form label .inputOptional:placeholder-shown+span {
+    top: 15px;
+    font-size: 0.9em;
+}
+
 
 .form label .input:focus+span,
 .form label .input:valid+span {
@@ -186,6 +247,20 @@
     font-weight: 600;
 }
 
+.form label .inputPassword:focus+span,
+.form label .inputPassword:valid+span {
+    top: 30px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+.form label .inputOptional:focus+span,
+.form label .inputOptional:valid+span {
+    top: 30px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+
 .form label .input:valid+span {
     color: #063b85;
 }
@@ -194,6 +269,12 @@
     color: #063b85;
 }
 
+.form label .inputPassword:valid+span {
+    color: #063b85;
+}
+.form label .inputOptional:valid+span {
+    color: #063b85;
+}
 .errors {
     color: #072754;
 }

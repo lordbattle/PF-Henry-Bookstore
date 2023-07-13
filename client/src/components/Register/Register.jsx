@@ -1,35 +1,27 @@
-import { useEffect, useState } from "react";
-//import { Link } from "react-router-dom";
-
-import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
-
-import { logingUser, postUsers } from "../../redux/actions";
-
+import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { postUsers, getUsers } from "../../redux/actions/index";
 import { useDispatch } from "react-redux";
-import { UserAuth } from "../../context/AuthContextFirebase";
-import { element } from "prop-types";
-import validations from "../../hooks/validations";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import style from "./Register.module.css";
+import Loading from "../Loading/Loading";
+import validations from "../../hooks/validations";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { signUp, loginWithGoogle } = UserAuth();
-
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // FILTRO EL EMAIL QUE ME TRAE EL LOCALSTORAGE
-  /*  const userEmail = JSON.parse(localStorage.getItem("userData"));
-  const userFilEmail = userEmail.email; */
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
-  /* useEffect(() => {
-    if (isAuthenticated) navigate("/home");
-  }, [isAuthenticated]);
- */
   const postUsersAsync = (payload) => {
+    console.log("postUserAync", payload);
     return new Promise((resolve, reject) => {
       dispatch(postUsers(payload))
         .then((response) => {
@@ -40,15 +32,6 @@ const Register = () => {
         });
     });
   };
-
-
-  const agesSelect = () => {
-    let count = [];
-    for (let i = 18; i <= 100; i++) {
-      count.push(i + '');
-    }
-    return count;
-  }
 
   return (
     <div className={style.formContainer}>
@@ -63,25 +46,25 @@ const Register = () => {
           phone: "",
           name: "",
           lastName: "",
+          securityQuestion: "",
         }}
         validate={(values) => {
           return validations(values);
         }}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
           try {
-            console.log("FORM SENT");
-            // redux
+            setSubmitting(true);
+            setFormSubmitted(true);
             try {
-              await postUsersAsync(values); // Esperar la resolución de la promesa
+              await postUsersAsync(values);
+              dispatch(getUsers());
             } catch (error) {
               throw new Error(error);
             }
-
-            await signUp(values.email, values.password, values.name);
-            setFormSubmitted(true);
-            resetForm();
-            setTimeout(() => setFormSubmitted(false), 3000);
-            //dispatch(logingUser(values.email, values.password, values.userName));
+            setTimeout(() => {
+              setSubmitting(false);
+              setFormSubmitted(false);
+            }, 3000);
             Swal.fire({
               icon: "success",
               title: "Registered Welcome!",
@@ -93,12 +76,12 @@ const Register = () => {
             Swal.fire({
               icon: "error",
               title: "Missing data",
-              text: "Please complete all fields!",
+              text: `${error}`,
             });
           }
         }}
       >
-        {({ errors }) => (
+        {({ errors, isSubmitting }) => (
           <Form className={style.form}>
             <p className={style.title}>Register</p>
             <p className={style.message}>
@@ -170,21 +153,35 @@ const Register = () => {
               name="userName"
               component={() => <div className="error">{errors.userName}</div>}
             />
-
-            <label>
-              <Field
-                placeholder=""
-                type="text"
-                className={style.input}
-                id="password"
-                name="password"
-              />
-              <span>password</span>
-            </label>
-            <ErrorMessage
-              name="password"
-              component={() => <div className="error">{errors.password}</div>}
-            />
+            <div className={style.containerMainPassword}>
+              <div className={style.containerPassword}>
+                <label>
+                  <Field
+                    placeholder=""
+                    type={showPassword ? "text" : "password"}
+                    className={style.inputPassword}
+                    id="password"
+                    name="password"
+                  />
+                  <span>password</span>
+                </label>
+                <ErrorMessage
+                  name="password"
+                  component={() => (
+                    <div className="error">{errors.password}</div>
+                  )}
+                />
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className={style.toggleButton}
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
+                </button>
+              </div>
+            </div>
 
             <label>
               <Field
@@ -197,68 +194,91 @@ const Register = () => {
               />
               <span>Location</span>
             </label>
-            <ErrorMessage name='location' component={() => (<div className='error'>{errors.location}</div>)} />
+            <ErrorMessage
+              name="location"
+              component={() => (
+                <div className="error">{errors.location}</div>
+              )}
+            />
+
+            <label>
+              <Field
+                required=""
+                placeholder="What is the name of your favorite pet?"
+                type="text"
+                className={style.input}
+                id="securityQuestion"
+                name="securityQuestion"
+              />
+              <span>Security question</span>
+            </label>
+            <ErrorMessage
+              name="securityQuestion"
+              component={() => (
+                <div className="error">{errors.securityQuestion}</div>
+              )}
+            />
 
             <p className={style.p}>Optional data for registration</p>
             <div className={style.containerNumberInfo}>
-              
-                <label>
-                  <Field
-                    placeholder='+ 18'
-                    type='text'
-                    className={style.input}
-                    id="age"
-                    name="age"
-                  />
-                  <span>Age</span>
-                </label>
-                <ErrorMessage name='age' component={() => (<div className='error'>{errors.age}</div>)} />
-              
+              <label>
+                <Field
+                  placeholder="+ 18"
+                  type="text"
+                  className={style.inputOptional}
+                  id="age"
+                  name="age"
+                />
+                <span>Age</span>
+              </label>
+              <ErrorMessage
+                name="age"
+                component={() => <div className="error">{errors.age}</div>}
+              />
 
-              
-                <label>
-                  <Field
-                    as='select'
-                    className={style.input}
-                    id="genres"
-                    name="genres"
-                  >
-                    <option value="">  </option>
-                    <option value="male">Masculino</option>
-                    <option value="female">Femenino</option>
-                  </Field>
+              <label>
+                <Field
+                  as="select"
+                  className={style.inputOptional}
+                  id="genres"
+                  name="genres"
+                >
+                  <option value="not specified"></option>
+                  <option value="male">Masculino</option>
+                  <option value="female">Femenino</option>
+                </Field>
 
-                  <span>Genres</span>
-                </label>
-                <ErrorMessage name='genres' component={() => (<div className='error'>{errors.genres}</div>)} />
-              
+                <span>Genres</span>
+              </label>
+              <ErrorMessage
+                name="genres"
+                component={() => (
+                  <div className="error">{errors.genres}</div>
+                )}
+              />
 
-
-              
-                <label>
-                  <Field
-                    placeholder=" +COD-xxx-xxx-xxxx"
-                    type="text"
-                    className={style.input}
-                    id="phone"
-                    name="phone"
-                  />
-                  <span>Phone</span>
-                </label>
-                <ErrorMessage name='phone' component={() => (<div className='error'>{errors.phone}</div>)} />
-              
+              <label>
+                <Field
+                  placeholder=" +COD-xxx-xxx-xxxx"
+                  type="text"
+                  className={style.inputOptional}
+                  id="phone"
+                  name="phone"
+                />
+                <span>Phone</span>
+              </label>
+              <ErrorMessage
+                name="phone"
+                component={() => <div className="error">{errors.phone}</div>}
+              />
             </div>
 
-            <button className={style.submit} type="submit">
-              Register
+            <button className={style.submit} type="submit" disabled={isSubmitting}>
+              {isSubmitting ? <Loading /> : "Register"}
             </button>
 
             {formSubmitted && (
-              <p>
-                {formSubmitted && (
-                  <p className="exito"> Form submitted successfully</p>
-                )}
-              </p>
+              <p className="exito">Form submitted successfully</p>
             )}
           </Form>
         )}
@@ -268,3 +288,4 @@ const Register = () => {
 };
 
 export default Register;
+

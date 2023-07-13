@@ -11,7 +11,9 @@ const typeUser = [
   "banned",
   "googleUser",
   "profilePic",
-
+  "name",
+  "lastName",
+  "securityQuestion",
   //google firebase
   "email",
   "displayName",
@@ -20,13 +22,11 @@ const typeUser = [
 
 const cleanData = (arr, obj) => {
   let newObj = {};
-
   for (const key in obj) {
     if (arr.some((a) => a === key)) {
       newObj = { ...newObj, [key]: obj[key] };
     }
   }
-
   return newObj;
 };
 

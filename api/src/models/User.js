@@ -35,19 +35,19 @@ module.exports = (sequelize) => {
       },
       age: {
         type: DataTypes.INTEGER,
-        defaultValue: "Not specified"
+        defaultValue: 18,
       },
       location: {
         type: DataTypes.STRING,
-        defaultValue: "Not specified"
+        defaultValue: "Not specified",
       },
       genres: {
         type: DataTypes.STRING,
-        defaultValue: "Not specified"
+        defaultValue: "Not specified",
       },
       phone: {
         type: DataTypes.STRING,
-        defaultValue: "Not specified"
+        defaultValue: "Not specified",
       },
       profilePic: {
         type: DataTypes.STRING,
@@ -75,6 +75,10 @@ module.exports = (sequelize) => {
       },
       notifications: {
         type: DataTypes.JSON,
+      },
+      securityQuestion: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     { timestamps: false }

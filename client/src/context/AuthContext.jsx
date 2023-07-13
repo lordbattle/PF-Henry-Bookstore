@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { logingUser, postUsers, verifyUser } from "../redux/actions/index";
+import { verifyUserToken } from "../redux/actions/index";
 import Cookies from "js-cookie";
-import { registerRequest } from "../api/auth";
+
 
 export const AuthContext = createContext();
 
@@ -54,14 +54,14 @@ export const AuthProvider = ({ children }) => {
     return () => clearTimeout(timer);
   }, [errors]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     function checkLogin() {
       const cookies = Cookies.get();
       console.log(cookies);
 
       if (cookies.token) {
         try {
-          const res = verifyUser(cookies.token);
+          const res = verifyUserToken(cookies.token);
           if (!res.data) {
             setIsAuthenticated(false);
             setUser(null);
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
       }
     }
     checkLogin();
-  }, []);
+  }, []); */
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, errors }}>

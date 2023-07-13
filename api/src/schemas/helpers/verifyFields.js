@@ -22,6 +22,13 @@ const regexPhone = /^\+\d{2}-\d{3}-\d{3}-\d{4}$/;
 //Can only contain letters
 const regexOnlyLetter = /^[A-Za-z\s]+$/;
 
+//Can only contain letters and numbers
+const regexOnlyLetterNumber = /^[a-zA-Z0-9]+$/;
+
+// Matches an id type uuid version 4
+const regexpV4 =
+  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[4][0-9a-fA-F]{3}-[89AB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/i;
+
 const isEmptyBoolean = (value) => !value || typeof value === "boolean" || false;
 
 const isEmptyImageFile = (value) => {
@@ -67,8 +74,15 @@ const isUsernameValidate = (value) => {
 };
 
 const isPasswordValidate = (value) => {
-  if (value.length >= 17) {
-    regexPassword.test(value);
+  console.log("regex entre " + value);
+  console.log("FUNCION REGEX   " + regexPassword.test(value));
+  if (regexPassword.test(value)) {
+    return true;
+  }
+};
+
+const isPasswordOnlyLetterNumber = (value) => {
+  if (regexOnlyLetterNumber.test(value)) {
     return true;
   }
 };
@@ -78,6 +92,9 @@ const isPhoneValidate = (value) => {
     return true;
   }
 };
+
+const isArrayLength = (value) => !!value.length > 0;
+const isNumberInteger = (value) => Number.isInteger(value);
 
 module.exports = {
   isEmptyBoolean,
@@ -89,5 +106,8 @@ module.exports = {
   isStringOnlyLetter,
   isUsernameValidate,
   isPasswordValidate,
+  isPasswordOnlyLetterNumber,
   isPhoneValidate,
+  isArrayLength,
+  isNumberInteger,
 };

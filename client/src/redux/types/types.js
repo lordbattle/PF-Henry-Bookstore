@@ -4,7 +4,7 @@ export const GET_BOOK_ID = "GET_BOOK_ID";
 export const GET_BOOK_TITLE = "GET_BOOK_TITLE";
 export const DELETE_BOOK = "DELETE_BOOK";
 export const FILTERS_BOOKS = "FILTERS_BOOKS";
-
+export const HISTORY_PURCHASE = "HISTORY_PURCHASE"
 //USERS
 export const GET_USERS = "GET_USERS";
 export const GET_USER_ID = "GET_USER_ID";
@@ -14,8 +14,18 @@ export const GET_USERS_BY_NAME = "GET_USERS_BY_NAME";
 export const GET_USERS_BY_STATUS = "GET_USERS_BY_NAME";
 export const CLEAN_USER_DETAIL = "CLEAN_USER_DETAIL";
 export const POST_USERS = "POST_USERS";
+export const GET_PAGINATION_USERS = "GET_PAGINATION_USERS";
 
 //Login
 export const LOGING_USER = "LOGING_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const VERIFY_USER = "VERIFY_USER";
+
+export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
+export const GET_ORDERS = "GET_ORDERS";
+
+//SALES
+export const GET_ORDERS_BY_STATUS = "GET_ORDERS_BY_STATUS"
+export const UPDATE_STATUS_ORDER = "UPDATE_STATUS_ORDER"
+export const INCREMENT_ITEMS = "INCREMENT_ITEMS"
+export const DECREMENT_ITEMS = "DECREMENT_ITEMS"

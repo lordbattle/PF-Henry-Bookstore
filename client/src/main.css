@@ -1,7 +1,14 @@
+*{
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 .container{
     background-color: #fcffff;
     min-width: 100vw;
-    min-height: 54vw;
-    margin: 0;
+    max-width: 101vw;
+    height: auto;
+    margin: 0 0;
     padding: 0;
 }

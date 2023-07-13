@@ -1,0 +1,102 @@
+.main {
+  margin: 15px;
+  padding: 30px;
+  padding-left: 60px;
+  padding-right: 60px;
+  border-radius: 20px;
+  background-color: #71a5e5;
+  width: 75%;
+  margin-left: 12.5%;
+}
+
+.container {
+  background-color: #b7cff4;
+  border-radius: 20px;
+  margin: 15px;
+  padding: 20px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deleteButtom {
+  background-color: #71a5e5;
+  border: none;
+  border-radius: 5px;
+}
+
+.deleteButtom:hover {
+  color: red;
+  box-shadow: 3px 3px 3px black;
+}
+
+.advancedDetail {
+  padding-left: 20px;
+  width: 65%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+p {
+  width: 100%;
+}
+
+.back {
+  background-color: #71a5e5;
+  border-radius: 5px;
+  width: 75vh;
+  margin-left: 25vh;
+  color: black;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.back:hover {
+  box-shadow: 3px 3px 3px black;
+  border: 1px black;
+  color: white;
+  background-color: #4d82bc;
+}
+
+.cancel {
+  border: none;
+  background-color: #71a5e5;
+  border-radius: 5px;
+
+  &:hover {
+    color: red;
+    box-shadow: 3px 3px 3px black;
+  }
+}
+
+.update {
+  border: none;
+  background-color: #71a5e5;
+  border-radius: 5px;
+
+  &:hover {
+    box-shadow: 3px 3px 3px black;
+  }
+}
+
+.img {
+  width: 30vh;
+  height: 40vh;
+  min-width: 40vh;
+  min-height: 60vh;
+}
+
+.error {
+  color: red;
+}
+
+.starActive {
+  color: gold; /* Color para las estrellas activas */
+}
+
+.starInactive {
+  color: lightgray; /* Color para las estrellas inactivas */
+}

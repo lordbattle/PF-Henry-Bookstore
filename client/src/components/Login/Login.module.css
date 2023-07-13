@@ -1,24 +1,40 @@
-.ContainerMain{
+.ContainerMain {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-.contianerLoginButton{
-    position: relative;
-    background-color: #63c090;
-    display: flex;
-    
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 0px 10px 10px 0px ;
-    box-shadow:  0px 1px 1px 0px;
+    height: 42em;
+}
+
+.contianerLoginButton {
+    position: relative;
+    background-color: #63c090;
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 10px 10px 0px;
+    box-shadow: 0px 1px 1px 0px;
     width: 8em;
     height: 7em;
 
 }
-.buttonLogin{
+
+.ContainerForm {
+    position: relative;
+    background-color: #8ae0b4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 31em;
+    height: 32em;
+    border-radius: 10%;
+    box-shadow: 0 6px 12px 0 #171615;
+}
+
+.buttonLogin {
     position: relative;
     border-radius: 13%;
     width: 4em;
@@ -26,11 +42,13 @@
     border: none;
     transform: .3s ease;
 }
+
 .buttonLogin:hover {
     background-color: #0c3d83;
 }
+
 .title {
-    font-size: 25px !important;
+    font-size: 31px !important;
     color: #0d66e1 !important;
     font-weight: 600 !important;
     position: relative !important;
@@ -38,6 +56,7 @@
     align-items: center !important;
     text-align: center;
     padding-left: 40px !important;
+    font-weight: bold;
 }
 
 .title::before,
@@ -62,6 +81,79 @@
     height: 18px;
     animation: pulse 0.7s linear infinite;
 }
+
+.label {
+    position: relative;
+    font-weight: bold;
+    font-size: 18px;
+    color: #063b85;
+}
+
+.options {
+    display: flex;
+    color: black;
+}
+
+.input {
+    background-color: white;
+    border: 2;
+    border-color: #8eb0e0;
+    border-radius: 10px;
+    width: 18em;
+    height: 3em;
+}
+
+.buttonSigIn {
+    position: relative;
+    left: 0em;
+    width: 7.5em;
+    height: 3em;
+    border-radius: 6px;
+    background-color: #3c71b2;
+    border: none;
+}
+.buttonSigInGoogle{
+    position: relative;
+    left: 2em;
+    height: 3em;
+    border-radius: 6px;    
+    background-color: #3c71b2;
+    border: none;
+}
+.buttonSigIn:hover  {
+    background-color: #8db3ec;
+    box-shadow: 0 6px 12px 0 #171615;
+
+
+}
+.buttonSigInGoogle:hover  {
+    background-color: #8db3ec;
+    box-shadow: 0 6px 12px 0 #171615;
+
+
+}
+.back {
+    margin-top: 1em;
+    text-decoration: none;
+    padding-top: 2px;
+    height: 2rem;
+    width: 7rem;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #71a5e5;
+    color: black;
+
+    &:hover {
+        text-decoration: none;
+        box-shadow: 0 6px 12px 0 #171615;
+        background-color: #b7cff4;
+        cursor: pointer
+    }
+}
+
+
+
+
 @keyframes pulse {
     from {
         transform: scale(0.9);

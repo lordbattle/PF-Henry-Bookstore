@@ -8,6 +8,7 @@ const {
   isStringOnlyLetter,
   isUsernameValidate,
   isPasswordValidate,
+  isPasswordOnlyLetterNumber,
   isPhoneValidate,
 } = require("./helpers/verifyFields");
 
@@ -45,23 +46,48 @@ const userNewSchema = {
     },
   },
   password: {
-    notEmpty: true,
-    errorMessage: "Password is required",
+    notEmpty: {
+      errorMessage: "Password is required",
+    },
 
     isLength: {
-      options: { min: 8, max: 20 },
-      errorMessage: `Password must contain between 8 and 20 characters`,
+      options: { min: 8, max: 25 },
+      errorMessage: `Password must contain between 8 and 25 characters`,
     },
 
     custom: {
       options: (value) => {
-        if (!isPasswordValidate(value)) {
-          throw new Error(
-            "Password must have at least one uppercase letter, one lowercase letter, one number, and one special character"
+        /* console.log(
+          "Estoy en custom el value es  " +
+            value +
+            "   estoy en length es " +
+            value.length
+        ); */
+        if (value.length >= 19) {
+          console.log("length + 19");
+          if (!isPasswordOnlyLetterNumber(value)) {
+            throw new Error(
+              "Password must be 19 characters or more and can only contain letters and numbers."
+            );
+          }
+        } else if (value.length < 19) {
+          console.log(
+            "Estoy en custom el value es  " +
+              value +
+              "   estoy en length es " +
+              value.length
           );
-        } else {
-          return true;
+          console.log("length menor 19");
+          if (!isPasswordValidate(value)) {
+            console.log(
+              "estoy en el ig de passworvalidare que es value ?    " + value
+            );
+            throw new Error(
+              "Password must have at least one uppercase letter, one lowercase letter, one number, and one special character."
+            );
+          }
         }
+        return true;
       },
     },
   },
@@ -134,8 +160,10 @@ const userNewSchema = {
     errorMessage: "Location is required",
   },
   genres: {
-    isIn: { options: ["male", "female"] },
-    errorMessage: "Genders male or female",
+    isIn: {
+      options: [["male", "female", "not specified"]],
+      errorMessage: "Genres must be male, female, or not specified",
+    },
   },
   phone: {
     //notEmpty: {errorMessage: "Phone is required"},
@@ -149,13 +177,13 @@ const userNewSchema = {
       },
     },
   },
-  profilePic: {
+  /*   profilePic: {
     custom: {
       options: isEmptyImageFile,
     },
     errorMessage: "The submitted file is not a .jpg, .jpeg, .png or .gif image",
     optional: true,
-  },
+  }, */
   active: {
     custom: {
       options: isEmptyBoolean,
@@ -180,11 +208,35 @@ const userNewSchema = {
     },
     errorMessage: "GoogleUser must be a boolean value",
   },
+  securityQuestion: {
+    notEmpty: {
+      errorMessage: "The security question is required",
+    },
+
+    custom: {
+      options: (value) => {
+        if (!isEmptyField(value)) {
+          throw new Error("The security question is required");
+        } else if (!isUsernameValidate(value)) {
+          throw new Error(
+            "The security question can only start with letters or numbers"
+          );
+        } else {
+          return true;
+        }
+      },
+    },
+
+    isLength: {
+      options: { min: 6, max: 30 },
+      errorMessage: `Username must contain between 6 and 30 characters`,
+    },
+  },
 };
 
 const userPutSchema = {
   ...userNewSchema,
-
+  
   // Make some properties optional for modification
   userName: {
     ...userNewSchema.userName, // Copy the title validation rules to userNewSchema
@@ -196,6 +248,14 @@ const userPutSchema = {
   },
   password: {
     ...userNewSchema.password,
+    optional: true,
+  },
+  name: {
+    ...userNewSchema.name,
+    optional: true,
+  },
+  lastName: {
+    ...userNewSchema.lastName,
     optional: true,
   },
   age: {
@@ -228,6 +288,10 @@ const userPutSchema = {
   },
   googleUser: {
     ...userNewSchema.googleUser,
+    optional: true,
+  },
+  securityQuestion: {
+    ...userNewSchema.securityQuestion,
     optional: true,
   },
 };

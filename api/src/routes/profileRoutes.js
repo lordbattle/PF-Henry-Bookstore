@@ -1,8 +1,8 @@
 const { Router } = require("express");
-const { validateToken } = require("../middleware/validateToken");
 const {
   getProfileUser,
   updateProfileUser,
+  changePassword,
 } = require("../handlers/profileUserHandler");
 
 
@@ -10,7 +10,8 @@ const ProfileRouter = Router();
 
 // Rutas del perfil de usuario
 
-ProfileRouter.get("/", validateToken, getProfileUser);
-ProfileRouter.put("/", validateToken, updateProfileUser);
+ProfileRouter.get("/", getProfileUser);
+ProfileRouter.put("/", updateProfileUser);
+ProfileRouter.put("/changePassword", changePassword);
 
 module.exports = ProfileRouter;

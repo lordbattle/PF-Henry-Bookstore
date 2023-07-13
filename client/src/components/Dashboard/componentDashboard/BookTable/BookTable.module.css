@@ -1,0 +1,185 @@
+.table {
+    position: relative;
+    /* background-color: coral;  */
+    table-layout: fixed;
+    -ms-text-combine-horizontal: all;
+    overscroll-behavior-y: contain;
+    width: 98%;
+    text-align: center;
+    overflow: scroll;
+    scroll-behavior: auto;
+    border-collapse: collapse;
+    border-radius: 10px;
+    background-color: rgb(179, 208, 249);
+    margin: 1rem;
+
+}
+
+.filters {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.divRadio {
+    position: relative;
+    display: flex;
+    width: 40%;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(249, 245, 245);
+}
+
+.span {
+    position: relative;
+    left: 1em;
+}
+
+.labelRadio {
+    position: relative;
+    left: -4em;
+}
+
+.thead {
+    position: relative;
+    height: 3em;
+    border-radius: 10px;
+    background-color: rgb(158, 158, 237);
+    box-shadow: 0px 2px 2px 0px rgb(109, 105, 105);
+}
+
+tbody .td {
+    position: relative;
+    width: 150px;
+    font-size: 18px;
+    text-transform: uppercase;
+
+}
+
+.pagination {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+
+.paginationItem {
+    background: #5973d0;
+    box-shadow: 0 0 7px #787777;
+    border: #5c5b5b;
+    padding: 10px 15px;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.paginationItem span {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+}
+
+.prev {
+
+    background: #284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    color: white;
+
+}
+
+.next {
+    background: 284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    color: white;
+}
+
+.paginationItemActive {
+    text-align: center;
+    box-shadow: 0 0 7px #787777;
+    border: #5c5b5b;
+    padding: 10px 15px;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;   
+    background: #35457e;
+    pointer-events: none;
+}
+.paginationItemNotActive{
+    text-align: center;
+    box-shadow: 0 0 7px #787777;
+    border: #5c5b5b;
+    padding: 10px 15px;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    color: white;   
+    background: #5973d0;
+}
+
+.prevDisabled {
+    background: 284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    pointer-events: none;
+    box-shadow: none;
+    color: #787777;
+    pointer-events:none;
+
+
+}
+.divErrorVacioTable{
+    background-color: rgb(245, 152, 152);
+    width: 601%;
+    height: 6em;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nextDisabled {
+    background: 284de0;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 0 7px #787777;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    pointer-events: none;
+    box-shadow: none;
+    color: #787777;
+    pointer-events:none;
+
+}

@@ -1,6 +1,7 @@
 const {
   saveAllBooksDb,
   getAllBooks,
+  getPaginationBooks,
   getBookBySearch,
   getBookById,
   postBook,
@@ -9,7 +10,7 @@ const {
 } = require("../controllers/booksControllers");
 
 //Save API data in the DB
-//saveAllBooksDb();
+saveAllBooksDb();
 
 const getBooksHandler = async (req, res) => {
   const {
@@ -85,6 +86,7 @@ const getBooksIdHandler = async (req, res) => {
   }
 };
 
+
 //Post Books
 const postBooksHandler = async (req, res) => {
   const {
@@ -102,6 +104,7 @@ const postBooksHandler = async (req, res) => {
     stock,
     authors,
     genre,
+    userId
   } = req.body;
   try {
     const newBook = await postBook(
@@ -119,7 +122,7 @@ const postBooksHandler = async (req, res) => {
       stock,
       authors,
       genre,
-      //userlogin
+      userId
     );
     res.status(200).json(newBook);
   } catch (error) {

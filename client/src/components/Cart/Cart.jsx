@@ -63,7 +63,7 @@ export const Cart = () => {
 
   const handleRemoveItem = (itemId) => {
     const itemRemove = cart.filter((item) => item.id === itemId);
-    dispatch(decrementItemCart(itemRemove.stock))
+    dispatch(decrementItemCart(itemRemove[0].stock))
     const updatedCart = cart.filter((item) => item.id !== itemId);
     setCart(updatedCart);
   };

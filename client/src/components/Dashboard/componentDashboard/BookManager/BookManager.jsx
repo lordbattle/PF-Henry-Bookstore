@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { getBookById, deleteBook, activeBook, editBook } from "../../../../redux/actions";
-import style from '../BookManager/BookManager.module.css';
+import {
+  getBookById,
+  deleteBook,
+  activeBook,
+  editBook,
+} from "../../../../redux/actions";
 import { useForm } from "react-hook-form";
+import style from '../BookManager/BookManager.module.css';
 import Swal from "sweetalert2";
 
 const BookManager = () => {
@@ -13,7 +18,28 @@ const BookManager = () => {
   const details = useSelector((state) => state.details);
   console.log("log del details", details);
 
-  const { active, authors, averageRating, bookPic, description, genre, identifier, pages, publishedDate, publisher, subtitle, title, userRating, price, stock } = details;
+  const {
+    active,
+    authors,
+    averageRating,
+    bookPic,
+    description,
+    genre,
+    identifier,
+    pages,
+    publishedDate,
+    publisher,
+    subtitle,
+    title,
+    userRating,
+    price,
+    stock,
+  } = details;
+
+
+  /*const handleDeleteBook = async () => {
+    await Swal.fire("The product was deleted", "", "error");
+    dispatch(deleteBook(id));*/
 
   useEffect(() => {
     dispatch(getBookById(id));
@@ -42,14 +68,34 @@ const BookManager = () => {
       'error'
     )
     dispatch(deleteBook(id))
+
     window.location = "/dashboard";
   };
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleEditProduct = (data) => {
-    dispatch(editBook(id, data));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedProduct({ ...editedProduct, [name]: value });
+  };
+
+  const handleEditProduct = (e) => {
+    e.preventDefault();
+
+    const editedProductCopy = { ...editedProduct }; // Crear una copia del objeto editedProduct
+
+    // Eliminar las propiedades vacías o no completadas del objeto editedProductCopy
+    Object.keys(editedProductCopy).forEach((key) => {
+      if (editedProductCopy[key] === "") {
+        delete editedProductCopy[key];
+      }
+    });
+
+    dispatch(editBook(id, editedProductCopy));
     setIsEditing(false);
+
+    window.location.reload();
+
   };
 
   return (
@@ -57,22 +103,61 @@ const BookManager = () => {
       <div className={style.container}>
         <div className={style.detail}>
           <h2>ID DEL LIBRO: {id}</h2>
-          <h4>
+          <h5>
             {active === true ? (
-              <button onClick={() => { dispatch(deleteBook(id)); }} className={style.deleteButton}>Deshabilitar producto</button>
+              <button
+                onClick={() => {
+                  dispatch(deleteBook(id));
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 0);
+                }}
+                className={style.deleteButton}
+              >
+                Disable product
+              </button>
             ) : (
-              <button onClick={() => (dispatch(activeBook(id)))} className={style.deleteButton}>Habilitar producto</button>
+              <button
+                onClick={() => {
+                  dispatch(activeBook(id));
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 0);
+                }}
+                className={style.deleteButton}
+              >
+                Enable product
+              </button>
             )}
-          </h4>
+          </h5>
           <div className={style.buttonGroup}>
-            <button onClick={() => setIsEditing(true)} className={style.editButton}>Edit product</button>
-            <button onClick={handleDeleteBook} className={style.deleteButton}>Delete Book</button>
+            <button
+              onClick={() => setIsEditing(true)}
+              className={style.editButton}
+            >
+              Edit product
+            </button>
+            {/* <button onClick={handleDeleteBook} className={style.deleteButton}>
+              Delete Book
+            </button> */}
           </div>
         </div>
 
-        <div className='d-flex p-3'>
+        <div className="d-flex p-3">
           <img src={bookPic} alt="Imagen del libro" className={style.img} />
           <div className={style.advancedDetail}>
+
+            /*{isEditing && (
+              <div className="d-flex flex-column">
+                <label style={{ fontSize: "23px" }}>
+                  Title:
+                  <input
+                    placeholder="TITLE"
+                    type="text"
+                    name="title"
+                    value={editedProduct.title}
+                    onChange={handleInputChange}
+                    style={{ minWidth: "20rem" }} */
 
             {isEditing ? (
               <form onSubmit={handleSubmit(handleEditProduct)} className="d-flex flex-column">
@@ -80,11 +165,12 @@ const BookManager = () => {
                   <input
                     placeholder="TITLE"
                     type="text"
-                    {...register("title", { required: true, maxLength: 50 })}
+                    {...register("title", { required: false, maxLength: 50 })}
                     style={{ minWidth: '20rem' }}
                   />
                   {errors.title && <p>Title is required and should have a maximum of 50 characters</p>}
                 </label>
+
                 <label style={{ fontSize: '20px' }}>Subtitle:
                   <input
                     placeholder="SUBTITLE"
@@ -181,12 +267,14 @@ const BookManager = () => {
                 <p style={{ width: '33.3%', fontSize: '18px' }}>Pages: {pages}</p>
                 <p style={{ width: '33.3%', fontSize: '18px' }}>{publisher} : {publishedDate}</p>
                 <p style={{ fontSize: '20px' }}>ISBN : {identifier}</p>
+
               </>
             )}
-
           </div>
         </div>
-        <Link to="/dashboard" style={{ textDecoration: 'none' }}><p className={style.back}>Go back</p></Link>
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+          <p className={style.back}>Go back</p>
+        </Link>
       </div>
     </div>
   );

@@ -15,8 +15,11 @@ const Profile = () => {
   const userLogin = useSelector((state) => state.user);
   const userCurrent = useSelector((state) => state.userDetail);
 
+  let userDataLocalPersistent =
+    JSON.parse(localStorage.getItem("userDataLoginPersistent")) || null;
+
   useEffect(() => {
-    dispatch(getUserById(userLogin.id));
+    dispatch(getUserById(userDataLocalPersistent.id));
   }, [dispatch, userLogin.id]);
 
   setTimeout(() => {
@@ -99,7 +102,7 @@ const Profile = () => {
               </Link>
             </li>
             <li className={style.dropdown_item}>
-            <Link
+              <Link
                 to={"/purchasehistory"}
                 className="text-black text-decoration-none fs-6"
               >

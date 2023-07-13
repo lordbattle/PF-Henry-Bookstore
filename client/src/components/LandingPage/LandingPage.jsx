@@ -51,14 +51,14 @@ const LandingPage = () => {
   }, [user, dispatch]);
 
   let userDataLocalPersistent =
-    JSON.parse(localStorage.getItem("userDataLoginPersistent")) || null;
+    JSON.parse(localStorage.getItem("userDataLoginPersistent")) || [];
 
   console.log(
     "antes del efect que es userDataLocalPersistent   ",
     userDataLocalPersistent
   );
 
-  useEffect(() => {
+  /* useEffect(() => {
     localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
     if (userDataLocalPersistent && userDataLocalPersistent.length < 1) {
       localStorage.setItem(
@@ -67,6 +67,12 @@ const LandingPage = () => {
       );
     }
     dispatch(logingUser(userDataLocalPersistent));
+  }, [userlogin]); */
+
+  useEffect(() => {
+    localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
+
+    localStorage.setItem("userDataLoginPersistent", JSON.stringify(userlogin));
   }, [userlogin]);
 
   return (

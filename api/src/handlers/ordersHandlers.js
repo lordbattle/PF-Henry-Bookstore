@@ -40,9 +40,17 @@ const getOrdersHandler = async (req, res) => {
 
 //Post Orders
 const postOrderdHandler = async (req, res) => {
-  const { id_user, items } = req.body;
+  const { id_user, items, expiration_date_from, expiration_date_to } = req.body;
 
   try {
+    // Validar los campos de fecha y hora
+    const dateFromPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}-\d{2}:\d{2}$/;
+    const dateToPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}-\d{2}:\d{2}$/;
+
+    if (!dateFromPattern.test(expiration_date_from) || !dateToPattern.test(expiration_date_to)) {
+      throw new Error("Invalid date format");
+    }
+
     const results = await insertOrder(id_user, items);
 
     res.status(200).json({ success: true, results });
@@ -70,7 +78,16 @@ const postReceiveWebhook = async (req, res) => {
 const putOrderStatusHnadler = async (req, res) => {
   try {
     const { idItem } = req.params;
-    const { status } = req.body;
+    const { status, expiration_date_from, expiration_date_to } = req.body;
+
+    // Validar los campos de fecha y hora
+    const dateFromPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}-\d{2}:\d{2}$/;
+    const dateToPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}-\d{2}:\d{2}$/;
+
+    if ((expiration_date_from && !dateFromPattern.test(expiration_date_from)) ||
+        (expiration_date_to && !dateToPattern.test(expiration_date_to))) {
+      throw new Error("Invalid date format");
+    }
 
     const result = await putStatusOrder(idItem, status);
 

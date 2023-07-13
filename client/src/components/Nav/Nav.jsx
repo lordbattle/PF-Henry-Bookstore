@@ -15,12 +15,9 @@ import prueba1 from '../../images/prueba1.png'
 const Nav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const userCurrent = useSelector((state) => state.userDetail);
-
   let userActive = userCurrent.results;
-
   const { logout } = UserAuth();
 
   const cookies = Cookies.get();

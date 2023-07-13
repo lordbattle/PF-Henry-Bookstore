@@ -17,6 +17,8 @@ const Nav = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const userCurrent = useSelector((state) => state.userDetail);
+  const totalItems = useSelector((state) => state.totalItemSCart);
+
   let userActive = userCurrent.results;
   const { logout } = UserAuth();
 
@@ -36,12 +38,11 @@ const Nav = () => {
   };
 
   const { cart } = useStorage();
-  const [totalItems, setTotalItems] = useState(0);
   const [updateKey, setUpdateKey] = useState(0);
 
   useEffect(() => {
-    setTotalItems(cart.length);
-  }, [cart]);
+    
+  }, [totalItems]);
 
   useEffect(() => {
     const handleStorageChange = () => {

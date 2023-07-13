@@ -92,6 +92,10 @@ const EditProfile = () => {
 
       await editUserAsync(userDataLogin.id, newObj);
       setIsChangeUser(true);
+      dispatch(getUserById(userDataLogin.id));
+      setTimeout(()=>{
+        window.location.reload();
+      },2000);
 
       Swal.fire({
         icon: "success",

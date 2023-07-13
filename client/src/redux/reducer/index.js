@@ -22,6 +22,8 @@ import {
 
 } from "../types/types.js";
 
+const numcart = localStorage.getItem("numcart");
+
 export const initialState = {
   books: [],
   details: [],
@@ -33,7 +35,7 @@ export const initialState = {
   pagination: null,
   currentUser: null,
   historyPurchase: [],
-  totalItemSCart:0
+  totalItemSCart: numcart ? JSON.parse(numcart) : 0
 };
 
 function rootReducer(state = initialState, action) {
@@ -42,14 +44,18 @@ function rootReducer(state = initialState, action) {
 
   switch (action.type) {
     case INCREMENT_ITEMS:
-    return {
-      ...state,
-      totalItemSCart : state.totalItemSCart + action.payload
-    }
+      const totalItemSCartI = state.totalItemSCart + action.payload
+      localStorage.setItem("numcart", totalItemSCartI)
+      return {
+        ...state,
+        totalItemSCart: totalItemSCartI
+      }
     case DECREMENT_ITEMS:
+      const totalItemSCartD = state.totalItemSCart === 0 ? 0 : state.totalItemSCart - action.payload
+      localStorage.setItem("numcart", totalItemSCartD)
       return{
         ...state,
-        totalItemSCart : state.totalItemSCart === 0 ? 0 : state.totalItemSCart - action.payload
+        totalItemSCart : totalItemSCartD
       }
     case GET_BOOKS:
       return {

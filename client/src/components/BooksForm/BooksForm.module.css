@@ -150,7 +150,7 @@
   right: 45%;
   background-color: transparent;
   text-align: justify;
-  border: none;
+ 
 }
 
 .spanButton {
@@ -160,6 +160,7 @@
 }
 
 .buttonBook:hover {
+  box-shadow: 0 0 1px rgba(246, 238, 4, 0.164);
   border-radius: 15%;
 }
 

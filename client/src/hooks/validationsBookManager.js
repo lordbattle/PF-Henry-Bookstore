@@ -3,7 +3,7 @@ const regexString = /^[A-Za-z0-9,.:-\s]*$/;
 const regexStartsWithLetterAndPunctuation = /^[A-Za-z][A-Za-z\s,.;-]*$/;
 
 
-const validationsFormBook = (values) => {
+const validationsBookManager = (values) => {
     let errors = {};
     if (!values.title) {
         errors.title = 'Insert book title'
@@ -109,4 +109,4 @@ const validationsFormBook = (values) => {
 
     return errors;
 }
-export default validationsFormBook;
+export default validationsBookManager;

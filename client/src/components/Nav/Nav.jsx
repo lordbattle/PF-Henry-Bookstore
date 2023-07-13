@@ -25,7 +25,7 @@ const Nav = ({paginaActual, setPaginaActual}) => {
   const cookies = Cookies.get();
   useEffect(() => {
     dispatch(verifyUserToken(cookies.token));
-  }, []);
+  }, [dispatch]);
 
   console.log("se carga el estado de login?    " + user.id);
 

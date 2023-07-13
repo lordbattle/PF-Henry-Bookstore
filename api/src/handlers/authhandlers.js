@@ -36,14 +36,11 @@ const loginUser = async (req, res) => {
 
     const token = await createAccessToken({ id: userFound.id });
 
-    res.cookie(
-      "token",
-      token /* {
+    res.cookie("token", token, {
       sameSite: "none",
       secure: true,
       httpOnly: true,
-    } */
-    );
+    });
 
     res.status(200).json({
       id: userFound.id,

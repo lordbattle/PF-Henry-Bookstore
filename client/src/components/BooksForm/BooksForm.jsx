@@ -7,7 +7,6 @@ import style from "../BooksForm/BooksForm.module.css";
 import image from "../../images/bookForm.png";
 import Swal from "sweetalert2";
 
-
 const AddBookForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,16 +14,14 @@ const AddBookForm = () => {
 
   const inputRef = useRef(null);
   const [file, setFile] = useState();
+  const [imagePreview, setImagePreview] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
- 
-
   const onSubmit = async (data) => {
-
     const formData = new FormData();
     if (!file) {
       Swal.fire({
@@ -52,9 +49,7 @@ const AddBookForm = () => {
     formData.append("description", data.description);
     formData.append("userId", userState.id);
 
-
     try {
-
       const response = await dispatch(postBooks(formData));
       if (response.data) {
         Swal.fire({
@@ -63,9 +58,9 @@ const AddBookForm = () => {
           text: "Book added successfully!",
           backdrop: true,
         });
-        navigate('/home')
+        navigate("/home");
       } else {
-        console.log('entro a error  ', data)
+        console.log("entro a error  ", data);
         Swal.fire({
           icon: "error",
           title: "Error Data",
@@ -82,18 +77,11 @@ const AddBookForm = () => {
       });
     }
   };
-  // const prueba = () => {
-  //   console.log(userState, "user storeeee");
-  //   const userlogin = dispatch(getUserById(userState.id));
-  //   const userssss = dispatch(getUsers());
-  //   console.log(userlogin, "userencontradoooooooo");
-
-  //   console.log(userssss, "userrrrssss");
-  // };
 
   const handleImageChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
+    setImagePreview(URL.createObjectURL(selectedFile));
   };
 
   const generateYearOptions = () => {
@@ -108,14 +96,12 @@ const AddBookForm = () => {
     return options;
   };
 
-
   return (
     <div className={style.containerForm}>
-      {/* <button onClick={prueba} style={{ width: "100px", height: "50px" }}>
-        PROBAR EN CONSOLA
-      </button> */}
       <form onSubmit={handleSubmit(onSubmit)} className={style.main}>
-        <p className={style.pId}>User ID : <span>{userState.id ? userState.id : 'undefined'}</span> </p>
+        <p className={style.pId}>
+          User ID : <span>{userState.id ? userState.id : "undefined"}</span>
+        </p>
         <h1 className={style.h1Titulo}>NEW BOOK</h1>
         <img src={image} alt="imageBookForm" className={style.imageForm} />
         <div className={style.containerSubUno}>
@@ -197,6 +183,14 @@ const AddBookForm = () => {
               ref={inputRef}
               onChange={handleImageChange}
             />
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Book Preview"
+                className={style.imagePreview}
+                style={{ maxWidth: "250px", maxHeight: "200px" }}
+              />
+            )}
           </div>
         </div>
 

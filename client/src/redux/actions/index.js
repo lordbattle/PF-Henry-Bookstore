@@ -151,7 +151,11 @@ export const deleteBook = (idBook) => {
     try {
       const response = await axiosInstance.delete(`/books/${idBook}`);
       const data = response.data;
-      alert(data);
+      Swal.fire(
+        'The product was successfully disabled',
+        '',
+        'success'
+      )
       return dispatch({
         type: DELETE_BOOK,
         payload: data,
@@ -180,7 +184,11 @@ export const activeBook = (idBook) => {
       const { data } = await axiosInstance.put(`/books/${idBook}`, {
         active: true,
       });
-      alert(data);
+      Swal.fire(
+        'The product was successfully enabled',
+        '',
+        'success'
+      )
     } catch (error) {
       alert(`Catch del activeBook ${error}`);
     }
@@ -194,7 +202,11 @@ export const editBook = (idBook, updatedProduct) => {
         `/books/${idBook}`,
         updatedProduct
       );
-      alert(data);
+      Swal.fire(
+        'The product was successfully edit',
+        '',
+        'success'
+      );
     } catch (error) {
       console.log(error);
       alert(`Cath del editBook ${error}`);

@@ -16,6 +16,13 @@
     padding: 20px;
 }
 
+.img{
+    width: 30vh;
+    height: 40vh;
+    min-width: 40vh;
+    min-height: 60vh;
+}
+
 .detail{
     display: flex;
     justify-content: space-between;

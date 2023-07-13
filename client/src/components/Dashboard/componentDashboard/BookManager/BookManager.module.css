@@ -81,3 +81,10 @@ p{
         box-shadow: 3px 3px 3px black;
     }
 }
+
+.img{
+    width: 30vh;
+    height: 40vh;
+    min-width: 40vh;
+    min-height: 60vh;
+}

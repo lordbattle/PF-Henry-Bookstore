@@ -21,6 +21,16 @@
 
 }
 
+.toggleButton {
+    position: relative;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.toggleButton:hover {
+    background-color: rgb(177, 237, 206);
+}
+
 .ContainerForm {
     position: relative;
     background-color: #8ae0b4;
@@ -96,7 +106,6 @@
 
 .input {
     background-color: white;
-    border: 2;
     border-color: #8eb0e0;
     border-radius: 10px;
     width: 18em;
@@ -112,26 +121,50 @@
     background-color: #3c71b2;
     border: none;
 }
-.buttonSigInGoogle{
+
+.buttonSigInGoogle {
     position: relative;
     left: 2em;
     height: 3em;
-    border-radius: 6px;    
+    border-radius: 6px;
     background-color: #3c71b2;
     border: none;
 }
-.buttonSigIn:hover  {
+
+.buttonSigIn:hover {
     background-color: #8db3ec;
     box-shadow: 0 6px 12px 0 #171615;
 
 
 }
-.buttonSigInGoogle:hover  {
+
+.buttonSigInGoogle:hover {
     background-color: #8db3ec;
     box-shadow: 0 6px 12px 0 #171615;
 
 
 }
+
+.forgot {
+    position: relative;
+    text-decoration: none;
+    top: -0.5em;
+    padding-top: 2px;
+    height: 2rem;
+    width: 12rem;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #71a5e5;
+    color: black;
+
+    &:hover {
+        text-decoration: none;
+        box-shadow: 0 6px 12px 0 #171615;
+        background-color: #b7cff4;
+        cursor: pointer
+    }
+}
+
 .back {
     margin-top: 1em;
     text-decoration: none;

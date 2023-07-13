@@ -2,10 +2,10 @@ import axios from "axios";
 //import Cookies from 'js-cookie';
 
 //Api Local
-/* const axiosInstance = axios.create({
+ /* const axiosInstance = axios.create({
   baseURL: "http://localhost:3001",
   withCredentials: true,
-}); */
+});  */
 
 //Api Nube
 const axiosInstance = axios.create({

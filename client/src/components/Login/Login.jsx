@@ -226,7 +226,7 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <br />
+                  
                   <button
                     type="button"
                     className={style.toggleButton}
@@ -285,9 +285,9 @@ const Login = () => {
           Return home
         </Link>
 
-        <Button variant="primary" onClick={handleForgotPassword}>
+        <button variant="primary" className={style.forgot} onClick={handleForgotPassword}>
           Forgot my password
-        </Button>
+        </button>
 
         <Modal show={showForgotPasswordModal} onHide={handleCloseModal}>
           <Modal.Header closeButton>

@@ -5,6 +5,35 @@ import { useDispatch } from "react-redux";
 import { incrementItemCart } from "../../redux/actions";
 
 const Cards = (props) => {
+
+  const renderRatingStars = (averageRating) => {
+    const rating = Math.round(averageRating); // Redondear el rating
+
+    let starIcons = "";
+    switch (rating) {
+      case 1:
+        starIcons = "🌟";
+        break;
+      case 2:
+        starIcons = "🌟🌟";
+        break;
+      case 3:
+        starIcons = "🌟🌟🌟";
+        break;
+      case 4:
+        starIcons = "🌟🌟🌟🌟";
+        break;
+      case 5:
+        starIcons = "🌟🌟🌟🌟🌟";
+        break;
+      default:
+        break;
+    }
+
+    return starIcons;
+  };
+
+
   const dispatch = useDispatch();
 
   const handlerCart = () => {
@@ -58,7 +87,7 @@ const Cards = (props) => {
             </div>
             <div className="w-50">
               {" "}
-              <p>Rating: {props.averageRating}</p>
+              <p>Rating: {renderRatingStars(props.averageRating)}</p>
             </div>
           </section>{" "}
         </div>

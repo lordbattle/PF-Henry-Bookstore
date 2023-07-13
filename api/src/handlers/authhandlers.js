@@ -37,7 +37,7 @@ const loginUser = async (req, res) => {
     const token = await createAccessToken({ id: userFound.id });
 
     res.cookie("token", token, {
-      sameSite: "none",
+      sameSite: true,
       secure: true,
       httpOnly: true,
     });

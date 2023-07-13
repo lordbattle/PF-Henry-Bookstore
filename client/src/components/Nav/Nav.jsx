@@ -33,9 +33,12 @@ const Nav = ({ paginaActual, setPaginaActual }) => {
   let userDataLocalPersistent =
     JSON.parse(localStorage.getItem("userDataLoginPersistent")) || null;
 
-  useEffect(() => {
-    dispatch(logingUser(userDataLocalPersistent.id));
-  }, [dispatch, user.id]);
+    useEffect(() => {
+      if (userDataLocalPersistent && userDataLocalPersistent.id) {
+        dispatch(getUserById(userDataLocalPersistent.id));
+      }
+    }, [dispatch, userDataLocalPersistent]);
+    
 
   useEffect(() => {}, [totalItems]);
   console.log("se carga el estado de login?    " + user.id);
@@ -164,7 +167,7 @@ const Nav = ({ paginaActual, setPaginaActual }) => {
 
         <b className="vr" />
         <div className="w-25 d-flex justify-content-center gap-3">
-          {!userDataLocalPersistent.id || null ? (
+          {!userDataLocalPersistent || !userDataLocalPersistent.id? (
             <>
               <Link
                 to={"/login"}

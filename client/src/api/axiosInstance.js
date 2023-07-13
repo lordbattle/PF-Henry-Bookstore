@@ -2,18 +2,18 @@ import axios from "axios";
 //import Cookies from 'js-cookie';
 
 //Api Local
-/* const axiosInstance = axios.create({
+ const axiosInstance = axios.create({
   baseURL: "http://localhost:3001",
   //credentials: "include",
   withCredentials: true,
-}); */
+}); 
 
 //Api Nube
-const axiosInstance = axios.create({
-  baseURL: "https://pf-henry-bookstore-production.up.railway.app",
-  //credentials: "include",
-  withCredentials: true,
-});
+// const axiosInstance = axios.create({
+//   baseURL: "https://pf-henry-bookstore-production.up.railway.app",
+//   //credentials: "include",
+//   withCredentials: true,
+// });
 
 export default axiosInstance;
 

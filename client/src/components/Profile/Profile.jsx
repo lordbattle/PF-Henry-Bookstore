@@ -19,8 +19,11 @@ const Profile = () => {
   JSON.parse(localStorage.getItem("userDataLoginPersistent")) || null;
   
   useEffect(() => {
-    dispatch(getUserById(userDataLocalPersistent.id));
-  }, [dispatch]);
+    if (userDataLocalPersistent) {
+      dispatch(getUserById(userDataLocalPersistent.id));
+    }
+  }, [dispatch, userDataLocalPersistent]);
+  
 
   setTimeout(() => {
     localStorage.setItem("userData", JSON.stringify(userCurrent.results));

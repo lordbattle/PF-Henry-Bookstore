@@ -60,13 +60,13 @@ const LandingPage = () => {
 
   useEffect(() => {
     localStorage.setItem("userDataLogin", JSON.stringify(userlogin));
-    dispatch(logingUser(userDataLocalPersistent));
-    if (userDataLocalPersistent && userDataLocalPersistent.length < 1 ) {
+    if (userDataLocalPersistent && userDataLocalPersistent.length < 1) {
       localStorage.setItem(
         "userDataLoginPersistent",
         JSON.stringify(userlogin)
       );
     }
+    dispatch(logingUser(userDataLocalPersistent));
   }, [userlogin]);
 
   return (

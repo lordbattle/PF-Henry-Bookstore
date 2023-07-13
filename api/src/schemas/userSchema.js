@@ -236,7 +236,7 @@ const userNewSchema = {
 
 const userPutSchema = {
   ...userNewSchema,
-
+  
   // Make some properties optional for modification
   userName: {
     ...userNewSchema.userName, // Copy the title validation rules to userNewSchema
@@ -248,6 +248,14 @@ const userPutSchema = {
   },
   password: {
     ...userNewSchema.password,
+    optional: true,
+  },
+  name: {
+    ...userNewSchema.name,
+    optional: true,
+  },
+  lastName: {
+    ...userNewSchema.lastName,
     optional: true,
   },
   age: {

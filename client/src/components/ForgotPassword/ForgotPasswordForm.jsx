@@ -21,7 +21,20 @@ const ForgotPasswordForm = ({ onClose }) => {
         text: "You will receive an email if it is registered in our database",
       });
     } catch (error) {
-      alert(error);
+      console.log("Propiedad 'errorMessage':", error.message);
+      if (error.message === "User banned") {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "User banned!",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "an error occurred, please try again later",
+        });
+      }
     }
   };
 

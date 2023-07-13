@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
-import { logoutUser, verifyUserToken, getUserById } from "../../redux/actions";
+import { logoutUser, verifyUserToken } from "../../redux/actions";
 import Cookies from "js-cookie";
 import Profile from "../Profile/Profile";
 import prueba1 from '../../images/prueba1.png'
@@ -15,15 +15,9 @@ import prueba1 from '../../images/prueba1.png'
 const Nav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const user = useSelector((state) => state.user);
   const userCurrent = useSelector((state) => state.userDetail);
-
   let userActive = userCurrent.results;
-
-
-
-
   const { logout } = UserAuth();
 
   const cookies = Cookies.get();
@@ -34,7 +28,7 @@ const Nav = () => {
   console.log("se carga el estado de login?    " + user.id);
 
   const userLoginLocal = JSON.parse(localStorage.getItem("userDataLogin"));
-
+  
   const handlerLogOut = async () => {
     await logout();
     dispatch(logoutUser());

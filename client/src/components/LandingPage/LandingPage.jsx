@@ -1,5 +1,4 @@
 import style from "../LandingPage/LandingPage.module.css";
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CarouselComp from "../Carousel/Carousel.jsx";
 import { useEffect } from "react";
@@ -7,25 +6,37 @@ import { logingUser, postUsers } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { UserAuth } from "../../context/AuthContextFirebase";
 import logo5 from "../../images/logo5.png";
+import Swal from "sweetalert2";
 
 const LandingPage = () => {
   const userlogin = useSelector((state) => state.user);
 
-  const { user } = UserAuth();
+  const { user, logout } = UserAuth();
   const dispatch = useDispatch();
   //const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      setTimeout(() => {
-        dispatch(postUsers(user));
-      }, 3000);
-
-      setTimeout(() => {
-        dispatch(logingUser(user));
-      }, 3000);
+      const loginUser = async () => {
+        try {
+          await new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(dispatch(logingUser(user)));
+            }, 3000);
+          });
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: `User banned: ${user.displayName}`,
+            text: "Estás baneado",
+          });
+          logout()
+        }
+      };
+  
+      loginUser();
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   useEffect(() => {
     localStorage.setItem("userDataLogin", JSON.stringify(userlogin));

@@ -19,7 +19,7 @@ import {
   HISTORY_PURCHASE,
   CHANGE_PASSWORD,
   UPDATE_STATUS_ORDER,
-  GET_ORDERS_BY_STATUS
+  GET_ORDERS_BY_STATUS,
 } from "../types/types.js";
 
 import axiosInstance from "../../api/axiosInstance.js";
@@ -79,7 +79,7 @@ export const getBookByTitle = (title) => {
   return async (dispatch) => {
     try {
       const { data } = await axiosInstance.get(`/books/?title=${title}`);
-      console.log(title , ' soy titulo action ');
+      console.log(title, " soy titulo action ");
       return dispatch({
         type: GET_BOOK_TITLE,
         payload: data,
@@ -92,7 +92,6 @@ export const getBookByTitle = (title) => {
 
 export const getPaginationBooks = () => {
   return async (dispatch) => {
-    //let url = "http://localhost:3001/books/";
     const { data } = await axiosInstance.get("/books/?limit=450");
     return dispatch({
       type: GET_PAGINATION_USERS,
@@ -152,11 +151,7 @@ export const deleteBook = (idBook) => {
     try {
       const response = await axiosInstance.delete(`/books/${idBook}`);
       const data = response.data;
-      Swal.fire(
-        'The product was successfully disabled',
-        '',
-        'success'
-      )
+      Swal.fire("The product was successfully disabled", "", "success");
       return dispatch({
         type: DELETE_BOOK,
         payload: data,
@@ -185,11 +180,7 @@ export const activeBook = (idBook) => {
       const { data } = await axiosInstance.put(`/books/${idBook}`, {
         active: true,
       });
-      Swal.fire(
-        'The product was successfully enabled',
-        '',
-        'success'
-      )
+      Swal.fire("The product was successfully enabled", "", "success");
     } catch (error) {
       alert(`Catch del activeBook ${error}`);
     }
@@ -203,11 +194,7 @@ export const editBook = (idBook, updatedProduct) => {
         `/books/${idBook}`,
         updatedProduct
       );
-      Swal.fire(
-        'The product was successfully edit',
-        '',
-        'success'
-      );
+      Swal.fire("The product was successfully edit", "", "success");
     } catch (error) {
       console.log(error);
       alert(`Cath del editBook ${error}`);
@@ -236,9 +223,8 @@ export const buyBook = (payload) => {
         if (result.isConfirmed) {
           window.location.href = "/optionLoginOrRegister";
         }
-      })
+      });
       console.log(`Catch de buyBook `, error);
-
     }
   };
 };
@@ -316,15 +302,12 @@ export const postUsers = (payload) => {
   return async (dispatch) => {
     try {
       const data = await axiosInstance.post("/users", payload);
-      console.log(" postUsers ", data);
 
       return dispatch({
         type: POST_USERS,
         payload: data,
       });
     } catch (error) {
-      /*  alert(`Error postUsers ${error}`); */
-      console.log(error);
       throw new Error(error.response.data);
     }
   };
@@ -333,12 +316,9 @@ export const postUsers = (payload) => {
 export const editUser = (idUser, updatedUser) => {
   return async () => {
     try {
-      const { data } = await axiosInstance.put(`/users/${idUser}`, updatedUser);
-      console.log("editUser", data);
-      // Aquí puedes realizar acciones adicionales, como actualizar el estado global con los datos modificados del usuario
+      await axiosInstance.put(`/users/${idUser}`, updatedUser);
     } catch (error) {
-      console.log(error.message);
-      // Aquí puedes manejar el error, mostrar un mensaje de error o realizar otras acciones según sea necesario
+      throw new Error(error);
     }
   };
 };
@@ -395,8 +375,7 @@ export function logingUser(user) {
       const baseData = await axiosInstance.post(`/authUser/login`, user);
       dispatch({ type: LOGING_USER, payload: baseData.data });
     } catch (error) {
-      /*  alert(`Cath del loginUser ${error}`); */
-      throw new Error(error.response.data);
+      throw new Error(error.response.data.message);
     }
   };
 }
@@ -478,9 +457,10 @@ export const changePasswordUser = (values) => {
 export const forgotPassword = (email) => {
   return async (dispatch) => {
     try {
-      await axiosInstance.get(`/authUser/forgotPassword/${email}`);
-      return;
+      let data = await axiosInstance.get(`/authUser/forgotPassword/${email}`);
+      console.log("error catch  ", data.data);
     } catch (error) {
+      console.log(error.response.data.message);
       throw new Error(error.response.data.message);
     }
   };
@@ -490,7 +470,6 @@ export const forgotPasswordChange = (values) => {
   return async () => {
     try {
       await axiosInstance.post(`/authUser/forgotPassword`, values);
-      return;
     } catch (error) {
       throw new Error(error.response.data.message);
     }
@@ -510,21 +489,20 @@ export const contactAdm = (values) => {
   };
 };
 
-export const updateOrderStatus = (id, status) =>{
-  return async() => {
+export const updateOrderStatus = (id, status) => {
+  return async () => {
     try {
-      await axiosInstance.put(`/orders/${id}`, status)
-    return;
+      await axiosInstance.put(`/orders/${id}`, status);
+      return;
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
-    
-  }
-}
+  };
+};
 
 export const getOrdersByStatus = (payload) => {
   return {
-      type: GET_ORDERS_BY_STATUS,
-      payload: payload
-  }
-}
+    type: GET_ORDERS_BY_STATUS,
+    payload: payload,
+  };
+};

@@ -99,13 +99,13 @@ function rootReducer(state = initialState, action) {
     case GET_CURRENT_USER:
       return {
         ...state,
-        currentUser: action.payload,
+        userDetail: action.payload,
       };
 
       case POST_USERS : 
       return {
-       ...state,
-       currentUser: action.payload,
+        ...state,
+        userDetail: action.payload,
       };
 
       case GET_ORDERS:

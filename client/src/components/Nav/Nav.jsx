@@ -84,6 +84,7 @@ const Nav = ({ paginaActual, setPaginaActual }) => {
         localStorage.setItem("userData", JSON.stringify([]));
         localStorage.setItem("userDataLogin", JSON.stringify([]));
         localStorage.setItem("userDataLoginPersistent", JSON.stringify([]));
+        localStorage.setItem("cart", JSON.stringify([]));
         Swal.fire("Log out!", "", "success");
       } else {
         navigate("/home");

@@ -25,6 +25,7 @@ const Nav = ({paginaActual, setPaginaActual}) => {
   const { logout } = UserAuth();
 
   const cookies = Cookies.get();
+  
   useEffect(() => {
     dispatch(verifyUserToken(cookies.token));
   }, [dispatch]);
